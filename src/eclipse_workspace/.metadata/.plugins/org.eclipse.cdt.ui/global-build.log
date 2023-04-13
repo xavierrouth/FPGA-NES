@@ -1,0 +1,6 @@
+22:10:39 **** Clean-only build of configuration Nios II for project NES_NIOSII_bsp ****
+make clean 
+[BSP clean complete]
+22:10:41 **** Clean-only build of configuration Nios II for project NES_NIOSII ****
+make clean 
+[NES_NIOSII clean complete]

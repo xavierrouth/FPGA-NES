@@ -1,0 +1,131 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/dev/FPGA-NES/src/simulation/modelsim
+vclockgen
+Z1 !s110 1681365646
+!i10b 1
+!s100 7CSMLM^mQ?FQW9<X:LG8;3
+Ih63=igVUUzga9fY4V72zm2
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1681363501
+8C:/dev/FPGA-NES/src/clockgen.v
+FC:/dev/FPGA-NES/src/clockgen.v
+L0 39
+Z3 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z4 !s108 1681365646.000000
+!s107 C:/dev/FPGA-NES/src/clockgen.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/clockgen.v|
+!i113 1
+Z5 o-vlog01compat -work work
+!s92 -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src
+Z6 tCvgOpt 0
+vclockgen_altpll
+R1
+!i10b 1
+!s100 9PHiF[RDDD16;mX>10Gg11
+I]F_T;e:2Tz:=iX1;D=Z::3
+R2
+R0
+w1681364523
+8C:/dev/FPGA-NES/src/db/clockgen_altpll.v
+FC:/dev/FPGA-NES/src/db/clockgen_altpll.v
+L0 30
+R3
+r1
+!s85 0
+31
+R4
+!s107 C:/dev/FPGA-NES/src/db/clockgen_altpll.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/dev/FPGA-NES/src/db|C:/dev/FPGA-NES/src/db/clockgen_altpll.v|
+!i113 1
+R5
+!s92 -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src/db
+R6
+vCPU_2A03
+Z7 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+DXx4 work 16 CPU_2A03_sv_unit 0 22 hJ8I<Z^;a79;Q:TjTbmnR0
+R2
+r1
+!s85 0
+31
+!i10b 1
+!s100 YdAQ[31?UDbD_2Khbgjom3
+IBl?UiS;C]AX]0EEhV61c52
+!s105 CPU_2A03_sv_unit
+S1
+R0
+Z8 w1681362874
+Z9 8C:/dev/FPGA-NES/src/CPU_2A03.sv
+Z10 FC:/dev/FPGA-NES/src/CPU_2A03.sv
+L0 10
+R3
+Z11 !s108 1681365648.000000
+Z12 !s107 C:/dev/FPGA-NES/src/CPU_2A03.sv|
+Z13 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/CPU_2A03.sv|
+!i113 1
+Z14 o-sv -work work
+Z15 !s92 -sv -work work +incdir+C:/dev/FPGA-NES/src
+R6
+n@c@p@u_2@a03
+XCPU_2A03_sv_unit
+R7
+VhJ8I<Z^;a79;Q:TjTbmnR0
+r1
+!s85 0
+31
+!i10b 1
+!s100 Xe?ZC@Zm8YVOK[VX]^JAd2
+IhJ8I<Z^;a79;Q:TjTbmnR0
+!i103 1
+S1
+R0
+R8
+R9
+R10
+L0 1
+R3
+R11
+R12
+R13
+!i113 1
+R14
+R15
+R6
+n@c@p@u_2@a03_sv_unit
+vHexDriver
+R7
+!s110 1681365648
+!i10b 1
+!s100 hKBo4zbCRmY3[Ac9JZP;<0
+IX[4cXbRoeDPTAQ_PH??X30
+R2
+!s105 HexDriver_sv_unit
+S1
+R0
+w1681090063
+8C:/dev/FPGA-NES/src/HexDriver.sv
+FC:/dev/FPGA-NES/src/HexDriver.sv
+L0 1
+R3
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/HexDriver.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/HexDriver.sv|
+!i113 1
+R14
+R15
+R6
+n@hex@driver

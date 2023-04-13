@@ -1,0 +1,2059 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/dev/FPGA-NES/src/simulation/modelsim
+valtera_avalon_i2c
+Z1 !s110 1681365645
+!i10b 1
+!s100 i;I80YB`l0<cOH0Mh0OXC2
+I=;D7Kg@l3IOcU1D14H8=@2
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+Z3 w1681355656
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c.v
+Z4 L0 18
+Z5 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z6 !s108 1681365645.000000
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c.v|
+!i113 1
+Z7 o-vlog01compat -work toplevel_soc
+Z8 !s92 -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules
+Z9 tCvgOpt 0
+valtera_avalon_i2c_clk_cnt
+R1
+!i10b 1
+!s100 CAQU3PEJGHFhmUSJ9nV@02
+ID;B:EB9R;dJ8EgA?T3MOX1
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_clk_cnt.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_clk_cnt.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_clk_cnt.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_clk_cnt.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_condt_det
+R1
+!i10b 1
+!s100 NWHS0:R1WP@@17W[f`AJI0
+IQIkz1PLI?YFYWfdlU_Zhk1
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_det.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_det.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_det.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_det.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_condt_gen
+R1
+!i10b 1
+!s100 F?IU54?<EV_ITzfFeG@`Z2
+I`<NJIXcmaE<fliekLMF<?1
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_gen.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_gen.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_gen.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_gen.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_csr
+R1
+!i10b 1
+!s100 _=XDE5_WWD1FP8Djl72V@1
+I@OYDh@U66K20M`lgH>C@m0
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_csr.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_csr.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_csr.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_csr.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_fifo
+R1
+!i10b 1
+!s100 K6:GE0kJz4H;LzVG[N3Ao2
+I4:IaTkJ?E6VDajjfm3c4R2
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_fifo.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_fifo.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_fifo.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_fifo.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_mstfsm
+R1
+!i10b 1
+!s100 EoIZ@gjk[7@:RNMP??jE51
+IhLd;jHR]Wd9[49EQzdVE@1
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_mstfsm.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_mstfsm.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_mstfsm.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_mstfsm.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_rxshifter
+R1
+!i10b 1
+!s100 NH?j7@d_^5gIg43`l^N`W3
+IAgTHVDEjDLchPKVHdzmF43
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_rxshifter.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_rxshifter.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_rxshifter.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_rxshifter.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_spksupp
+Z10 !s110 1681365646
+!i10b 1
+!s100 L4Jc3zDI^<U>:e]oA=kFJ0
+I>GOcH]n@0nDmOiKeH4:_`0
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_spksupp.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_spksupp.v
+R4
+R5
+r1
+!s85 0
+31
+Z11 !s108 1681365646.000000
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_spksupp.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_spksupp.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_txout
+R10
+!i10b 1
+!s100 :0U7=ZbJ=6_9QSWgb9VmM1
+I@4Yk>4L;QKz83UM4Z17W:1
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txout.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txout.v
+R4
+R5
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txout.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txout.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_i2c_txshifter
+R1
+!i10b 1
+!s100 ceW5>`_l>2G>TjfE>=9`60
+IFVk2SgjT0Tn8l6iE[6lEe1
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txshifter.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txshifter.v
+R4
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txshifter.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txshifter.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_sc_fifo
+Z12 !s110 1681365643
+!i10b 1
+!s100 4mK@em][G=j]om3zJIhOc0
+IaT?GA[DM8o>hBd]^AnRJf1
+R2
+R0
+Z13 w1681355671
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_sc_fifo.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_sc_fifo.v
+Z14 L0 21
+R5
+r1
+!s85 0
+31
+Z15 !s108 1681365643.000000
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_sc_fifo.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_sc_fifo.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_st_clock_crosser
+R10
+!i10b 1
+!s100 YbU`iK^TYJ_9Hz`CZekjQ3
+IAA_]^_IeomRV3J9DBLb?J2
+R2
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_clock_crosser.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_clock_crosser.v
+L0 22
+R5
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_clock_crosser.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_clock_crosser.v|
+!i113 1
+R7
+R8
+R9
+valtera_avalon_st_handshake_clock_crosser
+R10
+!i10b 1
+!s100 3f<J9K;e[9FU@JKn0^PK?0
+IQXP^CP>>FLR2EHkzk3HDP3
+R2
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.v
+Z16 L0 24
+R5
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.v|
+!i113 1
+R7
+R8
+R9
+valtera_merlin_arb_adder
+Z17 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z18 !s110 1681365647
+!i10b 1
+!s100 1Jn[a;@5nZmTN?DFKQNzj2
+ITncED0S^hN3SCVFXYhNTk3
+R2
+Z19 !s105 altera_merlin_arbitrator_sv_unit
+S1
+R0
+R13
+Z20 8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_arbitrator.sv
+Z21 FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_arbitrator.sv
+L0 228
+R5
+r1
+!s85 0
+31
+Z22 !s108 1681365647.000000
+Z23 !s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_arbitrator.sv|
+Z24 !s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_arbitrator.sv|
+!i113 1
+Z25 o-sv -work toplevel_soc
+Z26 !s92 -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules
+R9
+valtera_merlin_arbitrator
+R17
+R18
+!i10b 1
+!s100 NQTehjm2fNQROUMUzShGa1
+Igb:jULHFgOizd<V>PXegA3
+R2
+R19
+S1
+R0
+R13
+R20
+R21
+L0 103
+R5
+r1
+!s85 0
+31
+R22
+R23
+R24
+!i113 1
+R25
+R26
+R9
+valtera_merlin_burst_adapter
+R17
+R18
+!i10b 1
+!s100 OCc70X^k:B?GW6i71n`L_3
+I33H_WKha=Ia@NF;@>8QK20
+R2
+!s105 altera_merlin_burst_adapter_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter.sv
+R14
+R5
+r1
+!s85 0
+31
+R22
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter.sv|
+!i113 1
+R25
+R26
+R9
+valtera_merlin_burst_adapter_uncompressed_only
+R17
+R18
+!i10b 1
+!s100 STH]BdUM[JDMJZNJGXCd>0
+IL3B@T70>gIGP5BAHGR8Z22
+R2
+!s105 altera_merlin_burst_adapter_uncmpr_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter_uncmpr.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter_uncmpr.sv
+L0 39
+R5
+r1
+!s85 0
+31
+R22
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter_uncmpr.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter_uncmpr.sv|
+!i113 1
+R25
+R26
+R9
+valtera_merlin_burst_uncompressor
+R17
+R18
+!i10b 1
+!s100 f1?Rb<=9U?R9LJoHl;7>T3
+I>0LT3H7En@TkNJLR3?CdA1
+R2
+!s105 altera_merlin_burst_uncompressor_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_uncompressor.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_uncompressor.sv
+L0 40
+R5
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_uncompressor.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_uncompressor.sv|
+!i113 1
+R25
+R26
+R9
+valtera_merlin_master_agent
+R17
+Z27 !s110 1681365648
+!i10b 1
+!s100 _CJm:YX=>U2LQKH;8=@cb0
+IX2zzH:_Sdl<T>:Bo7Xif_3
+R2
+!s105 altera_merlin_master_agent_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_agent.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_agent.sv
+L0 28
+R5
+r1
+!s85 0
+31
+Z28 !s108 1681365648.000000
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_agent.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_agent.sv|
+!i113 1
+R25
+R26
+R9
+valtera_merlin_master_translator
+R17
+R27
+!i10b 1
+!s100 NdRk@]3fC2C@V7Rm;dQM31
+I6BZ0:m>zhPA;11_`UkjIT0
+R2
+!s105 altera_merlin_master_translator_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_translator.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_translator.sv
+L0 32
+R5
+r1
+!s85 0
+31
+R28
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_translator.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_translator.sv|
+!i113 1
+R25
+R26
+R9
+valtera_merlin_slave_agent
+R17
+R27
+!i10b 1
+!s100 ePZN1d?B062J`OBb?blff3
+ImIljKNm:dG2`>c>1kYflJ0
+R2
+!s105 altera_merlin_slave_agent_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv
+Z29 L0 34
+R5
+r1
+!s85 0
+31
+R28
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv|
+!i113 1
+R25
+R26
+R9
+valtera_merlin_slave_translator
+R17
+R27
+!i10b 1
+!s100 k`9[YAn_dLTkg;GE`mOb61
+I8;aB5IIdBgLJd62JUl2De2
+R2
+!s105 altera_merlin_slave_translator_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_translator.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_translator.sv
+L0 35
+R5
+r1
+!s85 0
+31
+R28
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_translator.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_translator.sv|
+!i113 1
+R25
+R26
+R9
+valtera_merlin_width_adapter
+R17
+R10
+!i10b 1
+!s100 QzdA5DP6CReOTH<9QzODa3
+I4V=Qa6GgcSSVkH[goF32i1
+R2
+!s105 altera_merlin_width_adapter_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_width_adapter.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_width_adapter.sv
+L0 25
+R5
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_width_adapter.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_width_adapter.sv|
+!i113 1
+R25
+R26
+R9
+valtera_reset_controller
+R12
+!i10b 1
+!s100 z[H_hRO9gO=:^2E3_jWH03
+IbanG`bEj;[3Q^4L48HEel1
+R2
+R0
+Z30 w1681355669
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_controller.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_controller.v
+L0 42
+R5
+r1
+!s85 0
+31
+R15
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_controller.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_controller.v|
+!i113 1
+R7
+R8
+R9
+valtera_reset_synchronizer
+R12
+!i10b 1
+!s100 oWLYmSO[EOX[G0PgQhZ2=0
+IzG85AgWBBL8dYo^8YbKQi0
+R2
+R0
+R30
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_synchronizer.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_synchronizer.v
+R16
+R5
+r1
+!s85 0
+31
+R15
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_synchronizer.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_synchronizer.v|
+!i113 1
+R7
+R8
+R9
+valtera_std_synchronizer_nocut
+R10
+!i10b 1
+!s100 b8zV2<79GgkNg0GC<P[GJ2
+IYWP7UA;@RObgMZ<L1=06[3
+R2
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_std_synchronizer_nocut.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_std_synchronizer_nocut.v
+L0 44
+R5
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_std_synchronizer_nocut.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_std_synchronizer_nocut.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc
+R12
+!i10b 1
+!s100 GbBQb6XmjH2l]LL]YmAO?0
+INf_l;hFkA8z?2daaf_N=[3
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/toplevel_soc.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/toplevel_soc.v
+L0 6
+R5
+r1
+!s85 0
+31
+R15
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/toplevel_soc.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/toplevel_soc.v|
+!i113 1
+R7
+!s92 -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis
+R9
+vtoplevel_soc_hex_digits_pio
+R10
+!i10b 1
+!s100 kznIK1eU[f6LPTOXKhdo[0
+IU<0_bOhmhKBJTR8Kd^@ZQ0
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_hex_digits_pio.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_hex_digits_pio.v
+R14
+R5
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_hex_digits_pio.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_hex_digits_pio.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_irq_mapper
+R17
+R10
+!i10b 1
+!s100 OhD]B@CN0DkVO:_6dIM7m0
+I8zMYIVI^zUULMH:T3W6F?0
+R2
+!s105 toplevel_soc_irq_mapper_sv_unit
+S1
+R0
+R30
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_irq_mapper.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_irq_mapper.sv
+L0 31
+R5
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_irq_mapper.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_irq_mapper.sv|
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_jtag_uart_0
+R1
+!i10b 1
+!s100 J;=3Q?6XDnD7W@>V`D]]?1
+IjoK2CDBWT`9V43ja>_zXQ3
+R2
+R0
+R3
+Z31 8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_jtag_uart_0.v
+Z32 FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_jtag_uart_0.v
+L0 331
+R5
+r1
+!s85 0
+31
+R6
+Z33 !s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_jtag_uart_0.v|
+Z34 !s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_jtag_uart_0.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_jtag_uart_0_scfifo_r
+R1
+!i10b 1
+!s100 ;>cno0W:Oge5=Ro4e5G`>1
+IJ6kPIhG<InN0GOhUkXj_V0
+R2
+R0
+R3
+R31
+R32
+L0 243
+R5
+r1
+!s85 0
+31
+R6
+R33
+R34
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_jtag_uart_0_scfifo_w
+R1
+!i10b 1
+!s100 J4[R9QXgS3X^=caU@mEAW0
+IiE?P=EOla9L@kA:ClnF@O2
+R2
+R0
+R3
+R31
+R32
+L0 78
+R5
+r1
+!s85 0
+31
+R6
+R33
+R34
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_jtag_uart_0_sim_scfifo_r
+R1
+!i10b 1
+!s100 z^TLDWBgz:@AWHIGEC=Y;3
+I<08<>GV31@nQmMg^klno=0
+R2
+R0
+R3
+R31
+R32
+L0 164
+R5
+r1
+!s85 0
+31
+R6
+R33
+R34
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_jtag_uart_0_sim_scfifo_w
+R1
+!i10b 1
+!s100 WDeL^TD=9EV8P`@Fb<`[A0
+IVz6Ue3mBOid43^1hWLEPY2
+R2
+R0
+R3
+R31
+R32
+R14
+R5
+r1
+!s85 0
+31
+R6
+R33
+R34
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_key
+R1
+!i10b 1
+!s100 5EN]3:8@6]Ad1KjaOBD5R0
+Im=8f=3Em4[4GD[b<PfbiX3
+R2
+R0
+R3
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_key.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_key.v
+R14
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_key.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_key.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_keycode
+R1
+!i10b 1
+!s100 F4gnz^RAc4BON1^d78i?L1
+I@0R3>zazQe5]K4bUfQEh[0
+R2
+R0
+Z35 w1681355657
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_keycode.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_keycode.v
+R14
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_keycode.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_keycode.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_leds_pio
+Z36 !s110 1681365644
+!i10b 1
+!s100 <I`iela;o49V8RbQ1OKl>2
+ImH7UcMeInbCg<mG0G^8P22
+R2
+R0
+R35
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_leds_pio.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_leds_pio.v
+R14
+R5
+r1
+!s85 0
+31
+Z37 !s108 1681365644.000000
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_leds_pio.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_leds_pio.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_mm_interconnect_0
+R12
+!i10b 1
+!s100 z:ke2BQAVjeXO0<5>1Mb60
+II=:Oe2V1INE2RA0:JcOcM0
+R2
+R0
+R30
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0.v
+L0 9
+R5
+r1
+!s85 0
+31
+R15
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_mm_interconnect_0_avalon_st_adapter
+R12
+!i10b 1
+!s100 Xh@1hXHEkn>NbVToSFTDk3
+IF<HN5?ifF0_C@I]`VMGNQ3
+R2
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter.v
+L0 9
+R5
+r1
+!s85 0
+31
+R15
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_mm_interconnect_0_avalon_st_adapter_005
+R12
+!i10b 1
+!s100 U=3MMLk5c:9PQb9CD<<m93
+I9KNaGzfMXkRVCHbQfLSjS3
+R2
+R0
+Z38 w1681355672
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_005.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_005.v
+L0 9
+R5
+r1
+!s85 0
+31
+R15
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_005.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_005.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_mm_interconnect_0_avalon_st_adapter_005_error_adapter_0
+R17
+R10
+!i10b 1
+!s100 >eicI:eG7N;DM8Y1nY=b40
+ILW[7Ln:GKJMgk]5A_fM6W1
+R2
+!s105 toplevel_soc_mm_interconnect_0_avalon_st_adapter_005_error_adapter_0_sv_unit
+S1
+R0
+R38
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_005_error_adapter_0.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_005_error_adapter_0.sv
+Z39 L0 66
+R5
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_005_error_adapter_0.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_005_error_adapter_0.sv|
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0
+R17
+R10
+!i10b 1
+!s100 nDBTjB_NJ1nnliPalVCD71
+IDk`ehkLAQYB1Dk7d<WcZg0
+R2
+!s105 toplevel_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0_sv_unit
+S1
+R0
+R38
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv
+R39
+R5
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv|
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_mm_interconnect_0_cmd_demux
+R17
+R18
+!i10b 1
+!s100 @VSb<kD76lf:FZaBOCN;O0
+IZZ2HQlVH`BGg1JNeZL>;V2
+R2
+!s105 toplevel_soc_mm_interconnect_0_cmd_demux_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_demux.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_demux.sv
+Z40 L0 43
+R5
+r1
+!s85 0
+31
+R22
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_demux.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_demux.sv|
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_mm_interconnect_0_cmd_mux
+R17
+R18
+!i10b 1
+!s100 BVfbEeLB2n0NOV4SU6G`X3
+I_AYY9lYA>Lngh<2PZ?]i52
+R2
+!s105 toplevel_soc_mm_interconnect_0_cmd_mux_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_mux.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_mux.sv
+Z41 L0 51
+R5
+r1
+!s85 0
+31
+R22
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_mux.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_mux.sv|
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_mm_interconnect_0_router
+R17
+R27
+!i10b 1
+!s100 9cBz=l@ZS_9Wg:aJhWLiO0
+INe::fO;KR5A_@l`;^_ZGl2
+R2
+Z42 !s105 toplevel_soc_mm_interconnect_0_router_sv_unit
+S1
+R0
+R13
+Z43 8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router.sv
+Z44 FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router.sv
+Z45 L0 84
+R5
+r1
+!s85 0
+31
+R28
+Z46 !s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router.sv|
+Z47 !s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router.sv|
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_mm_interconnect_0_router_002
+R17
+R27
+!i10b 1
+!s100 8f`T^?JXWM;VXOLCL1C7C3
+I>6V@gSIF6PC0XEYkgDYkG1
+R2
+Z48 !s105 toplevel_soc_mm_interconnect_0_router_002_sv_unit
+S1
+R0
+R13
+Z49 8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_002.sv
+Z50 FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_002.sv
+R45
+R5
+r1
+!s85 0
+31
+R28
+Z51 !s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_002.sv|
+Z52 !s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_002.sv|
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_mm_interconnect_0_router_002_default_decode
+R17
+R27
+!i10b 1
+!s100 X<bXR<<F[GeiRlOO:io2H0
+IVZeRz@4S7N6d`7nj;X6Kf2
+R2
+R48
+S1
+R0
+R13
+R49
+R50
+Z53 L0 45
+R5
+r1
+!s85 0
+31
+R28
+R51
+R52
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_mm_interconnect_0_router_007
+R17
+R27
+!i10b 1
+!s100 CJi6P6K;gUO6S2H:GL[a@2
+ITdg]J8cUc7[k1NHBcNfJo0
+R2
+Z54 !s105 toplevel_soc_mm_interconnect_0_router_007_sv_unit
+S1
+R0
+R13
+Z55 8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_007.sv
+Z56 FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_007.sv
+R45
+R5
+r1
+!s85 0
+31
+R22
+Z57 !s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_007.sv|
+Z58 !s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_007.sv|
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_mm_interconnect_0_router_007_default_decode
+R17
+R27
+!i10b 1
+!s100 aUOVXF]iSgJJDc8zFMQ6z0
+I_7ZB9fESGK^=F:5LF>BKh1
+R2
+R54
+S1
+R0
+R13
+R55
+R56
+R53
+R5
+r1
+!s85 0
+31
+R22
+R57
+R58
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_mm_interconnect_0_router_default_decode
+R17
+R27
+!i10b 1
+!s100 THLZoaS[l[AHlb]]k3]nK1
+IC``aLekc6<B5JCQdTd6lL0
+R2
+R42
+S1
+R0
+R13
+R43
+R44
+R53
+R5
+r1
+!s85 0
+31
+R28
+R46
+R47
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_mm_interconnect_0_rsp_demux
+R17
+R18
+!i10b 1
+!s100 J^Pzen6hh^7HNm00I@:<h1
+IZRag?@z`6na4Vi`9a0IdZ3
+R2
+!s105 toplevel_soc_mm_interconnect_0_rsp_demux_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_demux.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_demux.sv
+R40
+R5
+r1
+!s85 0
+31
+R22
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_demux.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_demux.sv|
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_mm_interconnect_0_rsp_mux
+R17
+R18
+!i10b 1
+!s100 :HMoEa<aG7j6ZEm[kQSjF0
+IOW>JD:;=EFaa1G2U_06Cl0
+R2
+!s105 toplevel_soc_mm_interconnect_0_rsp_mux_sv_unit
+S1
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_mux.sv
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_mux.sv
+R41
+R5
+r1
+!s85 0
+31
+R22
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_mux.sv|
+!s90 -reportprogress|300|-sv|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_mux.sv|
+!i113 1
+R25
+R26
+R9
+vtoplevel_soc_nios2_gen2_0
+R36
+!i10b 1
+!s100 Jha=0UG1>@HgVOQEoD;><1
+IhX?dY6MV2YX:HeAB`5O6[2
+R2
+R0
+R35
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0.v
+L0 9
+R5
+r1
+!s85 0
+31
+R37
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu
+R36
+!i10b 1
+!s100 YY9D30o@_6X4lS?1PCXO63
+IACgB9LFlOR16h>2^c>j=42
+R2
+R0
+R13
+Z59 8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu.v
+Z60 FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu.v
+L0 2834
+R5
+r1
+!s85 0
+31
+R37
+Z61 !s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu.v|
+Z62 !s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_debug_slave_sysclk
+R36
+!i10b 1
+!s100 P4;iGJ0^@2nZYBd0>dd:<2
+I@oASO>@_T?9N`RCB_2Ace1
+R2
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_sysclk.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_sysclk.v
+R14
+R5
+r1
+!s85 0
+31
+R37
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_sysclk.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_sysclk.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_debug_slave_tck
+R36
+!i10b 1
+!s100 HH4nf:LA01UDO6jCfK6Bc3
+INdWPLM4eF5zl6KMXFLoQE1
+R2
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_tck.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_tck.v
+R14
+R5
+r1
+!s85 0
+31
+R37
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_tck.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_tck.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_debug_slave_wrapper
+R36
+!i10b 1
+!s100 XF273_lBJPhI=C[3W7`890
+IJBXYLJK^:kLFQk:5Yiog;1
+R2
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_wrapper.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_wrapper.v
+R14
+R5
+r1
+!s85 0
+31
+R37
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_wrapper.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_wrapper.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_avalon_reg
+R36
+!i10b 1
+!s100 EK?nB02H==3]`ajQ@@CoV2
+Ii>c_Ek;J4^3B4k20E1enk1
+R2
+R0
+R13
+R59
+R60
+L0 2023
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci
+R36
+!i10b 1
+!s100 SPe=`n9>fmbOMfYd8M6000
+INdYlBCjo:g_7;SPb]i[]S3
+R2
+R0
+R13
+R59
+R60
+L0 2362
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_break
+R36
+!i10b 1
+!s100 okoBWMj4I;dgRD70dP3UC1
+Id7MFSg_b_N<9nHP=T;_J<0
+R2
+R0
+R13
+R59
+R60
+L0 295
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_compute_input_tm_cnt
+R36
+!i10b 1
+!s100 IOJk=B@LS5kVU5BmE@Q;m3
+II=WQaX?he^703JdbXaW;Z2
+R2
+R0
+R13
+R59
+R60
+L0 1265
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_dbrk
+R36
+!i10b 1
+!s100 F8KnPzOg7ZHfULS`ljjHP1
+IT148;BdSd<c84jV`4TW?^2
+R2
+R0
+R13
+R59
+R60
+L0 795
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_debug
+R36
+!i10b 1
+!s100 GoE`M0]070fOlWYTBG:ae0
+ImNY9<UF1XeXE4f`bkd94N2
+R2
+R0
+R13
+R59
+R60
+L0 153
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_dtrace
+R36
+!i10b 1
+!s100 0gDjF:f2RORk_]cMAYTfD1
+Ia6DEAY7HCLQHU4<K@Hk:U0
+R2
+R0
+R13
+R59
+R60
+L0 1183
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_fifo
+R36
+!i10b 1
+!s100 @B`]Qf3dBa495M<`Zo=a>2
+I;4=n@S^X1f8=PPzNPE?DH0
+R2
+R0
+R13
+R59
+R60
+L0 1427
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_fifo_cnt_inc
+R36
+!i10b 1
+!s100 0c1DN0PHl980X@P[5ChGN0
+ITX>eOc1bBY7eZ3`B4WeN]2
+R2
+R0
+R13
+R59
+R60
+L0 1380
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_fifo_wrptr_inc
+R36
+!i10b 1
+!s100 h_W^2K4g4k<g2K:o3?E`J2
+Ic<ZF>QIN>?gV_E^h]khmi0
+R2
+R0
+R13
+R59
+R60
+L0 1337
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_im
+R36
+!i10b 1
+!s100 PlOiXzFcg6J;UAMefnF@i0
+IPkj?R2AJ1zTV4h9>7Lk<30
+R2
+R0
+R13
+R59
+R60
+L0 1936
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_itrace
+R36
+!i10b 1
+!s100 ]?7F8Fe0kGN_DchAC6>TO0
+IMjo7neoS9l2SXS`_58Q7i1
+R2
+R0
+R13
+R59
+R60
+L0 982
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_pib
+R36
+!i10b 1
+!s100 J=Rj02n_ccb?zQ?UVo;LK3
+I>D?HdDI:I0<XbfNj=0L@51
+R2
+R0
+R13
+R59
+R60
+L0 1913
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_td_mode
+R36
+!i10b 1
+!s100 5_ezEaL]naGT4LzKA>:FU0
+IB;6<NE7Y39kVOk4I]YVV`1
+R2
+R0
+R13
+R59
+R60
+L0 1115
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_oci_xbrk
+R36
+!i10b 1
+!s100 k;0OBmSLK5So;HXMnNZ9C0
+InGRM;;bBUbFb@7^R;C<1[2
+R2
+R0
+R13
+R59
+R60
+L0 588
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_ocimem
+R36
+!i10b 1
+!s100 6IAamY6m_?ne@oH5Wicac1
+IN`:X^=]nK_2h5o?6M9S1V1
+R2
+R0
+R13
+R59
+R60
+L0 2181
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_nios2_performance_monitors
+R36
+!i10b 1
+!s100 L`aF9^nGji^V0eCil[XzN2
+IGLRkU=`ElMf0gla`WHoiN0
+R2
+R0
+R13
+R59
+R60
+L0 2006
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_ociram_sp_ram_module
+R36
+!i10b 1
+!s100 Ti@:a=XHSlONaLoJmBTT>0
+Ij:@n>QHzZUl[bbg>Yn:e43
+R2
+R0
+R13
+R59
+R60
+L0 2116
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_register_bank_a_module
+R36
+!i10b 1
+!s100 T4Q]@Fj[ATMaVHoN?k6UZ0
+IBb83ggf3PHUohocDE<?N>3
+R2
+R0
+R13
+R59
+R60
+R14
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_register_bank_b_module
+R36
+!i10b 1
+!s100 <a:VnJi;mY8TF?7ZKbI2E3
+I_N[gJSo;DS5CRQ[>Z:]V70
+R2
+R0
+R13
+R59
+R60
+L0 87
+R5
+r1
+!s85 0
+31
+R37
+R61
+R62
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_nios2_gen2_0_cpu_test_bench
+R36
+!i10b 1
+!s100 0hCczd8jI_cHZ=SEzlmOP2
+I=D3k6BJW3V3U=So1@2mem0
+R2
+R0
+R13
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_test_bench.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_test_bench.v
+R14
+R5
+r1
+!s85 0
+31
+R37
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_test_bench.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_test_bench.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_sdram
+R36
+!i10b 1
+!s100 VRgM?LHMe?ll4zK@m4Y:G2
+I]W0aiQ3L[GA?TKYkab5RL2
+R2
+R0
+R35
+Z63 8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram.v
+Z64 FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram.v
+L0 159
+R5
+r1
+!s85 0
+31
+R37
+Z65 !s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram.v|
+Z66 !s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_sdram_input_efifo_module
+R36
+!i10b 1
+!s100 Hlejf]09mB3zoJ]TYgKCz1
+IPOJYGT_];MWl`=_Fd2KN]3
+R2
+R0
+R35
+R63
+R64
+R14
+R5
+r1
+!s85 0
+31
+R37
+R65
+R66
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_sdram_pll
+R36
+!i10b 1
+!s100 d:>aMFFX?H3h0AJ0Eg[E31
+IbldVi7UR[NZkzbcbo@dn_3
+R2
+R0
+Z67 w1681355658
+Z68 8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram_pll.v
+Z69 FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram_pll.v
+L0 217
+R5
+r1
+!s85 0
+31
+R37
+Z70 !s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram_pll.v|
+Z71 !s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram_pll.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_sdram_pll_altpll_vg92
+R36
+!i10b 1
+!s100 ?>;]K>0[=hL6EQ>7;ATON3
+IHeoBbzMYd9Cd_Zd[1Sz2i2
+R2
+R0
+R67
+R68
+R69
+L0 130
+R5
+r1
+!s85 0
+31
+R37
+R70
+R71
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_sdram_pll_dffpipe_l2c
+R36
+!i10b 1
+!s100 Ln[5l9n:A5iA2LoRKl^<j3
+IfGCJzDmfQ>ba<mOOVW2VJ1
+R2
+R0
+R67
+R68
+R69
+L0 37
+R5
+r1
+!s85 0
+31
+R37
+R70
+R71
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_sdram_pll_stdsync_sv6
+R36
+!i10b 1
+!s100 O[`jZ]mERBmnh9ZU12@151
+IhkCzfcB1`U_7k0;Ti9LKb3
+R2
+R0
+R67
+R68
+R69
+L0 98
+R5
+r1
+!s85 0
+31
+R37
+R70
+R71
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_spi_0
+R36
+!i10b 1
+!s100 ?`?g]4VzziT]^1>J;Re8Q2
+IE<@5<b`d;nIUm_z];>ioZ3
+R2
+R0
+R67
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_spi_0.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_spi_0.v
+L0 41
+R5
+r1
+!s85 0
+31
+R37
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_spi_0.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_spi_0.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_sysid_qsys_0
+R36
+!i10b 1
+!s100 dPJb4zUP;?gGl0JlY77oY3
+IAaXEhn1D;YAVJ[>20h5=?0
+R2
+R0
+R67
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sysid_qsys_0.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sysid_qsys_0.v
+R29
+R5
+r1
+!s85 0
+31
+R37
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sysid_qsys_0.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sysid_qsys_0.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_timer_0
+R12
+!i10b 1
+!s100 6^]^HY00?KVX1M]=6cdcn1
+Ih<COJaK<lm_`?f]dJiIUR3
+R2
+R0
+R67
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_timer_0.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_timer_0.v
+R14
+R5
+r1
+!s85 0
+31
+R15
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_timer_0.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_timer_0.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_usb_gpx
+R12
+!i10b 1
+!s100 6[7`?hS8J6:GNN6mBS5iI2
+Imo<MPfXA15n@?H<i@aU1l2
+R2
+R0
+R67
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_gpx.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_gpx.v
+R14
+R5
+r1
+!s85 0
+31
+R15
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_gpx.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_gpx.v|
+!i113 1
+R7
+R8
+R9
+vtoplevel_soc_usb_rst
+R12
+!i10b 1
+!s100 LnHnhIWGklkE[PF7jkKb70
+I8[<z8mXSY6RodOWGU@T?a0
+R2
+R0
+w1681355659
+8C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_rst.v
+FC:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_rst.v
+R14
+R5
+r1
+!s85 0
+31
+R15
+!s107 C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_rst.v|
+!s90 -reportprogress|300|-vlog01compat|-work|toplevel_soc|+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules|C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_rst.v|
+!i113 1
+R7
+R8
+R9

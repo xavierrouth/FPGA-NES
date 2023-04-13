@@ -1,0 +1,152 @@
+
+State Machine - |toplevel|toplevel_soc:u0|toplevel_soc_sdram:sdram|m_next
+Name m_next.010000000 m_next.000010000 m_next.000001000 m_next.000000001 
+m_next.000000001 0 0 0 0 
+m_next.000001000 0 0 1 1 
+m_next.000010000 0 1 0 1 
+m_next.010000000 1 0 0 1 
+
+State Machine - |toplevel|toplevel_soc:u0|toplevel_soc_sdram:sdram|m_state
+Name m_state.100000000 m_state.010000000 m_state.001000000 m_state.000100000 m_state.000010000 m_state.000001000 m_state.000000100 m_state.000000010 m_state.000000001 
+m_state.000000001 0 0 0 0 0 0 0 0 0 
+m_state.000000010 0 0 0 0 0 0 0 1 1 
+m_state.000000100 0 0 0 0 0 0 1 0 1 
+m_state.000001000 0 0 0 0 0 1 0 0 1 
+m_state.000010000 0 0 0 0 1 0 0 0 1 
+m_state.000100000 0 0 0 1 0 0 0 0 1 
+m_state.001000000 0 0 1 0 0 0 0 0 1 
+m_state.010000000 0 1 0 0 0 0 0 0 1 
+m_state.100000000 1 0 0 0 0 0 0 0 1 
+
+State Machine - |toplevel|toplevel_soc:u0|toplevel_soc_sdram:sdram|i_next
+Name i_next.111 i_next.101 i_next.010 i_next.000 
+i_next.000 0 0 0 0 
+i_next.010 0 0 1 1 
+i_next.101 0 1 0 1 
+i_next.111 1 0 0 1 
+
+State Machine - |toplevel|toplevel_soc:u0|toplevel_soc_sdram:sdram|i_state
+Name i_state.111 i_state.101 i_state.011 i_state.010 i_state.001 i_state.000 
+i_state.000 0 0 0 0 0 0 
+i_state.001 0 0 0 0 1 1 
+i_state.010 0 0 0 1 0 1 
+i_state.011 0 0 1 0 0 1 
+i_state.101 0 1 0 0 0 1 
+i_state.111 1 0 0 0 0 1 
+
+State Machine - |toplevel|toplevel_soc:u0|toplevel_soc_nios2_gen2_0:nios2_gen2_0|toplevel_soc_nios2_gen2_0_cpu:cpu|toplevel_soc_nios2_gen2_0_cpu_nios2_oci:the_toplevel_soc_nios2_gen2_0_cpu_nios2_oci|toplevel_soc_nios2_gen2_0_cpu_debug_slave_wrapper:the_toplevel_soc_nios2_gen2_0_cpu_debug_slave_wrapper|toplevel_soc_nios2_gen2_0_cpu_debug_slave_tck:the_toplevel_soc_nios2_gen2_0_cpu_debug_slave_tck|DRsize
+Name DRsize.101 DRsize.100 DRsize.011 DRsize.010 DRsize.001 DRsize.000 
+DRsize.000 0 0 0 0 0 0 
+DRsize.001 0 0 0 0 1 1 
+DRsize.010 0 0 0 1 0 1 
+DRsize.011 0 0 1 0 0 1 
+DRsize.100 0 1 0 0 0 1 
+DRsize.101 1 0 0 0 0 1 
+
+State Machine - |toplevel|toplevel_soc:u0|altera_avalon_i2c:i2c_0|altera_avalon_i2c_condt_gen:u_condt_gen|stop_state
+Name stop_state.STOP_SETUP stop_state.STOP_SCL_LOW stop_state.STOP_LOAD stop_state.STOP_IDLE stop_state.STOP_DONE 
+stop_state.STOP_IDLE 0 0 0 0 0 
+stop_state.STOP_LOAD 0 0 1 1 0 
+stop_state.STOP_SCL_LOW 0 1 0 1 0 
+stop_state.STOP_SETUP 1 0 0 1 0 
+stop_state.STOP_DONE 0 0 0 1 1 
+
+State Machine - |toplevel|toplevel_soc:u0|altera_avalon_i2c:i2c_0|altera_avalon_i2c_condt_gen:u_condt_gen|restart_state
+Name restart_state.RESTART_DONE restart_state.RESTART_HOLD restart_state.RESTART_SETUP restart_state.RESTART_SCL_LOW restart_state.RESTART_LOAD restart_state.RESTART_IDLE 
+restart_state.RESTART_IDLE 0 0 0 0 0 0 
+restart_state.RESTART_LOAD 0 0 0 0 1 1 
+restart_state.RESTART_SCL_LOW 0 0 0 1 0 1 
+restart_state.RESTART_SETUP 0 0 1 0 0 1 
+restart_state.RESTART_HOLD 0 1 0 0 0 1 
+restart_state.RESTART_DONE 1 0 0 0 0 1 
+
+State Machine - |toplevel|toplevel_soc:u0|altera_avalon_i2c:i2c_0|altera_avalon_i2c_condt_gen:u_condt_gen|start_state
+Name start_state.START_DONE start_state.START_HOLD start_state.START_LOAD start_state.START_IDLE 
+start_state.START_IDLE 0 0 0 0 
+start_state.START_LOAD 0 0 1 1 
+start_state.START_HOLD 0 1 0 1 
+start_state.START_DONE 1 0 0 1 
+
+State Machine - |toplevel|toplevel_soc:u0|altera_avalon_i2c:i2c_0|altera_avalon_i2c_condt_det:u_condt_det|bus_state
+Name bus_state.BUS_COUNTING bus_state.BUS_LOAD_CNT bus_state.BUS_BUSY bus_state.BUS_IDLE 
+bus_state.BUS_IDLE 0 0 0 0 
+bus_state.BUS_BUSY 0 0 1 1 
+bus_state.BUS_LOAD_CNT 0 1 0 1 
+bus_state.BUS_COUNTING 1 0 0 1 
+
+State Machine - |toplevel|toplevel_soc:u0|altera_avalon_i2c:i2c_0|altera_avalon_i2c_txshifter:u_txshifter|tx_shiftfsm_state
+Name tx_shiftfsm_state.TX_DONE tx_shiftfsm_state.TX_CLK_HOLD tx_shiftfsm_state.TX_CLK_HIGH tx_shiftfsm_state.TX_CLK_LOW tx_shiftfsm_state.TX_CLK_LOAD tx_shiftfsm_state.TX_IDLE 
+tx_shiftfsm_state.TX_IDLE 0 0 0 0 0 0 
+tx_shiftfsm_state.TX_CLK_LOAD 0 0 0 0 1 1 
+tx_shiftfsm_state.TX_CLK_LOW 0 0 0 1 0 1 
+tx_shiftfsm_state.TX_CLK_HIGH 0 0 1 0 0 1 
+tx_shiftfsm_state.TX_CLK_HOLD 0 1 0 0 0 1 
+tx_shiftfsm_state.TX_DONE 1 0 0 0 0 1 
+
+State Machine - |toplevel|toplevel_soc:u0|altera_avalon_i2c:i2c_0|altera_avalon_i2c_rxshifter:u_rxshifter|rx_shiftfsm_state
+Name rx_shiftfsm_state.RX_DONE rx_shiftfsm_state.RX_HOLD rx_shiftfsm_state.RX_CLK_HIGH rx_shiftfsm_state.RX_CLK_LOW rx_shiftfsm_state.RX_CLK_LOAD rx_shiftfsm_state.IDLE 
+rx_shiftfsm_state.IDLE 0 0 0 0 0 0 
+rx_shiftfsm_state.RX_CLK_LOAD 0 0 0 0 1 1 
+rx_shiftfsm_state.RX_CLK_LOW 0 0 0 1 0 1 
+rx_shiftfsm_state.RX_CLK_HIGH 0 0 1 0 0 1 
+rx_shiftfsm_state.RX_HOLD 0 1 0 0 0 1 
+rx_shiftfsm_state.RX_DONE 1 0 0 0 0 1 
+
+State Machine - |toplevel|toplevel_soc:u0|altera_avalon_i2c:i2c_0|altera_avalon_i2c_mstfsm:u_mstfsm|mst_fsm_state
+Name mst_fsm_state.PRE_IDLE mst_fsm_state.GEN_STOP mst_fsm_state.BUS_HOLD mst_fsm_state.GEN_RESTART_7BIT mst_fsm_state.GEN_7BIT_ADDR mst_fsm_state.RX_BYTE mst_fsm_state.TX_BYTE mst_fsm_state.POP_TX_FIFO mst_fsm_state.GEN_START mst_fsm_state.PRE_START mst_fsm_state.IDLE 
+mst_fsm_state.IDLE 0 0 0 0 0 0 0 0 0 0 0 
+mst_fsm_state.PRE_START 0 0 0 0 0 0 0 0 0 1 1 
+mst_fsm_state.GEN_START 0 0 0 0 0 0 0 0 1 0 1 
+mst_fsm_state.POP_TX_FIFO 0 0 0 0 0 0 0 1 0 0 1 
+mst_fsm_state.TX_BYTE 0 0 0 0 0 0 1 0 0 0 1 
+mst_fsm_state.RX_BYTE 0 0 0 0 0 1 0 0 0 0 1 
+mst_fsm_state.GEN_7BIT_ADDR 0 0 0 0 1 0 0 0 0 0 1 
+mst_fsm_state.GEN_RESTART_7BIT 0 0 0 1 0 0 0 0 0 0 1 
+mst_fsm_state.BUS_HOLD 0 0 1 0 0 0 0 0 0 0 1 
+mst_fsm_state.GEN_STOP 0 1 0 0 0 0 0 0 0 0 1 
+mst_fsm_state.PRE_IDLE 1 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |toplevel|NES_ARCHITECUTRE:NES|CPU_2A03:inst|T65:CPU|Set_Addr_To_r
+Name Set_Addr_To_r.Set_Addr_To_BA Set_Addr_To_r.Set_Addr_To_ZPG Set_Addr_To_r.Set_Addr_To_SP Set_Addr_To_r.Set_Addr_To_PBR 
+Set_Addr_To_r.Set_Addr_To_PBR 0 0 0 0 
+Set_Addr_To_r.Set_Addr_To_SP 0 0 1 1 
+Set_Addr_To_r.Set_Addr_To_ZPG 0 1 0 1 
+Set_Addr_To_r.Set_Addr_To_BA 1 0 0 1 
+
+State Machine - |toplevel|NES_ARCHITECUTRE:NES|CPU_2A03:inst|T65:CPU|Write_Data_r
+Name Write_Data_r.Write_Data_DONTCARE Write_Data_r.Write_Data_YB Write_Data_r.Write_Data_XB Write_Data_r.Write_Data_AXB Write_Data_r.Write_Data_AX Write_Data_r.Write_Data_PCH Write_Data_r.Write_Data_PCL Write_Data_r.Write_Data_P Write_Data_r.Write_Data_S Write_Data_r.Write_Data_Y Write_Data_r.Write_Data_X Write_Data_r.Write_Data_ABC Write_Data_r.Write_Data_DL 
+Write_Data_r.Write_Data_DL 0 0 0 0 0 0 0 0 0 0 0 0 0 
+Write_Data_r.Write_Data_ABC 0 0 0 0 0 0 0 0 0 0 0 1 1 
+Write_Data_r.Write_Data_X 0 0 0 0 0 0 0 0 0 0 1 0 1 
+Write_Data_r.Write_Data_Y 0 0 0 0 0 0 0 0 0 1 0 0 1 
+Write_Data_r.Write_Data_S 0 0 0 0 0 0 0 0 1 0 0 0 1 
+Write_Data_r.Write_Data_P 0 0 0 0 0 0 0 1 0 0 0 0 1 
+Write_Data_r.Write_Data_PCL 0 0 0 0 0 0 1 0 0 0 0 0 1 
+Write_Data_r.Write_Data_PCH 0 0 0 0 0 1 0 0 0 0 0 0 1 
+Write_Data_r.Write_Data_AX 0 0 0 0 1 0 0 0 0 0 0 0 1 
+Write_Data_r.Write_Data_AXB 0 0 0 1 0 0 0 0 0 0 0 0 1 
+Write_Data_r.Write_Data_XB 0 0 1 0 0 0 0 0 0 0 0 0 1 
+Write_Data_r.Write_Data_YB 0 1 0 0 0 0 0 0 0 0 0 0 1 
+Write_Data_r.Write_Data_DONTCARE 1 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |toplevel|NES_ARCHITECUTRE:NES|CPU_2A03:inst|T65:CPU|ALU_Op_r
+Name ALU_Op_r.ALU_OP_XAA ALU_Op_r.ALU_OP_SAX ALU_Op_r.ALU_OP_ANC ALU_Op_r.ALU_OP_ARR ALU_Op_r.ALU_OP_INC ALU_Op_r.ALU_OP_DEC ALU_Op_r.ALU_OP_OR ALU_Op_r.ALU_OP_ROR ALU_Op_r.ALU_OP_LSR ALU_Op_r.ALU_OP_ROL ALU_Op_r.ALU_OP_ASL ALU_Op_r.ALU_OP_SBC ALU_Op_r.ALU_OP_CMP ALU_Op_r.ALU_OP_EQ2 ALU_Op_r.ALU_OP_EQ1 ALU_Op_r.ALU_OP_ADC ALU_Op_r.ALU_OP_EOR ALU_Op_r.ALU_OP_AND ALU_Op_r.ALU_OP_BIT 
+ALU_Op_r.ALU_OP_BIT 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+ALU_Op_r.ALU_OP_AND 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+ALU_Op_r.ALU_OP_EOR 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+ALU_Op_r.ALU_OP_ADC 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+ALU_Op_r.ALU_OP_EQ1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+ALU_Op_r.ALU_OP_EQ2 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+ALU_Op_r.ALU_OP_CMP 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_SBC 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_ASL 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_ROL 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_LSR 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_ROR 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_OR 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_DEC 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_INC 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_ARR 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_ANC 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_SAX 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+ALU_Op_r.ALU_OP_XAA 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 

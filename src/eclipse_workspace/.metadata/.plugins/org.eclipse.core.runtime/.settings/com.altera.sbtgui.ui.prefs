@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+newSoftwareExampleWizardPage.defaultLocation=C\:\\dev\\FPGA-NES\\src\\software\\NES_NIOSII
+newSoftwareExampleWizardPage.sopcinfoFile=C\:\\dev\\FPGA-NES\\src\\toplevel_soc.sopcinfo
+newSoftwareExampleWizardPage2.newBspLocation=C\:\\dev\\FPGA-NES\\src\\software\\NES_NIOSII_bsp
