@@ -1,12 +1,12 @@
-Analysis & Synthesis Status : Successful - Thu Apr 13 00:59:46 2023
+Analysis & Synthesis Status : Successful - Thu Apr 13 15:29:36 2023
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : FPGA-NES
 Top-level Entity Name : toplevel
 Family : MAX 10
-Total logic elements : 4,648
-    Total combinational functions : 3,615
-    Dedicated logic registers : 2,705
-Total registers : 2705
+Total logic elements : 4,728
+    Total combinational functions : 3,687
+    Dedicated logic registers : 2,745
+Total registers : 2745
 Total pins : 141
 Total virtual pins : 0
 Total memory bits : 11,336

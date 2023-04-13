@@ -1,3 +1,13 @@
+typedef struct packed {
+	logic [7:0] I;
+	logic [7:0] A;
+	logic [7:0] X;
+	logic [7:0] Y;
+	logic [7:0] S;
+	logic [7:0] P;
+} T65_Dbg;
+
+
 //-------------------------------------------------------------------------
 //      ECE 385 - Summer 2021 Lab 7 Top-level                            --
 //                                                                       --
@@ -61,7 +71,7 @@ module toplevel (
 //  REG/WIRE declarations
 //=======================================================
 	logic SPI0_CS_N, SPI0_SCLK, SPI0_MISO, SPI0_MOSI, USB_GPX, USB_IRQ, USB_RST;
-	logic [3:0] hex_num_4, hex_num_3, hex_num_1, hex_num_0; //4 bit input hex digits
+	logic [3:0] hex_num_5, hex_num_4, hex_num_3, hex_num_2, hex_num_1, hex_num_0; //4 bit input hex digits
 	logic [1:0] signs;
 	logic [1:0] hundreds;
 	logic [7:0] keycode;
@@ -69,6 +79,8 @@ module toplevel (
 //=======================================================
 //  Structural coding
 //=======================================================
+	
+	// USB / SPI0
 	
 	assign ARDUINO_IO[10] = SPI0_CS_N;
 	assign ARDUINO_IO[13] = SPI0_SCLK;
@@ -90,22 +102,27 @@ module toplevel (
 	//GPX is unconnected to shield, not needed for standard USB host - set to 0 to prevent interrupt
 	assign USB_GPX = 1'b0;
 	
+	// Hex Drivers
+	
 	//HEX drivers to convert numbers to HEX output
+	
+	HexDriver hex_driver5 (hex_num_5, HEX5[6:0]);
+	assign HEX5[7] = 1'b1;
+	
 	HexDriver hex_driver4 (hex_num_4, HEX4[6:0]);
 	assign HEX4[7] = 1'b1;
 	
 	HexDriver hex_driver3 (hex_num_3, HEX3[6:0]);
 	assign HEX3[7] = 1'b1;
 	
+	HexDriver hex_driver2 (hex_num_2, HEX2[6:0]);
+	assign HEX2[7] = 1'b1;
+	
 	HexDriver hex_driver1 (hex_num_1, HEX1[6:0]);
 	assign HEX1[7] = 1'b1;
 	
 	HexDriver hex_driver0 (hex_num_0, HEX0[6:0]);
 	assign HEX0[7] = 1'b1;
-	
-	//fill in the hundreds digit as well as the negative sign
-	assign HEX5 = {1'b1, ~signs[1], 3'b111, ~hundreds[1], ~hundreds[1], 1'b1};
-	assign HEX2 = {1'b1, ~signs[0], 3'b111, ~hundreds[0], ~hundreds[0], 1'b1};
 	
 	
 //=======================================================
@@ -139,8 +156,24 @@ module toplevel (
 
 	T65_Dbg cpu_debug;
 	
-	NES_ARCHITECUTRE NES(.MCLK(MAX10_CLK1_50), .CPU_CLK(CPU_CLK), .cpu_debug(cpu_debug));
+	logic [15:0]    ADDR_debug;
+	logic 		 	CPU_RW_n_debug;
+
+	// Rom Programmer Interface
+	logic [15:0] rom_prgmr_addr;
+	logic [7:0]  rom_prgmr_data_in, rom_prgmr_data_out;
+	logic rom_prgmr_wren, rom_prgmr_rden;
 	
+	NES_ARCHITECUTRE NES(.MCLK(MAX10_CLK1_50), .CPU_CLK(CPU_CLK), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
+						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data_in(rom_prgmr_data_in),
+						 .rom_prgmr_data_out(rom_prgmr_data_out), .rom_prgmr_wren(rom_prgmr_wren), .rom_prgmr_rden(rom_prgmr_rden));
+	
+	assign hex_num_3 = ADDR_debug[15:12];
+	assign hex_num_2 = ADDR_debug[11:8];
+	assign hex_num_1 = ADDR_debug[7:4];
+	assign hex_num_0 = ADDR_debug[3:0];
+	
+	assign LEDR[7] = CPU_RW_n_debug;
 	
 	
 //=======================================================
@@ -253,10 +286,17 @@ module toplevel (
 		.usb_irq_export(USB_IRQ),
 		.usb_gpx_export(USB_GPX),
 		
+		// Game Rom Programmer
+		.game_rom_conduit_to_game_rom(rom_prgmr_data_in),   //        game_rom_conduit.to_game_rom
+		.game_rom_conduit_from_game_rom(rom_prgmr_data_out),//                        .from_game_rom
+		.game_rom_conduit_write_rom(rom_prgmr_wren),     	//                        .write_rom
+		.game_rom_conduit_read_rom(rom_prgmr_rden),      	//                        .read_rom
+		.game_rom_conduit_rom_addr(rom_prgmr_addr),      	//                        .rom_addr
+		
 		//LEDs and HEX
-		.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
-		.leds_export({hundreds, signs, LEDR}),
-		.keycode_export(keycode),
+		//.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
+		//.leds_export({hundreds, signs, LEDR}),
+		.keycode_export(keycode)
 		
 		
 	 );

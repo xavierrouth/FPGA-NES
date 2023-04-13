@@ -68,8 +68,8 @@ vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/s
 vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_translator.sv}
 vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_translator.sv}
 vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/HexDriver.sv}
-vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/CPU_2A03.sv}
 vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/toplevel.sv}
+vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/CPU_2A03.sv}
 vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv}
 vcom -93 -work work {C:/dev/FPGA-NES/src/t65/T65_Pack.vhd}
 vcom -93 -work work {C:/dev/FPGA-NES/src/t65/T65_ALU.vhd}

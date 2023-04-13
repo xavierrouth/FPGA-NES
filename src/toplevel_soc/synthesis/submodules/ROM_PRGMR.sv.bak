@@ -1,0 +1,36 @@
+//=======================================================
+//  ROM PRGMR
+//  - This module is what the NIOS II interfaces with via the Avalon MM BUS in order to program the game ROMs.
+//    It should be instantiated as an element on the AVL MM BUs like we did in lab 7.2
+// 
+//  
+//  - TODO:
+//		Make this work
+//  
+//=======================================================
+
+module ROM_PRGMR(
+	// Avalon MM Side
+	input 			CLK,
+	input 			RESET,
+	input  [15:0] 	AVL_ADDR,
+	input   			AVL_CS,
+	input 			AVL_READ,
+	input 			AVL_WRITE,
+	input  [7:0] 	AVL_WRITEDATA,
+	output [7:0] 	AVL_READDATA,
+	
+	// NES Side
+	input  [7:0]	FROM_ROM,
+	output [15:0] 	ROM_ADDR,
+	output [7:0] 	TO_ROM,
+	output 			READ_ROM,
+	output 			WRITE_ROM
+	
+	
+);
+
+assign addr_out = addr_in;
+assign data_out = data_in;
+
+endmodule
