@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <deploy
- date="2023.04.13.22:54:32"
+ date="2023.04.14.13:53:00"
  outputDirectory="C:/dev/FPGA-NES/src/db/ip/sldec52bfc8/">
  <perimeter>
   <parameter

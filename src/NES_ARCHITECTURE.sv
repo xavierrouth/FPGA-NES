@@ -3,12 +3,12 @@
 //=======================================================
 
 typedef struct packed {
-	logic [7:0] I;
-	logic [7:0] A;
+	logic [15:0] PC; // PC, not sure which it is unclear
+	logic [15:0] SP; // Stack Pointer
+	logic [7:0] PF; // Processor Flags
 	logic [7:0] X;
-	logic [7:0] Y;
-	logic [7:0] S;
-	logic [7:0] P;
+	logic [7:0] Y; 
+	logic [7:0] A; 
 } T65_Dbg;
 
 
@@ -27,7 +27,6 @@ module NES_ARCHITECUTRE (
 	input				MCLK,
 	input				CPU_CLK,
 	input				ROM_CLK,
-	
 	
 	input				CPU_RESET,
 
@@ -79,34 +78,38 @@ always_comb begin : BUS_SELECTION
 	// Default Values
 	SYSRAM_wren = 1'b0;
 	SYSRAM_rden = 1'b0;
-	DATA_BUS = 8'hFF;
+	DATA_BUS = 8'hAA;
 	CARTRIDGE_rden = 1'b0;
 
 	// ------ Priority Mux Bus Control ---------
 
 	
 	
-	// CPU Write
-	if (~CPU_RW_n)
+	// ------ CPU Write ---------
+	if (~CPU_RW_n) begin
 		DATA_BUS = CPU_DATA_OUT;
 		
-	// System Ram [$0000 - $0FFF]
-	if (ADDR_BUS <= 16'h0FFF)
-		SYSRAM_wren = CPU_RW_n;
-		
-	// CPU Read
-	else if (CPU_RW_n) 
+		// System Ram [$0000 - $0FFF]
+		if (ADDR_BUS <= 16'h0FFF)
+			SYSRAM_wren = 1'b1;
+	end
+	
+	// ------ CPU Read  ---------
+	else if (CPU_RW_n) begin
+	
 		// System Ram [$0000 - $0FFF]
 		if (ADDR_BUS <= 16'h0FFF) begin
 			DATA_BUS = SYSRAM_DATA_OUT;
 			SYSRAM_rden = 1'b1;
 		end
+		
 		// Cartridge / ROM [$4020 - $FFFF]
 		else if (ADDR_BUS >= 16'h4020) begin
 			// TODO: Enable other things than just the CPU (like PPU) to read from here.
 			DATA_BUS = CARTRIDGE_DATA_OUT;
 			CARTRIDGE_rden = 1'b1;
 		end
+	end
 end
 //=======================================================
 //  Debug Signals
@@ -131,7 +134,7 @@ assign sysram_enable = 1'b1;
 //  Module Instatiation
 //=======================================================
 
-CPU_2A03 cpu_inst(.CLK(CPU_CLK), .ENABLE(CPU_ENABLE), .RESET_n(CPU_RESET), .DATA_IN(DATA_BUS), .ADDR(CPU_ADDR), 
+CPU_2A03 cpu_inst(.CLK(CPU_CLK), .ENABLE(CPU_ENABLE), .RESET(CPU_RESET), .DATA_IN(DATA_BUS), .ADDR(CPU_ADDR), 
 				  .DATA_OUT(CPU_DATA_OUT), .RW_n(CPU_RW_n), .cpu_debug(cpu_debug));
 				  
 SYS_RAM sysram_inst(.clk(RAM_CLK), .data_in(DATA_BUS), .addr(ADDR_BUS[10:0]), .wren(SYSRAM_wren), .rden(SYSRAM_rden), .data_out(SYSRAM_DATA_OUT));

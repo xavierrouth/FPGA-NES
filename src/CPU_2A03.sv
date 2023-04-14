@@ -1,16 +1,16 @@
 typedef struct packed {
-	logic [7:0] I; // IR or PC, not sure which it is unclear
-	logic [7:0] A;
+	logic [15:0] PC; // PC, not sure which it is unclear
+	logic [15:0] SP; // Stack Pointer
+	logic [7:0] PF; // Processor Flags
 	logic [7:0] X;
-	logic [7:0] Y;
-	logic [7:0] S; // Stack Pointer
-	logic [7:0] P; // Processor Flags
+	logic [7:0] Y; 
+	logic [7:0] A; 
 } T65_Dbg;
 
 module CPU_2A03 (
 	input 			 CLK,
 	input				 ENABLE,
-	input 			 RESET_n,
+	input 			 RESET,
 	
 	input 	[7:0]  DATA_IN,
 	
@@ -29,46 +29,46 @@ logic [7:0] DI, DO;
 
 logic [23:0] A; // Top 8 bits probably not used
 
-logic R_W_n, Enable, Rdy, NMI_n;
+logic PAUSE, NMI;
 
-assign NMI_n = 1'b1;
-assign Rdy = 1'b1;
+assign NMI = 1'b0;
+
+assign PAUSE = 1'b0;
 
 // 6502-T65 Debug Signals
 
-logic [63:0] debug; //63:48 is unused maybe?? idk
+logic [63:0] regs; //63:48 is unused maybe?? idk
 
-assign cpu_debug.A = debug[7:0];
-assign cpu_debug.Y = debug[23:16];
-assign cpu_debug.X = debug[15:8];
-assign cpu_debug.P = debug[31:24];
-assign cpu_debug.S = debug[39:32];
-assign cpu_debug.I = debug[47:40];
+assign cpu_debug.PC = regs[63:48];
+assign cpu_debug.SP = regs[47:32];
+assign cpu_debug.PF = regs[31:24];
+assign cpu_debug.Y = regs[23:16];
+assign cpu_debug.X = regs[15:8];
+assign cpu_debug.A = regs[7:0];
 
 T65 CPU(.mode(2'b00), 
 		  .BCD_en(1'b0), 
-		  .Res_n(RESET_n), 
+		  .Res_n(~RESET), 
 		  .Enable(ENABLE), 
 		  .Clk(CLK),
-		  .Rdy(Rdy),
+		  .Rdy(~PAUSE),
 		  .Abort_n(1'b1),
 		  .IRQ_n(1'b1),
-		  .NMI_n(NMI_n),
+		  .NMI_n(~NMI),
 		  .SO_n(1'b1),
-		  .R_W_n(R_W_n), 
+		  .R_W_n(RW_n), // High is read
 		  .A(A), 
 		  .DI(DI), 
 		  .DO(DO), 
-		  .Regs(debug)); //Everything else can be open I think
+		  .Regs(regs)); //Everything else can be open I think
 
 always_comb begin : data_route
-	if (RW_n == 1'b0)
+	if (RW_n == 1'b0) // Write
 		DI = DO;
 	else
-		DI = DATA_IN;
+		DI = DATA_IN; // Read
 end
 
-assign RW_n = R_W_n;
 assign DATA_OUT = DO;
 assign ADDR = A[15:0];
 

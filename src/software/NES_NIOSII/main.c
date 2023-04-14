@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include "system.h"
 #include <alt_types.h>
+#include "nestest.h"
 
 struct ROM_PROGRAMMER_STRUCT {
 	alt_u32 rom;
@@ -35,17 +36,37 @@ int main()
    * $FFFC–$FFFD = Reset vector
    * $FFFE–$FFFF = IRQ/BRK vector
    */
-  for (alt_u8 i = 0; i < 100; i++) {
-	  // Write BB to $5F00 to $5F00 + i
-	  rom_programmer->rom = 0x00BB5F00 | i;
+
+
+  // Write Program Rom
+
+
+  for (int i = 0; i < prg_rom_size; i++) {
+	  // Write BB to $C000 to $C000 + i
+	  alt_u8 bytes = prg_rom_data[i];
+	  // Write Data
+	  rom_programmer->rom = (0x0000C000 + i ) | (bytes << (4 * 4));
+	  rom_programmer->rom = (0x00008000 + i ) | (bytes << (4 * 4));
   }
 
-  rom_programmer->rom = 0x005FFFFA;
-  rom_programmer->rom = 0x0000FFFB;
-  rom_programmer->rom = 0x005FFFFC;
-  rom_programmer->rom = 0x0000FFFD;
-  rom_programmer->rom = 0x005FFFFE;
-  rom_programmer->rom = 0x0000FFFF;
+  /**
+  for (int i = 0; i < 100; i++) {
+  	  // Write BB to $C000 to $C000 + i
+  	  //alt_u8 bytes = prg_rom_data[i];
+  	  // Write Data
+  	  rom_programmer->rom = (0x0080CAAA + i);// | (bytes << (4 * 4));
+  }
+  */
+
+  rom_programmer->rom = 0x00AAFFFA;
+  rom_programmer->rom = 0x00AAFFFB;
+
+  // Reset Vector
+  rom_programmer->rom = 0x0000FFFC; // Lowe rpart of address
+  rom_programmer->rom = 0x00C0FFFD; // Higher part of address
+
+  rom_programmer->rom = 0x00AAFFFE;
+  rom_programmer->rom = 0x00AAFFFF;
 
   printf("Done Programming \n");
 

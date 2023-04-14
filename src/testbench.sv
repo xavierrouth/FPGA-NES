@@ -3,14 +3,13 @@
 //=======================================================
 
 typedef struct packed {
-	logic [7:0] I;
-	logic [7:0] A;
+	logic [15:0] PC; // PC, not sure which it is unclear
+	logic [15:0] SP; // Stack Pointer
+	logic [7:0] PF; // Processor Flags
 	logic [7:0] X;
-	logic [7:0] Y;
-	logic [7:0] S;
-	logic [7:0] P;
+	logic [7:0] Y; 
+	logic [7:0] A; 
 } T65_Dbg;
-
 
 module testbench();
 

@@ -1,10 +1,10 @@
 typedef struct packed {
-	logic [7:0] I;
-	logic [7:0] A;
+	logic [15:0] PC; // PC, not sure which it is unclear
+	logic [15:0] SP; // Stack Pointer
+	logic [7:0] PF; // Processor Flags
 	logic [7:0] X;
-	logic [7:0] Y;
-	logic [7:0] S;
-	logic [7:0] P;
+	logic [7:0] Y; 
+	logic [7:0] A; 
 } T65_Dbg;
 
 
@@ -67,11 +67,7 @@ module toplevel (
 
 );
 
-//=======================================================
-//  I/O Synchronizers
-//=======================================================
 
-sync pushbuttons[1:0] (.Clk(MAX10_CLK1_50), .d({~KEY[0], ~KEY[1]}), .q({syncd_reset_h, syncd_continue}));
 
 //=======================================================
 //  REG/WIRE declarations
@@ -130,19 +126,28 @@ sync pushbuttons[1:0] (.Clk(MAX10_CLK1_50), .d({~KEY[0], ~KEY[1]}), .q({syncd_re
 	HexDriver hex_driver0 (hex_num_0, HEX0[6:0]);
 	assign HEX0[7] = 1'b1;
 	
+//=======================================================
+//  I/O Synchronizers
+//=======================================================
+
+	logic syncd_reset_h;
+	logic syncd_continue;
+
+	sync pushbuttons[1:0] (.Clk(MAX10_CLK1_50), .d({~KEY[0], ~KEY[1]}), .q({syncd_reset_h, syncd_continue}));	
 	
 //=======================================================
 //  Switch / Button Inputs
 //=======================================================
 
-	logic syncd_reset_h;
-	logic syncd_continue;
+	
 
 	//assign signs = 2'b00;
 	//assign hex_num_4 = 4'h4;
 	//assign hex_num_3 = 4'h3;
 	//assign hex_num_1 = 4'h1;
 	//assign hex_num_0 = 4'h0;
+	
+
 	
 //=======================================================
 //  Clock Generation
@@ -157,6 +162,8 @@ sync pushbuttons[1:0] (.Clk(MAX10_CLK1_50), .d({~KEY[0], ~KEY[1]}), .q({syncd_re
 	logic ROM_CLK;
 	
 	clockgen clk_inst(.inclk0(MAX10_CLK1_50), .c0(CPU_MID_CLK));
+	
+	assign MCLK = MAX10_CLK1_50;
 	
 //=======================================================
 //  NES Architecture Instantiation
@@ -175,7 +182,7 @@ sync pushbuttons[1:0] (.Clk(MAX10_CLK1_50), .d({~KEY[0], ~KEY[1]}), .q({syncd_re
 	// Switch Between Manual Clock and Normal Clock
 	
 	
-	NES_ARCHITECUTRE NES(.MCLK(MAX10_CLK1_50), .CPU_CLK(CPU_CLK), .ROM_CLK(ROM_CLK), .CPU_RESET(~syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
+	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .ROM_CLK(ROM_CLK), .CPU_RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
 						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data(rom_prgmr_data),
 						 .rom_prgmr_wren(rom_prgmr_wren));
 	
@@ -206,7 +213,7 @@ sync pushbuttons[1:0] (.Clk(MAX10_CLK1_50), .d({~KEY[0], ~KEY[1]}), .q({syncd_re
 		else
 			CPU_CLK = CPU_MID_CLK;
 		if (SW[1])
-			ROM_CLK = syncd_continue;
+			ROM_CLK = MCLK;
 		else
 			ROM_CLK = CPU_MID_CLK;
 	end
@@ -223,26 +230,36 @@ sync pushbuttons[1:0] (.Clk(MAX10_CLK1_50), .d({~KEY[0], ~KEY[1]}), .q({syncd_re
 				hex_num_1 <= rom_prgmr_data[7:4];
 				hex_num_0 <= rom_prgmr_data[3:0];
 			end
-			// CPU Regs I, A, X
+			// CPU Regs X, Y, A
 			3'b001: begin
-				hex_num_5 <= cpu_debug.I[7:4];
-				hex_num_4 <= cpu_debug.I[3:0];
-				hex_num_3 <= cpu_debug.A[7:4];
-				hex_num_2 <= cpu_debug.A[3:0];
-				hex_num_1 <= cpu_debug.X[7:4];
-				hex_num_0 <= cpu_debug.X[3:0];
+				hex_num_5 <= cpu_debug.X[7:4];
+				hex_num_4 <= cpu_debug.X[3:0];
+				hex_num_3 <= cpu_debug.Y[7:4];
+				hex_num_2 <= cpu_debug.Y[3:0];
+				hex_num_1 <= cpu_debug.A[7:4];
+				hex_num_0 <= cpu_debug.A[3:0];
 			end
-			// CPU Regs Y, S, P
+			// CPU Regs PC, PF
 			3'b011: begin
-				hex_num_5 <= cpu_debug.Y[7:4];
-				hex_num_4 <= cpu_debug.Y[3:0];
-				hex_num_3 <= cpu_debug.S[7:4];
-				hex_num_2 <= cpu_debug.S[3:0];
-				hex_num_1 <= cpu_debug.P[7:4];
-				hex_num_0 <= cpu_debug.P[3:0];
+				hex_num_5 <= cpu_debug.PC[15:12];
+				hex_num_4 <= cpu_debug.PC[11:8];
+				hex_num_3 <= cpu_debug.PC[7:4];
+				hex_num_2 <= cpu_debug.PC[3:0];
+				hex_num_1 <= cpu_debug.PF[7:4];
+				hex_num_0 <= cpu_debug.PF[3:0];
 			end
-			// ADdress 
+			// CPU Regs SP
 			3'b111: begin
+				hex_num_5 <= cpu_debug.SP[15:12];
+				hex_num_4 <= cpu_debug.SP[11:8];
+				hex_num_3 <= cpu_debug.SP[7:4];
+				hex_num_2 <= cpu_debug.SP[3:0];
+				hex_num_1 <= cpu_debug.PF[7:4];
+				hex_num_0 <= cpu_debug.PF[3:0];
+			end
+			
+			// ADdress 
+			3'b010: begin
 				hex_num_5 <= ADDR_debug[15:12];
 				hex_num_4 <= ADDR_debug[11:8];
 				hex_num_3 <= ADDR_debug[7:4];
