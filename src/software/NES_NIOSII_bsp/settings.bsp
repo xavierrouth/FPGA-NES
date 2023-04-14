@@ -2,10 +2,10 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Apr 12, 2023 10:10:37 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1681355437578</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Apr 13, 2023 10:56:41 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1681444601997</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\dev\FPGA-NES\src\software\NES_NIOSII_bsp</BspGeneratedLocation>
-        <BspSettingsFile>.\settings.bsp</BspSettingsFile>
+        <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\toplevel_soc.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>
         <Cpu>nios2_gen2_0</Cpu>
@@ -899,16 +899,16 @@
                 <Group xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         </Setting>
         <MemoryMap>
-                <slaveDescriptor>i2c_0</slaveDescriptor>
+                <slaveDescriptor>timer_0</slaveDescriptor>
                 <addressRange>0x00000880 - 0x000008BF</addressRange>
                 <addressSpan>64</addressSpan>
-                <attributes/>
+                <attributes>timer</attributes>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>timer_0</slaveDescriptor>
+                <slaveDescriptor>i2c_0</slaveDescriptor>
                 <addressRange>0x000008C0 - 0x000008FF</addressRange>
                 <addressSpan>64</addressSpan>
-                <attributes>timer</attributes>
+                <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>spi_0</slaveDescriptor>
@@ -975,6 +975,12 @@
                 <addressRange>0x00000A58 - 0x00000A5F</addressRange>
                 <addressSpan>8</addressSpan>
                 <attributes>printable</attributes>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>game_rom_programmer_0</slaveDescriptor>
+                <addressRange>0x00010000 - 0x0001000F</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>sdram</slaveDescriptor>

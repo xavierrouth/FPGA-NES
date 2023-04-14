@@ -148,7 +148,7 @@ module toplevel_soc_mm_interconnect_0_router
     localparam PAD11 = log2ceil(64'ha40 - 64'ha30); 
     localparam PAD12 = log2ceil(64'ha58 - 64'ha50); 
     localparam PAD13 = log2ceil(64'ha60 - 64'ha58); 
-    localparam PAD14 = log2ceil(64'h30000 - 64'h20000); 
+    localparam PAD14 = log2ceil(64'h10010 - 64'h10000); 
     localparam PAD15 = log2ceil(64'hc000000 - 64'h8000000); 
     // -------------------------------------------------------
     // Work out which address bits are significant based on the
@@ -187,6 +187,8 @@ module toplevel_soc_mm_interconnect_0_router
     // -------------------------------------------------------
     // Write and read transaction signals
     // -------------------------------------------------------
+    wire write_transaction;
+    assign write_transaction = sink_data[PKT_TRANS_WRITE];
     wire read_transaction;
     assign read_transaction  = sink_data[PKT_TRANS_READ];
 
@@ -292,8 +294,8 @@ module toplevel_soc_mm_interconnect_0_router
             src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 3;
     end
 
-    // ( 0x20000 .. 0x30000 )
-    if ( {address[RG:PAD14],{PAD14{1'b0}}} == 28'h20000   ) begin
+    // ( 0x10000 .. 0x10010 )
+    if ( {address[RG:PAD14],{PAD14{1'b0}}} == 28'h10000  && write_transaction  ) begin
             src_channel = 16'b0000000000000010;
             src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 0;
     end

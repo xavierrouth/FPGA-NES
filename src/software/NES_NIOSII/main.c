@@ -15,10 +15,40 @@
  */
 
 #include <stdio.h>
+#include "system.h"
+#include <alt_types.h>
+
+struct ROM_PROGRAMMER_STRUCT {
+	alt_u32 rom;
+};
+
+static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
 
 int main()
 {
   printf("Hello from Nios II!\n");
+
+  printf("Beginning Programming \n");
+  // Format is 0x00[DATA (2 Bytes) ][ADDR (4 Bytes)];
+  /**
+   * $FFFA–$FFFB = NMI vector
+   * $FFFC–$FFFD = Reset vector
+   * $FFFE–$FFFF = IRQ/BRK vector
+   */
+  for (alt_u8 i = 0; i < 100; i++) {
+	  // Write BB to $5F00 to $5F00 + i
+	  rom_programmer->rom = 0x00BB5F00 | i;
+  }
+
+  rom_programmer->rom = 0x005FFFFA;
+  rom_programmer->rom = 0x0000FFFB;
+  rom_programmer->rom = 0x005FFFFC;
+  rom_programmer->rom = 0x0000FFFD;
+  rom_programmer->rom = 0x005FFFFE;
+  rom_programmer->rom = 0x0000FFFF;
+
+  printf("Done Programming \n");
+
 
   return 0;
 }

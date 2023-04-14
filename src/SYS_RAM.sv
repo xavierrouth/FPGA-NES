@@ -23,7 +23,7 @@ module SYS_RAM(
 	
 	input wren, rden,
 	
-	output [7:0] data_out
+	output logic [7:0] data_out
 );
 
 // Size is 2^11

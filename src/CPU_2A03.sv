@@ -1,10 +1,10 @@
 typedef struct packed {
-	logic [7:0] I;
+	logic [7:0] I; // IR or PC, not sure which it is unclear
 	logic [7:0] A;
 	logic [7:0] X;
 	logic [7:0] Y;
-	logic [7:0] S;
-	logic [7:0] P;
+	logic [7:0] S; // Stack Pointer
+	logic [7:0] P; // Processor Flags
 } T65_Dbg;
 
 module CPU_2A03 (
@@ -27,7 +27,7 @@ module CPU_2A03 (
 // 6502-T65 Interface Signals
 logic [7:0] DI, DO;
 
-logic [23:0] A;
+logic [23:0] A; // Top 8 bits probably not used
 
 logic R_W_n, Enable, Rdy, NMI_n;
 
@@ -36,10 +36,14 @@ assign Rdy = 1'b1;
 
 // 6502-T65 Debug Signals
 
-logic [63:0] debug; //23:0 is unused maybe?? idk
+logic [63:0] debug; //63:48 is unused maybe?? idk
 
 assign cpu_debug.A = debug[7:0];
+assign cpu_debug.Y = debug[23:16];
 assign cpu_debug.X = debug[15:8];
+assign cpu_debug.P = debug[31:24];
+assign cpu_debug.S = debug[39:32];
+assign cpu_debug.I = debug[47:40];
 
 T65 CPU(.mode(2'b00), 
 		  .BCD_en(1'b0), 

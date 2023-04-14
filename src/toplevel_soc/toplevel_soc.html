@@ -67,7 +67,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
   </table>
   <table class="blueBar">
    <tr>
-    <td class="l">2023.04.13.15:19:00</td>
+    <td class="l">2023.04.13.22:53:33</td>
     <td class="r">Datasheet</td>
    </tr>
   </table>
@@ -164,8 +164,8 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
    </tr>
    <tr>
     <td class="slaveb">avl_mm_slave&#160;</td>
-    <td class="addr"><span style="color:#989898">0x</span>00020000</td>
-    <td class="addr"><span style="color:#989898">0x</span>00020000</td>
+    <td class="addr"><span style="color:#989898">0x</span>00010000</td>
+    <td class="empty"></td>
    </tr>
    <tr>
     <td class="slavemodule">&#160;
@@ -418,17 +418,11 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
    <div class="greydiv">
     <table class="connectionboxes">
      <tr>
-      <td class="neighbor" rowspan="6">
+      <td class="neighbor" rowspan="4">
        <a href="#module_nios2_gen2_0">nios2_gen2_0</a>
       </td>
       <td class="from">data_master&#160;&#160;</td>
-      <td class="main" rowspan="11">game_rom_programmer_0</td>
-     </tr>
-     <tr>
-      <td class="to">&#160;&#160;avl_mm_slave</td>
-     </tr>
-     <tr>
-      <td class="from">instruction_master&#160;&#160;</td>
+      <td class="main" rowspan="9">game_rom_programmer_0</td>
      </tr>
      <tr>
       <td class="to">&#160;&#160;avl_mm_slave</td>
@@ -1613,7 +1607,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        <a href="#module_clk_0">clk_0</a>
       </td>
       <td class="from">clk&#160;&#160;</td>
-      <td class="main" rowspan="116">nios2_gen2_0</td>
+      <td class="main" rowspan="114">nios2_gen2_0</td>
      </tr>
      <tr>
       <td class="to">&#160;&#160;clk</td>
@@ -1674,19 +1668,9 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
       <td></td>
       <td></td>
       <td class="from">data_master&#160;&#160;</td>
-      <td class="neighbor" rowspan="6">
+      <td class="neighbor" rowspan="4">
        <a href="#module_game_rom_programmer_0">game_rom_programmer_0</a>
       </td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="to">&#160;&#160;avl_mm_slave</td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="from">instruction_master&#160;&#160;</td>
      </tr>
      <tr>
       <td></td>
@@ -2892,7 +2876,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">instSlaveMapParam</td>
-        <td class="parametervalue">&lt;address-map&gt;&lt;slave name='nios2_gen2_0.debug_mem_slave' start='0x0' end='0x800' type='altera_nios2_gen2.debug_mem_slave' /&gt;&lt;slave name='timer_0.s1' start='0x880' end='0x8C0' type='altera_avalon_timer.s1' /&gt;&lt;slave name='i2c_0.csr' start='0x8C0' end='0x900' type='altera_avalon_i2c.csr' /&gt;&lt;slave name='spi_0.spi_control_port' start='0x920' end='0x940' type='altera_avalon_spi.spi_control_port' /&gt;&lt;slave name='key.s1' start='0x9C0' end='0x9D0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='leds_pio.s1' start='0x9D0' end='0x9E0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='hex_digits_pio.s1' start='0x9E0' end='0x9F0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_rst.s1' start='0x9F0' end='0xA00' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_gpx.s1' start='0xA00' end='0xA10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_irq.s1' start='0xA10' end='0xA20' type='altera_avalon_pio.s1' /&gt;&lt;slave name='keycode.s1' start='0xA20' end='0xA30' type='altera_avalon_pio.s1' /&gt;&lt;slave name='sdram_pll.pll_slave' start='0xA30' end='0xA40' type='altpll.pll_slave' /&gt;&lt;slave name='sysid_qsys_0.control_slave' start='0xA50' end='0xA58' type='altera_avalon_sysid_qsys.control_slave' /&gt;&lt;slave name='jtag_uart_0.avalon_jtag_slave' start='0xA58' end='0xA60' type='altera_avalon_jtag_uart.avalon_jtag_slave' /&gt;&lt;slave name='game_rom_programmer_0.avl_mm_slave' start='0x20000' end='0x30000' type='game_rom_programmer.avl_mm_slave' /&gt;&lt;slave name='sdram.s1' start='0x8000000' end='0xC000000' type='altera_avalon_new_sdram_controller.s1' /&gt;&lt;/address-map&gt;</td>
+        <td class="parametervalue">&lt;address-map&gt;&lt;slave name='nios2_gen2_0.debug_mem_slave' start='0x0' end='0x800' type='altera_nios2_gen2.debug_mem_slave' /&gt;&lt;slave name='timer_0.s1' start='0x880' end='0x8C0' type='altera_avalon_timer.s1' /&gt;&lt;slave name='i2c_0.csr' start='0x8C0' end='0x900' type='altera_avalon_i2c.csr' /&gt;&lt;slave name='spi_0.spi_control_port' start='0x920' end='0x940' type='altera_avalon_spi.spi_control_port' /&gt;&lt;slave name='key.s1' start='0x9C0' end='0x9D0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='leds_pio.s1' start='0x9D0' end='0x9E0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='hex_digits_pio.s1' start='0x9E0' end='0x9F0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_rst.s1' start='0x9F0' end='0xA00' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_gpx.s1' start='0xA00' end='0xA10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_irq.s1' start='0xA10' end='0xA20' type='altera_avalon_pio.s1' /&gt;&lt;slave name='keycode.s1' start='0xA20' end='0xA30' type='altera_avalon_pio.s1' /&gt;&lt;slave name='sdram_pll.pll_slave' start='0xA30' end='0xA40' type='altpll.pll_slave' /&gt;&lt;slave name='sysid_qsys_0.control_slave' start='0xA50' end='0xA58' type='altera_avalon_sysid_qsys.control_slave' /&gt;&lt;slave name='jtag_uart_0.avalon_jtag_slave' start='0xA58' end='0xA60' type='altera_avalon_jtag_uart.avalon_jtag_slave' /&gt;&lt;slave name='sdram.s1' start='0x8000000' end='0xC000000' type='altera_avalon_new_sdram_controller.s1' /&gt;&lt;/address-map&gt;</td>
        </tr>
        <tr>
         <td class="parametername">faSlaveMapParam</td>
@@ -2900,7 +2884,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">dataSlaveMapParam</td>
-        <td class="parametervalue">&lt;address-map&gt;&lt;slave name='nios2_gen2_0.debug_mem_slave' start='0x0' end='0x800' type='altera_nios2_gen2.debug_mem_slave' /&gt;&lt;slave name='timer_0.s1' start='0x880' end='0x8C0' type='altera_avalon_timer.s1' /&gt;&lt;slave name='i2c_0.csr' start='0x8C0' end='0x900' type='altera_avalon_i2c.csr' /&gt;&lt;slave name='spi_0.spi_control_port' start='0x920' end='0x940' type='altera_avalon_spi.spi_control_port' /&gt;&lt;slave name='key.s1' start='0x9C0' end='0x9D0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='leds_pio.s1' start='0x9D0' end='0x9E0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='hex_digits_pio.s1' start='0x9E0' end='0x9F0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_rst.s1' start='0x9F0' end='0xA00' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_gpx.s1' start='0xA00' end='0xA10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_irq.s1' start='0xA10' end='0xA20' type='altera_avalon_pio.s1' /&gt;&lt;slave name='keycode.s1' start='0xA20' end='0xA30' type='altera_avalon_pio.s1' /&gt;&lt;slave name='sdram_pll.pll_slave' start='0xA30' end='0xA40' type='altpll.pll_slave' /&gt;&lt;slave name='sysid_qsys_0.control_slave' start='0xA50' end='0xA58' type='altera_avalon_sysid_qsys.control_slave' /&gt;&lt;slave name='jtag_uart_0.avalon_jtag_slave' start='0xA58' end='0xA60' type='altera_avalon_jtag_uart.avalon_jtag_slave' /&gt;&lt;slave name='game_rom_programmer_0.avl_mm_slave' start='0x20000' end='0x30000' type='game_rom_programmer.avl_mm_slave' /&gt;&lt;slave name='sdram.s1' start='0x8000000' end='0xC000000' type='altera_avalon_new_sdram_controller.s1' /&gt;&lt;/address-map&gt;</td>
+        <td class="parametervalue">&lt;address-map&gt;&lt;slave name='nios2_gen2_0.debug_mem_slave' start='0x0' end='0x800' type='altera_nios2_gen2.debug_mem_slave' /&gt;&lt;slave name='timer_0.s1' start='0x880' end='0x8C0' type='altera_avalon_timer.s1' /&gt;&lt;slave name='i2c_0.csr' start='0x8C0' end='0x900' type='altera_avalon_i2c.csr' /&gt;&lt;slave name='spi_0.spi_control_port' start='0x920' end='0x940' type='altera_avalon_spi.spi_control_port' /&gt;&lt;slave name='key.s1' start='0x9C0' end='0x9D0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='leds_pio.s1' start='0x9D0' end='0x9E0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='hex_digits_pio.s1' start='0x9E0' end='0x9F0' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_rst.s1' start='0x9F0' end='0xA00' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_gpx.s1' start='0xA00' end='0xA10' type='altera_avalon_pio.s1' /&gt;&lt;slave name='usb_irq.s1' start='0xA10' end='0xA20' type='altera_avalon_pio.s1' /&gt;&lt;slave name='keycode.s1' start='0xA20' end='0xA30' type='altera_avalon_pio.s1' /&gt;&lt;slave name='sdram_pll.pll_slave' start='0xA30' end='0xA40' type='altpll.pll_slave' /&gt;&lt;slave name='sysid_qsys_0.control_slave' start='0xA50' end='0xA58' type='altera_avalon_sysid_qsys.control_slave' /&gt;&lt;slave name='jtag_uart_0.avalon_jtag_slave' start='0xA58' end='0xA60' type='altera_avalon_jtag_uart.avalon_jtag_slave' /&gt;&lt;slave name='game_rom_programmer_0.avl_mm_slave' start='0x10000' end='0x10010' type='game_rom_programmer.avl_mm_slave' /&gt;&lt;slave name='sdram.s1' start='0x8000000' end='0xC000000' type='altera_avalon_new_sdram_controller.s1' /&gt;&lt;/address-map&gt;</td>
        </tr>
        <tr>
         <td class="parametername">tightlyCoupledDataMaster0MapParam</td>
@@ -4446,7 +4430,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">timestamp</td>
-        <td class="parametervalue">1681417140</td>
+        <td class="parametervalue">1681444413</td>
        </tr>
        <tr>
         <td class="parametername">deviceFamily</td>
@@ -4471,7 +4455,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">TIMESTAMP</td>
-        <td class="parametervalue">1681417140</td>
+        <td class="parametervalue">1681444413</td>
        </tr>
       </table>
      </td>

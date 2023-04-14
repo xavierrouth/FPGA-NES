@@ -2,9 +2,7 @@
 		port (
 			clk_clk                        : in    std_logic                     := 'X';             -- clk
 			game_rom_conduit_to_game_rom   : out   std_logic_vector(7 downto 0);                     -- to_game_rom
-			game_rom_conduit_from_game_rom : in    std_logic_vector(7 downto 0)  := (others => 'X'); -- from_game_rom
 			game_rom_conduit_write_rom     : out   std_logic;                                        -- write_rom
-			game_rom_conduit_read_rom      : out   std_logic;                                        -- read_rom
 			game_rom_conduit_rom_addr      : out   std_logic_vector(15 downto 0);                    -- rom_addr
 			hex_digits_export              : out   std_logic_vector(15 downto 0);                    -- export
 			i2c_0_i2c_serial_sda_in        : in    std_logic                     := 'X';             -- sda_in
@@ -39,9 +37,7 @@
 		port map (
 			clk_clk                        => CONNECTED_TO_clk_clk,                        --                     clk.clk
 			game_rom_conduit_to_game_rom   => CONNECTED_TO_game_rom_conduit_to_game_rom,   --        game_rom_conduit.to_game_rom
-			game_rom_conduit_from_game_rom => CONNECTED_TO_game_rom_conduit_from_game_rom, --                        .from_game_rom
 			game_rom_conduit_write_rom     => CONNECTED_TO_game_rom_conduit_write_rom,     --                        .write_rom
-			game_rom_conduit_read_rom      => CONNECTED_TO_game_rom_conduit_read_rom,      --                        .read_rom
 			game_rom_conduit_rom_addr      => CONNECTED_TO_game_rom_conduit_rom_addr,      --                        .rom_addr
 			hex_digits_export              => CONNECTED_TO_hex_digits_export,              --              hex_digits.export
 			i2c_0_i2c_serial_sda_in        => CONNECTED_TO_i2c_0_i2c_serial_sda_in,        --        i2c_0_i2c_serial.sda_in

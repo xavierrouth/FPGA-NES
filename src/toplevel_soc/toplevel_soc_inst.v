@@ -1,9 +1,7 @@
 	toplevel_soc u0 (
 		.clk_clk                        (<connected-to-clk_clk>),                        //                     clk.clk
 		.game_rom_conduit_to_game_rom   (<connected-to-game_rom_conduit_to_game_rom>),   //        game_rom_conduit.to_game_rom
-		.game_rom_conduit_from_game_rom (<connected-to-game_rom_conduit_from_game_rom>), //                        .from_game_rom
 		.game_rom_conduit_write_rom     (<connected-to-game_rom_conduit_write_rom>),     //                        .write_rom
-		.game_rom_conduit_read_rom      (<connected-to-game_rom_conduit_read_rom>),      //                        .read_rom
 		.game_rom_conduit_rom_addr      (<connected-to-game_rom_conduit_rom_addr>),      //                        .rom_addr
 		.hex_digits_export              (<connected-to-hex_digits_export>),              //              hex_digits.export
 		.i2c_0_i2c_serial_sda_in        (<connected-to-i2c_0_i2c_serial_sda_in>),        //        i2c_0_i2c_serial.sda_in

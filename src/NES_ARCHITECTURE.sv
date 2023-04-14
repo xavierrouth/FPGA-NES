@@ -26,13 +26,15 @@ module NES_ARCHITECUTRE (
 	// Clocks
 	input				MCLK,
 	input				CPU_CLK,
+	input				ROM_CLK,
+	
+	
 	input				CPU_RESET,
 
 	// ROM Programmer
-	input 				rom_prgmr_wren, rom_prgmr_rden,
+	input 				rom_prgmr_wren,
 	input [15:0]		rom_prgmr_addr,
-	input [7:0]			rom_prgmr_data_in,
-	output [7:0]			rom_prgmr_data_out,
+	input [7:0]			rom_prgmr_data,
 
 	// Video 
 	
@@ -54,7 +56,7 @@ logic [7:0]  DATA_BUS;
 logic [15:0] CPU_ADDR;
 logic [7:0]  CPU_DATA_OUT;
 logic 		 CPU_RW_n; // Read is high, write is low
-logic		 CPU_ENABLE;
+logic		 	 CPU_ENABLE;
 
 // SYSRAM Signals
 logic [7:0] SYSRAM_DATA_OUT;
@@ -66,7 +68,6 @@ logic CARTRIDGE_rden;
 
 
 assign CPU_ENABLE = 1'b1;
-assign ADDR_BUS = CPU_ADDR;
 
 //=======================================================
 //  Bus Architecture / Memory Mapped Logic
@@ -83,18 +84,29 @@ always_comb begin : BUS_SELECTION
 
 	// ------ Priority Mux Bus Control ---------
 
+	
+	
+	// CPU Write
+	if (~CPU_RW_n)
+		DATA_BUS = CPU_DATA_OUT;
+		
 	// System Ram [$0000 - $0FFF]
-	if (ADDR_BUS <= 16'h0FFF) begin
-		DATA_BUS = SYSRAM_DATA_OUT;
+	if (ADDR_BUS <= 16'h0FFF)
 		SYSRAM_wren = CPU_RW_n;
-		SYSRAM_rden = ~CPU_RW_n;
-	end
-	// Cartridge / ROM [$4020 - $FFFF]
-	else if (ADDR_BUS >= 16'h4020) begin
-		// TODO: Enable other things than just the CPU (like PPU) to read from here.
-		DATA_BUS = CARTRIDGE_DATA_OUT;
-		CARTRIDGE_rden = CPU_RW_n;
-	end
+		
+	// CPU Read
+	else if (CPU_RW_n) 
+		// System Ram [$0000 - $0FFF]
+		if (ADDR_BUS <= 16'h0FFF) begin
+			DATA_BUS = SYSRAM_DATA_OUT;
+			SYSRAM_rden = 1'b1;
+		end
+		// Cartridge / ROM [$4020 - $FFFF]
+		else if (ADDR_BUS >= 16'h4020) begin
+			// TODO: Enable other things than just the CPU (like PPU) to read from here.
+			DATA_BUS = CARTRIDGE_DATA_OUT;
+			CARTRIDGE_rden = 1'b1;
+		end
 end
 //=======================================================
 //  Debug Signals
@@ -124,7 +136,8 @@ CPU_2A03 cpu_inst(.CLK(CPU_CLK), .ENABLE(CPU_ENABLE), .RESET_n(CPU_RESET), .DATA
 				  
 SYS_RAM sysram_inst(.clk(RAM_CLK), .data_in(DATA_BUS), .addr(ADDR_BUS[10:0]), .wren(SYSRAM_wren), .rden(SYSRAM_rden), .data_out(SYSRAM_DATA_OUT));
 
-CARTRIDGE cart_inst(.clk(CPU_CLK), .prgmr_data_in(rom_prgmr_data), .nes_addr(ADDR_BUS[15:0]), .prgmr_addr(rom_prgmr_addr), 
-					.nes_rden(CARTRIDGE_rden), .prgmr_wren(rom_prgmr_active), .nes_data_out(CARTRIDGE_DATA_OUT));
+// Need to Split Cartridge into CHR-ROM and PRG-ROM
+CARTRIDGE cart_inst(.clk(ROM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(ADDR_BUS[15:0]), .prgmr_addr(rom_prgmr_addr), 
+					.nes_rden(CARTRIDGE_rden), .prgmr_wren(rom_prgmr_wren), .nes_data_out(CARTRIDGE_DATA_OUT));
 
 endmodule

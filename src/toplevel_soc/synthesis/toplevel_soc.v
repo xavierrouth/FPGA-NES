@@ -6,9 +6,7 @@
 module toplevel_soc (
 		input  wire        clk_clk,                        //                     clk.clk
 		output wire [7:0]  game_rom_conduit_to_game_rom,   //        game_rom_conduit.to_game_rom
-		input  wire [7:0]  game_rom_conduit_from_game_rom, //                        .from_game_rom
 		output wire        game_rom_conduit_write_rom,     //                        .write_rom
-		output wire        game_rom_conduit_read_rom,      //                        .read_rom
 		output wire [15:0] game_rom_conduit_rom_addr,      //                        .rom_addr
 		output wire [15:0] hex_digits_export,              //              hex_digits.export
 		input  wire        i2c_0_i2c_serial_sda_in,        //        i2c_0_i2c_serial.sda_in
@@ -59,11 +57,9 @@ module toplevel_soc (
 	wire         mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_write;           // mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_write -> jtag_uart_0:av_write_n
 	wire  [31:0] mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_writedata;       // mm_interconnect_0:jtag_uart_0_avalon_jtag_slave_writedata -> jtag_uart_0:av_writedata
 	wire         mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_chipselect; // mm_interconnect_0:game_rom_programmer_0_avl_mm_slave_chipselect -> game_rom_programmer_0:AVL_CS
-	wire   [7:0] mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_readdata;   // game_rom_programmer_0:AVL_READDATA -> mm_interconnect_0:game_rom_programmer_0_avl_mm_slave_readdata
-	wire  [15:0] mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_address;    // mm_interconnect_0:game_rom_programmer_0_avl_mm_slave_address -> game_rom_programmer_0:AVL_ADDR
-	wire         mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_read;       // mm_interconnect_0:game_rom_programmer_0_avl_mm_slave_read -> game_rom_programmer_0:AVL_READ
+	wire   [1:0] mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_address;    // mm_interconnect_0:game_rom_programmer_0_avl_mm_slave_address -> game_rom_programmer_0:AVL_ADDR
 	wire         mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_write;      // mm_interconnect_0:game_rom_programmer_0_avl_mm_slave_write -> game_rom_programmer_0:AVL_WRITE
-	wire   [7:0] mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_writedata;  // mm_interconnect_0:game_rom_programmer_0_avl_mm_slave_writedata -> game_rom_programmer_0:AVL_WRITEDATA
+	wire  [31:0] mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_writedata;  // mm_interconnect_0:game_rom_programmer_0_avl_mm_slave_writedata -> game_rom_programmer_0:AVL_WRITEDATA
 	wire  [31:0] mm_interconnect_0_sysid_qsys_0_control_slave_readdata;           // sysid_qsys_0:readdata -> mm_interconnect_0:sysid_qsys_0_control_slave_readdata
 	wire   [0:0] mm_interconnect_0_sysid_qsys_0_control_slave_address;            // mm_interconnect_0:sysid_qsys_0_control_slave_address -> sysid_qsys_0:address
 	wire  [31:0] mm_interconnect_0_i2c_0_csr_readdata;                            // i2c_0:readdata -> mm_interconnect_0:i2c_0_csr_readdata
@@ -144,13 +140,9 @@ module toplevel_soc (
 		.AVL_ADDR      (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_address),    //  avl_mm_slave.address
 		.AVL_WRITE     (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_write),      //              .write
 		.AVL_WRITEDATA (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_writedata),  //              .writedata
-		.AVL_READ      (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_read),       //              .read
-		.AVL_READDATA  (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_readdata),   //              .readdata
 		.AVL_CS        (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_chipselect), //              .chipselect
 		.TO_ROM        (game_rom_conduit_to_game_rom),                                    // game_rom_port.to_game_rom
-		.FROM_ROM      (game_rom_conduit_from_game_rom),                                  //              .from_game_rom
 		.WRITE_ROM     (game_rom_conduit_write_rom),                                      //              .write_rom
-		.READ_ROM      (game_rom_conduit_read_rom),                                       //              .read_rom
 		.ROM_ADDR      (game_rom_conduit_rom_addr),                                       //              .rom_addr
 		.CLK           (clk_clk),                                                         //           clk.clk
 		.RESET         (rst_controller_reset_out_reset)                                   //         reset.reset
@@ -394,8 +386,6 @@ module toplevel_soc (
 		.nios2_gen2_0_instruction_master_readdata       (nios2_gen2_0_instruction_master_readdata),                        //                                         .readdata
 		.game_rom_programmer_0_avl_mm_slave_address     (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_address),    //       game_rom_programmer_0_avl_mm_slave.address
 		.game_rom_programmer_0_avl_mm_slave_write       (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_write),      //                                         .write
-		.game_rom_programmer_0_avl_mm_slave_read        (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_read),       //                                         .read
-		.game_rom_programmer_0_avl_mm_slave_readdata    (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_readdata),   //                                         .readdata
 		.game_rom_programmer_0_avl_mm_slave_writedata   (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_writedata),  //                                         .writedata
 		.game_rom_programmer_0_avl_mm_slave_chipselect  (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_chipselect), //                                         .chipselect
 		.hex_digits_pio_s1_address                      (mm_interconnect_0_hex_digits_pio_s1_address),                     //                        hex_digits_pio_s1.address

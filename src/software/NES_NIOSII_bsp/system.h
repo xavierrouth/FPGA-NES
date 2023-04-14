@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'toplevel_soc'
  * SOPC Builder design path: ../../toplevel_soc.sopcinfo
  *
- * Generated: Wed Apr 12 22:10:38 CDT 2023
+ * Generated: Thu Apr 13 22:56:42 CDT 2023
  */
 
 /*
@@ -142,6 +142,7 @@
 #define __ALTERA_AVALON_TIMER
 #define __ALTERA_NIOS2_GEN2
 #define __ALTPLL
+#define __GAME_ROM_PROGRAMMER
 
 
 /*
@@ -178,6 +179,20 @@
 #define ALT_STDOUT_PRESENT
 #define ALT_STDOUT_TYPE "altera_avalon_jtag_uart"
 #define ALT_SYSTEM_NAME "toplevel_soc"
+
+
+/*
+ * game_rom_programmer_0 configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_game_rom_programmer_0 game_rom_programmer
+#define GAME_ROM_PROGRAMMER_0_BASE 0x10000
+#define GAME_ROM_PROGRAMMER_0_IRQ -1
+#define GAME_ROM_PROGRAMMER_0_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define GAME_ROM_PROGRAMMER_0_NAME "/dev/game_rom_programmer_0"
+#define GAME_ROM_PROGRAMMER_0_SPAN 16
+#define GAME_ROM_PROGRAMMER_0_TYPE "game_rom_programmer"
 
 
 /*
@@ -224,7 +239,7 @@
  */
 
 #define ALT_MODULE_CLASS_i2c_0 altera_avalon_i2c
-#define I2C_0_BASE 0x880
+#define I2C_0_BASE 0x8c0
 #define I2C_0_FIFO_DEPTH 4
 #define I2C_0_FREQ 50000000
 #define I2C_0_IRQ 4
@@ -430,7 +445,7 @@
 #define SYSID_QSYS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_0_NAME "/dev/sysid_qsys_0"
 #define SYSID_QSYS_0_SPAN 8
-#define SYSID_QSYS_0_TIMESTAMP 1681355129
+#define SYSID_QSYS_0_TIMESTAMP 1681444413
 #define SYSID_QSYS_0_TYPE "altera_avalon_sysid_qsys"
 
 
@@ -441,7 +456,7 @@
 
 #define ALT_MODULE_CLASS_timer_0 altera_avalon_timer
 #define TIMER_0_ALWAYS_RUN 0
-#define TIMER_0_BASE 0x8c0
+#define TIMER_0_BASE 0x880
 #define TIMER_0_COUNTER_SIZE 64
 #define TIMER_0_FIXED_PERIOD 0
 #define TIMER_0_FREQ 50000000

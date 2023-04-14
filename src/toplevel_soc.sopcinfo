@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="toplevel_soc" kind="toplevel_soc" version="1.0" fabric="QSYS">
  <!-- Format version 18.1 625 (Future versions may contain additional information.) -->
- <!-- 2023.04.13.15:19:00 -->
+ <!-- 2023.04.13.22:53:33 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1681417140</value>
+  <value>1681444413</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -544,7 +544,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="addressSpan">
     <type>java.math.BigInteger</type>
-    <value>65536</value>
+    <value>16</value>
     <derived>true</derived>
     <enabled>true</enabled>
     <visible>false</visible>
@@ -552,7 +552,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="addressUnits">
     <type>com.altera.sopcmodel.avalon.EAddrBurstUnits</type>
-    <value>SYMBOLS</value>
+    <value>WORDS</value>
     <derived>false</derived>
     <enabled>true</enabled>
     <visible>true</visible>
@@ -616,7 +616,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="burstcountUnits">
     <type>com.altera.sopcmodel.avalon.EAddrBurstUnits</type>
-    <value>SYMBOLS</value>
+    <value>WORDS</value>
     <derived>false</derived>
     <enabled>true</enabled>
     <visible>true</visible>
@@ -736,7 +736,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="readWaitStates">
     <type>int</type>
-    <value>10</value>
+    <value>5</value>
     <derived>false</derived>
     <enabled>true</enabled>
     <visible>false</visible>
@@ -744,7 +744,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="readWaitTime">
     <type>int</type>
-    <value>10</value>
+    <value>5</value>
     <derived>false</derived>
     <enabled>true</enabled>
     <visible>true</visible>
@@ -843,7 +843,7 @@ parameters are a RESULT of the module parameters. -->
    <port>
     <name>AVL_ADDR</name>
     <direction>Input</direction>
-    <width>16</width>
+    <width>2</width>
     <role>address</role>
    </port>
    <port>
@@ -855,20 +855,8 @@ parameters are a RESULT of the module parameters. -->
    <port>
     <name>AVL_WRITEDATA</name>
     <direction>Input</direction>
-    <width>8</width>
+    <width>32</width>
     <role>writedata</role>
-   </port>
-   <port>
-    <name>AVL_READ</name>
-    <direction>Input</direction>
-    <width>1</width>
-    <role>read</role>
-   </port>
-   <port>
-    <name>AVL_READDATA</name>
-    <direction>Output</direction>
-    <width>8</width>
-    <role>readdata</role>
    </port>
    <port>
     <name>AVL_CS</name>
@@ -922,22 +910,10 @@ parameters are a RESULT of the module parameters. -->
     <role>to_game_rom</role>
    </port>
    <port>
-    <name>FROM_ROM</name>
-    <direction>Input</direction>
-    <width>8</width>
-    <role>from_game_rom</role>
-   </port>
-   <port>
     <name>WRITE_ROM</name>
     <direction>Output</direction>
     <width>1</width>
     <role>write_rom</role>
-   </port>
-   <port>
-    <name>READ_ROM</name>
-    <direction>Output</direction>
-    <width>1</width>
-    <role>read_rom</role>
    </port>
    <port>
     <name>ROM_ADDR</name>
@@ -7158,7 +7134,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="instSlaveMapParam">
    <type>java.lang.String</type>
-   <value><![CDATA[<address-map><slave name='nios2_gen2_0.debug_mem_slave' start='0x0' end='0x800' type='altera_nios2_gen2.debug_mem_slave' /><slave name='timer_0.s1' start='0x880' end='0x8C0' type='altera_avalon_timer.s1' /><slave name='i2c_0.csr' start='0x8C0' end='0x900' type='altera_avalon_i2c.csr' /><slave name='spi_0.spi_control_port' start='0x920' end='0x940' type='altera_avalon_spi.spi_control_port' /><slave name='key.s1' start='0x9C0' end='0x9D0' type='altera_avalon_pio.s1' /><slave name='leds_pio.s1' start='0x9D0' end='0x9E0' type='altera_avalon_pio.s1' /><slave name='hex_digits_pio.s1' start='0x9E0' end='0x9F0' type='altera_avalon_pio.s1' /><slave name='usb_rst.s1' start='0x9F0' end='0xA00' type='altera_avalon_pio.s1' /><slave name='usb_gpx.s1' start='0xA00' end='0xA10' type='altera_avalon_pio.s1' /><slave name='usb_irq.s1' start='0xA10' end='0xA20' type='altera_avalon_pio.s1' /><slave name='keycode.s1' start='0xA20' end='0xA30' type='altera_avalon_pio.s1' /><slave name='sdram_pll.pll_slave' start='0xA30' end='0xA40' type='altpll.pll_slave' /><slave name='sysid_qsys_0.control_slave' start='0xA50' end='0xA58' type='altera_avalon_sysid_qsys.control_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0xA58' end='0xA60' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='game_rom_programmer_0.avl_mm_slave' start='0x20000' end='0x30000' type='game_rom_programmer.avl_mm_slave' /><slave name='sdram.s1' start='0x8000000' end='0xC000000' type='altera_avalon_new_sdram_controller.s1' /></address-map>]]></value>
+   <value><![CDATA[<address-map><slave name='nios2_gen2_0.debug_mem_slave' start='0x0' end='0x800' type='altera_nios2_gen2.debug_mem_slave' /><slave name='timer_0.s1' start='0x880' end='0x8C0' type='altera_avalon_timer.s1' /><slave name='i2c_0.csr' start='0x8C0' end='0x900' type='altera_avalon_i2c.csr' /><slave name='spi_0.spi_control_port' start='0x920' end='0x940' type='altera_avalon_spi.spi_control_port' /><slave name='key.s1' start='0x9C0' end='0x9D0' type='altera_avalon_pio.s1' /><slave name='leds_pio.s1' start='0x9D0' end='0x9E0' type='altera_avalon_pio.s1' /><slave name='hex_digits_pio.s1' start='0x9E0' end='0x9F0' type='altera_avalon_pio.s1' /><slave name='usb_rst.s1' start='0x9F0' end='0xA00' type='altera_avalon_pio.s1' /><slave name='usb_gpx.s1' start='0xA00' end='0xA10' type='altera_avalon_pio.s1' /><slave name='usb_irq.s1' start='0xA10' end='0xA20' type='altera_avalon_pio.s1' /><slave name='keycode.s1' start='0xA20' end='0xA30' type='altera_avalon_pio.s1' /><slave name='sdram_pll.pll_slave' start='0xA30' end='0xA40' type='altpll.pll_slave' /><slave name='sysid_qsys_0.control_slave' start='0xA50' end='0xA58' type='altera_avalon_sysid_qsys.control_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0xA58' end='0xA60' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='sdram.s1' start='0x8000000' end='0xC000000' type='altera_avalon_new_sdram_controller.s1' /></address-map>]]></value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -7178,7 +7154,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="dataSlaveMapParam">
    <type>java.lang.String</type>
-   <value><![CDATA[<address-map><slave name='nios2_gen2_0.debug_mem_slave' start='0x0' end='0x800' type='altera_nios2_gen2.debug_mem_slave' /><slave name='timer_0.s1' start='0x880' end='0x8C0' type='altera_avalon_timer.s1' /><slave name='i2c_0.csr' start='0x8C0' end='0x900' type='altera_avalon_i2c.csr' /><slave name='spi_0.spi_control_port' start='0x920' end='0x940' type='altera_avalon_spi.spi_control_port' /><slave name='key.s1' start='0x9C0' end='0x9D0' type='altera_avalon_pio.s1' /><slave name='leds_pio.s1' start='0x9D0' end='0x9E0' type='altera_avalon_pio.s1' /><slave name='hex_digits_pio.s1' start='0x9E0' end='0x9F0' type='altera_avalon_pio.s1' /><slave name='usb_rst.s1' start='0x9F0' end='0xA00' type='altera_avalon_pio.s1' /><slave name='usb_gpx.s1' start='0xA00' end='0xA10' type='altera_avalon_pio.s1' /><slave name='usb_irq.s1' start='0xA10' end='0xA20' type='altera_avalon_pio.s1' /><slave name='keycode.s1' start='0xA20' end='0xA30' type='altera_avalon_pio.s1' /><slave name='sdram_pll.pll_slave' start='0xA30' end='0xA40' type='altpll.pll_slave' /><slave name='sysid_qsys_0.control_slave' start='0xA50' end='0xA58' type='altera_avalon_sysid_qsys.control_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0xA58' end='0xA60' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='game_rom_programmer_0.avl_mm_slave' start='0x20000' end='0x30000' type='game_rom_programmer.avl_mm_slave' /><slave name='sdram.s1' start='0x8000000' end='0xC000000' type='altera_avalon_new_sdram_controller.s1' /></address-map>]]></value>
+   <value><![CDATA[<address-map><slave name='nios2_gen2_0.debug_mem_slave' start='0x0' end='0x800' type='altera_nios2_gen2.debug_mem_slave' /><slave name='timer_0.s1' start='0x880' end='0x8C0' type='altera_avalon_timer.s1' /><slave name='i2c_0.csr' start='0x8C0' end='0x900' type='altera_avalon_i2c.csr' /><slave name='spi_0.spi_control_port' start='0x920' end='0x940' type='altera_avalon_spi.spi_control_port' /><slave name='key.s1' start='0x9C0' end='0x9D0' type='altera_avalon_pio.s1' /><slave name='leds_pio.s1' start='0x9D0' end='0x9E0' type='altera_avalon_pio.s1' /><slave name='hex_digits_pio.s1' start='0x9E0' end='0x9F0' type='altera_avalon_pio.s1' /><slave name='usb_rst.s1' start='0x9F0' end='0xA00' type='altera_avalon_pio.s1' /><slave name='usb_gpx.s1' start='0xA00' end='0xA10' type='altera_avalon_pio.s1' /><slave name='usb_irq.s1' start='0xA10' end='0xA20' type='altera_avalon_pio.s1' /><slave name='keycode.s1' start='0xA20' end='0xA30' type='altera_avalon_pio.s1' /><slave name='sdram_pll.pll_slave' start='0xA30' end='0xA40' type='altpll.pll_slave' /><slave name='sysid_qsys_0.control_slave' start='0xA50' end='0xA58' type='altera_avalon_sysid_qsys.control_slave' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0xA58' end='0xA60' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='game_rom_programmer_0.avl_mm_slave' start='0x10000' end='0x10010' type='game_rom_programmer.avl_mm_slave' /><slave name='sdram.s1' start='0x8000000' end='0xC000000' type='altera_avalon_new_sdram_controller.s1' /></address-map>]]></value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -7857,8 +7833,8 @@ parameters are a RESULT of the module parameters. -->
     <moduleName>game_rom_programmer_0</moduleName>
     <slaveName>avl_mm_slave</slaveName>
     <name>game_rom_programmer_0.avl_mm_slave</name>
-    <baseAddress>131072</baseAddress>
-    <span>65536</span>
+    <baseAddress>65536</baseAddress>
+    <span>16</span>
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>
@@ -8266,14 +8242,6 @@ parameters are a RESULT of the module parameters. -->
     <name>jtag_uart_0.avalon_jtag_slave</name>
     <baseAddress>2648</baseAddress>
     <span>8</span>
-   </memoryBlock>
-   <memoryBlock>
-    <isBridge>false</isBridge>
-    <moduleName>game_rom_programmer_0</moduleName>
-    <slaveName>avl_mm_slave</slaveName>
-    <name>game_rom_programmer_0.avl_mm_slave</name>
-    <baseAddress>131072</baseAddress>
-    <span>65536</span>
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>
@@ -12781,7 +12749,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1681417140</value>
+   <value>1681444413</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -12801,7 +12769,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1681417140</value>
+   <value>1681444413</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -12817,7 +12785,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1681417140</value>
+   <value>1681444413</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>
@@ -16409,7 +16377,7 @@ parameters are a RESULT of the module parameters. -->
   </parameter>
   <parameter name="baseAddress">
    <type>java.math.BigInteger</type>
-   <value>0x00020000</value>
+   <value>0x00010000</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -17208,57 +17176,6 @@ parameters are a RESULT of the module parameters. -->
   <startConnectionPoint>instruction_master</startConnectionPoint>
   <endModule>jtag_uart_0</endModule>
   <endConnectionPoint>avalon_jtag_slave</endConnectionPoint>
- </connection>
- <connection
-   name="nios2_gen2_0.instruction_master/game_rom_programmer_0.avl_mm_slave"
-   kind="avalon"
-   version="18.1"
-   start="nios2_gen2_0.instruction_master"
-   end="game_rom_programmer_0.avl_mm_slave">
-  <parameter name="arbitrationPriority">
-   <type>int</type>
-   <value>1</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <parameter name="baseAddress">
-   <type>java.math.BigInteger</type>
-   <value>0x00020000</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <parameter name="defaultConnection">
-   <type>boolean</type>
-   <value>false</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <parameter name="deviceFamily">
-   <type>java.lang.String</type>
-   <value>UNKNOWN</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <parameter name="generateLegacySim">
-   <type>boolean</type>
-   <value>false</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <startModule>nios2_gen2_0</startModule>
-  <startConnectionPoint>instruction_master</startConnectionPoint>
-  <endModule>game_rom_programmer_0</endModule>
-  <endConnectionPoint>avl_mm_slave</endConnectionPoint>
  </connection>
  <connection
    name="nios2_gen2_0.instruction_master/sysid_qsys_0.control_slave"
@@ -19611,7 +19528,7 @@ parameters are a RESULT of the module parameters. -->
   <version>18.1</version>
  </plugin>
  <plugin>
-  <instanceCount>32</instanceCount>
+  <instanceCount>31</instanceCount>
   <name>avalon</name>
   <type>com.altera.entityinterfaces.IElementClass</type>
   <subtype>com.altera.entityinterfaces.IConnection</subtype>

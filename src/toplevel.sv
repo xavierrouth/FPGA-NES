@@ -29,7 +29,7 @@ module toplevel (
       input    [ 9: 0]   SW,
 
       ///////// LEDR /////////
-      output   [ 9: 0]   LEDR,
+      output   logic [ 9: 0]   LEDR,
 
       ///////// HEX /////////
       output   [ 7: 0]   HEX0,
@@ -66,6 +66,12 @@ module toplevel (
       inout              ARDUINO_RESET_N 
 
 );
+
+//=======================================================
+//  I/O Synchronizers
+//=======================================================
+
+sync pushbuttons[1:0] (.Clk(MAX10_CLK1_50), .d({~KEY[0], ~KEY[1]}), .q({syncd_reset_h, syncd_continue}));
 
 //=======================================================
 //  REG/WIRE declarations
@@ -129,11 +135,8 @@ module toplevel (
 //  Switch / Button Inputs
 //=======================================================
 
-	logic Reset_h;
-	logic play_mode;
-	
-	assign {Reset_h} = ~(KEY[0]); 
-	assign {play_mode} = ~(KEY[1]);
+	logic syncd_reset_h;
+	logic syncd_continue;
 
 	//assign signs = 2'b00;
 	//assign hex_num_4 = 4'h4;
@@ -146,9 +149,14 @@ module toplevel (
 //=======================================================
 	
 	logic MCLK;
+	
+	logic CPU_MID_CLK;
 	logic CPU_CLK;
 	
-	clockgen clk_inst(.inclk0(MAX10_CLK1_50), .c0(CPU_CLK));
+	logic ROM_MID_CLK;
+	logic ROM_CLK;
+	
+	clockgen clk_inst(.inclk0(MAX10_CLK1_50), .c0(CPU_MID_CLK));
 	
 //=======================================================
 //  NES Architecture Instantiation
@@ -157,23 +165,108 @@ module toplevel (
 	T65_Dbg cpu_debug;
 	
 	logic [15:0]    ADDR_debug;
-	logic 		 	CPU_RW_n_debug;
+	logic 		 	 CPU_RW_n_debug;
 
 	// Rom Programmer Interface
 	logic [15:0] rom_prgmr_addr;
-	logic [7:0]  rom_prgmr_data_in, rom_prgmr_data_out;
-	logic rom_prgmr_wren, rom_prgmr_rden;
+	logic [7:0]  rom_prgmr_data; 
+	logic rom_prgmr_wren; 
 	
-	NES_ARCHITECUTRE NES(.MCLK(MAX10_CLK1_50), .CPU_CLK(CPU_CLK), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
-						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data_in(rom_prgmr_data_in),
-						 .rom_prgmr_data_out(rom_prgmr_data_out), .rom_prgmr_wren(rom_prgmr_wren), .rom_prgmr_rden(rom_prgmr_rden));
+	// Switch Between Manual Clock and Normal Clock
 	
+	
+	NES_ARCHITECUTRE NES(.MCLK(MAX10_CLK1_50), .CPU_CLK(CPU_CLK), .ROM_CLK(ROM_CLK), .CPU_RESET(~syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
+						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data(rom_prgmr_data),
+						 .rom_prgmr_wren(rom_prgmr_wren));
+	
+	
+	/**
 	assign hex_num_3 = ADDR_debug[15:12];
 	assign hex_num_2 = ADDR_debug[11:8];
 	assign hex_num_1 = ADDR_debug[7:4];
 	assign hex_num_0 = ADDR_debug[3:0];
+	*/
 	
-	assign LEDR[7] = CPU_RW_n_debug;
+//=======================================================
+//  Debug Display and Tooling
+//=======================================================
+	
+	// Debug Switch Setup
+	// SW[0] - High is manual CPU_CLK   (KEY[0]), low is PLL generated Clock
+	// SW[1] - High is manual ROM clock (KEY[0]
+	// SW[9:7] - Select what is displayed on the HEX
+	//
+	//
+	//
+	
+	// SO MUCH CLOCK GATING LOL
+	always_comb begin
+		if (SW[0])
+			CPU_CLK = syncd_continue;
+		else
+			CPU_CLK = CPU_MID_CLK;
+		if (SW[1])
+			ROM_CLK = syncd_continue;
+		else
+			ROM_CLK = CPU_MID_CLK;
+	end
+	
+	// Choose what to display on the HEX
+	always_ff @ (posedge MAX10_CLK1_50) begin
+		case (SW[9:7])
+			// Display ROM Programmer Contents
+			3'b000: begin // I don't think we need this one so who cares if it works yet, should ideally save these on rom_prgmr_wren posedge
+				hex_num_5 <= rom_prgmr_addr[15:12];
+				hex_num_4 <= rom_prgmr_addr[11:8];
+				hex_num_3 <= rom_prgmr_addr[7:4];
+				hex_num_2 <= rom_prgmr_addr[3:0];
+				hex_num_1 <= rom_prgmr_data[7:4];
+				hex_num_0 <= rom_prgmr_data[3:0];
+			end
+			// CPU Regs I, A, X
+			3'b001: begin
+				hex_num_5 <= cpu_debug.I[7:4];
+				hex_num_4 <= cpu_debug.I[3:0];
+				hex_num_3 <= cpu_debug.A[7:4];
+				hex_num_2 <= cpu_debug.A[3:0];
+				hex_num_1 <= cpu_debug.X[7:4];
+				hex_num_0 <= cpu_debug.X[3:0];
+			end
+			// CPU Regs Y, S, P
+			3'b011: begin
+				hex_num_5 <= cpu_debug.Y[7:4];
+				hex_num_4 <= cpu_debug.Y[3:0];
+				hex_num_3 <= cpu_debug.S[7:4];
+				hex_num_2 <= cpu_debug.S[3:0];
+				hex_num_1 <= cpu_debug.P[7:4];
+				hex_num_0 <= cpu_debug.P[3:0];
+			end
+			// ADdress 
+			3'b111: begin
+				hex_num_5 <= ADDR_debug[15:12];
+				hex_num_4 <= ADDR_debug[11:8];
+				hex_num_3 <= ADDR_debug[7:4];
+				hex_num_2 <= ADDR_debug[3:0];
+				hex_num_1 <= 1'h1;
+				hex_num_0 <= 1'h1;
+			end
+			
+			default: begin
+				hex_num_5 <= 1'h1;
+				hex_num_4 <= 1'h1;
+				hex_num_3 <= 1'h1;
+				hex_num_2 <= 1'h1;
+				hex_num_1 <= 1'h1;
+				hex_num_0 <= 1'h1;
+			end
+			
+		endcase
+	end
+	// Might need to latch these
+	
+	
+	
+	assign LEDR[7] = rom_prgmr_wren;
 	
 	
 //=======================================================
@@ -287,10 +380,8 @@ module toplevel (
 		.usb_gpx_export(USB_GPX),
 		
 		// Game Rom Programmer
-		.game_rom_conduit_to_game_rom(rom_prgmr_data_in),   //        game_rom_conduit.to_game_rom
-		.game_rom_conduit_from_game_rom(rom_prgmr_data_out),//                        .from_game_rom
+		.game_rom_conduit_to_game_rom(rom_prgmr_data),   //        game_rom_conduit.to_game_rom
 		.game_rom_conduit_write_rom(rom_prgmr_wren),     	//                        .write_rom
-		.game_rom_conduit_read_rom(rom_prgmr_rden),      	//                        .read_rom
 		.game_rom_conduit_rom_addr(rom_prgmr_addr),      	//                        .rom_addr
 		
 		//LEDs and HEX
