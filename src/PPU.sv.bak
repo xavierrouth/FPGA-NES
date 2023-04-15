@@ -1,0 +1,11 @@
+//=======================================================
+//  PPU
+//  - This module represents the top-level wrapper for our NES system architecture,
+//    the goal is to be as hardware accurate to the original NES for all logic here.
+//
+//  - TODO:
+//		Everything
+//
+//=======================================================
+
+PPU

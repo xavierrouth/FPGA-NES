@@ -1,9 +1,10 @@
 	component toplevel_soc is
 		port (
 			clk_clk                        : in    std_logic                     := 'X';             -- clk
-			game_rom_conduit_to_game_rom   : out   std_logic_vector(7 downto 0);                     -- to_game_rom
-			game_rom_conduit_write_rom     : out   std_logic;                                        -- write_rom
+			game_rom_conduit_rom_data      : out   std_logic_vector(7 downto 0);                     -- rom_data
+			game_rom_conduit_prg_rom_write : out   std_logic;                                        -- prg_rom_write
 			game_rom_conduit_rom_addr      : out   std_logic_vector(15 downto 0);                    -- rom_addr
+			game_rom_conduit_chr_rom_write : out   std_logic;                                        -- chr_rom_write
 			hex_digits_export              : out   std_logic_vector(15 downto 0);                    -- export
 			i2c_0_i2c_serial_sda_in        : in    std_logic                     := 'X';             -- sda_in
 			i2c_0_i2c_serial_scl_in        : in    std_logic                     := 'X';             -- scl_in

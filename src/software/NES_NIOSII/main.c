@@ -18,12 +18,7 @@
 #include "system.h"
 #include <alt_types.h>
 #include "nestest.h"
-
-struct ROM_PROGRAMMER_STRUCT {
-	alt_u32 rom;
-};
-
-static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+#include "rom_programmer.h"
 
 int main()
 {
@@ -39,31 +34,21 @@ int main()
 
 
   // Write Program Rom
-
-
   for (int i = 0; i < prg_rom_size; i++) {
 	  // Write BB to $C000 to $C000 + i
 	  alt_u8 bytes = prg_rom_data[i];
 	  // Write Data
-	  rom_programmer->rom = (0x0000C000 + i ) | (bytes << (4 * 4));
-	  rom_programmer->rom = (0x00008000 + i ) | (bytes << (4 * 4));
-  }
+	  write_prg_rom(0xC000 + i, bytes);
+	  write_prg_rom(0x8000 + i, bytes);
 
-  /**
-  for (int i = 0; i < 100; i++) {
-  	  // Write BB to $C000 to $C000 + i
-  	  //alt_u8 bytes = prg_rom_data[i];
-  	  // Write Data
-  	  rom_programmer->rom = (0x0080CAAA + i);// | (bytes << (4 * 4));
   }
-  */
 
   rom_programmer->rom = 0x00AAFFFA;
   rom_programmer->rom = 0x00AAFFFB;
 
   // Reset Vector
-  rom_programmer->rom = 0x0000FFFC; // Lowe rpart of address
-  rom_programmer->rom = 0x00C0FFFD; // Higher part of address
+  rom_programmer->rom = 0x8000FFFC; // Lower part of address
+  rom_programmer->rom = 0x80C0FFFD; // Higher part of address
 
   rom_programmer->rom = 0x00AAFFFE;
   rom_programmer->rom = 0x00AAFFFF;

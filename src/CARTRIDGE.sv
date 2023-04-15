@@ -1,13 +1,15 @@
+
+// DEPRECIATED DEPRECIATED  DEPRECIATEDDEPRECIATEDDEPRECIATEDDEPRECIATEDDEPRECIATEDDEPRECIATEDDEPRECIATEDDEPRECIATEDDEPRECIATED
 //=======================================================
-//  CARTRIDGE
+//  CARTRIDGE 
 //  - This module represents the Game ROMs that are loaded into the NES from cartridges.
 // 	There are two sections traditonally PRG ROM and CHR ROM,
-// 
+// DEPRECIATEDDEPRECIATED
 //  - BUS Section [$4020 - $FFFF] ~ 49.120k Bytes
-//    We only want to instantiate 49k Bytes of mem here, (NVM HOW WOULD QUARTUS KNOW???)
+//    We only want to instantiate 49k Bytes of mem here, (NVM HOW WOULD QUARTUS KNOW???)DEPRECIATEDDEPRECIATEDDEPRECIATEDDEPRECIATED
 //
-//  - TODO:
-//		Create an interface with Avalon MM bus to support loading ROMs from NIOS II.
+//  - TODO: DEPRECIATEDDEPRECIATED
+//		Create an interface with Avalon MM bus to support loading ROMs from NIOS II.DEPRECIATEDDEPRECIATEDDEPRECIATED
 //		Mappers (This is why we have abstracted this memory away in the first place)
 //  
 //

@@ -1,14 +1,14 @@
-Fitter Status : Successful - Fri Apr 14 13:53:56 2023
+Fitter Status : Successful - Fri Apr 14 20:19:29 2023
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : FPGA-NES
 Top-level Entity Name : toplevel
 Family : MAX 10
 Device : 10M50DCF484C7G
 Timing Models : Final
-Total logic elements : 6,888 / 49,760 ( 14 % )
-    Total combinational functions : 5,554 / 49,760 ( 11 % )
-    Dedicated logic registers : 4,018 / 49,760 ( 8 % )
-Total registers : 4087
+Total logic elements : 6,982 / 49,760 ( 14 % )
+    Total combinational functions : 5,601 / 49,760 ( 11 % )
+    Dedicated logic registers : 4,051 / 49,760 ( 8 % )
+Total registers : 4120
 Total pins : 141 / 360 ( 39 % )
 Total virtual pins : 0
 Total memory bits : 1,051,720 / 1,677,312 ( 63 % )

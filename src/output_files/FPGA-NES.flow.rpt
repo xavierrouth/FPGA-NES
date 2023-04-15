@@ -1,5 +1,5 @@
 Flow report for FPGA-NES
-Fri Apr 14 13:54:10 2023
+Fri Apr 14 20:19:42 2023
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,17 +40,17 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Fri Apr 14 13:54:10 2023       ;
+; Flow Status                        ; Successful - Fri Apr 14 20:19:42 2023       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; FPGA-NES                                    ;
 ; Top-level Entity Name              ; toplevel                                    ;
 ; Family                             ; MAX 10                                      ;
 ; Device                             ; 10M50DCF484C7G                              ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 6,888 / 49,760 ( 14 % )                     ;
-;     Total combinational functions  ; 5,554 / 49,760 ( 11 % )                     ;
-;     Dedicated logic registers      ; 4,018 / 49,760 ( 8 % )                      ;
-; Total registers                    ; 4087                                        ;
+; Total logic elements               ; 6,982 / 49,760 ( 14 % )                     ;
+;     Total combinational functions  ; 5,601 / 49,760 ( 11 % )                     ;
+;     Dedicated logic registers      ; 4,051 / 49,760 ( 8 % )                      ;
+; Total registers                    ; 4120                                        ;
 ; Total pins                         ; 141 / 360 ( 39 % )                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 1,051,720 / 1,677,312 ( 63 % )              ;
@@ -66,7 +66,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/14/2023 13:52:40 ;
+; Start date & time ; 04/14/2023 20:18:24 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; FPGA-NES            ;
 +-------------------+---------------------+
@@ -77,7 +77,7 @@ refer to the applicable agreement for further details.
 +--------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+--------------+------------------+
 ; Assignment Name                      ; Value                                                                                                                                                                                                                                 ; Default Value ; Entity Name  ; Section Id       ;
 +--------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+--------------+------------------+
-; COMPILER_SIGNATURE_ID                ; 96830613240568.168149835932368                                                                                                                                                                                                        ; --            ; --           ; --               ;
+; COMPILER_SIGNATURE_ID                ; 96830613240568.168152150404360                                                                                                                                                                                                        ; --            ; --           ; --               ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                                                                                                                                                                                                                    ; --            ; --           ; testbench        ;
 ; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; testbench                                                                                                                                                                                                                             ; --            ; --           ; eda_simulation   ;
 ; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                                                                                                                                                                                                                     ; --            ; --           ; eda_simulation   ;
@@ -104,7 +104,7 @@ refer to the applicable agreement for further details.
 ; SLD_FILE                             ; toplevel_soc/synthesis/toplevel_soc.regmap                                                                                                                                                                                            ; --            ; --           ; --               ;
 ; SLD_FILE                             ; toplevel_soc/synthesis/toplevel_soc.debuginfo                                                                                                                                                                                         ; --            ; --           ; --               ;
 ; SLD_FILE                             ; db/signaltap_auto_stripped.stp                                                                                                                                                                                                        ; --            ; --           ; --               ;
-; SLD_INFO                             ; QSYS_NAME toplevel_soc HAS_SOPCINFO 1 GENERATION_ID 1681488791                                                                                                                                                                        ; --            ; toplevel_soc ; --               ;
+; SLD_INFO                             ; QSYS_NAME toplevel_soc HAS_SOPCINFO 1 GENERATION_ID 1681521448                                                                                                                                                                        ; --            ; toplevel_soc ; --               ;
 ; SLD_NODE_CREATOR_ID                  ; 110                                                                                                                                                                                                                                   ; --            ; --           ; auto_signaltap_0 ;
 ; SLD_NODE_ENTITY_NAME                 ; sld_signaltap                                                                                                                                                                                                                         ; --            ; --           ; auto_signaltap_0 ;
 ; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_RAM_BLOCK_TYPE=AUTO                                                                                                                                                                                                               ; --            ; --           ; auto_signaltap_0 ;
@@ -144,12 +144,12 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:33     ; 1.0                     ; 5098 MB             ; 00:00:10                           ;
-; Fitter               ; 00:00:39     ; 1.5                     ; 6242 MB             ; 00:00:15                           ;
+; Analysis & Synthesis ; 00:00:31     ; 1.0                     ; 5082 MB             ; 00:00:13                           ;
+; Fitter               ; 00:00:31     ; 1.6                     ; 6239 MB             ; 00:00:22                           ;
 ; Assembler            ; 00:00:03     ; 1.0                     ; 4720 MB             ; 00:00:01                           ;
-; Timing Analyzer      ; 00:00:04     ; 2.8                     ; 4976 MB             ; 00:00:05                           ;
-; EDA Netlist Writer   ; 00:00:03     ; 1.0                     ; 4770 MB             ; 00:00:01                           ;
-; Total                ; 00:01:22     ; --                      ; --                  ; 00:00:32                           ;
+; Timing Analyzer      ; 00:00:04     ; 3.0                     ; 4977 MB             ; 00:00:05                           ;
+; EDA Netlist Writer   ; 00:00:02     ; 1.0                     ; 4770 MB             ; 00:00:00                           ;
+; Total                ; 00:01:11     ; --                      ; --                  ; 00:00:41                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

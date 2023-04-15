@@ -20,18 +20,23 @@ module ROM_PRGMR(
 	
 	// NES Side
 	output [15:0] 	ROM_ADDR,
-	output [7:0] 	TO_ROM,
-	output 	logic		WRITE_ROM
+	output [7:0] 	ROM_DATA,
+	output 			CHR_ROM_WRITE,
+	output		   PRG_ROM_WRITE
 	
 );
 
-// Probably don't have to wait here just say fuck it
+
+// Use top 8 bits for mapper logic etc.
 
 always_ff @ (posedge CLK) begin
-	WRITE_ROM <= AVL_WRITE;
+	if (AVL_WRITEDATA[31])
+		PRG_ROM_WRITE <= AVL_WRITE;
+	else
+		CHR_ROM_WRITE <= AVL_WRITE;
 end
 
 assign ROM_ADDR = AVL_WRITEDATA[15:0];
-assign TO_ROM = AVL_WRITEDATA[23:16];
+assign ROM_DATA = AVL_WRITEDATA[23:16];
 
 endmodule

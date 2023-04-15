@@ -5,9 +5,10 @@
 `timescale 1 ps / 1 ps
 module toplevel_soc (
 		input  wire        clk_clk,                        //                     clk.clk
-		output wire [7:0]  game_rom_conduit_to_game_rom,   //        game_rom_conduit.to_game_rom
-		output wire        game_rom_conduit_write_rom,     //                        .write_rom
+		output wire [7:0]  game_rom_conduit_rom_data,      //        game_rom_conduit.rom_data
+		output wire        game_rom_conduit_prg_rom_write, //                        .prg_rom_write
 		output wire [15:0] game_rom_conduit_rom_addr,      //                        .rom_addr
+		output wire        game_rom_conduit_chr_rom_write, //                        .chr_rom_write
 		output wire [15:0] hex_digits_export,              //              hex_digits.export
 		input  wire        i2c_0_i2c_serial_sda_in,        //        i2c_0_i2c_serial.sda_in
 		input  wire        i2c_0_i2c_serial_scl_in,        //                        .scl_in
@@ -141,9 +142,10 @@ module toplevel_soc (
 		.AVL_WRITE     (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_write),      //              .write
 		.AVL_WRITEDATA (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_writedata),  //              .writedata
 		.AVL_CS        (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_chipselect), //              .chipselect
-		.TO_ROM        (game_rom_conduit_to_game_rom),                                    // game_rom_port.to_game_rom
-		.WRITE_ROM     (game_rom_conduit_write_rom),                                      //              .write_rom
+		.ROM_DATA      (game_rom_conduit_rom_data),                                       // game_rom_port.rom_data
+		.PRG_ROM_WRITE (game_rom_conduit_prg_rom_write),                                  //              .prg_rom_write
 		.ROM_ADDR      (game_rom_conduit_rom_addr),                                       //              .rom_addr
+		.CHR_ROM_WRITE (game_rom_conduit_chr_rom_write),                                  //              .chr_rom_write
 		.CLK           (clk_clk),                                                         //           clk.clk
 		.RESET         (rst_controller_reset_out_reset)                                   //         reset.reset
 	);

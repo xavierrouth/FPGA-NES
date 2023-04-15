@@ -1,0 +1,15 @@
+#ifndef __ROM_PRGMR_H_
+#define __ROM_PRGMR_H_
+
+#include "system.h"
+
+struct ROM_PROGRAMMER_STRUCT {
+	alt_u32 rom;
+};
+
+static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+
+void write_rom() {
+
+}
+rom_programmer->rom = 0x00AAFFFA;

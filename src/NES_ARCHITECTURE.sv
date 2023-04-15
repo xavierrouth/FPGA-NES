@@ -24,14 +24,14 @@ typedef struct packed {
 
 module NES_ARCHITECUTRE (
 	// Clocks
-	input				MCLK,
-	input				CPU_CLK,
-	input				ROM_CLK,
+	input					MCLK,
+	input					CPU_CLK,
+	input					ROM_CLK,
 	
-	input				CPU_RESET,
+	input					CPU_RESET,
 
 	// ROM Programmer
-	input 				rom_prgmr_wren,
+	input 				prg_rom_prgmr_wren, chr_rom_prgmr_wren,
 	input [15:0]		rom_prgmr_addr,
 	input [7:0]			rom_prgmr_data,
 
@@ -45,11 +45,11 @@ module NES_ARCHITECUTRE (
 
 
 //=======================================================
-//  Bus Signals
+//  CPU Bus Signals
 //=======================================================
 
-logic [15:0] ADDR_BUS;
-logic [7:0]  DATA_BUS;
+logic [15:0] CPU_ADDR_BUS;
+logic [7:0]  CPU_DATA_BUS;
 
 // CPU Signals
 logic [15:0] CPU_ADDR;
@@ -57,60 +57,147 @@ logic [7:0]  CPU_DATA_OUT;
 logic 		 CPU_RW_n; // Read is high, write is low
 logic		 	 CPU_ENABLE;
 
+// PPU-CPU Signals
+logic [7:0] PPU_CPU_DATA_OUT;
+logic CPU_PPU_wren, CPU_PPU_rden;
+
 // SYSRAM Signals
 logic [7:0] SYSRAM_DATA_OUT;
 logic SYSRAM_wren, SYSRAM_rden; 
 
-// Cartridge / ROM Signals
-logic [7:0] CARTRIDGE_DATA_OUT;
-logic CARTRIDGE_rden;
+// PRG-ROM Signals
+logic [7:0] PRG_ROM_DATA_OUT;
+logic PRG_ROM_rden;
 
 
 assign CPU_ENABLE = 1'b1;
 
 //=======================================================
-//  Bus Architecture / Memory Mapped Logic
+//  CPU Bus Architecture / Memory Mapped Logic
 //=======================================================
 
-assign ADDR_BUS = CPU_ADDR; // I think this is always the case
+assign CPU_ADDR_BUS = CPU_ADDR; // I think this is always the case
 
-always_comb begin : BUS_SELECTION
+always_comb begin : CPU_BUS_SELECTION
 	// Default Values
 	SYSRAM_wren = 1'b0;
 	SYSRAM_rden = 1'b0;
-	DATA_BUS = 8'hAA;
-	CARTRIDGE_rden = 1'b0;
-
-	// ------ Priority Mux Bus Control ---------
-
 	
+	CPU_PPU_wren = 1'b0;
+	CPU_PPU_rden = 1'b0;
+	
+	CPU_DATA_BUS = 8'hAA;
+	PRG_ROM_rden = 1'b0;
 	
 	// ------ CPU Write ---------
 	if (~CPU_RW_n) begin
-		DATA_BUS = CPU_DATA_OUT;
+		CPU_DATA_BUS = CPU_DATA_OUT;
 		
 		// System Ram [$0000 - $0FFF]
-		if (ADDR_BUS <= 16'h0FFF)
+		if (CPU_ADDR_BUS <= 16'h0FFF)
 			SYSRAM_wren = 1'b1;
+		
+		// PPU Control Registers [$2000 - $3FFF] (Repeats every 8 bytes)
+		if ((CPU_ADDR_BUS >= 16'h2000) & (CPU_ADDR_BUS <= 16'h3FFF)) begin
+			CPU_PPU_wren = 1'b1;
+		end
 	end
 	
 	// ------ CPU Read  ---------
 	else if (CPU_RW_n) begin
 	
 		// System Ram [$0000 - $0FFF]
-		if (ADDR_BUS <= 16'h0FFF) begin
-			DATA_BUS = SYSRAM_DATA_OUT;
+		if (CPU_ADDR_BUS <= 16'h0FFF) begin
+			CPU_DATA_BUS = SYSRAM_DATA_OUT;
 			SYSRAM_rden = 1'b1;
 		end
 		
-		// Cartridge / ROM [$4020 - $FFFF]
-		else if (ADDR_BUS >= 16'h4020) begin
-			// TODO: Enable other things than just the CPU (like PPU) to read from here.
-			DATA_BUS = CARTRIDGE_DATA_OUT;
-			CARTRIDGE_rden = 1'b1;
+		// PRG-ROM [$4020 - $FFFF]
+		else if (CPU_ADDR_BUS >= 16'h4020) begin
+			CPU_DATA_BUS = PRG_ROM_DATA_OUT;
+			PRG_ROM_rden = 1'b1;
+		end
+		
+		// PPU Control Registers [$2000 - $3FFF] (Repeats every 8 bytes)
+		if (CPU_ADDR_BUS >= 16'h2000 &&  CPU_ADDR_BUS <= 16'h3FFF) begin
+			// Do Reads / Writes matter here?
+			CPU_DATA_BUS = PPU_CPU_DATA_OUT;
+			CPU_PPU_rden = 1'b1;
 		end
 	end
 end
+
+//=======================================================
+//  PPU Bus Signals
+//=======================================================
+
+logic [13:0] PPU_ADDR_BUS;
+logic [7:0]  PPU_DATA_BUS;
+
+// PPU Signals
+logic [13:0] PPU_ADDR;
+logic [7:0]  PPU_DATA_OUT;
+
+logic PPU_READ, PPU_WRITE; // Let's split this into two signals, unlike CPU
+
+// CHR-ROM Signals
+logic [7:0] CHR_ROM_DATA_OUT;
+logic CHR_ROM_rden;
+
+// VRAM Signals
+logic [7:0] VRAM_DATA_OUT;
+logic VRAM_rden, VRAM_wren;
+
+//=======================================================
+//  PPU Bus Architecture / Memory Mapped Logic
+//=======================================================
+
+assign PPU_ADDR_BUS = PPU_ADDR; // I think this is always the case
+
+always_comb begin : PPU_BUS_SELECTION
+	// Default Values
+	PPU_DATA_BUS = 8'hAA;
+	VRAM_rden = 1'b0;
+	VRAM_wren = 1'b0;
+	CHR_ROM_rden = 1'b0;
+
+	// ------ Priority Mux Bus Control ---------
+
+	// CHR-ROM / Pattern Tables [$0000 - $1FFF]
+	
+	
+	// VRAM / Name Tables [$2000 - $27FF] // Weir dMirroring stuff who cares rn
+	
+	// Palette RAM [$3F00 - $3FFF] // Weir dMirroring stuff who cares rn
+	
+	
+	// ------ PPU Write --------- 
+	if (PPU_WRITE) begin
+		PPU_DATA_BUS = PPU_DATA_OUT;
+		
+		// VRAM / Name Tables [$2000 - $3FFF]
+		if (PPU_ADDR_BUS >= 14'h2000)
+			VRAM_wren = 1'b1;
+	end
+	
+	// ------ PPU Read  ---------
+	else if (PPU_READ) begin
+	
+		// CHR-ROM / Pattern Tables [$0000 - $1FFF]
+		if (PPU_ADDR_BUS <= 14'h1FFF) begin
+			PPU_DATA_BUS = CHR_ROM_DATA_OUT;
+			CHR_ROM_rden = 1'b1;
+		end
+		
+		// VRAM / Name Tables [$2000 - $3FFF]
+		else if (PPU_ADDR_BUS >= 14'h2000) begin
+			PPU_DATA_BUS = VRAM_DATA_OUT;
+			VRAM_rden = 1'b1;
+		end
+	end
+end
+
+
 //=======================================================
 //  Debug Signals
 //=======================================================
@@ -129,18 +216,28 @@ logic sysram_enable;
 assign RAM_CLK = CPU_CLK;
 assign sysram_enable = 1'b1;
 
+logic PPU_CLK;
+assign PPU_CLK = CPU_CLK; // For Now
+
 
 //=======================================================
 //  Module Instatiation
 //=======================================================
 
-CPU_2A03 cpu_inst(.CLK(CPU_CLK), .ENABLE(CPU_ENABLE), .RESET(CPU_RESET), .DATA_IN(DATA_BUS), .ADDR(CPU_ADDR), 
+CPU_2A03 cpu_inst(.CLK(CPU_CLK), .ENABLE(CPU_ENABLE), .RESET(CPU_RESET), .DATA_IN(CPU_DATA_BUS), .ADDR(CPU_ADDR), 
 				  .DATA_OUT(CPU_DATA_OUT), .RW_n(CPU_RW_n), .cpu_debug(cpu_debug));
-				  
-SYS_RAM sysram_inst(.clk(RAM_CLK), .data_in(DATA_BUS), .addr(ADDR_BUS[10:0]), .wren(SYSRAM_wren), .rden(SYSRAM_rden), .data_out(SYSRAM_DATA_OUT));
 
-// Need to Split Cartridge into CHR-ROM and PRG-ROM
-CARTRIDGE cart_inst(.clk(ROM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(ADDR_BUS[15:0]), .prgmr_addr(rom_prgmr_addr), 
-					.nes_rden(CARTRIDGE_rden), .prgmr_wren(rom_prgmr_wren), .nes_data_out(CARTRIDGE_DATA_OUT));
+SYS_RAM sysram_inst(.clk(RAM_CLK), .data_in(CPU_DATA_BUS), .addr(CPU_ADDR_BUS[10:0]), .wren(SYSRAM_wren), .rden(SYSRAM_rden), .data_out(SYSRAM_DATA_OUT));
 
+PRG_ROM prg_rom_inst(.clk(ROM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(CPU_ADDR_BUS[15:0]), .prgmr_addr(rom_prgmr_addr), 
+					.nes_rden(PRG_ROM_rden), .prgmr_wren(prg_rom_prgmr_wren), .nes_data_out(PRG_ROM_DATA_OUT));
+					
+CHR_ROM chr_rom_inst(.clk(ROM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(PPU_ADDR_BUS[13:0]), .prgmr_addr(rom_prgmr_addr), 
+					.nes_rden(CHR_ROM_rden), .prgmr_wren(chr_rom_prgmr_wren), .nes_data_out(CHR_ROM_DATA_OUT));
+					
+PPU ppu_inst(.clk(PPU_CLK), .CPU_DATA_IN(CPU_DATA_BUS), .CPU_ADDR(CPU_ADDR[2:0]), .CPU_DATA_OUT(PPU_CPU_DATA_OUT), .CPU_wren(CPU_PPU_wren), .CPU_rden(CPU_PPU_rden), 
+				.PPU_DATA_IN(PPU_DATA_BUS), .PPU_DATA_OUT(PPU_DATA_OUT), .PPU_ADDR(PPU_ADDR), .PPU_READ(PPU_READ), .PPU_WRITE(PPU_WRITE));
+				
+VRAM vram_inst(.clk(PPU_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
+					
 endmodule

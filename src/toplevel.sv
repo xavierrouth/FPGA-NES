@@ -161,6 +161,10 @@ module toplevel (
 	logic ROM_MID_CLK;
 	logic ROM_CLK;
 	
+	// 50 MHz input, 
+	// c0 is 1.7Mhz for 6502 CPU inside NES
+	// C1 is 
+	
 	clockgen clk_inst(.inclk0(MAX10_CLK1_50), .c0(CPU_MID_CLK));
 	
 	assign MCLK = MAX10_CLK1_50;
@@ -177,14 +181,14 @@ module toplevel (
 	// Rom Programmer Interface
 	logic [15:0] rom_prgmr_addr;
 	logic [7:0]  rom_prgmr_data; 
-	logic rom_prgmr_wren; 
+	logic chr_rom_prgmr_wren, prg_rom_prgmr_wren; 
 	
 	// Switch Between Manual Clock and Normal Clock
 	
 	
 	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .ROM_CLK(ROM_CLK), .CPU_RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
 						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data(rom_prgmr_data),
-						 .rom_prgmr_wren(rom_prgmr_wren));
+						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren));
 	
 	
 	/**
@@ -283,7 +287,7 @@ module toplevel (
 	
 	
 	
-	assign LEDR[7] = rom_prgmr_wren;
+	assign LEDR[7] = chr_rom_prgmr_wren | prg_rom_prgmr_wren;
 	
 	
 //=======================================================
@@ -345,13 +349,29 @@ module toplevel (
 //  Toplevel Video Instantiation
 //=======================================================
 	
-	/**
-	.vga_port_red (VGA_R),
-	.vga_port_green (VGA_G),
-	.vga_port_blue (VGA_B),
-	.vga_port_hs (VGA_HS),
-	.vga_port_vs (VGA_VS)
-	*/
+	logic VGA_Clk;
+	logic blank_n;
+	
+	assign VGA_CLK = MAX10_CLK1_50;
+	// This depends on our resolution
+	logic [10:0] drawx, drawy;
+	
+	vga_controller vga_ctrl (.Clk(VGA_CLK), .Reset(1'b0), .hs(VGA_HS), .vs(VGA_VS), .blank(blank_n), .DrawX(drawx), .DrawY(drawy));
+	 
+	always_ff @ (posedge VGA_CLK) begin 
+		if (blank_n) begin 
+			VGA_R <= 4'b1111;
+			VGA_G <= 4'b0000;
+			VGA_B <= 4'b1111;
+		end
+		
+		else if (~blank_n) begin // Blanking interval
+			VGA_R <= 4'b0000;
+			VGA_G <= 4'b0000;
+			VGA_B <= 4'b0000;
+		end
+	end
+
 	
 //=======================================================
 //  SOC Instantiation
@@ -397,9 +417,11 @@ module toplevel (
 		.usb_gpx_export(USB_GPX),
 		
 		// Game Rom Programmer
-		.game_rom_conduit_to_game_rom(rom_prgmr_data),   //        game_rom_conduit.to_game_rom
-		.game_rom_conduit_write_rom(rom_prgmr_wren),     	//                        .write_rom
-		.game_rom_conduit_rom_addr(rom_prgmr_addr),      	//                        .rom_addr
+	
+		.game_rom_conduit_rom_data(rom_prgmr_data),   //        game_rom_conduit.to_game_rom
+		.game_rom_conduit_prg_rom_write(prg_rom_prgmr_wren),     	//                        .write_rom
+		.game_rom_conduit_rom_addr(rom_prgmr_addr), 
+		.game_rom_conduit_chr_rom_write(chr_rom_prgmr_wren),     	//                        .rom_addr
 		
 		//LEDs and HEX
 		//.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
