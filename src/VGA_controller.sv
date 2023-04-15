@@ -30,16 +30,15 @@ module  vga_controller ( input        Clk,       // 50 MHz clock
 												  blank,     // Blanking interval indicator.  Active low.
 												  sync,      // Composite Sync signal.  Active low.  We don't use it in this lab,
 												             //   but the video DAC on the DE2 board requires an input for it.
-								 output [10:0]DrawX,     // horizontal coordinate
+								 output [9:0] DrawX,     // horizontal coordinate
 								              DrawY );   // vertical coordinate
 	 
-    parameter [10:0] hpixels = 11'd1040;
-    parameter [10:0] vlines = 11'd666;
+    parameter [9:0] hpixels = 10'd799;
+    parameter [9:0] vlines = 10'd524;
 	 
 	 
 	 // horizontal pixel and vertical line counters
-    logic [10:0] hc, vc;
-    logic clkdiv;
+    logic [9:0] hc, vc;
     
 	 // signal indicates if ok to display color for a pixel
 	 logic display;
@@ -52,16 +51,16 @@ module  vga_controller ( input        Clk,       // 50 MHz clock
 	begin: counter_proc
 		  if ( Reset ) 
 			begin 
-				 hc <= 11'b00000000000;
-				 vc <= 11'b00000000000;
+				 hc <= 10'b00000000000;
+				 vc <= 10'b00000000000;
 			end
 				
 		  else 
 			 if ( hc == hpixels )  //If hc has reached the end of pixel count
 			  begin 
-					hc <= 11'b00000000000;
+					hc <= 10'b00000000000;
 					if ( vc == vlines )   //if vc has reached end of line count
-						 vc <= 11'b00000000000;
+						 vc <= 10'b00000000000;
 					else 
 						 vc <= (vc + 1);
 			  end
@@ -80,7 +79,7 @@ module  vga_controller ( input        Clk,       // 50 MHz clock
         if ( Reset ) 
             hs <= 1'b0;
         else  
-            if (((hc + 1) >= 11'd856) & ((hc + 1) < 11'd976)) 
+            if (((hc + 1) >= 10'd656) & ((hc + 1) < 10'd752)) 
                 hs <= 1'b0;
             else 
 				    hs <= 1'b1;
@@ -93,7 +92,7 @@ module  vga_controller ( input        Clk,       // 50 MHz clock
         if ( Reset ) 
            vs <= 1'b0;
         else 
-            if (((vc + 1) >= 11'd637) & ((vc + 1) < 11'd643)) 
+            if (((vc + 1) == 10'd490) | ((vc + 1) == 10'd491)) 
 			       vs <= 1'b0;
             else 
 			       vs <= 1'b1;
@@ -103,49 +102,12 @@ module  vga_controller ( input        Clk,       // 50 MHz clock
     //(This signal is registered within the DAC chip, so we can leave it as pure combinational logic here)    
     always_comb
     begin 
-        if ( (hc >= 11'd800) | (vc >= 11'd600) ) 
+        if ( (hc >= 10'd640) | (vc >= 11'd480) ) 
             display = 1'b0;
         else 
             display = 1'b1;
     end 
    
-	 /**
-	 //horizontal sync pulse is 96 pixels long at pixels 656-752
-    //(signal is registered to ensure clean output waveform)
-    always_ff @ (posedge Reset or posedge Clk )
-    begin : hsync_proc
-        if ( Reset ) 
-            hs <= 1'b0;
-        else  
-            if ((((hc + 1) >= 10'b1010010000) & ((hc + 1) < 10'b1011110000))) 
-                hs <= 1'b0;
-            else 
-				    hs <= 1'b1;
-    end
-	 
-    //vertical sync pulse is 2 lines(800 pixels) long at line 490-491
-    //(signal is registered to ensure clean output waveform)
-    always_ff @ (posedge Reset or posedge Clk )
-    begin : vsync_proc
-        if ( Reset ) 
-           vs <= 1'b0;
-        else 
-            if ( ((vc + 1) == 9'b111101010) | ((vc + 1) == 9'b111101011) ) 
-			       vs <= 1'b0;
-            else 
-			       vs <= 1'b1;
-    end
-       
-    //only display pixels between horizontal 0-639 and vertical 0-479 (640x480)
-    //(This signal is registered within the DAC chip, so we can leave it as pure combinational logic here)    
-    always_comb
-    begin 
-        if ( (hc >= 10'b1010000000) | (vc >= 10'b0111100000) ) 
-            display = 1'b0;
-        else 
-            display = 1'b1;
-    end 
-	 */
    
     assign blank = display;
 	 

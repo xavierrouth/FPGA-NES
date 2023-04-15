@@ -16,6 +16,7 @@
 
 #include <stdio.h>
 #include "system.h"
+#include <stdlib.h>
 #include <alt_types.h>
 #include "nestest.h"
 #include "rom_programmer.h"
@@ -42,6 +43,15 @@ int main()
 	  write_prg_rom(0x8000 + i, bytes);
 
   }
+
+
+  for (int i = 0; i < 640; i++) {
+	  usleep(5000);
+	  printf("%X ", i);
+	  write_chr_rom(0x1000, i * 1);
+  }
+
+
 
   rom_programmer->rom = 0x00AAFFFA;
   rom_programmer->rom = 0x00AAFFFB;

@@ -26,8 +26,11 @@ module NES_ARCHITECUTRE (
 	// Clocks
 	input					MCLK,
 	input					CPU_CLK,
-	input					ROM_CLK,
+	input					PPU_CLK,
 	
+	input 				VGA_CLK,
+	
+	input 				CPU_ENABLE,
 	input					CPU_RESET,
 
 	// ROM Programmer
@@ -36,6 +39,11 @@ module NES_ARCHITECUTRE (
 	input [7:0]			rom_prgmr_data,
 
 	// Video 
+	output             VGA_HS,
+	output             VGA_VS,
+	output   [ 3: 0]   VGA_R,
+	output   [ 3: 0]   VGA_G,
+	output   [ 3: 0]   VGA_B,
 	
 	// Debug Signals
 	output T65_Dbg  	cpu_debug,
@@ -55,7 +63,6 @@ logic [7:0]  CPU_DATA_BUS;
 logic [15:0] CPU_ADDR;
 logic [7:0]  CPU_DATA_OUT;
 logic 		 CPU_RW_n; // Read is high, write is low
-logic		 	 CPU_ENABLE;
 
 // PPU-CPU Signals
 logic [7:0] PPU_CPU_DATA_OUT;
@@ -69,8 +76,6 @@ logic SYSRAM_wren, SYSRAM_rden;
 logic [7:0] PRG_ROM_DATA_OUT;
 logic PRG_ROM_rden;
 
-
-assign CPU_ENABLE = 1'b1;
 
 //=======================================================
 //  CPU Bus Architecture / Memory Mapped Logic
@@ -179,7 +184,7 @@ always_comb begin : PPU_BUS_SELECTION
 		if (PPU_ADDR_BUS >= 14'h2000)
 			VRAM_wren = 1'b1;
 	end
-	
+	 
 	// ------ PPU Read  ---------
 	else if (PPU_READ) begin
 	
@@ -209,15 +214,14 @@ assign CPU_RW_n_debug = CPU_RW_n;
 //  Memory Instantiation
 //=======================================================
 
-// System Ram
-logic RAM_CLK;
-logic sysram_enable;
 
-assign RAM_CLK = CPU_CLK;
+logic MEM_CLK;
+assign MEM_CLK = PPU_CLK;
+
+// System Ram
+logic sysram_enable;
 assign sysram_enable = 1'b1;
 
-logic PPU_CLK;
-assign PPU_CLK = CPU_CLK; // For Now
 
 
 //=======================================================
@@ -227,17 +231,17 @@ assign PPU_CLK = CPU_CLK; // For Now
 CPU_2A03 cpu_inst(.CLK(CPU_CLK), .ENABLE(CPU_ENABLE), .RESET(CPU_RESET), .DATA_IN(CPU_DATA_BUS), .ADDR(CPU_ADDR), 
 				  .DATA_OUT(CPU_DATA_OUT), .RW_n(CPU_RW_n), .cpu_debug(cpu_debug));
 
-SYS_RAM sysram_inst(.clk(RAM_CLK), .data_in(CPU_DATA_BUS), .addr(CPU_ADDR_BUS[10:0]), .wren(SYSRAM_wren), .rden(SYSRAM_rden), .data_out(SYSRAM_DATA_OUT));
+SYS_RAM sysram_inst(.clk(MEM_CLK), .data_in(CPU_DATA_BUS), .addr(CPU_ADDR_BUS[10:0]), .wren(SYSRAM_wren), .rden(SYSRAM_rden), .data_out(SYSRAM_DATA_OUT));
 
-PRG_ROM prg_rom_inst(.clk(ROM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(CPU_ADDR_BUS[15:0]), .prgmr_addr(rom_prgmr_addr), 
+PRG_ROM prg_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(CPU_ADDR_BUS[15:0]), .prgmr_addr(rom_prgmr_addr), 
 					.nes_rden(PRG_ROM_rden), .prgmr_wren(prg_rom_prgmr_wren), .nes_data_out(PRG_ROM_DATA_OUT));
 					
-CHR_ROM chr_rom_inst(.clk(ROM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(PPU_ADDR_BUS[13:0]), .prgmr_addr(rom_prgmr_addr), 
+CHR_ROM chr_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(PPU_ADDR_BUS[13:0]), .prgmr_addr(rom_prgmr_addr), 
 					.nes_rden(CHR_ROM_rden), .prgmr_wren(chr_rom_prgmr_wren), .nes_data_out(CHR_ROM_DATA_OUT));
 					
-PPU ppu_inst(.clk(PPU_CLK), .CPU_DATA_IN(CPU_DATA_BUS), .CPU_ADDR(CPU_ADDR[2:0]), .CPU_DATA_OUT(PPU_CPU_DATA_OUT), .CPU_wren(CPU_PPU_wren), .CPU_rden(CPU_PPU_rden), 
-				.PPU_DATA_IN(PPU_DATA_BUS), .PPU_DATA_OUT(PPU_DATA_OUT), .PPU_ADDR(PPU_ADDR), .PPU_READ(PPU_READ), .PPU_WRITE(PPU_WRITE));
+PPU ppu_inst(.CLK(PPU_CLK), .VIDEO_CLK(VGA_CLK), .CPU_DATA_IN(CPU_DATA_BUS), .CPU_ADDR(CPU_ADDR[2:0]), .CPU_DATA_OUT(PPU_CPU_DATA_OUT), .CPU_wren(CPU_PPU_wren), .CPU_rden(CPU_PPU_rden), 
+				.PPU_DATA_IN(PPU_DATA_BUS), .PPU_DATA_OUT(PPU_DATA_OUT), .PPU_ADDR(PPU_ADDR), .PPU_READ(PPU_READ), .PPU_WRITE(PPU_WRITE), .*);
 				
-VRAM vram_inst(.clk(PPU_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
+VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
 					
 endmodule

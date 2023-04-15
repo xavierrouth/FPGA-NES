@@ -79,7 +79,7 @@ module toplevel (
 	logic [7:0] keycode;
 
 //=======================================================
-//  Structural coding
+//  Toplevel Outside / Board Connections
 //=======================================================
 	
 	// USB / SPI0
@@ -153,21 +153,27 @@ module toplevel (
 //  Clock Generation
 //=======================================================
 	
-	logic MCLK;
+	// Main System Cloks
+	logic MCLK; // 50 MHz
+	logic VGA_CLK; // 25.175
 	
-	logic CPU_MID_CLK;
 	logic CPU_CLK;
-	
-	logic ROM_MID_CLK;
-	logic ROM_CLK;
+	logic PPU_CLK;
+	logic CPU_CLK_GATE;
+
 	
 	// 50 MHz input, 
-	// c0 is 1.7Mhz for 6502 CPU inside NES
-	// C1 is 
+	// c0 is 25.175 for VGA timing.
+	// C1 is 21.5 MHz, this is the master NES clock, all other NES clocks relative to this.
 	
-	clockgen clk_inst(.inclk0(MAX10_CLK1_50), .c0(CPU_MID_CLK));
+	main_clkgen mainclk_inst(.inclk0(MAX10_CLK1_50), .c0(VGA_CLK), .c1(MCLK));
 	
-	assign MCLK = MAX10_CLK1_50;
+	// NES MCLK (21.5MHz) input, 
+	// c0 is divided by 12
+	// C1 is divided by 4
+	// TODO: Replace CPU_CLK_GATE with CPU_CLK when single-step is removed
+	nes_clkgen nesclk_inst(.inclk0(MCLK), .c0(CPU_CLK_GATE), .c1(PPU_CLK));
+	
 	
 //=======================================================
 //  NES Architecture Instantiation
@@ -186,9 +192,9 @@ module toplevel (
 	// Switch Between Manual Clock and Normal Clock
 	
 	
-	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .ROM_CLK(ROM_CLK), .CPU_RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
+	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .PPU_CLK(PPU_CLK), .VGA_CLK(VGA_CLK), .CPU_RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
 						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data(rom_prgmr_data),
-						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren));
+						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren), .*);
 	
 	
 	/**
@@ -209,18 +215,16 @@ module toplevel (
 	//
 	//
 	//
+	logic CPU_ENABLE;
+	assign CPU_ENABLE = 1'b1;
 	
-	// SO MUCH CLOCK GATING LOL
 	always_comb begin
 		if (SW[0])
 			CPU_CLK = syncd_continue;
 		else
-			CPU_CLK = CPU_MID_CLK;
-		if (SW[1])
-			ROM_CLK = MCLK;
-		else
-			ROM_CLK = CPU_MID_CLK;
+			CPU_CLK = CPU_CLK_GATE;
 	end
+		
 	
 	// Choose what to display on the HEX
 	always_ff @ (posedge MAX10_CLK1_50) begin
@@ -345,10 +349,12 @@ module toplevel (
 	assign ARDUINO_IO[2] = SGTL_SERIAL_DIN; // Output from FPGA
 	*/
 	
+	
 //=======================================================
-//  Toplevel Video Instantiation
+//  Toplevel Video Instantiation (Moved to inside PPU)
 //=======================================================
 	
+	/**
 	logic VGA_Clk;
 	logic blank_n;
 	
@@ -371,7 +377,7 @@ module toplevel (
 			VGA_B <= 4'b0000;
 		end
 	end
-
+	*/
 	
 //=======================================================
 //  SOC Instantiation

@@ -1,5 +1,5 @@
 Flow report for FPGA-NES
-Fri Apr 14 20:19:42 2023
+Fri Apr 14 23:43:36 2023
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,22 +40,22 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Fri Apr 14 20:19:42 2023       ;
+; Flow Status                        ; Successful - Fri Apr 14 23:43:36 2023       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; FPGA-NES                                    ;
 ; Top-level Entity Name              ; toplevel                                    ;
 ; Family                             ; MAX 10                                      ;
 ; Device                             ; 10M50DCF484C7G                              ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 6,982 / 49,760 ( 14 % )                     ;
-;     Total combinational functions  ; 5,601 / 49,760 ( 11 % )                     ;
-;     Dedicated logic registers      ; 4,051 / 49,760 ( 8 % )                      ;
-; Total registers                    ; 4120                                        ;
+; Total logic elements               ; 5,677 / 49,760 ( 11 % )                     ;
+;     Total combinational functions  ; 5,000 / 49,760 ( 10 % )                     ;
+;     Dedicated logic registers      ; 2,914 / 49,760 ( 6 % )                      ;
+; Total registers                    ; 2983                                        ;
 ; Total pins                         ; 141 / 360 ( 39 % )                          ;
 ; Total virtual pins                 ; 0                                           ;
-; Total memory bits                  ; 1,051,720 / 1,677,312 ( 63 % )              ;
+; Total memory bits                  ; 617,544 / 1,677,312 ( 37 % )                ;
 ; Embedded Multiplier 9-bit elements ; 0 / 288 ( 0 % )                             ;
-; Total PLLs                         ; 2 / 4 ( 50 % )                              ;
+; Total PLLs                         ; 3 / 4 ( 75 % )                              ;
 ; UFM blocks                         ; 0 / 1 ( 0 % )                               ;
 ; ADC blocks                         ; 0                                           ;
 +------------------------------------+---------------------------------------------+
@@ -66,77 +66,50 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/14/2023 20:18:24 ;
+; Start date & time ; 04/14/2023 23:42:16 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; FPGA-NES            ;
 +-------------------+---------------------+
 
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                                                                                                                                                                                                                               ;
-+--------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+--------------+------------------+
-; Assignment Name                      ; Value                                                                                                                                                                                                                                 ; Default Value ; Entity Name  ; Section Id       ;
-+--------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+--------------+------------------+
-; COMPILER_SIGNATURE_ID                ; 96830613240568.168152150404360                                                                                                                                                                                                        ; --            ; --           ; --               ;
-; EDA_DESIGN_INSTANCE_NAME             ; NA                                                                                                                                                                                                                                    ; --            ; --           ; testbench        ;
-; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; testbench                                                                                                                                                                                                                             ; --            ; --           ; eda_simulation   ;
-; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                                                                                                                                                                                                                     ; --            ; --           ; eda_simulation   ;
-; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (SystemVerilog)                                                                                                                                                                                                       ; <None>        ; --           ; --               ;
-; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE                                                                                                                                                                                                                       ; --            ; --           ; eda_simulation   ;
-; EDA_TEST_BENCH_FILE                  ; testbench.sv                                                                                                                                                                                                                          ; --            ; --           ; testbench        ;
-; EDA_TEST_BENCH_MODULE_NAME           ; testbench                                                                                                                                                                                                                             ; --            ; --           ; testbench        ;
-; EDA_TEST_BENCH_NAME                  ; testbench                                                                                                                                                                                                                             ; --            ; --           ; eda_simulation   ;
-; EDA_TIME_SCALE                       ; 1 ps                                                                                                                                                                                                                                  ; --            ; --           ; eda_simulation   ;
-; ENABLE_SIGNALTAP                     ; On                                                                                                                                                                                                                                    ; --            ; --           ; --               ;
-; MAX_CORE_JUNCTION_TEMP               ; 85                                                                                                                                                                                                                                    ; --            ; --           ; --               ;
-; MIN_CORE_JUNCTION_TEMP               ; 0                                                                                                                                                                                                                                     ; --            ; --           ; --               ;
-; MISC_FILE                            ; toplevel_soc/synthesis/../toplevel_soc.cmp                                                                                                                                                                                            ; --            ; --           ; --               ;
-; MISC_FILE                            ; toplevel_soc/synthesis/../../toplevel_soc.qsys                                                                                                                                                                                        ; --            ; --           ; --               ;
-; MISC_FILE                            ; clockgen_inst.v                                                                                                                                                                                                                       ; --            ; --           ; --               ;
-; MISC_FILE                            ; clockgen_bb.v                                                                                                                                                                                                                         ; --            ; --           ; --               ;
-; MISC_FILE                            ; clockgen.ppf                                                                                                                                                                                                                          ; --            ; --           ; --               ;
-; PARTITION_COLOR                      ; -- (Not supported for targeted family)                                                                                                                                                                                                ; --            ; toplevel     ; Top              ;
-; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family)                                                                                                                                                                                                ; --            ; toplevel     ; Top              ;
-; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family)                                                                                                                                                                                                ; --            ; toplevel     ; Top              ;
-; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                                                                                                                                                                                                                   ; --            ; --           ; --               ;
-; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                                                                                                                                                                                                 ; --            ; --           ; --               ;
-; PROJECT_OUTPUT_DIRECTORY             ; output_files                                                                                                                                                                                                                          ; --            ; --           ; --               ;
-; SLD_FILE                             ; toplevel_soc/synthesis/toplevel_soc.regmap                                                                                                                                                                                            ; --            ; --           ; --               ;
-; SLD_FILE                             ; toplevel_soc/synthesis/toplevel_soc.debuginfo                                                                                                                                                                                         ; --            ; --           ; --               ;
-; SLD_FILE                             ; db/signaltap_auto_stripped.stp                                                                                                                                                                                                        ; --            ; --           ; --               ;
-; SLD_INFO                             ; QSYS_NAME toplevel_soc HAS_SOPCINFO 1 GENERATION_ID 1681521448                                                                                                                                                                        ; --            ; toplevel_soc ; --               ;
-; SLD_NODE_CREATOR_ID                  ; 110                                                                                                                                                                                                                                   ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_ENTITY_NAME                 ; sld_signaltap                                                                                                                                                                                                                         ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_RAM_BLOCK_TYPE=AUTO                                                                                                                                                                                                               ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_NODE_INFO=805334528                                                                                                                                                                                                               ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_POWER_UP_TRIGGER=0                                                                                                                                                                                                                ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_STORAGE_QUALIFIER_INVERSION_MASK_LENGTH=0                                                                                                                                                                                         ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_SEGMENT_SIZE=8192                                                                                                                                                                                                                 ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_ATTRIBUTE_MEM_MODE=OFF                                                                                                                                                                                                            ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_STATE_FLOW_USE_GENERATED=0                                                                                                                                                                                                        ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_STATE_BITS=11                                                                                                                                                                                                                     ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_BUFFER_FULL_STOP=1                                                                                                                                                                                                                ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_CURRENT_RESOURCE_WIDTH=1                                                                                                                                                                                                          ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_INCREMENTAL_ROUTING=1                                                                                                                                                                                                             ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_TRIGGER_LEVEL=1                                                                                                                                                                                                                   ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_SAMPLE_DEPTH=8192                                                                                                                                                                                                                 ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_TRIGGER_IN_ENABLED=0                                                                                                                                                                                                              ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_TRIGGER_PIPELINE=0                                                                                                                                                                                                                ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_RAM_PIPELINE=0                                                                                                                                                                                                                    ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_COUNTER_PIPELINE=0                                                                                                                                                                                                                ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_ADVANCED_TRIGGER_ENTITY=basic,1,                                                                                                                                                                                                  ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_TRIGGER_LEVEL_PIPELINE=1                                                                                                                                                                                                          ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_ENABLE_ADVANCED_TRIGGER=0                                                                                                                                                                                                         ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_DATA_BITS=61                                                                                                                                                                                                                      ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_TRIGGER_BITS=61                                                                                                                                                                                                                   ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_STORAGE_QUALIFIER_BITS=61                                                                                                                                                                                                         ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_INVERSION_MASK=000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 ; --            ; --           ; auto_signaltap_0 ;
-; SLD_NODE_PARAMETER_ASSIGNMENT        ; SLD_INVERSION_MASK_LENGTH=210                                                                                                                                                                                                         ; --            ; --           ; auto_signaltap_0 ;
-; SOPCINFO_FILE                        ; toplevel_soc/synthesis/../../toplevel_soc.sopcinfo                                                                                                                                                                                    ; --            ; --           ; --               ;
-; SYNTHESIS_ONLY_QIP                   ; On                                                                                                                                                                                                                                    ; --            ; --           ; --               ;
-; TOP_LEVEL_ENTITY                     ; toplevel                                                                                                                                                                                                                              ; FPGA-NES      ; --           ; --               ;
-; USE_SIGNALTAP_FILE                   ; signaltap.stp                                                                                                                                                                                                                         ; --            ; --           ; --               ;
-+--------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------+--------------+------------------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                                      ;
++--------------------------------------+----------------------------------------------------------------+---------------+--------------+----------------+
+; Assignment Name                      ; Value                                                          ; Default Value ; Entity Name  ; Section Id     ;
++--------------------------------------+----------------------------------------------------------------+---------------+--------------+----------------+
+; COMPILER_SIGNATURE_ID                ; 96830613240568.168153373550720                                 ; --            ; --           ; --             ;
+; EDA_DESIGN_INSTANCE_NAME             ; NA                                                             ; --            ; --           ; testbench      ;
+; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; testbench                                                      ; --            ; --           ; eda_simulation ;
+; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                                              ; --            ; --           ; eda_simulation ;
+; EDA_SIMULATION_TOOL                  ; ModelSim-Altera (SystemVerilog)                                ; <None>        ; --           ; --             ;
+; EDA_TEST_BENCH_ENABLE_STATUS         ; TEST_BENCH_MODE                                                ; --            ; --           ; eda_simulation ;
+; EDA_TEST_BENCH_FILE                  ; testbench.sv                                                   ; --            ; --           ; testbench      ;
+; EDA_TEST_BENCH_MODULE_NAME           ; testbench                                                      ; --            ; --           ; testbench      ;
+; EDA_TEST_BENCH_NAME                  ; testbench                                                      ; --            ; --           ; eda_simulation ;
+; EDA_TIME_SCALE                       ; 1 ps                                                           ; --            ; --           ; eda_simulation ;
+; ENABLE_SIGNALTAP                     ; Off                                                            ; --            ; --           ; --             ;
+; MAX_CORE_JUNCTION_TEMP               ; 85                                                             ; --            ; --           ; --             ;
+; MIN_CORE_JUNCTION_TEMP               ; 0                                                              ; --            ; --           ; --             ;
+; MISC_FILE                            ; toplevel_soc/synthesis/../toplevel_soc.cmp                     ; --            ; --           ; --             ;
+; MISC_FILE                            ; toplevel_soc/synthesis/../../toplevel_soc.qsys                 ; --            ; --           ; --             ;
+; MISC_FILE                            ; main_clkgen_bb.v                                               ; --            ; --           ; --             ;
+; MISC_FILE                            ; main_clkgen.ppf                                                ; --            ; --           ; --             ;
+; MISC_FILE                            ; nes_clkgen_bb.v                                                ; --            ; --           ; --             ;
+; MISC_FILE                            ; nes_clkgen.ppf                                                 ; --            ; --           ; --             ;
+; PARTITION_COLOR                      ; -- (Not supported for targeted family)                         ; --            ; toplevel     ; Top            ;
+; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family)                         ; --            ; toplevel     ; Top            ;
+; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family)                         ; --            ; toplevel     ; Top            ;
+; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                                            ; --            ; --           ; --             ;
+; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                          ; --            ; --           ; --             ;
+; PROJECT_OUTPUT_DIRECTORY             ; output_files                                                   ; --            ; --           ; --             ;
+; SLD_FILE                             ; toplevel_soc/synthesis/toplevel_soc.regmap                     ; --            ; --           ; --             ;
+; SLD_FILE                             ; toplevel_soc/synthesis/toplevel_soc.debuginfo                  ; --            ; --           ; --             ;
+; SLD_INFO                             ; QSYS_NAME toplevel_soc HAS_SOPCINFO 1 GENERATION_ID 1681521448 ; --            ; toplevel_soc ; --             ;
+; SOPCINFO_FILE                        ; toplevel_soc/synthesis/../../toplevel_soc.sopcinfo             ; --            ; --           ; --             ;
+; SYNTHESIS_ONLY_QIP                   ; On                                                             ; --            ; --           ; --             ;
+; TOP_LEVEL_ENTITY                     ; toplevel                                                       ; FPGA-NES      ; --           ; --             ;
+; USE_SIGNALTAP_FILE                   ; signaltap.stp                                                  ; --            ; --           ; --             ;
++--------------------------------------+----------------------------------------------------------------+---------------+--------------+----------------+
 
 
 +--------------------------------------------------------------------------------------------------------------------------+
@@ -144,12 +117,12 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:31     ; 1.0                     ; 5082 MB             ; 00:00:13                           ;
-; Fitter               ; 00:00:31     ; 1.6                     ; 6239 MB             ; 00:00:22                           ;
-; Assembler            ; 00:00:03     ; 1.0                     ; 4720 MB             ; 00:00:01                           ;
-; Timing Analyzer      ; 00:00:04     ; 3.0                     ; 4977 MB             ; 00:00:05                           ;
-; EDA Netlist Writer   ; 00:00:02     ; 1.0                     ; 4770 MB             ; 00:00:00                           ;
-; Total                ; 00:01:11     ; --                      ; --                  ; 00:00:41                           ;
+; Analysis & Synthesis ; 00:00:35     ; 1.0                     ; 5086 MB             ; 00:00:17                           ;
+; Fitter               ; 00:00:29     ; 1.5                     ; 6211 MB             ; 00:00:19                           ;
+; Assembler            ; 00:00:02     ; 1.0                     ; 4713 MB             ; 00:00:01                           ;
+; Timing Analyzer      ; 00:00:03     ; 2.8                     ; 4961 MB             ; 00:00:04                           ;
+; EDA Netlist Writer   ; 00:00:02     ; 1.0                     ; 4754 MB             ; 00:00:01                           ;
+; Total                ; 00:01:11     ; --                      ; --                  ; 00:00:42                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
