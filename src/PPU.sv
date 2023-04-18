@@ -8,8 +8,81 @@
 //  - NOTE: This is mirrored every 8 bytes, meaning we only have a 3 bit address into
 //    the control registers
 //
+//  - PPU BUS Layout
+//    [$0000-$0FFF] Pattern Table 0
+//	   [$1000-$1FFF] Pattern Table 1
+//
+// 	[$2000-$23FF] Nametable 0
+//		[$2400-$27FF] Nametable 1
+//		[$2800-$2BFF] Nametable 2
+//		[$2C00-$2FFF] Nametable 3
+//
+//		[$3000-$3EFF] Mirrors of Nametables (only until $2EFF)
+//		
+//		[$3F00-$3F1F] Palette RAM indexes
+//		[$3F20-$3FFF] Mirrors of Palette Ram
+//
+//  - PPU BUS Read / Write
+//		
+// 
+//
+//  - OAM Layout
+//
 //  - TODO:
 //		Adapt for VGA
+//
+//
+//  - PAL vs NTSC:
+//    pal has 5 clks per pixel, and ntsc has 4 clks per pixel
+//
+//=======================================================
+
+//=======================================================
+//  High Level Rendering Layout Overview:
+//-------------------------------------------------------
+//
+//  Pattern Table (https://www.nesdev.org/wiki/PPU_pattern_tables)
+//  - The ptable is an area of memory that defines the shapes of tiles.
+//  - Also used to describe sprites
+//  - Divided into two 256-tile sections, left [$0000-$0FFF], and right [$1000-$1FFF].
+//  - The two planes are combined into a 2-bit number for each pixel, corresponding to a pixel's color.
+//  - The second plane is the MSB.
+//  
+//  Addressing
+//  - Need to use a 13 bit number to address into 0x1FFF locations (2^13 = 8192)
+//  - This is broken down as follows:
+//                       Controlled by PPUCTRL                                   0 low 1 upper
+//		[1 -Mystery Bit][1 - Half of Pattern Table][4 - Tile Row][4 - Tile Column][1 - Bit Plane][3 - Fine Y offset / pixel row number]
+//  
+//-------------------------------------------------------
+//
+//  Name Table (https://www.nesdev.org/wiki/PPU_nametables)
+//  - A nametable is a 1024 byte area of memory used to lay out background. 
+//  - Each byte controls one 8x8 pixel character cell (tile), and each nametable has 30 rows of 32 tiles each.
+//  - The first 960 / $3C0 Bytes contain the tiles, while the rest is used by the attribute table section.
+// 
+//  Mirroring
+//	 - Who cares right now
+// 
+//
+//  Render Evaluation
+//  - 33 Times for each scanline (Each tile in the scanline)
+//  - Fetch a nametable entry.
+//  - Fetch the corresponding attribute table entry
+//  - Increment the current VRAM address within the same row.
+//  - Fetch the low byte from the pattern table
+//  - Fetch the high byte of the pattern table (8 bytes higher)
+//  - Calculate the palette indicies.
+//
+//-------------------------------------------------------
+//
+//	 Attribute Table (https://www.nesdev.org/wiki/PPU_attribute_tables)
+//  - An attribute table is a 64-byte array at the end of each nametable that controls which palette is assigned to each part of the background.
+//  - Each attribute table, 4 total starting at $23C0 ....
+//  - Arranged as an 8x8 byte array
+//  - Each Byte controls the palette of a 32x32 pixel or 4x4 tile part of the nametable and is divided into four 2-bit areas.
+//  - [Topleft][Topright][Bottomleft][Bottomright]
+//
 //
 //=======================================================
 
@@ -42,16 +115,123 @@ module PPU (
 );
 
 //=======================================================
-//  Control Regs
+//  PPU Bus Control Quirk - Implement This Latter
+//   Addr / Data bus is [13:0]
+//	  the PPU muxes the lower eight VRAM address pins, also using them as the VRAM data pins,
+//   this leads to each VRAM access taking two PPU cycles. 
+//   Cycle 1: output VRAM address [13:0] on the PPU Bus, assert ALE signal and latch the bottom eight bits [7:0].
+//   Cycle 2: output only upper six bits of the address, with latch providing lower eight bits. 
+//            Our data will appear on the lower eight address pins
+//
 //=======================================================
 
+/**
+logic [7:0] PPU_DATA_IN,
+logic [7:0] PPU_DATA_OUT,
+logic [13:0] PPU_ADDR,
+*/
+
+//=======================================================
+//  Control Regs - Meaning and Decoding (https://www.nesdev.org/wiki/PPU_registers)
+//=======================================================
+
+// TODO:: Some of these are write-twice 16 bit regs
+// These are all just an interface into the PPU, we should have separate variables / 
+// registers to hold the correct values once written through these.
 logic [7:0] PPUCTRL, PPUMASK, PPUSTATUS, OAMADDR, OAMDATA, PPUSCROLL, PPUADDR, PPUDATA;
 
 //=======================================================
-//  State Machine
+// PPUCTRL - Write Only
+// [7] - NMI Generate
+// [6] - master/slave select (unused)
+// [5] - Sprite size low: 8x8 high: 8x16
+// [4] - Background Pattern Table Address
+// [3] - Sprite Pattern table address
+// [2] - VRAM address increment, low: (1 / going across) high: (32 / going down)
+// [1:0] - Base nametable address #0: $2000, ... 
+// [1:0] - Also the msb of the scrolling coordinates
+//-------------------------------------------------------
+// When master/slave select is low, the PPU gets the palette index from EXT pins which are grounded / 0.
+// This should always be 0???. Yes I think its unused
+//
+//
+//=======================================================
+// PPUMASK - Write Only
+// [7:5] - BGR color emphasis
+// [4] - sprite enable
+// [3] - background enable
+// TODO: .... Who cares for now...
+// [2] - VRAM address increment, low: (1 / going across) high: (32 / going down)
+// [1:0] - Base nametable address #0: $2000, ... 
+// [1:0] - Also the msb of the scrolling coordinates
 //=======================================================
 
+//=======================================================
+// PPUSCROLL - 16 bit - Write Twice
+// Upper byte first, Valid addresses are $0000-$3FFF
+//
+//
+//
+//=======================================================
+
+//=======================================================
+// PPUADDR - 16 bit - Write Twice
+// Upper byte first, Valid addresses are $0000-$3FFF
+// To load address $2108:
+//   lda #$21
+//   sta PPUADDR
+//   lda #$08
+//   sta PPUADDR
+// Read PPUSTATUS to reset the address latch
+//=======================================================
+
+//=======================================================
+// PPUDATA - 8 bit - Read / Write
+// After access, the video memory address will increment by an amount determined by bit 2 of $2000
+// To load address $2108:
+//   lda #$21
+//   sta PPUADDR
+//   lda #$08
+//   sta PPUADDR
+// Read PPUSTATUS to reset the address latch
+//=======================================================
+
+//=======================================================
+//  Control Regs - Read / Write logic
+//=======================================================
+
+//=======================================================
+//  Rendering State Machine
+//=======================================================
+
+// State Registers
+
+logic [15:0] curr_vram_address;
+logic [15:0] temp_vram_address;
+
+logic [3:0] fine_x_scroll;
+
+logic write_toggle;
+
+// VRAM Data Tiles
+
+logic [15:0] ptable_data; // Pattern Table Data
+logic [7:0]  atable_data; // Attribute Table Data
+
+// OAM
+logic [63:0][3:0][7:0] OAM;
+
+
+//=======================================================
+// // Conceptually, for each scanline
+//
+//=======================================================
+
+// Background Evaluation
+
 logic [7:0] bingle;
+
+logic [5:0] counter;
 
 always_ff @ (posedge CLK) begin
 	PPU_ADDR <= 14'h1000;
@@ -60,6 +240,28 @@ always_ff @ (posedge CLK) begin
 	bingle <= PPU_DATA_IN;
 
 end
+
+
+
+
+
+
+
+
+
+
+
+//=======================================================
+//  Framebuffer - Double Buffered Entire Frame, so 256 * 240 * 2 * 3 (bytes per pixel for each color?)
+//  368,640 bytes. Where do we put it. 368kB.
+//  Maybe we need a pallette so lets bytes per pixel, or maybe we just need like two lines buffers
+//  1,638 Kb of OCM, so yes thats enough lol
+//
+//  Lets just do double buffered output as VGA colors.
+//
+//=======================================================
+
+
 //=======================================================
 //  VGA Controller
 //=======================================================

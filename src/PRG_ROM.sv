@@ -7,7 +7,7 @@
 //
 //  - TODO:
 //		Mappers (This is why we have abstracted this memory away in the first place)
-//  
+//    Fix PRGROM size 
 //
 //=======================================================
 
@@ -33,6 +33,7 @@ $FFFC–$FFFD = Reset vector
 $FFFE–$FFFF = IRQ/BRK vector
 */
 
+//TODO: This should be cut down and have all address be subtracted from PRG_ROM base address. 
 logic [7:0] mem [65536]; // 2^16 (THE WHOLE CPU ADDRESS SPACE!!)
 
 always_ff @ (posedge clk) begin

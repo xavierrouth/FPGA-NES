@@ -8,134 +8,13 @@ z2
 !i10f 100
 cModel Technology
 Z0 dC:/dev/FPGA-NES/src/simulation/modelsim
-vCARTRIDGE
-Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
-Z2 !s110 1681489045
-!i10b 1
-!s100 =4H0>ci9I_[5maQ1]V>WO2
-IA3n>mVzSeNla??C;;Bdb_3
-Z3 VDg1SIo80bB@j0V0VzS_@n1
-!s105 CARTRIDGE_sv_unit
-S1
-R0
-w1681435754
-8C:/dev/FPGA-NES/src/CARTRIDGE.sv
-FC:/dev/FPGA-NES/src/CARTRIDGE.sv
-L0 16
-Z4 OV;L;10.5b;63
-r1
-!s85 0
-31
-Z5 !s108 1681489045.000000
-!s107 C:/dev/FPGA-NES/src/CARTRIDGE.sv|
-!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/CARTRIDGE.sv|
-!i113 1
-Z6 o-sv -work work
-Z7 !s92 -sv -work work +incdir+C:/dev/FPGA-NES/src
-Z8 tCvgOpt 0
-n@c@a@r@t@r@i@d@g@e
-vclockgen
-Z9 !s110 1681489042
-!i10b 1
-!s100 7CSMLM^mQ?FQW9<X:LG8;3
-Ih63=igVUUzga9fY4V72zm2
-R3
-R0
-w1681363501
-8C:/dev/FPGA-NES/src/clockgen.v
-FC:/dev/FPGA-NES/src/clockgen.v
-L0 39
-R4
-r1
-!s85 0
-31
-Z10 !s108 1681489042.000000
-!s107 C:/dev/FPGA-NES/src/clockgen.v|
-!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/clockgen.v|
-!i113 1
-Z11 o-vlog01compat -work work
-!s92 -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src
-R8
-vclockgen_altpll
-R9
-!i10b 1
-!s100 9PHiF[RDDD16;mX>10Gg11
-I]F_T;e:2Tz:=iX1;D=Z::3
-R3
-R0
-w1681364523
-8C:/dev/FPGA-NES/src/db/clockgen_altpll.v
-FC:/dev/FPGA-NES/src/db/clockgen_altpll.v
-L0 30
-R4
-r1
-!s85 0
-31
-R10
-!s107 C:/dev/FPGA-NES/src/db/clockgen_altpll.v|
-!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/dev/FPGA-NES/src/db|C:/dev/FPGA-NES/src/db/clockgen_altpll.v|
-!i113 1
-R11
-!s92 -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src/db
-R8
-vCPU_2A03
-R1
-DXx4 work 16 CPU_2A03_sv_unit 0 22 EciJc^eoMYnD5b;NQgC0m2
-R3
-r1
-!s85 0
-31
-!i10b 1
-!s100 Jz7MMjmUo<T51d?f1`FhE2
-I1_aGjl`c62EhNm46>I1TP2
-!s105 CPU_2A03_sv_unit
-S1
-R0
-Z12 w1681440976
-Z13 8C:/dev/FPGA-NES/src/CPU_2A03.sv
-Z14 FC:/dev/FPGA-NES/src/CPU_2A03.sv
-L0 10
-R4
-R5
-Z15 !s107 C:/dev/FPGA-NES/src/CPU_2A03.sv|
-Z16 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/CPU_2A03.sv|
-!i113 1
-R6
-R7
-R8
-n@c@p@u_2@a03
-XCPU_2A03_sv_unit
-R1
-VEciJc^eoMYnD5b;NQgC0m2
-r1
-!s85 0
-31
-!i10b 1
-!s100 T_VUFWY7W1Oi9Q:G8oj`f1
-IEciJc^eoMYnD5b;NQgC0m2
-!i103 1
-S1
-R0
-R12
-R13
-R14
-L0 1
-R4
-R5
-R15
-R16
-!i113 1
-R6
-R7
-R8
-n@c@p@u_2@a03_sv_unit
 vHexDriver
-R1
-R2
+Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z2 !s110 1681779039
 !i10b 1
 !s100 hKBo4zbCRmY3[Ac9JZP;<0
 IX[4cXbRoeDPTAQ_PH??X30
-R3
+Z3 VDg1SIo80bB@j0V0VzS_@n1
 !s105 HexDriver_sv_unit
 S1
 R0
@@ -143,69 +22,132 @@ w1681090063
 8C:/dev/FPGA-NES/src/HexDriver.sv
 FC:/dev/FPGA-NES/src/HexDriver.sv
 L0 1
-R4
+Z4 OV;L;10.5b;63
 r1
 !s85 0
 31
-R5
+Z5 !s108 1681779039.000000
 !s107 C:/dev/FPGA-NES/src/HexDriver.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/HexDriver.sv|
 !i113 1
-R6
-R7
-R8
+Z6 o-sv -work work
+Z7 !s92 -sv -work work +incdir+C:/dev/FPGA-NES/src
+Z8 tCvgOpt 0
 n@hex@driver
-XNES_ARCHITECTURE_sv_unit
-R1
-V8a8CgTFeE?f[T`^KdPn][2
-r1
-!s85 0
-31
+vmain_clkgen
+Z9 !s110 1681779035
 !i10b 1
-!s100 [IXk@IaLKm`R>e:@Cm73_0
-I8a8CgTFeE?f[T`^KdPn][2
-!i103 1
-S1
-R0
-Z17 w1681450785
-Z18 8C:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv
-Z19 FC:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv
-L0 5
-R4
-R5
-Z20 !s107 C:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv|
-Z21 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv|
-!i113 1
-R6
-R7
-R8
-n@n@e@s_@a@r@c@h@i@t@e@c@t@u@r@e_sv_unit
-vNES_ARCHITECUTRE
-R1
-DXx4 work 24 NES_ARCHITECTURE_sv_unit 0 22 8a8CgTFeE?f[T`^KdPn][2
+!s100 InC7b1TobfdgX[ThQ7b342
+IQQVU?>LLSAUZY?6agYW[n2
 R3
+R0
+w1681531162
+8C:/dev/FPGA-NES/src/main_clkgen.v
+FC:/dev/FPGA-NES/src/main_clkgen.v
+Z10 L0 39
+R4
 r1
 !s85 0
 31
+Z11 !s108 1681779035.000000
+!s107 C:/dev/FPGA-NES/src/main_clkgen.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/main_clkgen.v|
+!i113 1
+Z12 o-vlog01compat -work work
+Z13 !s92 -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src
+R8
+vmain_clkgen_altpll
+R9
 !i10b 1
-!s100 hzC2aXnBgjd^g_KY?`0V?1
-IKKZ3VcOl8bLg27m3<nWB30
-!s105 NES_ARCHITECTURE_sv_unit
+!s100 [RDVgh30[<cgeZ;GI_=6Z3
+IXHOg3WA>cVPzRIMFIDB>k2
+R3
+R0
+Z14 w1681531597
+8C:/dev/FPGA-NES/src/db/main_clkgen_altpll.v
+FC:/dev/FPGA-NES/src/db/main_clkgen_altpll.v
+Z15 L0 30
+R4
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/db/main_clkgen_altpll.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/dev/FPGA-NES/src/db|C:/dev/FPGA-NES/src/db/main_clkgen_altpll.v|
+!i113 1
+R12
+Z16 !s92 -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src/db
+R8
+vnes_clkgen
+R9
+!i10b 1
+!s100 JDX7m^Rn2PdGWVDOgj9]G0
+I1McC3Y[<:I;4`UYXPCE033
+R3
+R0
+w1681531302
+8C:/dev/FPGA-NES/src/nes_clkgen.v
+FC:/dev/FPGA-NES/src/nes_clkgen.v
+R10
+R4
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/nes_clkgen.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/nes_clkgen.v|
+!i113 1
+R12
+R13
+R8
+vnes_clkgen_altpll
+R9
+!i10b 1
+!s100 k@ne[`Sa>H2kAlQJPOIWA2
+Iog1]PO:SibV]7W=9_MMMh1
+R3
+R0
+R14
+8C:/dev/FPGA-NES/src/db/nes_clkgen_altpll.v
+FC:/dev/FPGA-NES/src/db/nes_clkgen_altpll.v
+R15
+R4
+r1
+!s85 0
+31
+R11
+!s107 C:/dev/FPGA-NES/src/db/nes_clkgen_altpll.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/dev/FPGA-NES/src/db|C:/dev/FPGA-NES/src/db/nes_clkgen_altpll.v|
+!i113 1
+R12
+R16
+R8
+vPRG_ROM
+R1
+R2
+!i10b 1
+!s100 9I`SE@PjXnR<<9P1CmOV31
+I<R<BOzBk36m[NTTl5Y3Pl0
+R3
+!s105 PRG_ROM_sv_unit
 S1
 R0
-R17
-R18
-R19
-L0 25
+w1681507882
+8C:/dev/FPGA-NES/src/PRG_ROM.sv
+FC:/dev/FPGA-NES/src/PRG_ROM.sv
+L0 14
 R4
+r1
+!s85 0
+31
 R5
-R20
-R21
+!s107 C:/dev/FPGA-NES/src/PRG_ROM.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/PRG_ROM.sv|
 !i113 1
 R6
 R7
 R8
-n@n@e@s_@a@r@c@h@i@t@e@c@u@t@r@e
+n@p@r@g_@r@o@m
 vsync
 R1
 R2
@@ -213,20 +155,20 @@ R2
 !s100 2W5Vz0:F6ckE2`eJOTK5l1
 IWDNUdmd3M5cn>W[[RWAML3
 R3
-Z22 !s105 synchronizers_sv_unit
+Z17 !s105 synchronizers_sv_unit
 S1
 R0
-Z23 w1681439218
-Z24 8C:/dev/FPGA-NES/src/synchronizers.sv
-Z25 FC:/dev/FPGA-NES/src/synchronizers.sv
+Z18 w1681439218
+Z19 8C:/dev/FPGA-NES/src/synchronizers.sv
+Z20 FC:/dev/FPGA-NES/src/synchronizers.sv
 L0 4
 R4
 r1
 !s85 0
 31
 R5
-Z26 !s107 C:/dev/FPGA-NES/src/synchronizers.sv|
-Z27 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/synchronizers.sv|
+Z21 !s107 C:/dev/FPGA-NES/src/synchronizers.sv|
+Z22 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/synchronizers.sv|
 !i113 1
 R6
 R7
@@ -238,20 +180,20 @@ R2
 !s100 V;_mi010i:S2iV<>a2ZXJ3
 IBo;3`6PH;?e]9Ck3bM4Og3
 R3
-R22
+R17
 S1
 R0
-R23
-R24
-R25
-Z28 L0 17
+R18
+R19
+R20
+Z23 L0 17
 R4
 r1
 !s85 0
 31
 R5
-R26
-R27
+R21
+R22
 !i113 1
 R6
 R7
@@ -263,20 +205,20 @@ R2
 !s100 9X2Iz8zYn^WV5TWZ]W6NL3
 ICZhoIkAFBzWnQ0d@mjY@G1
 R3
-R22
+R17
 S1
 R0
-R23
-R24
-R25
+R18
+R19
+R20
 L0 33
 R4
 r1
 !s85 0
 31
 R5
-R26
-R27
+R21
+R22
 !i113 1
 R6
 R7
@@ -294,7 +236,7 @@ R0
 w1681435827
 8C:/dev/FPGA-NES/src/SYS_RAM.sv
 FC:/dev/FPGA-NES/src/SYS_RAM.sv
-R28
+R23
 R4
 r1
 !s85 0
@@ -307,277 +249,27 @@ R6
 R7
 R8
 n@s@y@s_@r@a@m
-Et65
-Z29 w1681356310
-Z30 DPx4 work 8 t65_pack 0 22 X?JfXF8kDjW8H@j@^`P0b2
-Z31 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
-Z32 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
-Z33 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
-R0
-Z34 8C:/dev/FPGA-NES/src/t65/T65.vhd
-Z35 FC:/dev/FPGA-NES/src/t65/T65.vhd
-l0
-L134
-VFR:Eij84Yi[:Q2P9iFF`;3
-!s100 F[L2A5O0iCmAfZCRoAQ>l3
-Z36 OV;C;10.5b;63
-31
-R2
-!i10b 1
-R5
-Z37 !s90 -reportprogress|300|-93|-work|work|C:/dev/FPGA-NES/src/t65/T65.vhd|
-Z38 !s107 C:/dev/FPGA-NES/src/t65/T65.vhd|
-!i113 1
-Z39 o-93 -work work
-Z40 tExplicit 1 CvgOpt 0
-Artl
-Z41 DEx4 work 7 t65_alu 0 22 D<7zk8h_Jf3845>A4]QRQ3
-Z42 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
-Z43 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
-Z44 DEx4 work 9 t65_mcode 0 22 A3a=lD8]fFB?ja^kzoN@a2
-R30
-R31
-R32
-R33
-DEx4 work 3 t65 0 22 FR:Eij84Yi[:Q2P9iFF`;3
-l250
-L166
-VbC=>6Gl0XH7IY1KS:T9NA3
-!s100 L`IE@;ehA8eH<5LKX6LYf2
-R36
-31
-R2
-!i10b 1
-R5
-R37
-R38
-!i113 1
-R39
-R40
-Et65_alu
-R29
-R30
-R31
-R32
-R33
-R0
-Z45 8C:/dev/FPGA-NES/src/t65/T65_ALU.vhd
-Z46 FC:/dev/FPGA-NES/src/t65/T65_ALU.vhd
-l0
-L57
-VD<7zk8h_Jf3845>A4]QRQ3
-!s100 ]`YYMd<OGUFGd6cSJ7JGz2
-R36
-31
-R2
-!i10b 1
-R5
-Z47 !s90 -reportprogress|300|-93|-work|work|C:/dev/FPGA-NES/src/t65/T65_ALU.vhd|
-Z48 !s107 C:/dev/FPGA-NES/src/t65/T65_ALU.vhd|
-!i113 1
-R39
-R40
-Artl
-R30
-R31
-R32
-R33
-R41
-l85
-L70
-V6KgTF27kU:nn5879[DmGC3
-!s100 QHn:[nai0[X5_3e`g_OY`3
-R36
-31
-R2
-!i10b 1
-R5
-R47
-R48
-!i113 1
-R39
-R40
-Et65_mcode
-R29
-R30
-R42
-R43
-R31
-R32
-R33
-R0
-Z49 8C:/dev/FPGA-NES/src/t65/T65_MCode.vhd
-Z50 FC:/dev/FPGA-NES/src/t65/T65_MCode.vhd
-l0
-L58
-VA3a=lD8]fFB?ja^kzoN@a2
-!s100 6a]]B>1S;6bbb9HFKQJXB2
-R36
-31
-R2
-!i10b 1
-R5
-Z51 !s90 -reportprogress|300|-93|-work|work|C:/dev/FPGA-NES/src/t65/T65_MCode.vhd|
-Z52 !s107 C:/dev/FPGA-NES/src/t65/T65_MCode.vhd|
-!i113 1
-R39
-R40
-Artl
-R30
-R42
-R43
-R31
-R32
-R33
-R44
-l100
-L95
-Vz;O]a5TNilFa5PF;BiMhM2
-!s100 ^73>E=ofGjoZInPCEeCk<1
-R36
-31
-R2
-!i10b 1
-R5
-R51
-R52
-!i113 1
-R39
-R40
-Pt65_pack
-R32
-R33
-R29
-R0
-Z53 8C:/dev/FPGA-NES/src/t65/T65_Pack.vhd
-Z54 FC:/dev/FPGA-NES/src/t65/T65_Pack.vhd
-l0
-L55
-VX?JfXF8kDjW8H@j@^`P0b2
-!s100 VCE6QlBhTeTd95bNlUckX1
-R36
-31
-b1
-R2
-!i10b 1
-R5
-Z55 !s90 -reportprogress|300|-93|-work|work|C:/dev/FPGA-NES/src/t65/T65_Pack.vhd|
-Z56 !s107 C:/dev/FPGA-NES/src/t65/T65_Pack.vhd|
-!i113 1
-R39
-R40
-Bbody
-R30
-R32
-R33
-l0
-L154
-VCFN60UD[aDFQCXU1T^1:61
-!s100 J_99BnUe^e;H2?a^1_VR[3
-R36
-31
-R2
-!i10b 1
-R5
-R55
-R56
-!i113 1
-R39
-R40
-vtestbench
+vvga_controller
 R1
-DXx4 work 17 testbench_sv_unit 0 22 gWnn8XQ_hEd4E[zQA8AlK1
+R2
+!i10b 1
+!s100 2US2Q2[k?jgYZj[5KKjFG3
+IT307d<L57Df2f8dQAbS111
 R3
+!s105 VGA_controller_sv_unit
+S1
+R0
+w1681533684
+8C:/dev/FPGA-NES/src/VGA_controller.sv
+FC:/dev/FPGA-NES/src/VGA_controller.sv
+L0 25
+R4
 r1
 !s85 0
 31
-!i10b 1
-!s100 FmN_1oOebl0nbdBH5zgY51
-I8h[IRe:eeU0zT9;E^:Ol?1
-!s105 testbench_sv_unit
-S1
-R0
-Z57 w1681401881
-Z58 8C:/dev/FPGA-NES/src/testbench.sv
-Z59 FC:/dev/FPGA-NES/src/testbench.sv
-L0 15
-R4
 R5
-Z60 !s107 C:/dev/FPGA-NES/src/testbench.sv|
-Z61 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/testbench.sv|
-!i113 1
-R6
-R7
-R8
-Xtestbench_sv_unit
-R1
-VgWnn8XQ_hEd4E[zQA8AlK1
-r1
-!s85 0
-31
-!i10b 1
-!s100 ZGH`mV2C8doh3T]A_4^;@3
-IgWnn8XQ_hEd4E[zQA8AlK1
-!i103 1
-S1
-R0
-R57
-R58
-R59
-L0 5
-R4
-R5
-R60
-R61
-!i113 1
-R6
-R7
-R8
-vtoplevel
-R1
-DXx4 work 16 toplevel_sv_unit 0 22 XTR_mHjz>Mzg@kN@3A@<?2
-R3
-r1
-!s85 0
-31
-!i10b 1
-!s100 dN1mao=^18oM2Qf4MhE:B2
-IzOaY_`SF26CV;?SRPm:192
-!s105 toplevel_sv_unit
-S1
-R0
-Z62 w1681488984
-Z63 8C:/dev/FPGA-NES/src/toplevel.sv
-Z64 FC:/dev/FPGA-NES/src/toplevel.sv
-L0 20
-R4
-R5
-Z65 !s107 C:/dev/FPGA-NES/src/toplevel.sv|
-Z66 !s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/toplevel.sv|
-!i113 1
-R6
-R7
-R8
-Xtoplevel_sv_unit
-R1
-VXTR_mHjz>Mzg@kN@3A@<?2
-r1
-!s85 0
-31
-!i10b 1
-!s100 Mk6dh5b6:a5OA;4e4?L0O1
-IXTR_mHjz>Mzg@kN@3A@<?2
-!i103 1
-S1
-R0
-R62
-R63
-R64
-L0 1
-R4
-R5
-R65
-R66
+!s107 C:/dev/FPGA-NES/src/VGA_controller.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/dev/FPGA-NES/src|C:/dev/FPGA-NES/src/VGA_controller.sv|
 !i113 1
 R6
 R7

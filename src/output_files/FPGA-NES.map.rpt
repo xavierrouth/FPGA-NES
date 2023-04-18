@@ -1,5 +1,5 @@
 Analysis & Synthesis report for FPGA-NES
-Fri Apr 14 23:42:55 2023
+Tue Apr 18 14:18:50 2023
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -416,7 +416,7 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Fri Apr 14 23:42:55 2023       ;
+; Analysis & Synthesis Status        ; Successful - Tue Apr 18 14:18:50 2023       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; FPGA-NES                                    ;
 ; Top-level Entity Name              ; toplevel                                    ;
@@ -530,18 +530,19 @@ refer to the applicable agreement for further details.
 ; Number detected on machine ; 20          ;
 ; Maximum allowed            ; 10          ;
 ;                            ;             ;
-; Average used               ; 1.01        ;
+; Average used               ; 1.00        ;
 ; Maximum used               ; 10          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.2%      ;
+;     Processor 2            ;   0.1%      ;
 ;     Processor 3            ;   0.1%      ;
 ;     Processor 4            ;   0.1%      ;
 ;     Processor 5            ;   0.0%      ;
 ;     Processor 6            ;   0.0%      ;
 ;     Processor 7            ;   0.0%      ;
-;     Processors 8-10        ;   0.0%      ;
+;     Processor 8            ;   0.0%      ;
+;     Processors 9-10        ;   0.0%      ;
 +----------------------------+-------------+
 
 
@@ -11159,7 +11160,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:15     ;
+; Top            ; 00:00:08     ;
 +----------------+--------------+
 
 
@@ -11169,7 +11170,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Fri Apr 14 23:42:15 2023
+    Info: Processing started: Tue Apr 18 14:18:19 2023
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off FPGA-NES -c FPGA-NES
 Info (20032): Parallel compilation is enabled and will use up to 10 processors
 Info (12021): Found 1 design units, including 1 entities, in source file vga_controller.sv
@@ -11394,7 +11395,7 @@ Info (12021): Found 3 design units, including 3 entities, in source file synchro
 Info (12021): Found 1 design units, including 1 entities, in source file prg_rom.sv
     Info (12023): Found entity 1: PRG_ROM File: C:/dev/FPGA-NES/src/PRG_ROM.sv Line: 14
 Info (12021): Found 1 design units, including 1 entities, in source file ppu.sv
-    Info (12023): Found entity 1: PPU File: C:/dev/FPGA-NES/src/PPU.sv Line: 16
+    Info (12023): Found entity 1: PPU File: C:/dev/FPGA-NES/src/PPU.sv Line: 89
 Info (12021): Found 1 design units, including 1 entities, in source file chr_rom.sv
     Info (12023): Found entity 1: CHR_ROM File: C:/dev/FPGA-NES/src/CHR_ROM.sv Line: 14
 Info (12021): Found 1 design units, including 1 entities, in source file vram.sv
@@ -11403,6 +11404,8 @@ Info (12021): Found 1 design units, including 1 entities, in source file main_cl
     Info (12023): Found entity 1: main_clkgen File: C:/dev/FPGA-NES/src/main_clkgen.v Line: 39
 Info (12021): Found 1 design units, including 1 entities, in source file nes_clkgen.v
     Info (12023): Found entity 1: nes_clkgen File: C:/dev/FPGA-NES/src/nes_clkgen.v Line: 39
+Info (12021): Found 1 design units, including 1 entities, in source file controller.sv
+    Info (12023): Found entity 1: CONTROLLER File: C:/dev/FPGA-NES/src/CONTROLLER.sv Line: 35
 Warning (10236): Verilog HDL Implicit Net warning at toplevel.sv(397): created implicit net for "s_sda_in" File: C:/dev/FPGA-NES/src/toplevel.sv Line: 397
 Warning (10236): Verilog HDL Implicit Net warning at toplevel.sv(398): created implicit net for "s_scl_in" File: C:/dev/FPGA-NES/src/toplevel.sv Line: 398
 Warning (10236): Verilog HDL Implicit Net warning at toplevel.sv(399): created implicit net for "s_sda_oe" File: C:/dev/FPGA-NES/src/toplevel.sv Line: 399
@@ -11564,10 +11567,11 @@ Warning (10034): Output port "debug_out" at PRG_ROM.sv(27) has no driver File: C
 Info (12128): Elaborating entity "CHR_ROM" for hierarchy "NES_ARCHITECUTRE:NES|CHR_ROM:chr_rom_inst" File: C:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv Line: 240
 Warning (10034): Output port "debug_out" at CHR_ROM.sv(27) has no driver File: C:/dev/FPGA-NES/src/CHR_ROM.sv Line: 27
 Info (12128): Elaborating entity "PPU" for hierarchy "NES_ARCHITECUTRE:NES|PPU:ppu_inst" File: C:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv Line: 243
-Warning (10034): Output port "CPU_DATA_OUT" at PPU.sv(27) has no driver File: C:/dev/FPGA-NES/src/PPU.sv Line: 27
-Warning (10034): Output port "PPU_DATA_OUT" at PPU.sv(32) has no driver File: C:/dev/FPGA-NES/src/PPU.sv Line: 32
-Warning (10034): Output port "PPU_WRITE" at PPU.sv(34) has no driver File: C:/dev/FPGA-NES/src/PPU.sv Line: 34
-Info (12128): Elaborating entity "vga_controller" for hierarchy "NES_ARCHITECUTRE:NES|PPU:ppu_inst|vga_controller:vga_ctrl" File: C:/dev/FPGA-NES/src/PPU.sv Line: 72
+Warning (10034): Output port "CPU_DATA_OUT" at PPU.sv(100) has no driver File: C:/dev/FPGA-NES/src/PPU.sv Line: 100
+Warning (10034): Output port "PPU_DATA_OUT" at PPU.sv(105) has no driver File: C:/dev/FPGA-NES/src/PPU.sv Line: 105
+Warning (10034): Output port "PPU_WRITE" at PPU.sv(107) has no driver File: C:/dev/FPGA-NES/src/PPU.sv Line: 107
+Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "OAM" into its bus
+Info (12128): Elaborating entity "vga_controller" for hierarchy "NES_ARCHITECUTRE:NES|PPU:ppu_inst|vga_controller:vga_ctrl" File: C:/dev/FPGA-NES/src/PPU.sv Line: 250
 Warning (10230): Verilog HDL assignment warning at VGA_controller.sv(65): truncated value with size 32 to match size of target (10) File: C:/dev/FPGA-NES/src/VGA_controller.sv Line: 65
 Warning (10230): Verilog HDL assignment warning at VGA_controller.sv(68): truncated value with size 32 to match size of target (10) File: C:/dev/FPGA-NES/src/VGA_controller.sv Line: 68
 Info (12128): Elaborating entity "VRAM" for hierarchy "NES_ARCHITECUTRE:NES|VRAM:vram_inst" File: C:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv Line: 245
@@ -11838,7 +11842,7 @@ Info (12128): Elaborating entity "altera_reset_synchronizer" for hierarchy "topl
 Info (12128): Elaborating entity "altera_reset_synchronizer" for hierarchy "toplevel_soc:u0|altera_reset_controller:rst_controller|altera_reset_synchronizer:alt_rst_req_sync_uq1" File: C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_controller.v Line: 220
 Info (12128): Elaborating entity "altera_reset_controller" for hierarchy "toplevel_soc:u0|altera_reset_controller:rst_controller_001" File: C:/dev/FPGA-NES/src/toplevel_soc/synthesis/toplevel_soc.v Line: 602
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2023.04.14.23:42:29 Progress: Loading sldec52bfc8/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2023.04.18.14:18:32 Progress: Loading sldec52bfc8/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -12034,10 +12038,10 @@ Info (21057): Implemented 6820 device resources after synthesis - the final reso
     Info (21064): Implemented 210 RAM segments
     Info (21065): Implemented 3 PLLs
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 81 warnings
-    Info: Peak virtual memory: 5086 megabytes
-    Info: Processing ended: Fri Apr 14 23:42:55 2023
-    Info: Elapsed time: 00:00:40
-    Info: Total CPU time (on all processors): 00:00:21
+    Info: Peak virtual memory: 5071 megabytes
+    Info: Processing ended: Tue Apr 18 14:18:50 2023
+    Info: Elapsed time: 00:00:31
+    Info: Total CPU time (on all processors): 00:00:11
 
 
 +------------------------------------------+
