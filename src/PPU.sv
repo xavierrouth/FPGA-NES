@@ -103,8 +103,8 @@ module PPU (
 	input [7:0] PPU_DATA_IN,
 	
 	output [7:0] PPU_DATA_OUT,
-	output [13:0] PPU_ADDR,
-	output PPU_WRITE, PPU_READ,
+	output [13:0] PPU_BUS_ADDR,
+	output PPU_WRITE, PPU_READ, // PPU wants to read, ppu want to write
 	
 	// Video Output
 	output             VGA_HS,
@@ -115,7 +115,7 @@ module PPU (
 );
 
 //=======================================================
-//  PPU Bus Control Quirk - Implement This Latter
+//  PPU Bus Control Quirk - Implement This Now
 //   Addr / Data bus is [13:0]
 //	  the PPU muxes the lower eight VRAM address pins, also using them as the VRAM data pins,
 //   this leads to each VRAM access taking two PPU cycles. 
@@ -125,19 +125,116 @@ module PPU (
 //
 //=======================================================
 
-/**
-logic [7:0] PPU_DATA_IN,
-logic [7:0] PPU_DATA_OUT,
-logic [13:0] PPU_ADDR,
-*/
+// TODO: Make sure that curr_Vram_address use is consistent
+// PPU_BUS_ADDR is the external interface
+assign PPU_BUS_ADDR = curr_vram_address[13:0];
+
+logic scroll_write_status;
+logic addr_write_status;
+
+logic ppu_latch;
+
+logic ppu_data_write_status;
+
+logic [7:0] PPU_READ_BUFFER;
+
+// CPU Interface
+always_ff @ (posedge clk) begin
+	// rden and wren are never active at the same time
+	//-------------CPU WRITE--------------------------
+	if (CPU_wren) begin // CPU Write
+		case (CPU_ADDR)
+			// Write Only
+			3'h0: PPUCTRL <= CPU_DATA_IN;
+			3'h1: PPUMASK <= CPU_DATA_IN;
+			3'h3: OAMADDR <= CPU_DATA_IN;
+			// Read Only
+			3'h2: 
+			// Read / Write
+			3'h4: begin
+				// TODO: Fix this?
+				// Increment OAMADDR after write
+				OAMDATA <= CPU_DATA_IN;
+				OAMADDR <= OAMADDR + 1;
+			end
+			// Write Twice
+			3'h5: begin //PPUSCROLL
+				// Little baby state machine
+				if (scroll_write_status == 1'b0) begin
+					scroll_write_status <= 1'b1;
+				end
+			end
+			3'h6: begin //PPUADDR
+				// TODO: Do we actually ignore top 3 bits of PPU_ADDR?
+				if (ppu_latch == 1'b0) begin
+					// Write upper byte of PPU_ADDR
+					curr_vram_address[14:8] <= CPU_DATA_IN[6:0] // 
+					ppu_latch <= 1'b1;
+				end
+				else if (ppu_latch == 1'b1) begin
+					// TODO: Do we actually ignore top 
+					// Write lower byte of PPU_ADDR
+					curr_vram_address <= temp_vram_address;
+					curr_vram_address[7:0] <= CPU_DATA_IN[7:0] // 
+					ppu_latch <= 1'b0;
+				end
+			end
+			3'h7: begin //PPU_DATA
+			
+				// TODO: Confirm this should only write for one PPU cycle
+				// PPU_ADDR should be set and outputting to BUS already, so just forward CPU data to PPU bus
+				if (ppu_latch == 1'b0) begin
+					PPU_WRITE <= 1'b1; 
+					PPU_DATA_OUT <= CPU_DATA_IN;
+					ppu_latch <= 1'b1;
+					
+					// TODO: Make Read Increment this also
+					// Increment PPU_ADDR
+					if (PPUCTRL[2]) 
+						curr_vram_address <= curr_vram_address + 8'd32; // Increment 32
+					else 
+						curr_vram_address <= curr_vram_address + 1'd1; // Increment 1
+				end
+				else if (ppu_data_write_status == 1'b1) begin
+					PPU_WRITE <= 1'b0; 
+					PPU_DATA_OUT <= CPU_DATA_IN; // Open Bus / Don't Care I suppose
+					ppu_latch <= 1'b0;
+				end
+			end
+		endcase
+
+			
+	//-------------CPU READ---------------------------
+	end else if (CPU_rden) begin // CPU Read
+		
+		case (CPU_ADDR)
+			// Write Only
+			3'h0: CPU_DATA_OUT <= PPU_BUS_LATCH;
+			3'h1: CPU_DATA_OUT <= PPU_BUS_LATCH;
+			// Read Only
+			3'h2: begin	
+				CPU_DATA_OUT <= PPUSTATUS;
+				//Clear PPU_LATCH address latch
+				
+			end
+			3'h3:
+			3'h4:
+			3'h5:
+			3'h6:
+			3'h7:
+		endcase
+	end
+end
+
 
 //=======================================================
 //  Control Regs - Meaning and Decoding (https://www.nesdev.org/wiki/PPU_registers)
 //=======================================================
 
-// TODO:: Some of these are write-twice 16 bit regs
+// TODO: Some of these are write-twice 16 bit regs
 // These are all just an interface into the PPU, we should have separate variables / 
 // registers to hold the correct values once written through these.
+// I don't think these are real, these are just addresses.
 logic [7:0] PPUCTRL, PPUMASK, PPUSTATUS, OAMADDR, OAMDATA, PPUSCROLL, PPUADDR, PPUDATA;
 
 //=======================================================
@@ -223,7 +320,7 @@ logic [63:0][3:0][7:0] OAM;
 
 
 //=======================================================
-// // Conceptually, for each scanline
+// Conceptually, for each scanline
 //
 //=======================================================
 
@@ -258,6 +355,7 @@ end
 //  1,638 Kb of OCM, so yes thats enough lol
 //
 //  Lets just do double buffered output as VGA colors.
+//  256 * 2 * 2 = 1024 Bytes
 //
 //=======================================================
 

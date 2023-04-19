@@ -194,7 +194,8 @@ always_comb begin : PPU_BUS_SELECTION
 			CHR_ROM_rden = 1'b1;
 		end
 		
-		// VRAM / Name Tables [$2000 - $3FFF]
+		// TODO: Name Tables from Palette?
+		// VRAM / Name Tables / Palette [$2000 - $3FFF]
 		else if (PPU_ADDR_BUS >= 14'h2000) begin
 			PPU_DATA_BUS = VRAM_DATA_OUT;
 			VRAM_rden = 1'b1;

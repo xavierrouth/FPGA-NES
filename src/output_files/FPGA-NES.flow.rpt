@@ -1,5 +1,5 @@
 Flow report for FPGA-NES
-Tue Apr 18 14:19:25 2023
+Wed Apr 19 01:31:24 2023
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,24 +40,24 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Flow Summary                                                                     ;
 +------------------------------------+---------------------------------------------+
-; Flow Status                        ; Successful - Tue Apr 18 14:19:25 2023       ;
+; Flow Status                        ; Flow Failed - Wed Apr 19 01:31:24 2023      ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; FPGA-NES                                    ;
 ; Top-level Entity Name              ; toplevel                                    ;
 ; Family                             ; MAX 10                                      ;
 ; Device                             ; 10M50DCF484C7G                              ;
 ; Timing Models                      ; Final                                       ;
-; Total logic elements               ; 5,677 / 49,760 ( 11 % )                     ;
-;     Total combinational functions  ; 5,000 / 49,760 ( 10 % )                     ;
-;     Dedicated logic registers      ; 2,914 / 49,760 ( 6 % )                      ;
-; Total registers                    ; 2983                                        ;
-; Total pins                         ; 141 / 360 ( 39 % )                          ;
-; Total virtual pins                 ; 0                                           ;
-; Total memory bits                  ; 617,544 / 1,677,312 ( 37 % )                ;
-; Embedded Multiplier 9-bit elements ; 0 / 288 ( 0 % )                             ;
-; Total PLLs                         ; 3 / 4 ( 75 % )                              ;
-; UFM blocks                         ; 0 / 1 ( 0 % )                               ;
-; ADC blocks                         ; 0                                           ;
+; Total logic elements               ; N/A until Partition Merge                   ;
+;     Total combinational functions  ; N/A until Partition Merge                   ;
+;     Dedicated logic registers      ; N/A until Partition Merge                   ;
+; Total registers                    ; N/A until Partition Merge                   ;
+; Total pins                         ; N/A until Partition Merge                   ;
+; Total virtual pins                 ; N/A until Partition Merge                   ;
+; Total memory bits                  ; N/A until Partition Merge                   ;
+; Embedded Multiplier 9-bit elements ; N/A until Partition Merge                   ;
+; Total PLLs                         ; N/A until Partition Merge                   ;
+; UFM blocks                         ; N/A until Partition Merge                   ;
+; ADC blocks                         ; N/A until Partition Merge                   ;
 +------------------------------------+---------------------------------------------+
 
 
@@ -66,7 +66,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/18/2023 14:18:19 ;
+; Start date & time ; 04/19/2023 01:31:18 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; FPGA-NES            ;
 +-------------------+---------------------+
@@ -77,7 +77,7 @@ refer to the applicable agreement for further details.
 +--------------------------------------+----------------------------------------------------------------+---------------+--------------+----------------+
 ; Assignment Name                      ; Value                                                          ; Default Value ; Entity Name  ; Section Id     ;
 +--------------------------------------+----------------------------------------------------------------+---------------+--------------+----------------+
-; COMPILER_SIGNATURE_ID                ; 96830613240568.168184549926440                                 ; --            ; --           ; --             ;
+; COMPILER_SIGNATURE_ID                ; 96830613240568.168188587835176                                 ; --            ; --           ; --             ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                                             ; --            ; --           ; testbench      ;
 ; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; testbench                                                      ; --            ; --           ; eda_simulation ;
 ; EDA_OUTPUT_DATA_FORMAT               ; Systemverilog Hdl                                              ; --            ; --           ; eda_simulation ;
@@ -117,12 +117,8 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:28     ; 1.0                     ; 5071 MB             ; 00:00:11                           ;
-; Fitter               ; 00:00:24     ; 1.6                     ; 6213 MB             ; 00:00:16                           ;
-; Assembler            ; 00:00:02     ; 1.0                     ; 4714 MB             ; 00:00:01                           ;
-; Timing Analyzer      ; 00:00:03     ; 2.8                     ; 4960 MB             ; 00:00:04                           ;
-; EDA Netlist Writer   ; 00:00:02     ; 1.0                     ; 4754 MB             ; 00:00:01                           ;
-; Total                ; 00:00:59     ; --                      ; --                  ; 00:00:33                           ;
+; Analysis & Synthesis ; 00:00:07     ; 1.0                     ; 4806 MB             ; 00:00:03                           ;
+; Total                ; 00:00:07     ; --                      ; --                  ; 00:00:03                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -132,10 +128,6 @@ refer to the applicable agreement for further details.
 ; Module Name          ; Machine Hostname ; OS Name    ; OS Version ; Processor type ;
 +----------------------+------------------+------------+------------+----------------+
 ; Analysis & Synthesis ; XROUTHPC-2023    ; Windows 10 ; 10.0       ; x86_64         ;
-; Fitter               ; XROUTHPC-2023    ; Windows 10 ; 10.0       ; x86_64         ;
-; Assembler            ; XROUTHPC-2023    ; Windows 10 ; 10.0       ; x86_64         ;
-; Timing Analyzer      ; XROUTHPC-2023    ; Windows 10 ; 10.0       ; x86_64         ;
-; EDA Netlist Writer   ; XROUTHPC-2023    ; Windows 10 ; 10.0       ; x86_64         ;
 +----------------------+------------------+------------+------------+----------------+
 
 
@@ -143,10 +135,6 @@ refer to the applicable agreement for further details.
 ; Flow Log ;
 ------------
 quartus_map --read_settings_files=on --write_settings_files=off FPGA-NES -c FPGA-NES
-quartus_fit --read_settings_files=off --write_settings_files=off FPGA-NES -c FPGA-NES
-quartus_asm --read_settings_files=off --write_settings_files=off FPGA-NES -c FPGA-NES
-quartus_sta FPGA-NES -c FPGA-NES
-quartus_eda --read_settings_files=off --write_settings_files=off FPGA-NES -c FPGA-NES
 
 
 
