@@ -89,6 +89,7 @@
 module PPU (
 	input CLK,
 	input VIDEO_CLK,
+	input RESET,
 	//input enable,
 	
 	// CPU BUS interface
@@ -98,12 +99,13 @@ module PPU (
 	input CPU_wren, CPU_rden, // CPU wants to read / CPU wants to write
 	
 	output logic [7:0] CPU_DATA_OUT,
+	output 	NMI,
 	
 	//PPU BUS interface
 	input [7:0] PPU_DATA_IN,
 	
 	output [7:0] PPU_DATA_OUT,
-	output [13:0] PPU_BUS_ADDR,
+	output [13:0] PPU_ADDR,
 	output PPU_WRITE, PPU_READ, // PPU wants to read, ppu want to write
 	
 	// Video Output
@@ -115,7 +117,7 @@ module PPU (
 );
 
 //=======================================================
-//  PPU Bus Control Quirk - Implement This Now
+//  PPU Bus Control Quirk - Implement This Later?
 //   Addr / Data bus is [13:0]
 //	  the PPU muxes the lower eight VRAM address pins, also using them as the VRAM data pins,
 //   this leads to each VRAM access taking two PPU cycles. 
@@ -125,31 +127,48 @@ module PPU (
 //
 //=======================================================
 
-// TODO: Make sure that curr_Vram_address use is consistent
-// PPU_BUS_ADDR is the external interface
-assign PPU_BUS_ADDR = curr_vram_address[13:0];
+// State Registers
 
-logic scroll_write_status;
-logic addr_write_status;
+logic [14:0] curr_vram_address;
+logic [14:0] temp_vram_address;
+
+
+logic [2:0] fine_x_scroll;
 
 logic ppu_latch;
 
-logic ppu_data_write_status;
+// When PPU is trying to write 
+logic data_write_status;
+logic data_read_status;
 
-logic [7:0] PPU_READ_BUFFER;
+// TODO: Make sure that curr_Vram_address use is consistent
+// PPU_BUS_ADDR is the external interface
+assign PPU_BUS_ADDR = curr_vram_address[13:0];
+logic [7:0] ppu_read_buffer;
+logic [7:0] vram_addr_latched;
+
 
 // CPU Interface
-always_ff @ (posedge clk) begin
+always_ff @ (posedge CLK) begin
 	// rden and wren are never active at the same time
 	//-------------CPU WRITE--------------------------
 	if (CPU_wren) begin // CPU Write
 		case (CPU_ADDR)
 			// Write Only
-			3'h0: PPUCTRL <= CPU_DATA_IN;
+			3'h0: begin 
+				// Use a struct to make this easier??
+				nmi_generate <= CPU_DATA_IN[7];
+				sprite_size <= CPU_DATA_IN[5];
+				background_ptable_addr <= CPU_DATA_IN[4]; // 0-> $0000 or 1 -> $1000
+				sprite_ptable_addr <= CPU_DATA_IN[3];
+				addr_increment <= CPU_DATA_IN[2];
+				temp_vram_address[11:10] <= CPU_DATA_IN[1:0];
+				
+			end
 			3'h1: PPUMASK <= CPU_DATA_IN;
 			3'h3: OAMADDR <= CPU_DATA_IN;
 			// Read Only
-			3'h2: 
+			3'h2: ;
 			// Read / Write
 			3'h4: begin
 				// TODO: Fix this?
@@ -159,23 +178,27 @@ always_ff @ (posedge clk) begin
 			end
 			// Write Twice
 			3'h5: begin //PPUSCROLL
-				// Little baby state machine
-				if (scroll_write_status == 1'b0) begin
-					scroll_write_status <= 1'b1;
-				end
-			end
-			3'h6: begin //PPUADDR
-				// TODO: Do we actually ignore top 3 bits of PPU_ADDR?
 				if (ppu_latch == 1'b0) begin
-					// Write upper byte of PPU_ADDR
-					curr_vram_address[14:8] <= CPU_DATA_IN[6:0] // 
+					temp_vram_address[4:0] <= CPU_DATA_IN[7:3];
+					fine_x_scroll <= CPU_DATA_IN[2:0];
 					ppu_latch <= 1'b1;
 				end
 				else if (ppu_latch == 1'b1) begin
-					// TODO: Do we actually ignore top 
-					// Write lower byte of PPU_ADDR
-					curr_vram_address <= temp_vram_address;
-					curr_vram_address[7:0] <= CPU_DATA_IN[7:0] // 
+					temp_vram_address[9:5] <= CPU_DATA_IN[7:3];
+					temp_vram_address[14:12] <= CPU_DATA_IN[2:0];
+					ppu_latch <= 1'b0;
+				end
+			end
+			3'h6: begin //PPUADDR
+				if (ppu_latch == 1'b0) begin
+					temp_vram_address[13:8] <= CPU_DATA_IN[5:0];
+					temp_vram_address[14] <= 1'b0;
+					ppu_latch <= 1'b1;
+				end
+				else if (ppu_latch == 1'b1) begin
+					temp_vram_address[7:0] <= CPU_DATA_IN[7:0];
+					curr_vram_address <= {temp_vram_address[14:8], CPU_DATA_IN[7:0]};
+					 
 					ppu_latch <= 1'b0;
 				end
 			end
@@ -183,47 +206,76 @@ always_ff @ (posedge clk) begin
 			
 				// TODO: Confirm this should only write for one PPU cycle
 				// PPU_ADDR should be set and outputting to BUS already, so just forward CPU data to PPU bus
-				if (ppu_latch == 1'b0) begin
+				if (data_write_status == 1'b0) begin
 					PPU_WRITE <= 1'b1; 
 					PPU_DATA_OUT <= CPU_DATA_IN;
-					ppu_latch <= 1'b1;
+					data_write_status <= 1'b1;
 					
-					// TODO: Make Read Increment this also
 					// Increment PPU_ADDR
 					if (PPUCTRL[2]) 
 						curr_vram_address <= curr_vram_address + 8'd32; // Increment 32
 					else 
 						curr_vram_address <= curr_vram_address + 1'd1; // Increment 1
 				end
-				else if (ppu_data_write_status == 1'b1) begin
+				else if (data_write_status == 1'b1) begin
 					PPU_WRITE <= 1'b0; 
-					PPU_DATA_OUT <= CPU_DATA_IN; // Open Bus / Don't Care I suppose
-					ppu_latch <= 1'b0;
+					// Open Bus / Don't Care I suppose
+					data_write_status <= 1'b0;
 				end
 			end
-		endcase
-
+		endcase // End Addr Case
+	end // End Write
 			
 	//-------------CPU READ---------------------------
-	end else if (CPU_rden) begin // CPU Read
+	else if (CPU_rden) begin // CPU Read
 		
 		case (CPU_ADDR)
 			// Write Only
-			3'h0: CPU_DATA_OUT <= PPU_BUS_LATCH;
-			3'h1: CPU_DATA_OUT <= PPU_BUS_LATCH;
+			3'h0: CPU_DATA_OUT <= 8'h0;
+			3'h1: CPU_DATA_OUT <= 8'h0;
 			// Read Only
-			3'h2: begin	
-				CPU_DATA_OUT <= PPUSTATUS;
-				//Clear PPU_LATCH address latch
+			3'h2: begin	//Status
+				// Output PPUSTATUS data
+				
+				CPU_DATA_OUT[7] <= status_vblank;
+				CPU_DATA_OUT[6] <= sprite0_hit;
+				CPU_DATA_OUT[5] <= ppu_sprite_eval;
+				// The rest of the bus doesn't get updated
+				
+				//Clear latch for 2005 and 2006
+				ppu_latch <= 1'b0;
+				// Clear VBlank
+				status_vblank <= 1'b0;
 				
 			end
-			3'h3:
-			3'h4:
-			3'h5:
-			3'h6:
-			3'h7:
-		endcase
-	end
+			3'h3: ;
+			3'h4: ;
+			3'h5: ;
+			3'h6: ;
+			3'h7: begin
+				//TODO: Implement different behavior for read buffer based on palette vs read form normal vram,
+				//Maybe this can be abstracted away to a different module??
+				CPU_DATA_OUT <= ppu_read_buffer;
+				
+				if (data_write_status == 1'b0) begin
+					ppu_read_buffer <= PPU_DATA_IN;
+					PPU_READ <= 1'b1;
+					data_read_status <= 1'b1;
+					if (PPUCTRL[2]) 
+						curr_vram_address <= curr_vram_address + 8'd32; // Increment 32
+					else 
+						curr_vram_address <= curr_vram_address + 1'd1; // Increment 1
+				end
+				else if (data_read_status == 1'b1) begin
+					//TODO: Should we update the read buffer on both steps of the read?
+					//ppu_read_buffer <= PPU_DATA_IN;
+					PPU_READ <= 1'b0;
+					data_read_status <= 1'b0;
+				end
+				
+			end
+		endcase // End ADDR Case
+	end // End read
 end
 
 
@@ -238,7 +290,7 @@ end
 logic [7:0] PPUCTRL, PPUMASK, PPUSTATUS, OAMADDR, OAMDATA, PPUSCROLL, PPUADDR, PPUDATA;
 
 //=======================================================
-// PPUCTRL - Write Only
+// $2000 PPUCTRL - Write Only
 // [7] - NMI Generate
 // [6] - master/slave select (unused)
 // [5] - Sprite size low: 8x8 high: 8x16
@@ -250,10 +302,18 @@ logic [7:0] PPUCTRL, PPUMASK, PPUSTATUS, OAMADDR, OAMDATA, PPUSCROLL, PPUADDR, P
 //-------------------------------------------------------
 // When master/slave select is low, the PPU gets the palette index from EXT pins which are grounded / 0.
 // This should always be 0???. Yes I think its unused
-//
-//
 //=======================================================
-// PPUMASK - Write Only
+
+//TODO: Pack these as a struct?
+
+logic nmi_generate;
+logic sprite_size;
+logic background_ptable_addr;
+logic sprite_ptable_addr;
+logic addr_increment;
+
+//=======================================================
+// $2001 PPUMASK - Write Only
 // [7:5] - BGR color emphasis
 // [4] - sprite enable
 // [3] - background enable
@@ -264,11 +324,23 @@ logic [7:0] PPUCTRL, PPUMASK, PPUSTATUS, OAMADDR, OAMDATA, PPUSCROLL, PPUADDR, P
 //=======================================================
 
 //=======================================================
+// $2002 PPUSTATUS - Read Only
+// [7:5] - BGR color emphasis
+// [4] - sprite enable
+// [3] - background enable
+// TODO: .... Who cares for now...
+// [2] - VRAM address increment, low: (1 / going across) high: (32 / going down)
+// [1:0] - Base nametable address #0: $2000, ... 
+// [1:0] - Also the msb of the scrolling coordinates
+//=======================================================
+
+logic status_vblank;
+logic sprite0_hit;
+logic ppu_sprite_eval;
+
+//=======================================================
 // PPUSCROLL - 16 bit - Write Twice
 // Upper byte first, Valid addresses are $0000-$3FFF
-//
-//
-//
 //=======================================================
 
 //=======================================================
@@ -298,17 +370,8 @@ logic [7:0] PPUCTRL, PPUMASK, PPUSTATUS, OAMADDR, OAMDATA, PPUSCROLL, PPUADDR, P
 //=======================================================
 
 //=======================================================
-//  Rendering State Machine
+//  Rendering Engine / State Machine
 //=======================================================
-
-// State Registers
-
-logic [15:0] curr_vram_address;
-logic [15:0] temp_vram_address;
-
-logic [3:0] fine_x_scroll;
-
-logic write_toggle;
 
 // VRAM Data Tiles
 
@@ -318,34 +381,49 @@ logic [7:0]  atable_data; // Attribute Table Data
 // OAM
 logic [63:0][3:0][7:0] OAM;
 
+logic [9:0] cycle, scanline;
 
-//=======================================================
-// Conceptually, for each scanline
-//
-//=======================================================
-
-// Background Evaluation
-
-logic [7:0] bingle;
-
-logic [5:0] counter;
-
+// Scanline and Cycle Engine
 always_ff @ (posedge CLK) begin
-	PPU_ADDR <= 14'h1000;
-	PPU_READ <= 1'b1;
+	if (RESET) begin // Synchronous Reset Logic
+		cycle <= 10'd0;
+		scanline <= 10'd0;
+	end
 	
-	bingle <= PPU_DATA_IN;
+	if (cycle >= 10'd341) begin
+		 cycle <= 10'd0; 
+		 // Increment Scanline
+		 if (scanline >= 10'd261) begin
+			scanline <= 10'd0;
+			//status_vblank <= 1'b1;
+		 end
+		 else begin
+			scanline <= scanline + 1;
+		 end
+	end
+	else begin
+		// Increment Cycle
+		cycle <= cycle + 1; 
+	end
+end
+
+// Actually Do stuff with Scanline and Cycle
+always_ff @ (posedge CLK) begin
+	if (scanline == 241 & cycle == 1) begin
+		if (nmi_generate) 
+			NMI <= 1'b1; // When does this undo??
+			
+	// TODO: Do we have to wait 3 APU cycles before reseting so the CPU guarantes that it reads this on a CPU cycle?
+	if (NMI) 
+		NMI <= 1'b0;
+	end
+
 
 end
 
+// Our Clock is 
 
-
-
-
-
-
-
-
+assign PPU_ADDR = curr_vram_address[13:0];
 
 
 //=======================================================
@@ -364,13 +442,17 @@ end
 //  VGA Controller
 //=======================================================
 
+//VGA Clock should be approx 107.36 MHz, / 5x Master.
 logic blank_n;
 
 // This depends on our resolution http://tinyvga.com/vga-timing/640x480@60Hz
-logic [9:0] drawx, drawy;
+logic [10:0] drawx, drawy;
 
 vga_controller vga_ctrl (.Clk(VIDEO_CLK), .Reset(1'b0), .hs(VGA_HS), .vs(VGA_VS), .blank(blank_n), .DrawX(drawx), .DrawY(drawy));
  
+logic [7:0] bingle;
+assign bingle = 10'd123;
+
 always_ff @ (posedge VIDEO_CLK) begin 
 	if (blank_n) begin
 		if (drawx > bingle[7:0]) begin

@@ -30,15 +30,15 @@ module  vga_controller ( input        Clk,       // 50 MHz clock
 												  blank,     // Blanking interval indicator.  Active low.
 												  sync,      // Composite Sync signal.  Active low.  We don't use it in this lab,
 												             //   but the video DAC on the DE2 board requires an input for it.
-								 output [9:0] DrawX,     // horizontal coordinate
+								 output [10:0] DrawX,     // horizontal coordinate
 								              DrawY );   // vertical coordinate
 	 
-    parameter [9:0] hpixels = 10'd799;
-    parameter [9:0] vlines = 10'd524;
+    parameter [10:0] hpixels = 10'd1794;
+    parameter [10:0] vlines = 10'd1047;
 	 
 	 
 	 // horizontal pixel and vertical line counters
-    logic [9:0] hc, vc;
+    logic [10:0] hc, vc;
     
 	 // signal indicates if ok to display color for a pixel
 	 logic display;
@@ -79,7 +79,7 @@ module  vga_controller ( input        Clk,       // 50 MHz clock
         if ( Reset ) 
             hs <= 1'b0;
         else  
-            if (((hc + 1) >= 10'd656) & ((hc + 1) < 10'd752)) 
+            if (((hc + 1) >= 10'd1328) & ((hc + 1) < 10'd1440)) 
                 hs <= 1'b0;
             else 
 				    hs <= 1'b1;
@@ -92,7 +92,7 @@ module  vga_controller ( input        Clk,       // 50 MHz clock
         if ( Reset ) 
            vs <= 1'b0;
         else 
-            if (((vc + 1) == 10'd490) | ((vc + 1) == 10'd491)) 
+            if (((vc + 1) == 10'd1025) | ((vc + 1) == 10'd1026) | ((vc + 1) == 10'd1027) | ((vc + 1) == 10'd1028))
 			       vs <= 1'b0;
             else 
 			       vs <= 1'b1;
@@ -102,7 +102,7 @@ module  vga_controller ( input        Clk,       // 50 MHz clock
     //(This signal is registered within the DAC chip, so we can leave it as pure combinational logic here)    
     always_comb
     begin 
-        if ( (hc >= 10'd640) | (vc >= 11'd480) ) 
+        if ( (hc >= 10'd1280) | (vc >= 10'd1024) ) 
             display = 1'b0;
         else 
             display = 1'b1;

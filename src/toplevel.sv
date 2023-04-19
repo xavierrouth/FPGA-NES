@@ -162,17 +162,18 @@ module toplevel (
 	logic CPU_CLK_GATE;
 
 	
+	logic idiot_clk;
 	// 50 MHz input, 
 	// c0 is 25.175 for VGA timing.
 	// C1 is 21.5 MHz, this is the master NES clock, all other NES clocks relative to this.
 	
-	main_clkgen mainclk_inst(.inclk0(MAX10_CLK1_50), .c0(VGA_CLK), .c1(MCLK));
+	main_clkgen mainclk_inst(.inclk0(MAX10_CLK1_50), .c0(idiot_clk), .c1(MCLK));
 	
 	// NES MCLK (21.5MHz) input, 
 	// c0 is divided by 12
 	// C1 is divided by 4
 	// TODO: Replace CPU_CLK_GATE with CPU_CLK when single-step is removed
-	nes_clkgen nesclk_inst(.inclk0(MCLK), .c0(CPU_CLK_GATE), .c1(PPU_CLK));
+	nes_clkgen nesclk_inst(.inclk0(MCLK), .c0(CPU_CLK_GATE), .c1(PPU_CLK), .c2(VGA_CLK));
 	
 	
 //=======================================================
