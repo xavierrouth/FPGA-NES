@@ -34,8 +34,8 @@ module  vga_controller ( input        Clk,       // 25.175 MHz clock
     
     // 800 horizontal pixels indexed 0 to 799
     // 525 vertical pixels indexed 0 to 524
-    parameter [9:0] hpixels = 10'b1100011111;
-    parameter [9:0] vlines = 10'b1000001100;
+    parameter [9:0] hpixels = 10'd341;
+    parameter [9:0] vlines = 10'd223;
 	 
 	 // horizontal pixel and vertical line counters
     logic [9:0] hc, vc;
@@ -79,7 +79,7 @@ module  vga_controller ( input        Clk,       // 25.175 MHz clock
         if ( Reset ) 
             hs <= 1'b0;
         else  
-            if ((((hc + 1) >= 10'b1010010000) & ((hc + 1) < 10'b1011110000))) 
+            if ((((hc + 1) >= 10'd280) & ((hc + 1) < 10'd321))) 
                 hs <= 1'b0;
             else 
 				    hs <= 1'b1;
@@ -92,7 +92,7 @@ module  vga_controller ( input        Clk,       // 25.175 MHz clock
         if ( Reset ) 
            vs <= 1'b0;
         else 
-            if ( ((vc + 1) == 9'b111101010) | ((vc + 1) == 9'b111101011) ) 
+            if ( ((vc + 1) == 9'd209) | ((vc + 1) == 9'd210) ) 
 			       vs <= 1'b0;
             else 
 			       vs <= 1'b1;
@@ -102,7 +102,7 @@ module  vga_controller ( input        Clk,       // 25.175 MHz clock
     //(This signal is registered within the DAC chip, so we can leave it as pure combinational logic here)    
     always_comb
     begin 
-        if ( (hc >= 10'b1010000000) | (vc >= 10'b0111100000) ) 
+        if ( (hc >= 10'd272) | (vc >= 10'd204) ) 
             display = 1'b0;
         else 
             display = 1'b1;

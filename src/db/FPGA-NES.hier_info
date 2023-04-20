@@ -3988,8 +3988,8 @@ PPU_ADDR[12] <= curr_vram_address[12].DB_MAX_OUTPUT_PORT_TYPE
 PPU_ADDR[13] <= curr_vram_address[13].DB_MAX_OUTPUT_PORT_TYPE
 PPU_WRITE <= PPU_WRITE~reg0.DB_MAX_OUTPUT_PORT_TYPE
 PPU_READ <= PPU_READ~reg0.DB_MAX_OUTPUT_PORT_TYPE
-VGA_HS <= vga_controller:vga_controller1024.hs
-VGA_VS <= vga_controller:vga_controller1024.vs
+VGA_HS <= vga_controller:vga_controller.hs
+VGA_VS <= vga_controller:vga_controller.vs
 VGA_R[0] <= VGA_R[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 VGA_R[1] <= VGA_R[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 VGA_R[2] <= VGA_R[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -4004,7 +4004,7 @@ VGA_B[2] <= VGA_B[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 VGA_B[3] <= VGA_B[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|toplevel|NES_ARCHITECUTRE:NES|PPU:ppu_inst|vga_controller:vga_controller1024
+|toplevel|NES_ARCHITECUTRE:NES|PPU:ppu_inst|vga_controller:vga_controller
 Clk => vs~reg0.CLK
 Clk => hs~reg0.CLK
 Clk => vc[0].CLK

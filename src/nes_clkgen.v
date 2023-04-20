@@ -119,9 +119,9 @@ module nes_clkgen (
 		altpll_component.clk1_duty_cycle = 50,
 		altpll_component.clk1_multiply_by = 1,
 		altpll_component.clk1_phase_shift = "0",
-		altpll_component.clk2_divide_by = 1,
+		altpll_component.clk2_divide_by = 2,
 		altpll_component.clk2_duty_cycle = 50,
-		altpll_component.clk2_multiply_by = 5,
+		altpll_component.clk2_multiply_by = 1,
 		altpll_component.clk2_phase_shift = "0",
 		altpll_component.compensate_clock = "CLK0",
 		altpll_component.inclk0_input_frequency = 46511,
@@ -198,13 +198,13 @@ endmodule
 // Retrieval info: PRIVATE: DEVICE_SPEED_GRADE STRING "Any"
 // Retrieval info: PRIVATE: DIV_FACTOR0 NUMERIC "12"
 // Retrieval info: PRIVATE: DIV_FACTOR1 NUMERIC "4"
-// Retrieval info: PRIVATE: DIV_FACTOR2 NUMERIC "1"
+// Retrieval info: PRIVATE: DIV_FACTOR2 NUMERIC "2"
 // Retrieval info: PRIVATE: DUTY_CYCLE0 STRING "50.00000000"
 // Retrieval info: PRIVATE: DUTY_CYCLE1 STRING "50.00000000"
 // Retrieval info: PRIVATE: DUTY_CYCLE2 STRING "50.00000000"
 // Retrieval info: PRIVATE: EFF_OUTPUT_FREQ_VALUE0 STRING "1.791667"
 // Retrieval info: PRIVATE: EFF_OUTPUT_FREQ_VALUE1 STRING "5.375000"
-// Retrieval info: PRIVATE: EFF_OUTPUT_FREQ_VALUE2 STRING "107.500000"
+// Retrieval info: PRIVATE: EFF_OUTPUT_FREQ_VALUE2 STRING "10.750000"
 // Retrieval info: PRIVATE: EXPLICIT_SWITCHOVER_COUNTER STRING "0"
 // Retrieval info: PRIVATE: EXT_FEEDBACK_RADIO STRING "0"
 // Retrieval info: PRIVATE: GLOCKED_COUNTER_EDIT_CHANGED STRING "1"
@@ -233,7 +233,7 @@ endmodule
 // Retrieval info: PRIVATE: MIRROR_CLK2 STRING "0"
 // Retrieval info: PRIVATE: MULT_FACTOR0 NUMERIC "1"
 // Retrieval info: PRIVATE: MULT_FACTOR1 NUMERIC "1"
-// Retrieval info: PRIVATE: MULT_FACTOR2 NUMERIC "5"
+// Retrieval info: PRIVATE: MULT_FACTOR2 NUMERIC "1"
 // Retrieval info: PRIVATE: NORMAL_MODE_RADIO STRING "1"
 // Retrieval info: PRIVATE: OUTPUT_FREQ0 STRING "100.00000000"
 // Retrieval info: PRIVATE: OUTPUT_FREQ1 STRING "100.00000000"
@@ -300,9 +300,9 @@ endmodule
 // Retrieval info: CONSTANT: CLK1_DUTY_CYCLE NUMERIC "50"
 // Retrieval info: CONSTANT: CLK1_MULTIPLY_BY NUMERIC "1"
 // Retrieval info: CONSTANT: CLK1_PHASE_SHIFT STRING "0"
-// Retrieval info: CONSTANT: CLK2_DIVIDE_BY NUMERIC "1"
+// Retrieval info: CONSTANT: CLK2_DIVIDE_BY NUMERIC "2"
 // Retrieval info: CONSTANT: CLK2_DUTY_CYCLE NUMERIC "50"
-// Retrieval info: CONSTANT: CLK2_MULTIPLY_BY NUMERIC "5"
+// Retrieval info: CONSTANT: CLK2_MULTIPLY_BY NUMERIC "1"
 // Retrieval info: CONSTANT: CLK2_PHASE_SHIFT STRING "0"
 // Retrieval info: CONSTANT: COMPENSATE_CLOCK STRING "CLK0"
 // Retrieval info: CONSTANT: INCLK0_INPUT_FREQUENCY NUMERIC "46511"
