@@ -155,8 +155,9 @@ module toplevel (
 	
 	// Main System Cloks
 	logic MCLK; // 50 MHz
-	logic VGA_CLK; // 25.175
+	logic VGA_CLK; // 107.5 MHz
 	
+	logic fast_Vga_for_idiots;
 	logic CPU_CLK;
 	logic PPU_CLK;
 	logic CPU_CLK_GATE;
@@ -174,6 +175,7 @@ module toplevel (
 	// C1 is divided by 4
 	// TODO: Replace CPU_CLK_GATE with CPU_CLK when single-step is removed
 	nes_clkgen nesclk_inst(.inclk0(MCLK), .c0(CPU_CLK_GATE), .c1(PPU_CLK), .c2(VGA_CLK));
+	idiot_pll ajhwglkgjer(.inclk0(MAX10_CLK1_50), .c0(fast_Vga_for_idiots));
 	
 	
 //=======================================================
@@ -193,7 +195,7 @@ module toplevel (
 	// Switch Between Manual Clock and Normal Clock
 	
 	
-	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .PPU_CLK(PPU_CLK), .VGA_CLK(VGA_CLK), .CPU_RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
+	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .PPU_CLK(PPU_CLK), .VGA_CLK(fast_Vga_for_idiots), .CPU_RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
 						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data(rom_prgmr_data),
 						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren), .*);
 	

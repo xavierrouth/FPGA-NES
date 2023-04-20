@@ -225,6 +225,8 @@ assign sysram_enable = 1'b1;
 
 logic RESET;
 
+logic NMI;
+
 //=======================================================
 //  Module Instatiation
 //=======================================================
@@ -240,7 +242,7 @@ PRG_ROM prg_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(CPU_A
 CHR_ROM chr_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(PPU_ADDR_BUS[13:0]), .prgmr_addr(rom_prgmr_addr), 
 					.nes_rden(CHR_ROM_rden), .prgmr_wren(chr_rom_prgmr_wren), .nes_data_out(CHR_ROM_DATA_OUT));
 					
-PPU ppu_inst(.CLK(PPU_CLK), .RESET(RESET), .VIDEO_CLK(VGA_CLK), .CPU_DATA_IN(CPU_DATA_BUS), .CPU_ADDR(CPU_ADDR[2:0]), .CPU_DATA_OUT(PPU_CPU_DATA_OUT), .CPU_wren(CPU_PPU_wren), .CPU_rden(CPU_PPU_rden), 
+PPU ppu_inst(.CLK(PPU_CLK), .RESET(RESET), .VIDEO_CLK(VGA_CLK), .NMI(NMI), .CPU_DATA_IN(CPU_DATA_BUS), .CPU_ADDR(CPU_ADDR[2:0]), .CPU_DATA_OUT(PPU_CPU_DATA_OUT), .CPU_wren(CPU_PPU_wren), .CPU_rden(CPU_PPU_rden), 
 				.PPU_DATA_IN(PPU_DATA_BUS), .PPU_DATA_OUT(PPU_DATA_OUT), .PPU_ADDR(PPU_ADDR), .PPU_READ(PPU_READ), .PPU_WRITE(PPU_WRITE), .*);
 				
 VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));

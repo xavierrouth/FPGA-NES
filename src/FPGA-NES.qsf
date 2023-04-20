@@ -269,4 +269,8 @@ set_global_assignment -name SYSTEMVERILOG_FILE VRAM.sv
 set_global_assignment -name QIP_FILE main_clkgen.qip
 set_global_assignment -name QIP_FILE nes_clkgen.qip
 set_global_assignment -name SYSTEMVERILOG_FILE CONTROLLER.sv
+set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller1280.sv
+set_global_assignment -name QIP_FILE idiot_pll.qip
+set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller1152.sv
+set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller1024.sv
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
