@@ -448,7 +448,7 @@ logic blank_n;
 // This depends on our resolution http://tinyvga.com/vga-timing/640x480@60Hz
 logic [10:0] drawx, drawy;
 
-vga_controller vga_controller342 (.Clk(VIDEO_CLK), .Reset(1'b0), .hs(VGA_HS), .vs(VGA_VS), .blank(blank_n), .DrawX(drawx), .DrawY(drawy));
+vga_controller342 vga_controller (.Clk(VIDEO_CLK), .Reset(1'b0), .hs(VGA_HS), .vs(VGA_VS), .blank(blank_n), .DrawX(drawx), .DrawY(drawy));
  
 logic [7:0] bingle;
 assign bingle = 10'd200;

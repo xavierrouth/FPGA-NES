@@ -113,7 +113,7 @@ module  vga_controller342 ( input     Clk,       // 25.175 MHz clock
 
         hs <= h_pol ^ ((hcount < h_sb) | (hcount >= h_se));
         vs <= v_pol ^ ((vcount < v_sb) | (vcount >= v_se));
-		  blank <= ~((hcount < h_active) & (vcount < v_active));
+		  blank <= ((hcount < h_active) & (vcount < v_active));
      end // else: !if(Reset)  
 	end
     
