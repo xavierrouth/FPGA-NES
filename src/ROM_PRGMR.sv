@@ -21,8 +21,8 @@ module ROM_PRGMR(
 	// NES Side
 	output [15:0] 	ROM_ADDR,
 	output [7:0] 	ROM_DATA,
-	output 			CHR_ROM_WRITE,
-	output		   PRG_ROM_WRITE
+	output logic	CHR_ROM_WRITE,
+	output logic	PRG_ROM_WRITE
 	
 );
 

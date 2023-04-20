@@ -65,6 +65,8 @@ module  vga_controller342 ( input     Clk,       // 25.175 MHz clock
 	end
 	*/
 	
+	logic dclk, middleclk;
+	
 	assign dclk = Clk;
 	
 	/**
@@ -78,7 +80,7 @@ module  vga_controller342 ( input     Clk,       // 25.175 MHz clock
 	*/
 
 
-	logic dclk, middleclk;
+	
 
 	logic [11:0] nexth, nextv, hcount, vcount;
 	

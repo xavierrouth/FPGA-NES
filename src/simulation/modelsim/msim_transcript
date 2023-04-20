@@ -12,43 +12,83 @@
 # 
 # vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/main_clkgen.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:35 on Apr 17,2023
+# Start time: 15:23:52 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/main_clkgen.v 
 # -- Compiling module main_clkgen
 # 
 # Top level modules:
 # 	main_clkgen
-# End time: 19:50:35 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:52 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/nes_clkgen.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:35 on Apr 17,2023
+# Start time: 15:23:52 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/nes_clkgen.v 
 # -- Compiling module nes_clkgen
 # 
 # Top level modules:
 # 	nes_clkgen
-# End time: 19:50:35 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:52 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/idiot_pll.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:52 on Apr 20,2023
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/idiot_pll.v 
+# -- Compiling module idiot_pll
+# 
+# Top level modules:
+# 	idiot_pll
+# End time: 15:23:52 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/vga_pll.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:52 on Apr 20,2023
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/vga_pll.v 
+# -- Compiling module vga_pll
+# 
+# Top level modules:
+# 	vga_pll
+# End time: 15:23:52 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src/db {C:/dev/FPGA-NES/src/db/main_clkgen_altpll.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:35 on Apr 17,2023
+# Start time: 15:23:52 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/dev/FPGA-NES/src/db" C:/dev/FPGA-NES/src/db/main_clkgen_altpll.v 
 # -- Compiling module main_clkgen_altpll
 # 
 # Top level modules:
 # 	main_clkgen_altpll
-# End time: 19:50:35 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:52 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src/db {C:/dev/FPGA-NES/src/db/vga_pll_altpll.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:52 on Apr 20,2023
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/dev/FPGA-NES/src/db" C:/dev/FPGA-NES/src/db/vga_pll_altpll.v 
+# -- Compiling module vga_pll_altpll
+# 
+# Top level modules:
+# 	vga_pll_altpll
+# End time: 15:23:52 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src/db {C:/dev/FPGA-NES/src/db/nes_clkgen_altpll.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:35 on Apr 17,2023
+# Start time: 15:23:52 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/dev/FPGA-NES/src/db" C:/dev/FPGA-NES/src/db/nes_clkgen_altpll.v 
 # -- Compiling module nes_clkgen_altpll
 # 
 # Top level modules:
 # 	nes_clkgen_altpll
-# End time: 19:50:35 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:52 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src/db {C:/dev/FPGA-NES/src/db/idiot_pll_altpll.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:53 on Apr 20,2023
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/dev/FPGA-NES/src/db" C:/dev/FPGA-NES/src/db/idiot_pll_altpll.v 
+# -- Compiling module idiot_pll_altpll
+# 
+# Top level modules:
+# 	idiot_pll_altpll
+# End time: 15:23:53 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlib toplevel_soc
 # ** Warning: (vlib-34) Library already exists at "toplevel_soc".
@@ -58,127 +98,127 @@
 # Modifying modelsim.ini
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/toplevel_soc.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:35 on Apr 17,2023
+# Start time: 15:23:53 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/toplevel_soc.v 
 # -- Compiling module toplevel_soc
 # 
 # Top level modules:
 # 	toplevel_soc
-# End time: 19:50:35 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:53 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_controller.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:35 on Apr 17,2023
+# Start time: 15:23:53 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_controller.v 
 # -- Compiling module altera_reset_controller
 # 
 # Top level modules:
 # 	altera_reset_controller
-# End time: 19:50:35 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:53 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_synchronizer.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:35 on Apr 17,2023
+# Start time: 15:23:53 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_reset_synchronizer.v 
 # -- Compiling module altera_reset_synchronizer
 # 
 # Top level modules:
 # 	altera_reset_synchronizer
-# End time: 19:50:35 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:53 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:35 on Apr 17,2023
+# Start time: 15:23:53 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0.v 
 # -- Compiling module toplevel_soc_mm_interconnect_0
 # 
 # Top level modules:
 # 	toplevel_soc_mm_interconnect_0
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:01
+# End time: 15:23:53 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_006.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:36 on Apr 17,2023
+# Start time: 15:23:53 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_006.v 
 # -- Compiling module toplevel_soc_mm_interconnect_0_avalon_st_adapter_006
 # 
 # Top level modules:
 # 	toplevel_soc_mm_interconnect_0_avalon_st_adapter_006
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:53 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:36 on Apr 17,2023
+# Start time: 15:23:53 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter.v 
 # -- Compiling module toplevel_soc_mm_interconnect_0_avalon_st_adapter
 # 
 # Top level modules:
 # 	toplevel_soc_mm_interconnect_0_avalon_st_adapter
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:53 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_sc_fifo.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:36 on Apr 17,2023
+# Start time: 15:23:53 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_sc_fifo.v 
 # -- Compiling module altera_avalon_sc_fifo
 # 
 # Top level modules:
 # 	altera_avalon_sc_fifo
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:53 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_rst.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:36 on Apr 17,2023
+# Start time: 15:23:53 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_rst.v 
 # -- Compiling module toplevel_soc_usb_rst
 # 
 # Top level modules:
 # 	toplevel_soc_usb_rst
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:53 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_gpx.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:36 on Apr 17,2023
+# Start time: 15:23:53 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_usb_gpx.v 
 # -- Compiling module toplevel_soc_usb_gpx
 # 
 # Top level modules:
 # 	toplevel_soc_usb_gpx
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:53 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_timer_0.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:36 on Apr 17,2023
+# Start time: 15:23:53 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_timer_0.v 
 # -- Compiling module toplevel_soc_timer_0
 # 
 # Top level modules:
 # 	toplevel_soc_timer_0
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:53 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sysid_qsys_0.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:36 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sysid_qsys_0.v 
 # -- Compiling module toplevel_soc_sysid_qsys_0
 # 
 # Top level modules:
 # 	toplevel_soc_sysid_qsys_0
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_spi_0.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:36 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_spi_0.v 
 # -- Compiling module toplevel_soc_spi_0
 # 
 # Top level modules:
 # 	toplevel_soc_spi_0
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram_pll.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:36 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram_pll.v 
 # -- Compiling module toplevel_soc_sdram_pll_dffpipe_l2c
 # -- Compiling module toplevel_soc_sdram_pll_stdsync_sv6
@@ -187,32 +227,32 @@
 # 
 # Top level modules:
 # 	toplevel_soc_sdram_pll
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:36 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_sdram.v 
 # -- Compiling module toplevel_soc_sdram_input_efifo_module
 # -- Compiling module toplevel_soc_sdram
 # 
 # Top level modules:
 # 	toplevel_soc_sdram
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:36 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0.v 
 # -- Compiling module toplevel_soc_nios2_gen2_0
 # 
 # Top level modules:
 # 	toplevel_soc_nios2_gen2_0
-# End time: 19:50:36 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu.v 
 # -- Compiling module toplevel_soc_nios2_gen2_0_cpu_register_bank_a_module
 # -- Compiling module toplevel_soc_nios2_gen2_0_cpu_register_bank_b_module
@@ -239,81 +279,81 @@
 # Top level modules:
 # 	toplevel_soc_nios2_gen2_0_cpu_nios2_performance_monitors
 # 	toplevel_soc_nios2_gen2_0_cpu
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_sysclk.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_sysclk.v 
 # -- Compiling module toplevel_soc_nios2_gen2_0_cpu_debug_slave_sysclk
 # 
 # Top level modules:
 # 	toplevel_soc_nios2_gen2_0_cpu_debug_slave_sysclk
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_tck.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_tck.v 
 # -- Compiling module toplevel_soc_nios2_gen2_0_cpu_debug_slave_tck
 # 
 # Top level modules:
 # 	toplevel_soc_nios2_gen2_0_cpu_debug_slave_tck
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_wrapper.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_debug_slave_wrapper.v 
 # -- Compiling module toplevel_soc_nios2_gen2_0_cpu_debug_slave_wrapper
 # 
 # Top level modules:
 # 	toplevel_soc_nios2_gen2_0_cpu_debug_slave_wrapper
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_test_bench.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu_test_bench.v 
 # -- Compiling module toplevel_soc_nios2_gen2_0_cpu_test_bench
 # 
 # Top level modules:
 # 	toplevel_soc_nios2_gen2_0_cpu_test_bench
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_leds_pio.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_leds_pio.v 
 # -- Compiling module toplevel_soc_leds_pio
 # 
 # Top level modules:
 # 	toplevel_soc_leds_pio
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_keycode.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_keycode.v 
 # -- Compiling module toplevel_soc_keycode
 # 
 # Top level modules:
 # 	toplevel_soc_keycode
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:54 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_key.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:54 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_key.v 
 # -- Compiling module toplevel_soc_key
 # 
 # Top level modules:
 # 	toplevel_soc_key
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_jtag_uart_0.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_jtag_uart_0.v 
 # -- Compiling module toplevel_soc_jtag_uart_0_sim_scfifo_w
 # -- Compiling module toplevel_soc_jtag_uart_0_scfifo_w
@@ -323,165 +363,161 @@
 # 
 # Top level modules:
 # 	toplevel_soc_jtag_uart_0
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c.v 
 # -- Compiling module altera_avalon_i2c
 # 
 # Top level modules:
 # 	altera_avalon_i2c
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_csr.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_csr.v 
 # -- Compiling module altera_avalon_i2c_csr
 # 
 # Top level modules:
 # 	altera_avalon_i2c_csr
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_clk_cnt.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:37 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_clk_cnt.v 
 # -- Compiling module altera_avalon_i2c_clk_cnt
 # 
 # Top level modules:
 # 	altera_avalon_i2c_clk_cnt
-# End time: 19:50:37 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_det.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:38 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_det.v 
 # -- Compiling module altera_avalon_i2c_condt_det
 # 
 # Top level modules:
 # 	altera_avalon_i2c_condt_det
-# End time: 19:50:38 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_gen.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:38 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_condt_gen.v 
 # -- Compiling module altera_avalon_i2c_condt_gen
 # 
 # Top level modules:
 # 	altera_avalon_i2c_condt_gen
-# End time: 19:50:38 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_fifo.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:38 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_fifo.v 
 # -- Compiling module altera_avalon_i2c_fifo
 # 
 # Top level modules:
 # 	altera_avalon_i2c_fifo
-# End time: 19:50:38 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_mstfsm.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:38 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_mstfsm.v 
 # -- Compiling module altera_avalon_i2c_mstfsm
 # 
 # Top level modules:
 # 	altera_avalon_i2c_mstfsm
-# End time: 19:50:38 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_rxshifter.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:38 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_rxshifter.v 
 # -- Compiling module altera_avalon_i2c_rxshifter
 # 
 # Top level modules:
 # 	altera_avalon_i2c_rxshifter
-# End time: 19:50:38 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txshifter.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:38 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txshifter.v 
 # -- Compiling module altera_avalon_i2c_txshifter
 # 
 # Top level modules:
 # 	altera_avalon_i2c_txshifter
-# End time: 19:50:38 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_spksupp.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:38 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_spksupp.v 
 # -- Compiling module altera_avalon_i2c_spksupp
 # 
 # Top level modules:
 # 	altera_avalon_i2c_spksupp
-# End time: 19:50:38 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:55 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txout.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:38 on Apr 17,2023
+# Start time: 15:23:55 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_i2c_txout.v 
 # -- Compiling module altera_avalon_i2c_txout
 # 
 # Top level modules:
 # 	altera_avalon_i2c_txout
-# End time: 19:50:39 on Apr 17,2023, Elapsed time: 0:00:01
+# End time: 15:23:56 on Apr 20,2023, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_hex_digits_pio.v}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:39 on Apr 17,2023
+# Start time: 15:23:56 on Apr 20,2023
 # vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_hex_digits_pio.v 
 # -- Compiling module toplevel_soc_hex_digits_pio
 # 
 # Top level modules:
 # 	toplevel_soc_hex_digits_pio
-# End time: 19:50:39 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:56 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/VGA_controller.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:39 on Apr 17,2023
+# Start time: 15:23:56 on Apr 20,2023
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/VGA_controller.sv 
 # -- Compiling module vga_controller
-# ** Warning: C:/dev/FPGA-NES/src/VGA_controller.sv(54): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-# ** Warning: C:/dev/FPGA-NES/src/VGA_controller.sv(55): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-# ** Warning: C:/dev/FPGA-NES/src/VGA_controller.sv(61): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
-# ** Warning: C:/dev/FPGA-NES/src/VGA_controller.sv(63): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
 # 
 # Top level modules:
 # 	vga_controller
-# End time: 19:50:39 on Apr 17,2023, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 4
+# End time: 15:23:56 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/HexDriver.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:39 on Apr 17,2023
+# Start time: 15:23:56 on Apr 20,2023
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/HexDriver.sv 
 # -- Compiling module HexDriver
 # 
 # Top level modules:
 # 	HexDriver
-# End time: 19:50:39 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:56 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/SYS_RAM.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:39 on Apr 17,2023
+# Start time: 15:23:56 on Apr 20,2023
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/SYS_RAM.sv 
 # -- Compiling module SYS_RAM
 # 
 # Top level modules:
 # 	SYS_RAM
-# End time: 19:50:39 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:56 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/synchronizers.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:39 on Apr 17,2023
+# Start time: 15:23:56 on Apr 20,2023
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/synchronizers.sv 
 # -- Compiling module sync
 # -- Compiling module sync_r0
@@ -491,38 +527,489 @@
 # 	sync
 # 	sync_r0
 # 	sync_r1
-# End time: 19:50:39 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:56 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/PRG_ROM.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:39 on Apr 17,2023
+# Start time: 15:23:56 on Apr 20,2023
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/PRG_ROM.sv 
 # -- Compiling module PRG_ROM
 # 
 # Top level modules:
 # 	PRG_ROM
-# End time: 19:50:39 on Apr 17,2023, Elapsed time: 0:00:00
+# End time: 15:23:56 on Apr 20,2023, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/PPU.sv}
 # Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
-# Start time: 19:50:39 on Apr 17,2023
+# Start time: 15:23:56 on Apr 20,2023
 # vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/PPU.sv 
 # -- Compiling module PPU
-# ** Error: C:/dev/FPGA-NES/src/PPU.sv(57): (vlog-2110) Illegal reference to net "PPU_ADDR".
-# ** Error: C:/dev/FPGA-NES/src/PPU.sv(58): (vlog-2110) Illegal reference to net "PPU_READ".
-# ** Error: C:/dev/FPGA-NES/src/PPU.sv(77): (vlog-2110) Illegal reference to net "VGA_R".
-# ** Error: C:/dev/FPGA-NES/src/PPU.sv(78): (vlog-2110) Illegal reference to net "VGA_G".
-# ** Error: C:/dev/FPGA-NES/src/PPU.sv(79): (vlog-2110) Illegal reference to net "VGA_B".
-# ** Error: C:/dev/FPGA-NES/src/PPU.sv(82): (vlog-2110) Illegal reference to net "VGA_R".
-# ** Error: C:/dev/FPGA-NES/src/PPU.sv(83): (vlog-2110) Illegal reference to net "VGA_G".
-# ** Error: C:/dev/FPGA-NES/src/PPU.sv(84): (vlog-2110) Illegal reference to net "VGA_B".
-# ** Error: C:/dev/FPGA-NES/src/PPU.sv(91): (vlog-2110) Illegal reference to net "VGA_R".
-# ** Error: C:/dev/FPGA-NES/src/PPU.sv(92): (vlog-2110) Illegal reference to net "VGA_G".
-# ** Error: C:/dev/FPGA-NES/src/PPU.sv(93): (vlog-2110) Illegal reference to net "VGA_B".
-# End time: 19:50:39 on Apr 17,2023, Elapsed time: 0:00:00
-# Errors: 11, Warnings: 0
-# ** Error: C:/intelFPGA_lite/18.1/modelsim_ase/win32aloem/vlog failed.
-# Error in macro ./FPGA-NES_run_msim_rtl_systemverilog.do line 55
-# C:/intelFPGA_lite/18.1/modelsim_ase/win32aloem/vlog failed.
-#     while executing
-# "vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/PPU.sv}"
+# 
+# Top level modules:
+# 	PPU
+# End time: 15:23:56 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/CHR_ROM.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:56 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/CHR_ROM.sv 
+# -- Compiling module CHR_ROM
+# 
+# Top level modules:
+# 	CHR_ROM
+# End time: 15:23:56 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/VRAM.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:56 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/VRAM.sv 
+# -- Compiling module VRAM
+# 
+# Top level modules:
+# 	VRAM
+# End time: 15:23:56 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/VGA_controller342.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:56 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/VGA_controller342.sv 
+# -- Compiling module vga_controller342
+# 
+# Top level modules:
+# 	vga_controller342
+# End time: 15:23:56 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_irq_mapper.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:56 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_irq_mapper.sv 
+# -- Compiling module toplevel_soc_irq_mapper
+# 
+# Top level modules:
+# 	toplevel_soc_irq_mapper
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_006_error_adapter_0.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_006_error_adapter_0.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_avalon_st_adapter_006_error_adapter_0
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_avalon_st_adapter_006_error_adapter_0
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.v 
+# -- Compiling module altera_avalon_st_handshake_clock_crosser
+# 
+# Top level modules:
+# 	altera_avalon_st_handshake_clock_crosser
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_clock_crosser.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_avalon_st_clock_crosser.v 
+# -- Compiling module altera_avalon_st_clock_crosser
+# 
+# Top level modules:
+# 	altera_avalon_st_clock_crosser
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_std_synchronizer_nocut.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -vlog01compat -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_std_synchronizer_nocut.v 
+# -- Compiling module altera_std_synchronizer_nocut
+# 
+# Top level modules:
+# 	altera_std_synchronizer_nocut
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_width_adapter.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_width_adapter.sv 
+# -- Compiling module altera_merlin_width_adapter
+# 
+# Top level modules:
+# 	altera_merlin_width_adapter
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_uncompressor.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_uncompressor.sv 
+# -- Compiling module altera_merlin_burst_uncompressor
+# 
+# Top level modules:
+# 	altera_merlin_burst_uncompressor
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_mux_001.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_mux_001.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_rsp_mux_001
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_rsp_mux_001
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_arbitrator.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_arbitrator.sv 
+# -- Compiling module altera_merlin_arbitrator
+# -- Compiling module altera_merlin_arb_adder
+# 
+# Top level modules:
+# 	altera_merlin_arbitrator
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_mux.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_mux.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_rsp_mux
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_rsp_mux
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_demux_001.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_demux_001.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_rsp_demux_001
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_rsp_demux_001
+# End time: 15:23:57 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_demux.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:57 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_rsp_demux.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_rsp_demux
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_rsp_demux
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_mux_001.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_mux_001.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_cmd_mux_001
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_cmd_mux_001
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_mux.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_mux.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_cmd_mux
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_cmd_mux
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_demux_001.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_demux_001.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_cmd_demux_001
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_cmd_demux_001
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_demux.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_cmd_demux.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_cmd_demux
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_cmd_demux
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter.sv 
+# -- Compiling module altera_merlin_burst_adapter
+# 
+# Top level modules:
+# 	altera_merlin_burst_adapter
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter_uncmpr.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_burst_adapter_uncmpr.sv 
+# -- Compiling module altera_merlin_burst_adapter_uncompressed_only
+# 
+# Top level modules:
+# 	altera_merlin_burst_adapter_uncompressed_only
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_008.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_008.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_router_008_default_decode
+# -- Compiling module toplevel_soc_mm_interconnect_0_router_008
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_router_008
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_003.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_003.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_router_003_default_decode
+# -- Compiling module toplevel_soc_mm_interconnect_0_router_003
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_router_003
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_002.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_002.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_router_002_default_decode
+# -- Compiling module toplevel_soc_mm_interconnect_0_router_002
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_router_002
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_001.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router_001.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_router_001_default_decode
+# -- Compiling module toplevel_soc_mm_interconnect_0_router_001
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_router_001
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_router.sv 
+# -- Compiling module toplevel_soc_mm_interconnect_0_router_default_decode
+# -- Compiling module toplevel_soc_mm_interconnect_0_router
+# 
+# Top level modules:
+# 	toplevel_soc_mm_interconnect_0_router
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:58 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv 
+# -- Compiling module altera_merlin_slave_agent
+# ** Warning: C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv(618): (vlog-2186) SystemVerilog testbench feature
+# (randomization, coverage or assertion) detected in the design.
+# These features are only supported in Questasim.
+# ** Warning: C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv(488): (vlog-2583) [SVCHK] - Some checking for conflicts with always_comb and always_latch variables not yet supported. Run vopt to provide additional design-level checks.
+# ** Warning: C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv(489): (vlog-2583) [SVCHK] - Some checking for conflicts with always_comb and always_latch variables not yet supported. Run vopt to provide additional design-level checks.
+# ** Warning: C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv(490): (vlog-2583) [SVCHK] - Some checking for conflicts with always_comb and always_latch variables not yet supported. Run vopt to provide additional design-level checks.
+# ** Warning: C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv(491): (vlog-2583) [SVCHK] - Some checking for conflicts with always_comb and always_latch variables not yet supported. Run vopt to provide additional design-level checks.
+# ** Warning: C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_agent.sv(34): (vlog-2186) SystemVerilog testbench feature
+# (randomization, coverage or assertion) detected in the design.
+# These features are only supported in Questasim.
+# 
+# Top level modules:
+# 	altera_merlin_slave_agent
+# End time: 15:23:58 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 6
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_agent.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:59 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_agent.sv 
+# -- Compiling module altera_merlin_master_agent
+# 
+# Top level modules:
+# 	altera_merlin_master_agent
+# End time: 15:23:59 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_translator.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:59 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_translator.sv 
+# -- Compiling module altera_merlin_slave_translator
+# 
+# Top level modules:
+# 	altera_merlin_slave_translator
+# End time: 15:23:59 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_translator.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:59 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_translator.sv 
+# -- Compiling module altera_merlin_master_translator
+# 
+# Top level modules:
+# 	altera_merlin_master_translator
+# End time: 15:23:59 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/ROM_PRGMR.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:59 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work toplevel_soc "+incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules" C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/ROM_PRGMR.sv 
+# -- Compiling module ROM_PRGMR
+# 
+# Top level modules:
+# 	ROM_PRGMR
+# End time: 15:23:59 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/toplevel.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:59 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/toplevel.sv 
+# -- Compiling package toplevel_sv_unit
+# -- Compiling module toplevel
+# 
+# Top level modules:
+# 	toplevel
+# End time: 15:23:59 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:59 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv 
+# -- Compiling package NES_ARCHITECTURE_sv_unit
+# -- Compiling module NES_ARCHITECUTRE
+# 
+# Top level modules:
+# 	NES_ARCHITECUTRE
+# End time: 15:23:59 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/CPU_2A03.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:59 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/CPU_2A03.sv 
+# -- Compiling package CPU_2A03_sv_unit
+# -- Compiling module CPU_2A03
+# 
+# Top level modules:
+# 	CPU_2A03
+# End time: 15:23:59 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {C:/dev/FPGA-NES/src/t65/T65_Pack.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:59 on Apr 20,2023
+# vcom -reportprogress 300 -93 -work work C:/dev/FPGA-NES/src/t65/T65_Pack.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling package T65_Pack
+# -- Compiling package body T65_Pack
+# -- Loading package T65_Pack
+# End time: 15:23:59 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {C:/dev/FPGA-NES/src/t65/T65_ALU.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:59 on Apr 20,2023
+# vcom -reportprogress 300 -93 -work work C:/dev/FPGA-NES/src/t65/T65_ALU.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package T65_Pack
+# -- Compiling entity T65_ALU
+# -- Compiling architecture rtl of T65_ALU
+# End time: 15:23:59 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {C:/dev/FPGA-NES/src/t65/T65_MCode.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:59 on Apr 20,2023
+# vcom -reportprogress 300 -93 -work work C:/dev/FPGA-NES/src/t65/T65_MCode.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Loading package T65_Pack
+# -- Compiling entity T65_MCode
+# -- Compiling architecture rtl of T65_MCode
+# End time: 15:23:59 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {C:/dev/FPGA-NES/src/t65/T65.vhd}
+# Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:23:59 on Apr 20,2023
+# vcom -reportprogress 300 -93 -work work C:/dev/FPGA-NES/src/t65/T65.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package T65_Pack
+# -- Compiling entity T65
+# -- Compiling architecture rtl of T65
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Loading entity T65_MCode
+# -- Loading entity T65_ALU
+# End time: 15:23:59 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/ppu-testbench.sv}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 15:24:00 on Apr 20,2023
+# vlog -reportprogress 300 -sv -work work "+incdir+C:/dev/FPGA-NES/src" C:/dev/FPGA-NES/src/ppu-testbench.sv 
+# -- Compiling module ppu_testbench
+# 
+# Top level modules:
+# 	ppu_testbench
+# End time: 15:24:00 on Apr 20,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L fiftyfivenm_ver -L rtl_work -L work -L toplevel_soc -voptargs="+acc"  ppu_testbench
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L fiftyfivenm_ver -L rtl_work -L work -L toplevel_soc -voptargs=""+acc"" ppu_testbench 
+# Start time: 15:24:00 on Apr 20,2023
+# Loading sv_std.std
+# Loading work.ppu_testbench
+# Loading work.PPU
+# Loading work.vga_controller342
+# ** Warning: (vsim-3017) C:/dev/FPGA-NES/src/PPU.sv(509): [TFMPC] - Too few port connections. Expected 8, found 7.
+#    Time: 0 ps  Iteration: 0  Instance: /ppu_testbench/ppu_inst/vga_controller File: C:/dev/FPGA-NES/src/VGA_controller342.sv
+# ** Warning: (vsim-3722) C:/dev/FPGA-NES/src/PPU.sv(509): [TFMPC] - Missing connection for port 'sync'.
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+add wave -position end sim:/ppu_testbench/ppu_inst/*
+restart -f
+# ** Warning: (vsim-3017) C:/dev/FPGA-NES/src/PPU.sv(509): [TFMPC] - Too few port connections. Expected 8, found 7.
+#    Time: 0 ps  Iteration: 0  Instance: /ppu_testbench/ppu_inst/vga_controller File: C:/dev/FPGA-NES/src/VGA_controller342.sv
+# ** Warning: (vsim-3722) C:/dev/FPGA-NES/src/PPU.sv(509): [TFMPC] - Missing connection for port 'sync'.
+run -all
+# WARNING: No extended dataflow license exists
+# End time: 15:35:21 on Apr 20,2023, Elapsed time: 0:11:21
+# Errors: 0, Warnings: 5

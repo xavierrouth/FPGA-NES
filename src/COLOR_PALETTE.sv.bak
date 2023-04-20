@@ -1,0 +1,32 @@
+module COLOR_PALETTE (
+	input CLK,
+	input VIDEO_CLK,
+	input RESET,
+	//input enable,
+	
+	// CPU BUS interface
+	input [7:0] CPU_DATA_IN,
+	input [2:0] CPU_ADDR,
+	
+	input CPU_wren, CPU_rden, // CPU wants to read / CPU wants to write
+	
+	output logic [7:0] CPU_DATA_OUT,
+	output 	NMI,
+	
+	//PPU BUS interface
+	input [7:0] PPU_DATA_IN,
+	
+	output [7:0] PPU_DATA_OUT,
+	output [13:0] PPU_ADDR,
+	output PPU_WRITE, PPU_READ, // PPU wants to read, ppu want to write
+	
+	// Video Output
+	output             VGA_HS,
+	output             VGA_VS,
+	output   [ 3: 0]   VGA_R,
+	output   [ 3: 0]   VGA_G,
+	output   [ 3: 0]   VGA_B
+);
+
+
+endmodule

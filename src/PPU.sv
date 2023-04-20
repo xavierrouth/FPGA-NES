@@ -87,8 +87,8 @@
 //=======================================================
 
 module PPU (
-	input CLK,
-	input VIDEO_CLK,
+	input CLK, // 5.375 MHz or something
+	input VIDEO_CLK, // 10.75 MHz (twice as fast)
 	input RESET,
 	//input enable,
 	
@@ -99,21 +99,21 @@ module PPU (
 	input CPU_wren, CPU_rden, // CPU wants to read / CPU wants to write
 	
 	output logic [7:0] CPU_DATA_OUT,
-	output 	NMI,
+	output logic	NMI,
 	
 	//PPU BUS interface
 	input [7:0] PPU_DATA_IN,
 	
-	output [7:0] PPU_DATA_OUT,
-	output [13:0] PPU_ADDR,
-	output PPU_WRITE, PPU_READ, // PPU wants to read, ppu want to write
+	output logic [7:0] PPU_DATA_OUT,
+	output logic [13:0] PPU_ADDR,
+	output logic PPU_WRITE, PPU_READ, // PPU wants to read, ppu want to write
 	
 	// Video Output
-	output             VGA_HS,
-	output             VGA_VS,
-	output   [ 3: 0]   VGA_R,
-	output   [ 3: 0]   VGA_G,
-	output   [ 3: 0]   VGA_B
+	output logic          VGA_HS,
+	output logic          VGA_VS,
+	output logic [ 3: 0]   VGA_R,
+	output logic [ 3: 0]   VGA_G,
+	output logic [ 3: 0]   VGA_B
 );
 
 //=======================================================
@@ -144,9 +144,102 @@ logic data_read_status;
 // TODO: Make sure that curr_Vram_address use is consistent
 // PPU_BUS_ADDR is the external interface
 assign PPU_BUS_ADDR = curr_vram_address[13:0];
+assign PPU_ADDR = curr_vram_address[13:0];
 logic [7:0] ppu_read_buffer;
 logic [7:0] vram_addr_latched;
 
+
+
+
+//=======================================================
+//  Control Regs - Meaning and Decoding (https://www.nesdev.org/wiki/PPU_registers)
+//=======================================================
+
+// TODO: Some of these are write-twice 16 bit regs
+// These are all just an interface into the PPU, we should have separate variables / 
+// registers to hold the correct values once written through these.
+// I don't think these are real, these are just addresses.
+logic [7:0] PPUCTRL, PPUMASK, PPUSTATUS, OAMADDR, OAMDATA, PPUSCROLL, PPUADDR, PPUDATA;
+
+//=======================================================
+// $2000 PPUCTRL - Write Only
+// [7] - NMI Generate
+// [6] - master/slave select (unused)
+// [5] - Sprite size low: 8x8 high: 8x16
+// [4] - Background Pattern Table Address
+// [3] - Sprite Pattern table address
+// [2] - VRAM address increment, low: (1 / going across) high: (32 / going down)
+// [1:0] - Base nametable address #0: $2000, ... 
+// [1:0] - Also the msb of the scrolling coordinates
+//-------------------------------------------------------
+// When master/slave select is low, the PPU gets the palette index from EXT pins which are grounded / 0.
+// This should always be 0???. Yes I think its unused
+//=======================================================
+
+//TODO: Pack these as a struct?
+
+logic nmi_generate;
+logic sprite_size;
+logic background_ptable_addr;
+logic sprite_ptable_addr;
+logic addr_increment;
+
+//=======================================================
+// $2001 PPUMASK - Write Only
+// [7:5] - BGR color emphasis
+// [4] - sprite enable
+// [3] - background enable
+// TODO: .... Who cares for now...
+// [2] - VRAM address increment, low: (1 / going across) high: (32 / going down)
+// [1:0] - Base nametable address #0: $2000, ... 
+// [1:0] - Also the msb of the scrolling coordinates
+//=======================================================
+
+//=======================================================
+// $2002 PPUSTATUS - Read Only
+// [7] - Vertical blank has started (this is just based on NMI)
+// [6] - Sprite 0 Hit
+// [5] - sprite evaluation has started
+// [4:0] - Open bus / don't care
+//=======================================================
+
+// TODO: Figure out if these are actually always the same (nmi occured and status_vblank), or if they need to be seperated.
+// Does systemverilog have variable aliases?? What would the use case for those be?
+logic status_vblank;
+
+logic sprite0_hit;
+logic ppu_sprite_eval;
+
+//=======================================================
+// PPUSCROLL - 16 bit - Write Twice
+// Upper byte first, Valid addresses are $0000-$3FFF
+//=======================================================
+
+//=======================================================
+// PPUADDR - 16 bit - Write Twice
+// Upper byte first, Valid addresses are $0000-$3FFF
+// To load address $2108:
+//   lda #$21
+//   sta PPUADDR
+//   lda #$08
+//   sta PPUADDR
+// Read PPUSTATUS to reset the address latch
+//=======================================================
+
+//=======================================================
+// PPUDATA - 8 bit - Read / Write
+// After access, the video memory address will increment by an amount determined by bit 2 of $2000
+// To load address $2108:
+//   lda #$21
+//   sta PPUADDR
+//   lda #$08
+//   sta PPUADDR
+// Read PPUSTATUS to reset the address latch
+//=======================================================
+
+//=======================================================
+//  Control Regs - Read / Write logic
+//=======================================================
 
 // CPU Interface
 always_ff @ (posedge CLK) begin
@@ -244,8 +337,9 @@ always_ff @ (posedge CLK) begin
 				
 				//Clear latch for 2005 and 2006
 				ppu_latch <= 1'b0;
-				// Clear VBlank
-				status_vblank <= 1'b0;
+				// Clear VBlank / Nmi Occured (these are two names for the same signal i think)
+				// TODO: Fix multiple drivers issue here to enable this:
+				//nmi_occured <= 1'b0;
 				
 			end
 			3'h3: ;
@@ -278,97 +372,6 @@ always_ff @ (posedge CLK) begin
 	end // End read
 end
 
-
-//=======================================================
-//  Control Regs - Meaning and Decoding (https://www.nesdev.org/wiki/PPU_registers)
-//=======================================================
-
-// TODO: Some of these are write-twice 16 bit regs
-// These are all just an interface into the PPU, we should have separate variables / 
-// registers to hold the correct values once written through these.
-// I don't think these are real, these are just addresses.
-logic [7:0] PPUCTRL, PPUMASK, PPUSTATUS, OAMADDR, OAMDATA, PPUSCROLL, PPUADDR, PPUDATA;
-
-//=======================================================
-// $2000 PPUCTRL - Write Only
-// [7] - NMI Generate
-// [6] - master/slave select (unused)
-// [5] - Sprite size low: 8x8 high: 8x16
-// [4] - Background Pattern Table Address
-// [3] - Sprite Pattern table address
-// [2] - VRAM address increment, low: (1 / going across) high: (32 / going down)
-// [1:0] - Base nametable address #0: $2000, ... 
-// [1:0] - Also the msb of the scrolling coordinates
-//-------------------------------------------------------
-// When master/slave select is low, the PPU gets the palette index from EXT pins which are grounded / 0.
-// This should always be 0???. Yes I think its unused
-//=======================================================
-
-//TODO: Pack these as a struct?
-
-logic nmi_generate;
-logic sprite_size;
-logic background_ptable_addr;
-logic sprite_ptable_addr;
-logic addr_increment;
-
-//=======================================================
-// $2001 PPUMASK - Write Only
-// [7:5] - BGR color emphasis
-// [4] - sprite enable
-// [3] - background enable
-// TODO: .... Who cares for now...
-// [2] - VRAM address increment, low: (1 / going across) high: (32 / going down)
-// [1:0] - Base nametable address #0: $2000, ... 
-// [1:0] - Also the msb of the scrolling coordinates
-//=======================================================
-
-//=======================================================
-// $2002 PPUSTATUS - Read Only
-// [7:5] - BGR color emphasis
-// [4] - sprite enable
-// [3] - background enable
-// TODO: .... Who cares for now...
-// [2] - VRAM address increment, low: (1 / going across) high: (32 / going down)
-// [1:0] - Base nametable address #0: $2000, ... 
-// [1:0] - Also the msb of the scrolling coordinates
-//=======================================================
-
-logic status_vblank;
-logic sprite0_hit;
-logic ppu_sprite_eval;
-
-//=======================================================
-// PPUSCROLL - 16 bit - Write Twice
-// Upper byte first, Valid addresses are $0000-$3FFF
-//=======================================================
-
-//=======================================================
-// PPUADDR - 16 bit - Write Twice
-// Upper byte first, Valid addresses are $0000-$3FFF
-// To load address $2108:
-//   lda #$21
-//   sta PPUADDR
-//   lda #$08
-//   sta PPUADDR
-// Read PPUSTATUS to reset the address latch
-//=======================================================
-
-//=======================================================
-// PPUDATA - 8 bit - Read / Write
-// After access, the video memory address will increment by an amount determined by bit 2 of $2000
-// To load address $2108:
-//   lda #$21
-//   sta PPUADDR
-//   lda #$08
-//   sta PPUADDR
-// Read PPUSTATUS to reset the address latch
-//=======================================================
-
-//=======================================================
-//  Control Regs - Read / Write logic
-//=======================================================
-
 //=======================================================
 //  Rendering Engine / State Machine
 //=======================================================
@@ -381,62 +384,117 @@ logic [7:0]  atable_data; // Attribute Table Data
 // OAM
 logic [63:0][3:0][7:0] OAM;
 
-logic [9:0] cycle, scanline;
+// Scanline and Cycle Engine (Very similar to VGA controller)
 
-// Scanline and Cycle Engine
-always_ff @ (posedge CLK) begin
-	if (RESET) begin // Synchronous Reset Logic
+logic [9:0] cycle, scanline, next_cycle, next_scanline;
+
+parameter [9:0] cycle_count = 10'd340;
+parameter [9:0] scanline_count = 10'd262;
+
+logic ppu_vs, ppu_hs;
+
+always @(posedge CLK) begin
+	if (RESET) begin
 		cycle <= 10'd0;
 		scanline <= 10'd0;
-	end
-	
-	if (cycle >= 10'd341) begin
-		 cycle <= 10'd0; 
-		 // Increment Scanline
-		 if (scanline >= 10'd261) begin
-			scanline <= 10'd0;
-			//status_vblank <= 1'b1;
-		 end
-		 else begin
-			scanline <= scanline + 1;
-		 end
+		next_cycle <= 10'd0;
+		next_scanline <= 10'd0;
+		ppu_vs <= 1'b0;
+		ppu_hs <= 1'b0;
 	end
 	else begin
-		// Increment Cycle
-		cycle <= cycle + 1; 
+		if (next_cycle == 10'd340) begin
+			next_cycle <= 10'd0;
+			if (next_scanline == 10'd262)
+				next_scanline <= 10'd0;
+			else 
+				next_scanline <= next_scanline + 1;
+		end
+		else
+			next_cycle <= next_cycle + 1;
+			
+		cycle <= next_cycle;
+		scanline <= next_scanline;
 	end
+	
 end
+// Actualy linebuffer (this gets inferred as ram yay :))
+
+logic [255:0][5:0] linebuffer [2];
+
+// Indicies into linebuffer
+logic ppu_linebuffer;
+logic vga_linebuffer;
+assign vga_linebuffer = ~ppu_linebuffer;
+
+// NMI signals
+logic nmi_occured;
+assign NMI = ~(nmi_generate & nmi_occured); // Unclear if this is active low or not
+assign status_vblank = nmi_occured;
 
 // Actually Do stuff with Scanline and Cycle
 always_ff @ (posedge CLK) begin
-	if (scanline == 241 & cycle == 1) begin
-		if (nmi_generate) 
-			NMI <= 1'b1; // When does this undo??
-			
-	// TODO: Do we have to wait 3 APU cycles before reseting so the CPU guarantes that it reads this on a CPU cycle?
-	if (NMI) 
-		NMI <= 1'b0;
+	if (RESET) begin
+		ppu_linebuffer <= 1'b0;
+	end else begin // NOT RESET
+		if (cycle == 1'd0) begin
+			// TODO: This should be somewhere at the end
+			//ppu_linebuffer <= ~ppu_linebuffer;
+			;
+		end
+		else if (cycle > 10'd0 & cycle <= 10'd256) begin
+			// Do some fetching
+			// Write real data to linebuffer
+			// Fake fetching data for now
+			if (ppu_linebuffer)
+				linebuffer[ppu_linebuffer][cycle] <= 6'h21;
+			else 
+				linebuffer[ppu_linebuffer][cycle] <= 6'h28;
+		end
+		else if (cycle > 10'd256) begin
+			// Do nothing
+			;
+		end
+		if (cycle == 10'd339) begin
+			ppu_linebuffer <= ~ppu_linebuffer;
+		end
+		
+		//===== START NMI Handling =========
+		// Start of vertical blanking
+		if (scanline == 241 & cycle == 1) begin 
+			nmi_occured <= 1'b1;
+		end
+		// "End of vertical blanking / sometime in pre-render scanline"
+		if (scanline == 261) begin 
+			nmi_occured <= 1'b0;
+		end
+		//===== END NMI Handling =========
 	end
-
-
-end
-
-// Our Clock is 
-
-assign PPU_ADDR = curr_vram_address[13:0];
-
+end	
+ 
 
 //=======================================================
-//  Framebuffer - Double Buffered Entire Frame, so 256 * 240 * 2 * 3 (bytes per pixel for each color?)
-//  368,640 bytes. Where do we put it. 368kB.
-//  Maybe we need a pallette so lets bytes per pixel, or maybe we just need like two lines buffers
-//  1,638 Kb of OCM, so yes thats enough lol
+//  Double Linebuffer 
 //
-//  Lets just do double buffered output as VGA colors.
-//  256 * 2 * 2 = 1024 Bytes
+//  Lets just do double buffered output as pixel_idx
+//	 256 * 2 * 6 = 3072 Bits / LEs for now.
+//  This is the itnerface between PPU and VGA controller
+//  They don't talk to eachother besides form this
+//
+//
+//  REASONING BEHIND THIS IMPLEMENTATION:
+//		Normal NES PPU produces an NTSC signal. NTSC is a signal that has the same VSYNC rate as VGA,
+//    BUT has half the HSYNC rate. This means we need to double the HSYNC rate, the way to do this is to 
+//    have VGA run twice as fast for each scanline. However we still need to keep VSYNC the same, so we
+//    read each scanline twice. This will work out and everyone will be happy.
+//
+//
 //
 //=======================================================
 
+
+
+// Read back from this at twice the speed in 
 
 //=======================================================
 //  VGA Controller
@@ -446,26 +504,35 @@ assign PPU_ADDR = curr_vram_address[13:0];
 logic blank_n;
 
 // This depends on our resolution http://tinyvga.com/vga-timing/640x480@60Hz
-logic [10:0] drawx, drawy;
+logic [10:0] drawx_intermediate, drawx, drawy;
 
-vga_controller342 vga_controller (.Clk(VIDEO_CLK), .Reset(1'b0), .hs(VGA_HS), .vs(VGA_VS), .blank(blank_n), .DrawX(drawx), .DrawY(drawy));
+vga_controller342 vga_controller (.Clk(VIDEO_CLK), .Reset(RESET), .hs(VGA_HS), .vs(VGA_VS), .blank(blank_n), .DrawX(drawx_intermediate), .DrawY(drawy));
  
+logic [11:0] colors [64] = '{12'h333,12'h014,12'h006,12'h326,12'h403,12'h503,12'h510,12'h420,12'h320,12'h120,12'h031,12'h040,12'h022,12'h000,12'h000,12'h000,
+12'h555,12'h036,12'h027,12'h407,12'h507,12'h704,12'h700,12'h630,12'h430,12'h140,12'h040,12'h053,12'h044,12'h000,12'h000,12'h000,
+12'h777,12'h357,12'h447,12'h637,12'h707,12'h737,12'h740,12'h750,12'h660,12'h360,12'h070,12'h276,12'h077,12'h000,12'h000,12'h000,
+12'h777,12'h567,12'h657,12'h757,12'h747,12'h755,12'h764,12'h772,12'h773,12'h572,12'h473,12'h276,12'h467,12'h000,12'h000,12'h000};
+
+
 logic [7:0] bingle;
 assign bingle = 10'd200;
 
+logic [5:0] pixel_clr_idx;
+
+// This reads back at twice the speed
+// We don't even have to worry about reading the same scanline twice it will just do it for us!
+assign pixel_clr_idx = linebuffer[vga_linebuffer][drawx_intermediate[7:0]];
+
 always_ff @ (posedge VIDEO_CLK) begin 
-	if (blank_n) begin
-		if (drawx > bingle[7:0]) begin
-			VGA_R <= bingle[3:0]; // We expect this to be all 0s for now i think
-			VGA_G <= bingle[3:0];
-			VGA_B <= bingle[3:0];
-		end 
-		else begin
-			VGA_R <= 4'b1111; 
-			VGA_G <= 4'b0000;
-			VGA_B <= 4'b0000;
+	if (cycle == 0) 
+		drawx <= 10'd0;
+	else
+		drawx <= drawx_intermediate; 
 		
-		end
+	if (blank_n) begin
+		VGA_R <= colors[pixel_clr_idx][11:8];
+		VGA_G <= colors[pixel_clr_idx][7:4];
+		VGA_B <= colors[pixel_clr_idx][3:0];
 		
 	end
 	

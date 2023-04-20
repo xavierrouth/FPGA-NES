@@ -7,8 +7,12 @@ vmap work rtl_work
 
 vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/main_clkgen.v}
 vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/nes_clkgen.v}
+vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/idiot_pll.v}
+vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/vga_pll.v}
 vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src/db {C:/dev/FPGA-NES/src/db/main_clkgen_altpll.v}
+vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src/db {C:/dev/FPGA-NES/src/db/vga_pll_altpll.v}
 vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src/db {C:/dev/FPGA-NES/src/db/nes_clkgen_altpll.v}
+vlog -vlog01compat -work work +incdir+C:/dev/FPGA-NES/src/db {C:/dev/FPGA-NES/src/db/idiot_pll_altpll.v}
 vlib toplevel_soc
 vmap toplevel_soc toplevel_soc
 vlog -vlog01compat -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/toplevel_soc.v}
@@ -55,6 +59,7 @@ vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/PRG_ROM.sv}
 vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/PPU.sv}
 vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/CHR_ROM.sv}
 vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/VRAM.sv}
+vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/VGA_controller342.sv}
 vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_irq_mapper.sv}
 vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_006_error_adapter_0.sv}
 vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/toplevel_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv}
@@ -84,17 +89,17 @@ vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/s
 vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_slave_translator.sv}
 vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/altera_merlin_master_translator.sv}
 vlog -sv -work toplevel_soc +incdir+C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules {C:/dev/FPGA-NES/src/toplevel_soc/synthesis/submodules/ROM_PRGMR.sv}
-vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/CPU_2A03.sv}
-vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv}
 vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/toplevel.sv}
+vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/NES_ARCHITECTURE.sv}
+vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/CPU_2A03.sv}
 vcom -93 -work work {C:/dev/FPGA-NES/src/t65/T65_Pack.vhd}
 vcom -93 -work work {C:/dev/FPGA-NES/src/t65/T65_ALU.vhd}
 vcom -93 -work work {C:/dev/FPGA-NES/src/t65/T65_MCode.vhd}
 vcom -93 -work work {C:/dev/FPGA-NES/src/t65/T65.vhd}
 
-vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/testbench.sv}
+vlog -sv -work work +incdir+C:/dev/FPGA-NES/src {C:/dev/FPGA-NES/src/ppu-testbench.sv}
 
-vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L fiftyfivenm_ver -L rtl_work -L work -L toplevel_soc -voptargs="+acc"  testbench
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L fiftyfivenm_ver -L rtl_work -L work -L toplevel_soc -voptargs="+acc"  ppu_testbench
 
 add wave *
 view structure
