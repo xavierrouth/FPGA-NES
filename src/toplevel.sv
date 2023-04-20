@@ -156,6 +156,7 @@ module toplevel (
 	// Main System Cloks
 	logic MCLK; // 50 MHz
 	logic VGA_CLK; // 10.75 MHz
+	logic VGA_CLK_REAL;
 	
 	logic real_Vga_for_idiots;
 	logic multiplied_vga_for_idiots;
@@ -170,8 +171,8 @@ module toplevel (
 	// c0 is 25.175 for VGA timing.
 	// C1 is 21.5 MHz, this is the master NES clock, all other NES clocks relative to this.
 	
-	main_clkgen mainclk_inst(.inclk0(MAX10_CLK1_50), .c0(idiot_clk), .c1(MCLK));
-	
+	main_clkgen mainclk_inst(.inclk0(MAX10_CLK1_50), .c0(MCLK));
+	vga_pll gjaklrewdawd(.inclk0(MAX10_CLK1_50), .c0(VGA_CLK_REAL));
 	// NES MCLK (21.5MHz) input, 
 	// c0 is divided by 12
 	// C1 is divided by 4
@@ -198,7 +199,7 @@ module toplevel (
 	// Switch Between Manual Clock and Normal Clock
 	
 	
-	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .PPU_CLK(PPU_CLK), .VGA_CLK(multiplied_vga_for_idiots), .CPU_RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
+	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .PPU_CLK(PPU_CLK), .VGA_CLK(VGA_CLK_REAL), .CPU_RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
 						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data(rom_prgmr_data),
 						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren), .*);
 	
