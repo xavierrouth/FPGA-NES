@@ -33,8 +33,8 @@ module  vga_controller1024 ( input        Clk,       // 50 MHz clock
 								 output [10:0] DrawX,     // horizontal coordinate
 								              DrawY );   // vertical coordinate
 	 
-    parameter [10:0] hpixels = 10'd1343;
-    parameter [10:0] vlines = 10'd805;
+    parameter [10:0] hpixels = 11'd1343;
+    parameter [10:0] vlines = 11'd805;
 	 
 	 
 	 // horizontal pixel and vertical line counters
@@ -51,16 +51,16 @@ module  vga_controller1024 ( input        Clk,       // 50 MHz clock
 	begin: counter_proc
 		  if ( Reset ) 
 			begin 
-				 hc <= 10'b00000000000;
-				 vc <= 10'b00000000000;
+				 hc <= 11'b00000000000;
+				 vc <= 11'b00000000000;
 			end
 				
 		  else 
 			 if ( hc == hpixels )  //If hc has reached the end of pixel count
 			  begin 
-					hc <= 10'b00000000000;
+					hc <= 11'b00000000000;
 					if ( vc == vlines )   //if vc has reached end of line count
-						 vc <= 10'b00000000000;
+						 vc <= 11'b00000000000;
 					else 
 						 vc <= (vc + 1);
 			  end
@@ -79,7 +79,7 @@ module  vga_controller1024 ( input        Clk,       // 50 MHz clock
         if ( Reset ) 
             hs <= 1'b0;
         else  
-            if (((hc + 1) >= 10'd1048) & ((hc + 1) < 10'd1184)) 
+            if (((hc + 1) >= 11'd1048) & ((hc + 1) < 11'd1184)) 
                 hs <= 1'b0;
             else 
 				    hs <= 1'b1;
@@ -92,7 +92,7 @@ module  vga_controller1024 ( input        Clk,       // 50 MHz clock
         if ( Reset ) 
            vs <= 1'b0;
         else 
-            if (((vc + 1) >= 10'd771) & ((vc + 1) <= 10'd777))
+            if (((vc + 1) >= 11'd771) & ((vc + 1) <= 11'd777))
 			       vs <= 1'b0;
             else 
 			       vs <= 1'b1;
@@ -102,7 +102,7 @@ module  vga_controller1024 ( input        Clk,       // 50 MHz clock
     //(This signal is registered within the DAC chip, so we can leave it as pure combinational logic here)    
     always_comb
     begin 
-        if ( (hc >= 10'd1024) | (vc >= 10'd768) ) 
+        if ( (hc >= 11'd1024) | (vc >= 11'd768) ) 
             display = 1'b0;
         else 
             display = 1'b1;

@@ -33,8 +33,8 @@ module  vga_controller1280 ( input        Clk,       // 50 MHz clock
 								 output [10:0] DrawX,     // horizontal coordinate
 								              DrawY );   // vertical coordinate
 	 
-    parameter [10:0] hpixels = 10'd1687;
-    parameter [10:0] vlines = 10'd1065;
+    parameter [10:0] hpixels = 11'd1687;
+    parameter [10:0] vlines = 11'd1065;
 	 
 	 
 	 // horizontal pixel and vertical line counters
@@ -51,16 +51,16 @@ module  vga_controller1280 ( input        Clk,       // 50 MHz clock
 	begin: counter_proc
 		  if ( Reset ) 
 			begin 
-				 hc <= 10'b00000000000;
-				 vc <= 10'b00000000000;
+				 hc <= 11'b00000000000;
+				 vc <= 11'b00000000000;
 			end
 				
 		  else 
 			 if ( hc == hpixels )  //If hc has reached the end of pixel count
 			  begin 
-					hc <= 10'b00000000000;
+					hc <= 11'b00000000000;
 					if ( vc == vlines )   //if vc has reached end of line count
-						 vc <= 10'b00000000000;
+						 vc <= 11'b00000000000;
 					else 
 						 vc <= (vc + 1);
 			  end
@@ -79,7 +79,7 @@ module  vga_controller1280 ( input        Clk,       // 50 MHz clock
         if ( Reset ) 
             hs <= 1'b0;
         else  
-            if (((hc + 1) >= 10'd1328) & ((hc + 1) < 10'd1440)) 
+            if (((hc + 1) >= 11'd1328) & ((hc + 1) < 11'd1440)) 
                 hs <= 1'b0;
             else 
 				    hs <= 1'b1;
@@ -92,7 +92,7 @@ module  vga_controller1280 ( input        Clk,       // 50 MHz clock
         if ( Reset ) 
            vs <= 1'b0;
         else 
-            if (((vc + 1) == 10'd1025) | (((vc + 1) == 10'd1026) | ((vc + 1) == 10'd1027)))
+            if (((vc + 1) == 11'd1025) | (((vc + 1) == 11'd1026) | ((vc + 1) == 11'd1027)))
 			       vs <= 1'b0;
             else 
 			       vs <= 1'b1;
@@ -102,7 +102,7 @@ module  vga_controller1280 ( input        Clk,       // 50 MHz clock
     //(This signal is registered within the DAC chip, so we can leave it as pure combinational logic here)    
     always_comb
     begin 
-        if ( (hc >= 10'd1280) | (vc >= 10'd1024) ) 
+        if ( (hc >= 11'd1280) | (vc >= 11'd1024) ) 
             display = 1'b0;
         else 
             display = 1'b1;

@@ -474,6 +474,7 @@ locked <= locked.DB_MAX_OUTPUT_PORT_TYPE
 areset => areset.IN1
 inclk0 => sub_wire1[0].IN1
 c0 <= altpll:altpll_component.clk
+c1 <= altpll:altpll_component.clk
 locked <= altpll:altpll_component.locked
 
 
@@ -4017,6 +4018,7 @@ Clk => vc[6].CLK
 Clk => vc[7].CLK
 Clk => vc[8].CLK
 Clk => vc[9].CLK
+Clk => vc[10].CLK
 Clk => hc[0].CLK
 Clk => hc[1].CLK
 Clk => hc[2].CLK
@@ -4027,6 +4029,7 @@ Clk => hc[6].CLK
 Clk => hc[7].CLK
 Clk => hc[8].CLK
 Clk => hc[9].CLK
+Clk => hc[10].CLK
 Reset => vs~reg0.ACLR
 Reset => hs~reg0.ACLR
 Reset => vc[0].ACLR
@@ -4039,6 +4042,7 @@ Reset => vc[6].ACLR
 Reset => vc[7].ACLR
 Reset => vc[8].ACLR
 Reset => vc[9].ACLR
+Reset => vc[10].ACLR
 Reset => hc[0].ACLR
 Reset => hc[1].ACLR
 Reset => hc[2].ACLR
@@ -4049,6 +4053,7 @@ Reset => hc[6].ACLR
 Reset => hc[7].ACLR
 Reset => hc[8].ACLR
 Reset => hc[9].ACLR
+Reset => hc[10].ACLR
 hs <= hs~reg0.DB_MAX_OUTPUT_PORT_TYPE
 vs <= vs~reg0.DB_MAX_OUTPUT_PORT_TYPE
 blank <= always3.DB_MAX_OUTPUT_PORT_TYPE
@@ -4063,6 +4068,7 @@ DrawX[6] <= hc[6].DB_MAX_OUTPUT_PORT_TYPE
 DrawX[7] <= hc[7].DB_MAX_OUTPUT_PORT_TYPE
 DrawX[8] <= hc[8].DB_MAX_OUTPUT_PORT_TYPE
 DrawX[9] <= hc[9].DB_MAX_OUTPUT_PORT_TYPE
+DrawX[10] <= hc[10].DB_MAX_OUTPUT_PORT_TYPE
 DrawY[0] <= vc[0].DB_MAX_OUTPUT_PORT_TYPE
 DrawY[1] <= vc[1].DB_MAX_OUTPUT_PORT_TYPE
 DrawY[2] <= vc[2].DB_MAX_OUTPUT_PORT_TYPE
@@ -4073,6 +4079,7 @@ DrawY[6] <= vc[6].DB_MAX_OUTPUT_PORT_TYPE
 DrawY[7] <= vc[7].DB_MAX_OUTPUT_PORT_TYPE
 DrawY[8] <= vc[8].DB_MAX_OUTPUT_PORT_TYPE
 DrawY[9] <= vc[9].DB_MAX_OUTPUT_PORT_TYPE
+DrawY[10] <= vc[10].DB_MAX_OUTPUT_PORT_TYPE
 
 
 |toplevel|NES_ARCHITECUTRE:NES|VRAM:vram_inst
