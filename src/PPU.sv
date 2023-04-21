@@ -383,6 +383,7 @@ end
 
 logic [15:0] ptable_data [2]; // Pattern Table Data
 logic [7:0]  atable_data [2]; // Attribute Table Data
+logic [7:0]  ntable_byte; // Unclear if this is needed
 
 // OAM
 logic [63:0][3:0][7:0] OAM;
@@ -484,98 +485,96 @@ always_comb begin
 	if (~render_enable) begin
 		PPU_ADDR = active_vram_address;
 	end else if (render_enable) begin
-		// DURING VBLANK
-		if (status_vblank) begin
-			;//PPU_READ = cpu_read_request | ppu_data_read;
-			//PPU_WRITE = cpu_write_request | ppu_data_write;
-		end
 		
-		// NOT DURING VBLANK
-		else if(~status_vblank) begin
-			//======== VISIBLE SCANLINES (0-239) ==============
-			if (scanline <= 10'd239) begin
-				// ----------CYCLE 0--------------------
-				if (cycle == 1'd0) begin
-					;
-				end
-				else begin
-				
-				// ----------CYCLES 1-256----------------
-				if (cycle > 10'd0 & cycle <= 10'd256) begin
-					// Do some fetching
-					case (counter)
-						// Fetch nametable byte
-						3'd0: begin
-							PPU_ADDR = {2'b10, active_vram_address[11:0]};
-							ppu_read_request = 1'b1;
-						end
-						3'd1: begin
-							; // Dumby cycle
-						end
-						// Fetch attribute table byte
-						3'd2: begin
-							PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
-							ppu_read_request = 1'b1;
-						end
-						3'd3: ; // Dumby cycle
-						// fethc parttern table low 
-						3'd4: begin
-							PPU_ADDR = 14'd0; //??
-							ppu_read_request = 1'b1;
-						end
-						
-						3'd5: ;
-						// fetch pattern tile high 
-						3'd6: begin
-							PPU_ADDR = 14'd0; //??
-							ppu_read_request = 1'b1;
-						end
-						3'd7: ;
-					endcase
-					
-					if (cycle == 10'd256) begin
-						ppu_inc_vram_request = 1'b1;
+		//======== VISIBLE SCANLINES (0-239) ==============
+		if (scanline <= 10'd239) begin
+			// ----------CYCLE 0--------------------
+			if (cycle == 1'd0) begin
+				;
+			end
+			else begin
+			
+			// ----------CYCLES 1-256----------------
+			if (cycle > 10'd0 & cycle <= 10'd256) begin
+				// Do some fetching
+				case (counter)
+					// Fetch nametable byte
+					3'd0: begin
+						PPU_ADDR = {2'b10, active_vram_address[11:0]};
+						ppu_read_request = 1'b1;
+					end
+					3'd1: begin
+						ppu_read_request = 1'b1; // Dumby cycle
+					end
+					// Fetch attribute table byte
+					3'd2: begin
+						PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
+						ppu_read_request = 1'b1;
+					end
+					3'd3: ppu_read_request = 1'b1; // Dumby cycle
+					// fethc parttern table low 
+					3'd4: begin
+						PPU_ADDR = 14'd0; //??
+						ppu_read_request = 1'b1;
 					end
 					
-				end
-				// ----------CYCLES 257-320----------------
-				else if (cycle > 10'd256 & cycle <= 10'd320) begin
-					if (cycle == 10'd257) begin
-						ppu_hcopy_vram_request = 1'b1;
+					3'd5: ppu_read_request = 1'b1;
+					// fetch pattern tile high 
+					3'd6: begin
+						PPU_ADDR = 14'd0; //?? + 8 from pattern table tile low
+						ppu_read_request = 1'b1;
 					end
-					if (cycle >= 10'd280 & cycle <= 10'd340) begin
-						ppu_vcopy_vram_request = 1'b1;
-					end
-					// Fetch tile data for sprites on next scanline
-					;
-				end
-				// ----------CYCLES 320-336----------------
-				else if (cycle > 10'd320 & cycle <= 10'd336) begin
-					// TODO: Fetch firs two tiles for the next scanline
-					;
-				end
-				// ----------CYCLES 337-340----------------
-				// Do nothing
+					3'd7: ppu_read_request = 1'b1;
+				endcase
 				
-				end // Not cycle 0
+				if (cycle == 10'd256) begin
+					//TODO: This is not that simple
+					// This needs to increment the veritcal position in v, the effective Y scroll coordinate
+					//ppu_inc_vram_request = 1'b1;
+				end
 				
 			end
-			//======== SCANLINE (240) ==============
+			// ----------CYCLES 257-320----------------
+			else if (cycle > 10'd256 & cycle <= 10'd320) begin
+				if (cycle == 10'd257) begin
+					ppu_hcopy_vram_request = 1'b1;
+				end
+				
+				// Fetch tile data for sprites on next scanline
+				;
+			end
+			// ----------CYCLES 320-336----------------
+			else if (cycle > 10'd320 & cycle <= 10'd336) begin
+				// TODO: Fetch firs two tiles for the next scanline
+				;
+			end
+			// ----------CYCLES 337-340----------------
 			// Do nothing
 			
-			//===== SCANLINES 241-260 - START NMI Handling =========
-			// Start of vertical blanking
-			// Dont touch memory here
-			if (scanline == 241 & cycle == 1) begin 
-				ppu_nmi_set_request = 1'b1;
-			end
-			// "End of vertical blanking / sometime in pre-render scanline"
-			if (scanline == 261) begin 
-				ppu_nmi_clear_request = 1'b1;
-				// Fill shift registers with data for the first two tiles of the next scanline.
-			end
-			//===== END NMI Handling =========
+			end // Not cycle 0
+			
 		end
+		//======== SCANLINE (240) ==============
+		// Do nothing
+		if (cycle >= 10'd328 | cycle <= 10'd256) begin
+			ppu_inc_vram_request = 1'b1;
+		end
+		//===== SCANLINES 241-260 - START NMI Handling =========
+		// Start of vertical blanking
+		// Dont touch memory here
+		if (scanline == 241 & cycle == 1) begin 
+			ppu_nmi_set_request = 1'b1;
+		end
+		// "End of vertical blanking / sometime in pre-render scanline"
+		if (scanline == 261) begin 
+			ppu_nmi_clear_request = 1'b1;
+			// Reload vertical scroll bits
+			if (cycle >= 10'd280 & cycle <= 10'd340) begin
+				ppu_vcopy_vram_request = 1'b1;
+			end
+			// Fill shift registers with data for the first two tiles of the next scanline.
+		end
+		//===== END NMI Handling =========
 	end // if rendering_enable
 end
 
@@ -589,6 +588,8 @@ always_ff @ (posedge CLK) begin
 	if (RESET) begin
 		ppu_linebuffer <= 1'b0;
 		counter <= 3'b0;
+		ntable_byte <= 8'd0;
+		
 	end else begin // NOT RESET
 		//======== VISIBLE SCANLINES (0-239) ==============
 		if (scanline <= 10'd239) begin
@@ -598,7 +599,40 @@ always_ff @ (posedge CLK) begin
 			end
 			else begin
 			counter <= counter + 1;
+			// TODO: Shift Shiftregs
 			// ----------CYCLES 1-256----------------
+			case (counter)
+				// Fetch nametable byte
+				3'd0: begin
+					; // Load data into shift regs
+				end
+				3'd1: begin
+					ntable_byte <= PPU_DATA_IN;
+				end
+				// Fetch attribute table byte
+				3'd2: begin
+					;
+				end
+				3'd3: begin
+					// TODO: Which atable_data??
+					atable_data[0] <= PPU_DATA_IN;
+				end
+				// fethc parttern table low 
+				3'd4: begin
+					;
+				end
+				
+				3'd5: begin
+					ptable_data[0] <= PPU_DATA_IN;
+				end
+				// fetch pattern tile high 
+				3'd6: begin
+					;
+				end
+				3'd7: begin
+					ptable_data[1] <= PPU_DATA_IN;
+				end
+			endcase
 			if (cycle > 10'd0 & cycle <= 10'd256) begin
 				// Fetch random shit;
 				if (scanline < 10'd100)
