@@ -43,7 +43,7 @@ module  vga_controller342 ( input     Clk,       // 25.175 MHz clock
 	parameter [10:0] v_se = 11'd491;
 
 	parameter [10:0] h_tot = 11'd341; //11'd800;
-	parameter [10:0] v_tot = 11'd525;
+	parameter [10:0] v_tot = 11'd525; // This changes scrolling you should fix it
 
 	parameter [10:0] h_active = 11'd273; //11'd640
 	parameter [10:0] v_active = 11'd480;

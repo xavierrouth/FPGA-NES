@@ -99,7 +99,7 @@ module PPU (
 	input CPU_wren, CPU_rden, // CPU wants to read / CPU wants to write
 	
 	output logic [7:0] CPU_DATA_OUT,
-	output logic	NMI,
+	output logic		 NMI_n,
 	
 	//PPU BUS interface
 	input [7:0] PPU_DATA_IN,
@@ -143,8 +143,6 @@ logic data_read_status;
 
 // TODO: Make sure that curr_Vram_address use is consistent
 // PPU_BUS_ADDR is the external interface
-assign PPU_BUS_ADDR = curr_vram_address[13:0];
-assign PPU_ADDR = curr_vram_address[13:0];
 logic [7:0] ppu_read_buffer;
 logic [7:0] vram_addr_latched;
 
@@ -389,7 +387,7 @@ logic [63:0][3:0][7:0] OAM;
 logic [9:0] cycle, scanline, next_cycle, next_scanline;
 
 parameter [9:0] cycle_count = 10'd340;
-parameter [9:0] scanline_count = 10'd262;
+parameter [9:0] scanline_count = 10'd263;
 
 logic ppu_vs, ppu_hs;
 
@@ -403,9 +401,9 @@ always @(posedge CLK) begin
 		ppu_hs <= 1'b0;
 	end
 	else begin
-		if (next_cycle == 10'd340) begin
+		if (next_cycle == cycle_count) begin
 			next_cycle <= 10'd0;
-			if (next_scanline == 10'd262)
+			if (next_scanline == scanline_count)
 				next_scanline <= 10'd0;
 			else 
 				next_scanline <= next_scanline + 1;
@@ -429,44 +427,96 @@ assign vga_linebuffer = ~ppu_linebuffer;
 
 // NMI signals
 logic nmi_occured;
-assign NMI = ~(nmi_generate & nmi_occured); // Unclear if this is active low or not
+assign NMI_n = (nmi_generate & nmi_occured); // Unclear if this is active low or not
 assign status_vblank = nmi_occured;
+
+logic [2:0] counter;
+// TODO:
+// Even / Odd Frames (might fix scrolling issue)
+//
 
 // Actually Do stuff with Scanline and Cycle
 always_ff @ (posedge CLK) begin
 	if (RESET) begin
 		ppu_linebuffer <= 1'b0;
+		counter <= 3'b0;
 	end else begin // NOT RESET
-		if (cycle == 1'd0) begin
-			// TODO: This should be somewhere at the end
-			//ppu_linebuffer <= ~ppu_linebuffer;
-			;
-		end
-		else if (cycle > 10'd0 & cycle <= 10'd256) begin
-			// Do some fetching
-			// Write real data to linebuffer
-			// Fake fetching data for now
-			if (ppu_linebuffer)
-				linebuffer[ppu_linebuffer][cycle] <= 6'h21;
-			else 
-				linebuffer[ppu_linebuffer][cycle] <= 6'h28;
-		end
-		else if (cycle > 10'd256) begin
+		//======== VISIBLE SCANLINES (0-239) ==============
+		if (scanline <= 10'd239) begin
+			// ----------CYCLE 0--------------------
+			if (cycle == 1'd0) begin
+				counter <= 3'b0;
+			end
+			
+			// ----------CYCLES 1-256----------------
+			else if (cycle > 10'd0 & cycle <= 10'd256) begin
+				// Do some fetching
+				case (counter)
+					// Fetch nametable byte
+					3'd0: begin
+						PPU_ADDR <= curr_vram_address[13:0];
+						PPU_READ <= 1'b1;
+					end
+					3'd1: begin
+						
+					end
+					3'd2:
+					3'd3:
+					3'd4:
+					3'd5:
+					3'd6:
+					3'd7:
+					// Fetch attribute table byte
+					
+					
+					// fethc parttern table low
+					
+					
+					// fetch pattern tile high 
+				
+				
+				endcase
+				
+				/**
+				// Fake fetching data for now
+				if (scanline < 10'd100)
+					linebuffer[ppu_linebuffer][cycle] <= 6'h21;
+				else 
+					linebuffer[ppu_linebuffer][cycle] <= 6'h28;
+				*/
+			end
+			// ----------CYCLES 257-320----------------
+			else if (cycle > 10'd256 & cycle <= 10'd320) begin
+				// Fetch tile data for sprites on next scanline
+				;
+			end
+			// ----------CYCLES 320-336----------------
+			else if (cycle > 10'd320 & cycle <= 10'd336) begin
+				// Fetch firs two tiles for the next scanline
+				;
+			end
+			// ----------CYCLES 337-340----------------
 			// Do nothing
-			;
+			
+			// This is some random time in horizontal blanking
+			if (cycle == 10'd339) begin
+				ppu_linebuffer <= ~ppu_linebuffer;
+			end
+			
 		end
-		if (cycle == 10'd339) begin
-			ppu_linebuffer <= ~ppu_linebuffer;
-		end
+		//======== SCANLINE (240) ==============
+		// Do nothing
 		
-		//===== START NMI Handling =========
+		//===== SCANLINES 241-260 - START NMI Handling =========
 		// Start of vertical blanking
+		// Dont touch memory here
 		if (scanline == 241 & cycle == 1) begin 
 			nmi_occured <= 1'b1;
 		end
 		// "End of vertical blanking / sometime in pre-render scanline"
 		if (scanline == 261) begin 
 			nmi_occured <= 1'b0;
+			// Fill shift registers with data for the first two tiles of the next scanline.
 		end
 		//===== END NMI Handling =========
 	end
@@ -528,11 +578,10 @@ always_ff @ (posedge VIDEO_CLK) begin
 		drawx <= 10'd0;
 	else
 		drawx <= drawx_intermediate; 
-		
 	if (blank_n) begin
-		VGA_R <= colors[pixel_clr_idx][11:8];
-		VGA_G <= colors[pixel_clr_idx][7:4];
-		VGA_B <= colors[pixel_clr_idx][3:0];
+		VGA_R <= colors[pixel_clr_idx][11:8] << 1;
+		VGA_G <= colors[pixel_clr_idx][7:4] << 1; // Make Brighter
+		VGA_B <= colors[pixel_clr_idx][3:0] << 1;
 		
 	end
 	

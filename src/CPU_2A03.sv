@@ -11,6 +11,7 @@ module CPU_2A03 (
 	input 			 CLK,
 	input				 ENABLE,
 	input 			 RESET,
+	input 			 NMI_n,
 	
 	input 	[7:0]  DATA_IN,
 	
@@ -29,9 +30,7 @@ logic [7:0] DI, DO;
 
 logic [23:0] A; // Top 8 bits probably not used
 
-logic PAUSE, NMI;
-
-assign NMI = 1'b0;
+logic PAUSE;
 
 assign PAUSE = 1'b0;
 
@@ -54,7 +53,7 @@ T65 CPU(.mode(2'b00),
 		  .Rdy(~PAUSE),
 		  .Abort_n(1'b1),
 		  .IRQ_n(1'b1),
-		  .NMI_n(~NMI),
+		  .NMI_n(NMI_n),
 		  .SO_n(1'b1),
 		  .R_W_n(RW_n), // High is read
 		  .A(A), 
