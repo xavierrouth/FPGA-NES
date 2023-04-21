@@ -11,23 +11,29 @@ module ppu_testbench();
 timeunit 1ps;	// Half clock cycle at 50 MHz
 
 			
-logic  PPU_CLK;
-logic  VGA_CLK;
+logic PPU_CLK;
+logic VGA_CLK;
+logic CPU_CLK;
 
 // PPU runs twice as slow as VGA
 
 always begin : VGA_CLK_GENERATION
-#1 VGA_CLK = ~VGA_CLK;
+#3 VGA_CLK = ~VGA_CLK;
 end
 
 always begin : PPU_CLK_GENERATION
-#2 PPU_CLK = ~PPU_CLK;
+#6 PPU_CLK = ~PPU_CLK;
+end
+
+always begin : CPU_CLK_GENERATION
+#2 CPU_CLK = ~CPU_CLK;	
 end
 
 
 initial begin: CLOCK_INITIALIZATION
     VGA_CLK = 0;
 	 PPU_CLK = 0;
+	 CPU_CLK = 0;
 end 
 
 
@@ -68,7 +74,7 @@ integer TestsFailed = 0;
 //=======================================================
 //  DUT Instantiationisnitanwo
 //=======================================================
-PPU ppu_inst(.CLK(PPU_CLK), .RESET(RESET), .VIDEO_CLK(VGA_CLK), .*);
+PPU ppu_inst(.CLK(PPU_CLK), .CPU_CLK(CPU_CLK), .RESET(RESET), .VIDEO_CLK(VGA_CLK), .*);
 
 //=======================================================
 //  Test Vectors

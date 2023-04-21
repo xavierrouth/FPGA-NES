@@ -69,7 +69,7 @@
 //  - 33 Times for each scanline (Each tile in the scanline)
 //  - Fetch a nametable entry.
 //  - Fetch the corresponding attribute table entry
-//  - Increment the current VRAM address within the same row.
+//  - Increment the activeent VRAM address within the same row.
 //  - Fetch the low byte from the pattern table
 //  - Fetch the high byte of the pattern table (8 bytes higher)
 //  - Calculate the palette indicies.
@@ -88,6 +88,7 @@
 
 module PPU (
 	input CLK, // 5.375 MHz or something
+	input CPU_CLK, // 1.7 or something
 	input VIDEO_CLK, // 10.75 MHz (twice as fast)
 	input RESET,
 	//input enable,
@@ -129,25 +130,17 @@ module PPU (
 
 // State Registers
 
-logic [14:0] curr_vram_address;
+logic [14:0] active_vram_address;
 logic [14:0] temp_vram_address;
-
 
 logic [2:0] fine_x_scroll;
 
 logic ppu_latch;
 
-// When PPU is trying to write 
-logic data_write_status;
-logic data_read_status;
-
-// TODO: Make sure that curr_Vram_address use is consistent
+// TODO: Make sure that active_Vram_address use is consistent
 // PPU_BUS_ADDR is the external interface
 logic [7:0] ppu_read_buffer;
 logic [7:0] vram_addr_latched;
-
-
-
 
 //=======================================================
 //  Control Regs - Meaning and Decoding (https://www.nesdev.org/wiki/PPU_registers)
@@ -180,7 +173,7 @@ logic nmi_generate;
 logic sprite_size;
 logic background_ptable_addr;
 logic sprite_ptable_addr;
-logic addr_increment;
+logic addr_increment; // 0 is 1, 1 is 32
 
 //=======================================================
 // $2001 PPUMASK - Write Only
@@ -188,10 +181,12 @@ logic addr_increment;
 // [4] - sprite enable
 // [3] - background enable
 // TODO: .... Who cares for now...
-// [2] - VRAM address increment, low: (1 / going across) high: (32 / going down)
-// [1:0] - Base nametable address #0: $2000, ... 
-// [1:0] - Also the msb of the scrolling coordinates
+
 //=======================================================
+//TODO: Have BGR color emphasis shift the vga output values left
+
+logic sprite_render_enable;
+logic background_render_enable;
 
 //=======================================================
 // $2002 PPUSTATUS - Read Only
@@ -239,11 +234,27 @@ logic ppu_sprite_eval;
 //  Control Regs - Read / Write logic
 //=======================================================
 
+// CPU REQUEST FLAGS
+logic cpu_write_request;
+logic cpu_read_request;
+logic cpu_load_vram_request;
+logic cpu_inc_vram_request;
+logic cpu_nmi_clear_request;
+
 // CPU Interface
-always_ff @ (posedge CLK) begin
+always_ff @ (posedge CPU_CLK) begin
 	// rden and wren are never active at the same time
+	if (RESET) begin
+		cpu_write_request <= 1'b0;
+		cpu_read_request <= 1'b0;
+		cpu_inc_vram_request <= 1'b0;
+		cpu_nmi_clear_request <= 1'b0;
+		cpu_load_vram_request <= 1'b0;
+		ppu_latch <= 1'b0;
+	end
+	
 	//-------------CPU WRITE--------------------------
-	if (CPU_wren) begin // CPU Write
+	else if (CPU_wren) begin // CPU Write
 		case (CPU_ADDR)
 			// Write Only
 			3'h0: begin 
@@ -254,9 +265,11 @@ always_ff @ (posedge CLK) begin
 				sprite_ptable_addr <= CPU_DATA_IN[3];
 				addr_increment <= CPU_DATA_IN[2];
 				temp_vram_address[11:10] <= CPU_DATA_IN[1:0];
-				
 			end
-			3'h1: PPUMASK <= CPU_DATA_IN;
+			3'h1: begin
+				sprite_render_enable <= CPU_DATA_IN[4];
+				background_render_enable <= CPU_DATA_IN[3];
+			end
 			3'h3: OAMADDR <= CPU_DATA_IN;
 			// Read Only
 			3'h2: ;
@@ -288,96 +301,88 @@ always_ff @ (posedge CLK) begin
 				end
 				else if (ppu_latch == 1'b1) begin
 					temp_vram_address[7:0] <= CPU_DATA_IN[7:0];
-					curr_vram_address <= {temp_vram_address[14:8], CPU_DATA_IN[7:0]};
-					 
+					temp_vram_address <= {temp_vram_address[14:8], CPU_DATA_IN[7:0]};
 					ppu_latch <= 1'b0;
+					cpu_load_vram_request <= ~cpu_load_vram_request;
 				end
 			end
 			3'h7: begin //PPU_DATA
-			
-				// TODO: Confirm this should only write for one PPU cycle
-				// PPU_ADDR should be set and outputting to BUS already, so just forward CPU data to PPU bus
-				if (data_write_status == 1'b0) begin
-					PPU_WRITE <= 1'b1; 
-					PPU_DATA_OUT <= CPU_DATA_IN;
-					data_write_status <= 1'b1;
-					
-					// Increment PPU_ADDR
-					if (PPUCTRL[2]) 
-						curr_vram_address <= curr_vram_address + 8'd32; // Increment 32
-					else 
-						curr_vram_address <= curr_vram_address + 1'd1; // Increment 1
-				end
-				else if (data_write_status == 1'b1) begin
-					PPU_WRITE <= 1'b0; 
-					// Open Bus / Don't Care I suppose
-					data_write_status <= 1'b0;
-				end
+				// Request that a write occur
+				cpu_write_request <= ~cpu_write_request;
+				// Request that vram be incremented
+				cpu_inc_vram_request <= ~cpu_inc_vram_request;
 			end
 		endcase // End Addr Case
+
 	end // End Write
 			
 	//-------------CPU READ---------------------------
 	else if (CPU_rden) begin // CPU Read
-		
 		case (CPU_ADDR)
 			// Write Only
-			3'h0: CPU_DATA_OUT <= 8'h0;
-			3'h1: CPU_DATA_OUT <= 8'h0;
+			3'h0: ;
+			3'h1: ;
 			// Read Only
 			3'h2: begin	//Status
-				// Output PPUSTATUS data
-				
-				CPU_DATA_OUT[7] <= status_vblank;
-				CPU_DATA_OUT[6] <= sprite0_hit;
-				CPU_DATA_OUT[5] <= ppu_sprite_eval;
-				// The rest of the bus doesn't get updated
 				
 				//Clear latch for 2005 and 2006
 				ppu_latch <= 1'b0;
-				// Clear VBlank / Nmi Occured (these are two names for the same signal i think)
-				// TODO: Fix multiple drivers issue here to enable this:
-				//nmi_occured <= 1'b0;
 				
+				// Request NMI clear
+				cpu_nmi_clear_request <= ~cpu_nmi_clear_request;
 			end
 			3'h3: ;
 			3'h4: ;
 			3'h5: ;
 			3'h6: ;
 			3'h7: begin
-				//TODO: Implement different behavior for read buffer based on palette vs read form normal vram,
-				//Maybe this can be abstracted away to a different module??
-				CPU_DATA_OUT <= ppu_read_buffer;
-				
-				if (data_write_status == 1'b0) begin
-					ppu_read_buffer <= PPU_DATA_IN;
-					PPU_READ <= 1'b1;
-					data_read_status <= 1'b1;
-					if (PPUCTRL[2]) 
-						curr_vram_address <= curr_vram_address + 8'd32; // Increment 32
-					else 
-						curr_vram_address <= curr_vram_address + 1'd1; // Increment 1
-				end
-				else if (data_read_status == 1'b1) begin
-					//TODO: Should we update the read buffer on both steps of the read?
-					//ppu_read_buffer <= PPU_DATA_IN;
-					PPU_READ <= 1'b0;
-					data_read_status <= 1'b0;
-				end
-				
+				cpu_read_request <= ~cpu_read_request;
+				//TODO: This updates too soon, this needs to update later, just think about it
+				ppu_read_buffer <= PPU_DATA_IN;
+			end
+		endcase // End ADDR Case
+	end // End read
+end
+
+always_comb begin
+	//-------------CPU READ---------------------------
+	// Default Values
+	CPU_DATA_OUT = 8'h0; //TODO: What should the default of this be?
+	
+	if (CPU_rden) begin // CPU Read
+		case (CPU_ADDR)
+			// Write Only
+			3'h0: ;
+			3'h1: ;
+			// Read Only
+			3'h2: begin	//Status
+				// Output PPUSTATUS data
+				CPU_DATA_OUT[7] = status_vblank;
+				CPU_DATA_OUT[6] = sprite0_hit;
+				CPU_DATA_OUT[5] = ppu_sprite_eval;
+			end
+			3'h3: ;
+			3'h4: ;
+			3'h5: ;
+			3'h6: ;
+			3'h7: begin
+				if (CPU_ADDR >= 14'h3F00)
+					CPU_DATA_OUT = PPU_DATA_IN;
+				else
+					CPU_DATA_OUT = ppu_read_buffer;
 			end
 		endcase // End ADDR Case
 	end // End read
 end
 
 //=======================================================
-//  Rendering Engine / State Machine
+//  Cycle and Scanline Engine
 //=======================================================
 
 // VRAM Data Tiles
 
-logic [15:0] ptable_data; // Pattern Table Data
-logic [7:0]  atable_data; // Attribute Table Data
+logic [15:0] ptable_data [2]; // Pattern Table Data
+logic [7:0]  atable_data [2]; // Attribute Table Data
 
 // OAM
 logic [63:0][3:0][7:0] OAM;
@@ -416,6 +421,32 @@ always @(posedge CLK) begin
 	end
 	
 end
+
+//=======================================================
+//  Rendering Logic Signals
+//=======================================================
+
+// PPU HANDLE FLAGS (These mirror the CPU request flags)
+logic ppu_write_handle;
+logic ppu_read_handle;
+logic ppu_load_vram_handle;
+logic ppu_inc_vram_handle;
+logic ppu_nmi_clear_handle;
+
+// PPU REQUEST FLAGS (These are things that the PPU wants to do also, they are different from handling requests the CPU makes)
+// Every cycle these are high, they happen.
+logic ppu_write_request;
+logic ppu_read_request;
+logic ppu_load_vram_request;
+logic ppu_inc_vram_request;
+logic ppu_nmi_set_request;
+logic ppu_nmi_clear_request;
+
+// Copy horizontal and vertical bits respecively
+logic ppu_hcopy_vram_request;
+logic ppu_vcopy_vram_request;
+
+
 // Actualy linebuffer (this gets inferred as ram yay :))
 
 logic [255:0][5:0] linebuffer [2];
@@ -425,17 +456,135 @@ logic ppu_linebuffer;
 logic vga_linebuffer;
 assign vga_linebuffer = ~ppu_linebuffer;
 
-// NMI signals
-logic nmi_occured;
-assign NMI_n = (nmi_generate & nmi_occured); // Unclear if this is active low or not
-assign status_vblank = nmi_occured;
+logic render_enable;
+assign render_enable = background_render_enable | sprite_render_enable;
 
 logic [2:0] counter;
+
 // TODO:
 // Even / Odd Frames (might fix scrolling issue)
-//
 
-// Actually Do stuff with Scanline and Cycle
+//=======================================================
+//  Rendering Logic Always Comb
+//=======================================================
+
+// Always_comb for doing stuff
+
+always_comb begin
+	// ========== Default Values =========================
+	ppu_hcopy_vram_request = 1'b0;
+	ppu_vcopy_vram_request = 1'b0;
+	ppu_nmi_set_request = 1'b0;
+	ppu_nmi_clear_request = 1'b0;
+	ppu_read_request = 1'b0;
+	ppu_inc_vram_request = 1'b0;
+	
+	PPU_ADDR = active_vram_address[11:0];
+	
+	if (~render_enable) begin
+		PPU_ADDR = active_vram_address;
+	end else if (render_enable) begin
+		// DURING VBLANK
+		if (status_vblank) begin
+			;//PPU_READ = cpu_read_request | ppu_data_read;
+			//PPU_WRITE = cpu_write_request | ppu_data_write;
+		end
+		
+		// NOT DURING VBLANK
+		else if(~status_vblank) begin
+			//======== VISIBLE SCANLINES (0-239) ==============
+			if (scanline <= 10'd239) begin
+				// ----------CYCLE 0--------------------
+				if (cycle == 1'd0) begin
+					;
+				end
+				else begin
+				
+				// ----------CYCLES 1-256----------------
+				if (cycle > 10'd0 & cycle <= 10'd256) begin
+					// Do some fetching
+					case (counter)
+						// Fetch nametable byte
+						3'd0: begin
+							PPU_ADDR = {2'b10, active_vram_address[11:0]};
+							ppu_read_request = 1'b1;
+						end
+						3'd1: begin
+							; // Dumby cycle
+						end
+						// Fetch attribute table byte
+						3'd2: begin
+							PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
+							ppu_read_request = 1'b1;
+						end
+						3'd3: ; // Dumby cycle
+						// fethc parttern table low 
+						3'd4: begin
+							PPU_ADDR = 14'd0; //??
+							ppu_read_request = 1'b1;
+						end
+						
+						3'd5: ;
+						// fetch pattern tile high 
+						3'd6: begin
+							PPU_ADDR = 14'd0; //??
+							ppu_read_request = 1'b1;
+						end
+						3'd7: ;
+					endcase
+					
+					if (cycle == 10'd256) begin
+						ppu_inc_vram_request = 1'b1;
+					end
+					
+				end
+				// ----------CYCLES 257-320----------------
+				else if (cycle > 10'd256 & cycle <= 10'd320) begin
+					if (cycle == 10'd257) begin
+						ppu_hcopy_vram_request = 1'b1;
+					end
+					if (cycle >= 10'd280 & cycle <= 10'd340) begin
+						ppu_vcopy_vram_request = 1'b1;
+					end
+					// Fetch tile data for sprites on next scanline
+					;
+				end
+				// ----------CYCLES 320-336----------------
+				else if (cycle > 10'd320 & cycle <= 10'd336) begin
+					// TODO: Fetch firs two tiles for the next scanline
+					;
+				end
+				// ----------CYCLES 337-340----------------
+				// Do nothing
+				
+				end // Not cycle 0
+				
+			end
+			//======== SCANLINE (240) ==============
+			// Do nothing
+			
+			//===== SCANLINES 241-260 - START NMI Handling =========
+			// Start of vertical blanking
+			// Dont touch memory here
+			if (scanline == 241 & cycle == 1) begin 
+				ppu_nmi_set_request = 1'b1;
+			end
+			// "End of vertical blanking / sometime in pre-render scanline"
+			if (scanline == 261) begin 
+				ppu_nmi_clear_request = 1'b1;
+				// Fill shift registers with data for the first two tiles of the next scanline.
+			end
+			//===== END NMI Handling =========
+		end
+	end // if rendering_enable
+end
+
+
+//=======================================================
+//  Rendering Logic Always FF
+//=======================================================
+
+// Always_ff For doing stuff
 always_ff @ (posedge CLK) begin
 	if (RESET) begin
 		ppu_linebuffer <= 1'b0;
@@ -447,43 +596,15 @@ always_ff @ (posedge CLK) begin
 			if (cycle == 1'd0) begin
 				counter <= 3'b0;
 			end
-			
+			else begin
+			counter <= counter + 1;
 			// ----------CYCLES 1-256----------------
-			else if (cycle > 10'd0 & cycle <= 10'd256) begin
-				// Do some fetching
-				case (counter)
-					// Fetch nametable byte
-					3'd0: begin
-						//PPU_ADDR <= curr_vram_address[13:0];
-						//PPU_READ <= 1'b1;
-					end
-					3'd1: begin
-						;
-					end
-					3'd2: ;
-					3'd3: ;
-					3'd4: ;
-					3'd5: ;
-					3'd6: ;
-					3'd7: ;
-					// Fetch attribute table byte
-					
-					
-					// fethc parttern table low
-					
-					
-					// fetch pattern tile high 
-				
-				
-				endcase
-				
-				/**
-				// Fake fetching data for now
+			if (cycle > 10'd0 & cycle <= 10'd256) begin
+				// Fetch random shit;
 				if (scanline < 10'd100)
 					linebuffer[ppu_linebuffer][cycle] <= 6'h21;
 				else 
 					linebuffer[ppu_linebuffer][cycle] <= 6'h28;
-				*/
 			end
 			// ----------CYCLES 257-320----------------
 			else if (cycle > 10'd256 & cycle <= 10'd320) begin
@@ -502,26 +623,152 @@ always_ff @ (posedge CLK) begin
 			if (cycle == 10'd339) begin
 				ppu_linebuffer <= ~ppu_linebuffer;
 			end
+			end // Not cycle 0
 			
 		end
 		//======== SCANLINE (240) ==============
 		// Do nothing
 		
-		//===== SCANLINES 241-260 - START NMI Handling =========
-		// Start of vertical blanking
-		// Dont touch memory here
-		if (scanline == 241 & cycle == 1) begin 
-			nmi_occured <= 1'b1;
-		end
-		// "End of vertical blanking / sometime in pre-render scanline"
-		if (scanline == 261) begin 
-			nmi_occured <= 1'b0;
-			// Fill shift registers with data for the first two tiles of the next scanline.
-		end
-		//===== END NMI Handling =========
 	end
 end	
  
+//============ CPU-PPU ASYNC ==================================================================================
+// There are Various parts of the NES that are driven both by the PPU and by the CPU,
+// this results in all sorts of weird behavior, when one side once to do something and other
+// doesn't know. SystemVerilog and HDL constrains us by not allowing 'multiple drivers',
+// therefore we must handle it using flags generated by always_comb blocks.
+//
+// THIS IS SO FUCKY -- DEPRECEATED:
+//
+// Sometimes we only want things to happen once per CPU cycle (incrementing vram address), 
+// The problem with our proposed setup is that the inc_vram flag will be set the whole time,
+// and that we won't be able to 'unset' the flag because it is controlled by CPU.
+//
+// in order to handle this, we need to:
+// 	read that a request is requested from the CPU
+//    handle the request, but set a cooldown that counts down according to the PPU clock
+//    this seems so fucking annoying, but maybe it will work
+//
+//
+// THIS IS REALLY COOL:
+//
+// We need the CPU to request that things happen on the PPU, reading / writing to registers sets various 'CPU' flags.
+// These requests are seen by the PPU, and then handled. In order to know that the request has already been handled, 
+// the PPU has a flag of its own, that it sets upon handling a request. The PPU then only cares about the xor of both flags.
+// 
+// So say CPU requests t be loaded into v, then CPU toggles its flag, and then PPU sees that next cycle and handles the request, 
+// and then sets its flag high. Then next cycle PPU doesn't see a request that needs to be handled.
+//
+// The CPU //toggles// it's flag. It does not care if it is high or low, only that an edge / toggle occurs.
+//==============================================================================================================
+
+// logic addr_increment; // 0 is 1, 1 is 32
+
+//======== ASYNC VRAM Register Increment Handling ==========
+always_ff @ (posedge CLK) begin
+	// Load takes priority over increment
+	if (RESET) begin
+		ppu_load_vram_handle <= 1'b0;
+		ppu_inc_vram_handle <= 1'b0;
+		active_vram_address <= 14'd0;
+	end
+	else begin
+		// Load request from CPU
+		if (cpu_load_vram_request ^ ppu_load_vram_handle) begin
+			active_vram_address <= temp_vram_address;
+			ppu_load_vram_handle <= ~ppu_load_vram_handle;
+		end
+		
+		//TODO: Do we have to increment when we load also here also?? FUCK.
+		
+		// TODO: Implement this scrolling behavior?
+		// Load request from ppu
+		else if (ppu_hcopy_vram_request) begin
+			;
+		end
+		else if (ppu_vcopy_vram_request) begin
+			;
+		end
+		
+		// Increment request from CPU
+		else if (cpu_inc_vram_request ^ ppu_inc_vram_handle) begin
+			ppu_inc_vram_handle <= ~ppu_inc_vram_handle;
+			if (addr_increment) 
+				active_vram_address <= active_vram_address + 32;
+			else
+				active_vram_address <= active_vram_address + 1;
+		end
+		
+		// Increment request from PPU
+		else if (ppu_inc_vram_request) begin
+			if (addr_increment) 
+				active_vram_address <= active_vram_address + 32;
+			else
+				active_vram_address <= active_vram_address + 1;
+		end
+	end
+end
+
+
+
+//======== ASYNC PPU Write / Read Handling =======
+
+// ppu_write_request, ppu_read_request, ppu_read_handle, ppu_write_handle, cpu_read_request, cpu_write_request
+
+always_ff @ (posedge CLK) begin
+	if (RESET) begin
+		PPU_READ <= 1'b0;
+		PPU_WRITE <= 1'b0;
+	end
+	else begin
+		//TODO: Figure out if we need to handle anything with bus or data or address or just 
+		// Reads
+		if (cpu_read_request ^ ppu_read_handle) begin
+			PPU_READ <= 1'b1;
+			ppu_read_handle <= ~ppu_read_handle;
+		end
+		// TODO: What if we want to clear read? does this work?
+		else if (ppu_read_request)
+			PPU_READ <= 1'b1;
+		else 
+			PPU_READ <= 1'b0;
+		// Writes
+		if (cpu_write_request ^ ppu_write_handle) begin
+			PPU_WRITE <= 1'b1;
+			ppu_write_handle <= ~ppu_write_handle;
+		end
+		// TODO: What if we want to clear write? does this work?
+		else if (ppu_write_request)
+			PPU_WRITE <= 1'b1;
+		else 
+			PPU_WRITE <= 1'b0;
+	end
+end
+ 
+//======== ASYNC NMI Handling  ===================
+
+//ppu_nmi_set_request ppu_nmi_clear_request ppu_nmi_clear_handle cpu_nmi_clear_request
+
+// NMI signals
+logic nmi_occured;
+assign NMI_n = ~(nmi_generate & nmi_occured); // Unclear if this is active low or not
+assign status_vblank = nmi_occured;
+
+always_ff @ (posedge CLK) begin
+	if (RESET) begin
+		nmi_occured <= 1'b0;
+	end
+	else begin
+		if (cpu_nmi_clear_request ^ ppu_nmi_clear_handle) begin
+			ppu_nmi_clear_handle <= ~ppu_nmi_clear_handle;
+			nmi_occured <= 1'b0;
+		end
+		else if (ppu_nmi_set_request)
+			nmi_occured <= 1'b1;
+		else if (ppu_nmi_clear_request)
+			nmi_occured <= 1'b0;
+	end
+end
 
 //=======================================================
 //  Double Linebuffer 
@@ -538,10 +785,10 @@ end
 //    have VGA run twice as fast for each scanline. However we still need to keep VSYNC the same, so we
 //    read each scanline twice. This will work out and everyone will be happy.
 //
+// TODO: FIX WEIRD VERTICAL SCROLLING
 //
 //
 //=======================================================
-
 
 
 // Read back from this at twice the speed in 
