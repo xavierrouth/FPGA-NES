@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <alt_types.h>
 #include "nestest.h"
+#include "usb_host.h"
 #include "rom_programmer.h"
 
 int main()
@@ -28,9 +29,9 @@ int main()
   printf("Beginning Programming \n");
   // Format is 0x00[DATA (2 Bytes) ][ADDR (4 Bytes)];
   /**
-   * $FFFA–$FFFB = NMI vector
-   * $FFFC–$FFFD = Reset vector
-   * $FFFE–$FFFF = IRQ/BRK vector
+   * $FFFAï¿½$FFFB = NMI vector
+   * $FFFCï¿½$FFFD = Reset vector
+   * $FFFEï¿½$FFFF = IRQ/BRK vector
    */
 
 
@@ -38,33 +39,149 @@ int main()
   for (int i = 0; i < prg_rom_size; i++) {
 	  // Write BB to $C000 to $C000 + i
 	  alt_u8 bytes = prg_rom_data[i];
-	  // Write Data
+	  // Write Data (I don't feel like doing mirroring for now)
 	  write_prg_rom(0xC000 + i, bytes);
 	  write_prg_rom(0x8000 + i, bytes);
-
   }
 
-
-  for (int i = 0; i < 640; i++) {
-	  usleep(5000);
-	  printf("%X ", i);
-	  write_chr_rom(0x1000, i * 1);
+  // Write CHR Rom
+  for (int i = 0; i < chr_rom_size; i++) {
+	  // Write BB to $C000 to $C000 + i
+	  alt_u8 bytes = chr_rom_data[i];
+	  // Write Data (I don't feel like doing mirroring for now)
+	  write_prg_rom(0x0000 + i, bytes);
   }
 
-
-
-  rom_programmer->rom = 0x00AAFFFA;
-  rom_programmer->rom = 0x00AAFFFB;
-
-  // Reset Vector
-  rom_programmer->rom = 0x8000FFFC; // Lower part of address
-  rom_programmer->rom = 0x80C0FFFD; // Higher part of address
-
-  rom_programmer->rom = 0x00AAFFFE;
-  rom_programmer->rom = 0x00AAFFFF;
+  // Write Reset Vector
+  /**
+  write_prg_rom(0xFFFC, 0x00);
+  write_prg_rom(0xFFFD, 0xC0);
+  */
 
   printf("Done Programming \n");
 
+  // USB polling stuff
+  BYTE rcode;
+  BOOT_MOUSE_REPORT buf;		//USB mouse report
+	BOOT_KBD_REPORT kbdbuf;
+
+	BYTE runningdebugflag = 0;//flag to dump out a bunch of information when we first get to USB_STATE_RUNNING
+	BYTE errorflag = 0; //flag once we get an error device so we don't keep dumping out state info
+	BYTE device;
+	WORD keycode;
+
+	printf("initializing MAX3421E...\n");
+	MAX3421E_init();
+	printf("initializing USB...\n");
+	USB_init();
+	printf("Test reg_rd: %x \n", MAXreg_rd(rREVISION));
+	while (1) {
+		printf(".");
+		MAX3421E_Task();
+		USB_Task();
+		//usleep (500000);
+		if (GetUsbTaskState() == USB_STATE_RUNNING) {
+			if (!runningdebugflag) {
+				runningdebugflag = 1;
+				setLED(9);
+				device = GetDriverandReport();
+			} else if (device == 1) {
+				//run keyboard debug polling
+				rcode = kbdPoll(&kbdbuf);
+				if (rcode == hrNAK) {
+					continue; //NAK means no new data
+				} else if (rcode) {
+					printf("Rcode: ");
+					printf("%x \n", rcode);
+					continue;
+				}
+				printf("keycodes: ");
+				for (int i = 0; i < 6; i++) {
+					printf("%x ", kbdbuf.keycode[i]);
+				}
+				// overwrite setKeycode to translate to NES
+				BYTE nesKeycodes = 0x00;
+
+				for (int i = 0; i < 6; i++) {
+					BYTE kc = kbdbuf.keycode[i];
+					// A - K
+					if (kc == 14) nesKeycodes |= 0x01;
+					// B - L
+					if (kc == 15) nesKeycodes |= 0x02;
+					// SELECT - '\'
+					if (kc == 49) nesKeycodes |= 0x04;
+					// START - 'enter;
+					if (kc == 40) nesKeycodes |= 0x08;
+					// UP - W
+					if (kc == 26) nesKeycodes |= 0x10;
+					// DOWN - S
+					if (kc == 22) nesKeycodes |= 0x20;
+					// LEFT - A
+					if (kc == 4) nesKeycodes |= 0x40;
+					// RIGHT - D
+					if (kc == 7) nesKeycodes |= 0x80;
+				}
+				setKeycode(nesKeycodes);
+				printf("NES controller sees: %x ", nesKeycodes);
+				printf("\n");
+				printSignedHex0(kbdbuf.keycode[0]);
+				printSignedHex1(kbdbuf.keycode[1]);
+				printf("\n");
+			}
+
+			else if (device == 2) {
+				rcode = mousePoll(&buf);
+				if (rcode == hrNAK) {
+					//NAK means no new data
+					continue;
+				} else if (rcode) {
+					printf("Rcode: ");
+					printf("%x \n", rcode);
+					continue;
+				}
+				printf("X displacement: ");
+				printf("%d ", (signed char) buf.Xdispl);
+				printSignedHex0((signed char) buf.Xdispl);
+				printf("Y displacement: ");
+				printf("%d ", (signed char) buf.Ydispl);
+				printSignedHex1((signed char) buf.Ydispl);
+				printf("Buttons: ");
+				printf("%x\n", buf.button);
+				if (buf.button & 0x04)
+					setLED(2);
+				else
+					clearLED(2);
+				if (buf.button & 0x02)
+					setLED(1);
+				else
+					clearLED(1);
+				if (buf.button & 0x01)
+					setLED(0);
+				else
+					clearLED(0);
+			}
+		} else if (GetUsbTaskState() == USB_STATE_ERROR) {
+			if (!errorflag) {
+				errorflag = 1;
+				clearLED(9);
+				printf("USB Error State\n");
+				//print out string descriptor here
+			}
+		} else //not in USB running state
+		{
+
+			printf("USB task state: ");
+			printf("%x\n", GetUsbTaskState());
+			if (runningdebugflag) {	//previously running, reset USB hardware just to clear out any funky state, HS/FS etc
+				runningdebugflag = 0;
+				MAX3421E_init();
+				USB_init();
+			}
+			errorflag = 0;
+			clearLED(9);
+		}
+
+	}
 
   return 0;
 }

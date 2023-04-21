@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>Apr 14, 2023 11:34:31 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1681533271239</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>Apr 20, 2023 8:04:27 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1682039067604</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\dev\FPGA-NES\src\software\NES_NIOSII_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\toplevel_soc.sopcinfo</SopcDesignFile>

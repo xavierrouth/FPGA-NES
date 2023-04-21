@@ -454,18 +454,18 @@ always_ff @ (posedge CLK) begin
 				case (counter)
 					// Fetch nametable byte
 					3'd0: begin
-						PPU_ADDR <= curr_vram_address[13:0];
-						PPU_READ <= 1'b1;
+						//PPU_ADDR <= curr_vram_address[13:0];
+						//PPU_READ <= 1'b1;
 					end
 					3'd1: begin
-						
+						;
 					end
-					3'd2:
-					3'd3:
-					3'd4:
-					3'd5:
-					3'd6:
-					3'd7:
+					3'd2: ;
+					3'd3: ;
+					3'd4: ;
+					3'd5: ;
+					3'd6: ;
+					3'd7: ;
 					// Fetch attribute table byte
 					
 					

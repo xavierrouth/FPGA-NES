@@ -33,7 +33,7 @@
 //=======================================================
 
 module CONTROLLER (
-	
+
 	input rden, wren,
 	
 	input [7:0] data_in,
@@ -48,15 +48,20 @@ assign data_out[7:1] = 7'b0;
 
 logic [7:0] keycodes;
 
-
-// This is all wrong, we should adapt the clock outside of this
+// TODO: Add second controller
+// TODO: This is all wrong, we should adapt the clock outside of this
 always_ff @ (posedge rden or posedge wren) begin
+	// TOOD: This should load continously on CLK not only on wren.
 	if (wren) begin
 		if (data_in[0]) // Parallel load
 			keycodes <= keycodes_in;
 		else
 			keycodes <= keycodes;
-			
+	end
+	if (rden) begin
+		// Right shift out keycodes
+		keycodes <= {1'b1, keycodes[7:1]};
+		data_out[0] <= keycodes[0];
 	end
 end
 

@@ -106,6 +106,17 @@ mst_fsm_state.BUS_HOLD 0 0 1 0 0 0 0 0 0 0 1
 mst_fsm_state.GEN_STOP 0 1 0 0 0 0 0 0 0 0 1 
 mst_fsm_state.PRE_IDLE 1 0 0 0 0 0 0 0 0 0 1 
 
+State Machine - |toplevel|NES_ARCHITECUTRE:NES|PPU:ppu_inst|counter
+Name counter.111 counter.110 counter.101 counter.100 counter.011 counter.010 counter.001 counter.000 
+counter.000 0 0 0 0 0 0 0 0 
+counter.001 0 0 0 0 0 0 1 1 
+counter.010 0 0 0 0 0 1 0 1 
+counter.011 0 0 0 0 1 0 0 1 
+counter.100 0 0 0 1 0 0 0 1 
+counter.101 0 0 1 0 0 0 0 1 
+counter.110 0 1 0 0 0 0 0 1 
+counter.111 1 0 0 0 0 0 0 1 
+
 State Machine - |toplevel|NES_ARCHITECUTRE:NES|CPU_2A03:cpu_inst|T65:CPU|Set_Addr_To_r
 Name Set_Addr_To_r.Set_Addr_To_BA Set_Addr_To_r.Set_Addr_To_ZPG Set_Addr_To_r.Set_Addr_To_SP Set_Addr_To_r.Set_Addr_To_PBR 
 Set_Addr_To_r.Set_Addr_To_PBR 0 0 0 0 

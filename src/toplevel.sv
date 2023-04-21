@@ -201,7 +201,7 @@ module toplevel (
 	
 	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .PPU_CLK(PPU_CLK), .VGA_CLK(VGA_CLK), .CPU_RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
 						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data(rom_prgmr_data),
-						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren), .*);
+						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren), .controller_keycode(keycode), .*);
 	
 	
 	/**
@@ -234,6 +234,7 @@ module toplevel (
 		
 	
 	// Choose what to display on the HEX
+	/**
 	always_ff @ (posedge MAX10_CLK1_50) begin
 		case (SW[9:7])
 			// Display ROM Programmer Contents
@@ -298,7 +299,8 @@ module toplevel (
 	
 	
 	
-	assign LEDR[7] = chr_rom_prgmr_wren | prg_rom_prgmr_wren;
+	//assign LEDR[7] = chr_rom_prgmr_wren | prg_rom_prgmr_wren;
+	*/
 	
 	
 //=======================================================
@@ -437,8 +439,8 @@ module toplevel (
 		.game_rom_conduit_chr_rom_write(chr_rom_prgmr_wren),     	//                        .rom_addr
 		
 		//LEDs and HEX
-		//.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
-		//.leds_export({hundreds, signs, LEDR}),
+		.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
+		.leds_export({hundreds, signs, LEDR}),
 		.keycode_export(keycode)
 		
 		

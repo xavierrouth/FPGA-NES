@@ -46,7 +46,7 @@ logic [2:0] CPU_ADDR;
 logic CPU_wren, CPU_rden; // CPU wants to read / CPU wants to write
 
 logic  [7:0] CPU_DATA_OUT;
-logic 	NMI;
+logic 	NMI_n;
 
 //PPU BUS interface
 logic [7:0] PPU_DATA_IN;

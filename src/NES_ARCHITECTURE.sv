@@ -37,6 +37,7 @@ module NES_ARCHITECUTRE (
 	input 				prg_rom_prgmr_wren, chr_rom_prgmr_wren,
 	input [15:0]		rom_prgmr_addr,
 	input [7:0]			rom_prgmr_data,
+	input [7:0] 		controller_keycode,
 
 	// Video 
 	output             VGA_HS,
@@ -63,6 +64,11 @@ logic [7:0]  CPU_DATA_BUS;
 logic [15:0] CPU_ADDR;
 logic [7:0]  CPU_DATA_OUT;
 logic 		 CPU_RW_n; // Read is high, write is low
+
+//Controller Signals
+
+logic CONTROLLER_wren, CONTROLLER_rden;
+logic [7:0] CONTROLLER_DATA_OUT;
 
 // PPU-CPU Signals
 logic [7:0] PPU_CPU_DATA_OUT;
@@ -94,6 +100,9 @@ always_comb begin : CPU_BUS_SELECTION
 	CPU_DATA_BUS = 8'hAA;
 	PRG_ROM_rden = 1'b0;
 	
+	CONTROLLER_rden = 1'b0;
+	CONTROLLER_wren = 1'b0;
+	
 	// ------ CPU Write ---------
 	if (~CPU_RW_n) begin
 		CPU_DATA_BUS = CPU_DATA_OUT;
@@ -101,6 +110,11 @@ always_comb begin : CPU_BUS_SELECTION
 		// System Ram [$0000 - $0FFF]
 		if (CPU_ADDR_BUS <= 16'h0FFF)
 			SYSRAM_wren = 1'b1;
+		
+		// CONTROLLER [$4016]
+		if (CPU_ADDR_BUS == 16'h4016) begin
+			CONTROLLER_wren = 1'b1;
+		end
 		
 		// PPU Control Registers [$2000 - $3FFF] (Repeats every 8 bytes)
 		if ((CPU_ADDR_BUS >= 16'h2000) & (CPU_ADDR_BUS <= 16'h3FFF)) begin
@@ -116,7 +130,11 @@ always_comb begin : CPU_BUS_SELECTION
 			CPU_DATA_BUS = SYSRAM_DATA_OUT;
 			SYSRAM_rden = 1'b1;
 		end
-		
+		// CONTROLLER [$4016 - $4017]
+		if (CPU_ADDR_BUS == 16'h4016 | CPU_ADDR_BUS == 16'h4017) begin
+			CONTROLLER_rden = 1'b1;
+			CPU_DATA_BUS = CONTROLLER_DATA_OUT;
+		end
 		// PRG-ROM [$4020 - $FFFF]
 		else if (CPU_ADDR_BUS >= 16'h4020) begin
 			CPU_DATA_BUS = PRG_ROM_DATA_OUT;
@@ -225,11 +243,13 @@ assign sysram_enable = 1'b1;
 
 logic RESET;
 
-logic NMI;
+logic NMI_n;
 
 //=======================================================
 //  Module Instatiation
 //=======================================================
+
+CONTROLLER playerone(.rden(CONTROLLER_rden), .wren(CONTROLLER_wren), .data_in(CPU_DATA_BUS), .keycodes_in(controller_keycode), .data_out(CONTROLLER_DATA_OUT));
 
 CPU_2A03 cpu_inst(.CLK(CPU_CLK), .ENABLE(CPU_ENABLE), .RESET(CPU_RESET), .DATA_IN(CPU_DATA_BUS), .ADDR(CPU_ADDR), 
 				  .DATA_OUT(CPU_DATA_OUT), .RW_n(CPU_RW_n), .cpu_debug(cpu_debug));
@@ -242,7 +262,7 @@ PRG_ROM prg_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(CPU_A
 CHR_ROM chr_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(PPU_ADDR_BUS[13:0]), .prgmr_addr(rom_prgmr_addr), 
 					.nes_rden(CHR_ROM_rden), .prgmr_wren(chr_rom_prgmr_wren), .nes_data_out(CHR_ROM_DATA_OUT));
 					
-PPU ppu_inst(.CLK(PPU_CLK), .RESET(RESET), .VIDEO_CLK(VGA_CLK), .NMI(NMI), .CPU_DATA_IN(CPU_DATA_BUS), .CPU_ADDR(CPU_ADDR[2:0]), .CPU_DATA_OUT(PPU_CPU_DATA_OUT), .CPU_wren(CPU_PPU_wren), .CPU_rden(CPU_PPU_rden), 
+PPU ppu_inst(.CLK(PPU_CLK), .RESET(RESET), .VIDEO_CLK(VGA_CLK), .NMI_n(NMI_n), .CPU_DATA_IN(CPU_DATA_BUS), .CPU_ADDR(CPU_ADDR[2:0]), .CPU_DATA_OUT(PPU_CPU_DATA_OUT), .CPU_wren(CPU_PPU_wren), .CPU_rden(CPU_PPU_rden), 
 				.PPU_DATA_IN(PPU_DATA_BUS), .PPU_DATA_OUT(PPU_DATA_OUT), .PPU_ADDR(PPU_ADDR), .PPU_READ(PPU_READ), .PPU_WRITE(PPU_WRITE), .*);
 				
 VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
