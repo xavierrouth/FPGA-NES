@@ -22,10 +22,10 @@
 //-------------------------------------------------------------------------
 
 
-module  vga_controller342 ( input     Clk,       // 25.175 MHz clock
+module  vga_controller342 ( input     Clk,       // 10.7 MHz clock
                                       Reset,     // reset signal
                          output logic hs,        // Horizontal sync pulse.  Active low
-								              vs,        // Vertical sync pulse.  Active low // 25 MHz pixel clock output
+								              vs,        // Vertical sync pulse.  Active low 
 												  blank,     // Blanking interval indicator.  Active low.
 												  sync,      // Composite Sync signal.  Active low.  We don't use it in this lab,
 												             //   but the video DAC on the DE2 board requires an input for it.
@@ -41,11 +41,13 @@ module  vga_controller342 ( input     Clk,       // 25.175 MHz clock
 
 	parameter [10:0] v_sb = 11'd490;
 	parameter [10:0] v_se = 11'd491;
+	
+	
+	// These need fixing?
+	parameter [10:0] h_tot = 11'd340;// 11'd341; //11'd800;
+	parameter [10:0] v_tot = 11'd523; // What happens if we do this? // This changes scrolling you should fix it
 
-	parameter [10:0] h_tot = 11'd341; //11'd800;
-	parameter [10:0] v_tot = 11'd525; // This changes scrolling you should fix it
-
-	parameter [10:0] h_active = 11'd273; //11'd640
+	parameter [10:0] h_active = 11'd256; //11'd640
 	parameter [10:0] v_active = 11'd480;
 
 	logic h_pol = 1'b1;
@@ -84,7 +86,7 @@ module  vga_controller342 ( input     Clk,       // 25.175 MHz clock
 
 	logic [11:0] nexth, nextv, hcount, vcount;
 	
-	assign DrawX = hcount << 1;
+	assign DrawX = hcount;
 	assign DrawY = vcount;
 	
    always @(posedge dclk) begin

@@ -93,6 +93,8 @@ module PPU (
 	input RESET,
 	//input enable,
 	
+	input debug_enable_nmi,
+	
 	// CPU BUS interface
 	input [7:0] CPU_DATA_IN,
 	input [2:0] CPU_ADDR,
@@ -129,15 +131,22 @@ module PPU (
 //=======================================================
 
 // State Registers
+typedef struct packed {
+	logic [2:0] fine_y; 
+	logic       nametable_y;
+	logic 		nametable_x;
+	logic [4:0] coarse_y;
+	logic [4:0] coarse_x; 
+} loopy_reg;
 
-logic [14:0] active_vram_address;
-logic [14:0] temp_vram_address;
 
-logic [2:0] fine_x_scroll;
+loopy_reg active_vram_address;
+loopy_reg temp_vram_address;
+
+logic [2:0] fine_x;
 
 logic ppu_latch;
 
-// TODO: Make sure that active_Vram_address use is consistent
 // PPU_BUS_ADDR is the external interface
 logic [7:0] ppu_read_buffer;
 logic [7:0] vram_addr_latched;
@@ -187,6 +196,7 @@ logic addr_increment; // 0 is 1, 1 is 32
 
 logic sprite_render_enable;
 logic background_render_enable;
+assign background_render_enable = 1'b1;
 
 //=======================================================
 // $2002 PPUSTATUS - Read Only
@@ -241,6 +251,7 @@ logic cpu_load_vram_request;
 logic cpu_inc_vram_request;
 logic cpu_nmi_clear_request;
 
+assign nmi_generate = debug_enable_nmi;
 // CPU Interface
 always_ff @ (posedge CPU_CLK) begin
 	// rden and wren are never active at the same time
@@ -259,16 +270,18 @@ always_ff @ (posedge CPU_CLK) begin
 			// Write Only
 			3'h0: begin 
 				// Use a struct to make this easier??
-				nmi_generate <= CPU_DATA_IN[7];
+				//nmi_generate <= CPU_DATA_IN[7];
 				sprite_size <= CPU_DATA_IN[5];
 				background_ptable_addr <= CPU_DATA_IN[4]; // 0-> $0000 or 1 -> $1000
 				sprite_ptable_addr <= CPU_DATA_IN[3];
 				addr_increment <= CPU_DATA_IN[2];
-				temp_vram_address[11:10] <= CPU_DATA_IN[1:0];
+				temp_vram_address.nametable_y <= CPU_DATA_IN[1];
+				temp_vram_address.nametable_x <= CPU_DATA_IN[0];
 			end
 			3'h1: begin
 				sprite_render_enable <= CPU_DATA_IN[4];
-				background_render_enable <= CPU_DATA_IN[3];
+				//TODO:
+				//background_render_enable <= CPU_DATA_IN[3];
 			end
 			3'h3: OAMADDR <= CPU_DATA_IN;
 			// Read Only
@@ -283,13 +296,13 @@ always_ff @ (posedge CPU_CLK) begin
 			// Write Twice
 			3'h5: begin //PPUSCROLL
 				if (ppu_latch == 1'b0) begin
-					temp_vram_address[4:0] <= CPU_DATA_IN[7:3];
-					fine_x_scroll <= CPU_DATA_IN[2:0];
+					temp_vram_address.coarse_x <= CPU_DATA_IN[7:3];
+					fine_x <= CPU_DATA_IN[2:0];
 					ppu_latch <= 1'b1;
 				end
 				else if (ppu_latch == 1'b1) begin
-					temp_vram_address[9:5] <= CPU_DATA_IN[7:3];
-					temp_vram_address[14:12] <= CPU_DATA_IN[2:0];
+					temp_vram_address.coarse_y <= CPU_DATA_IN[7:3];
+					temp_vram_address.fine_y <= CPU_DATA_IN[2:0];
 					ppu_latch <= 1'b0;
 				end
 			end
@@ -300,7 +313,6 @@ always_ff @ (posedge CPU_CLK) begin
 					ppu_latch <= 1'b1;
 				end
 				else if (ppu_latch == 1'b1) begin
-					temp_vram_address[7:0] <= CPU_DATA_IN[7:0];
 					temp_vram_address <= {temp_vram_address[14:8], CPU_DATA_IN[7:0]};
 					ppu_latch <= 1'b0;
 					cpu_load_vram_request <= ~cpu_load_vram_request;
@@ -391,9 +403,13 @@ logic [63:0][3:0][7:0] OAM;
 // Scanline and Cycle Engine (Very similar to VGA controller)
 
 logic [9:0] cycle, scanline, next_cycle, next_scanline;
+logic extra_cycle_latch;
+logic extra_cycle;
 
-parameter [9:0] cycle_count = 10'd340;
-parameter [9:0] scanline_count = 10'd263;
+
+
+parameter [9:0] cycle_count = 10'd340; //
+parameter [9:0] scanline_count = 10'd261;
 
 logic ppu_vs, ppu_hs;
 
@@ -405,9 +421,11 @@ always @(posedge CLK) begin
 		next_scanline <= 10'd0;
 		ppu_vs <= 1'b0;
 		ppu_hs <= 1'b0;
+		extra_cycle_latch <= 1'b0;
 	end
 	else begin
-		if (next_cycle == cycle_count) begin
+		if (next_cycle == (cycle_count + extra_cycle)) begin
+			//extra_cycle_latch <= ~extra_cycle_latch;
 			next_cycle <= 10'd0;
 			if (next_scanline == scanline_count)
 				next_scanline <= 10'd0;
@@ -439,13 +457,14 @@ logic ppu_nmi_clear_handle;
 logic ppu_write_request;
 logic ppu_read_request;
 logic ppu_load_vram_request;
-logic ppu_inc_vram_request;
 logic ppu_nmi_set_request;
 logic ppu_nmi_clear_request;
 
 // Copy horizontal and vertical bits respecively
 logic ppu_hcopy_vram_request;
 logic ppu_vcopy_vram_request;
+logic ppu_hinc_vram_request;
+logic ppu_vinc_vram_request;
 
 
 // Actualy linebuffer (this gets inferred as ram yay :))
@@ -458,9 +477,13 @@ logic vga_linebuffer;
 assign vga_linebuffer = ~ppu_linebuffer;
 
 logic render_enable;
+// TODO: This is just pulled high for now for testing
 assign render_enable = background_render_enable | sprite_render_enable;
 
+assign extra_cycle = extra_cycle_latch & render_enable;
+
 logic [2:0] counter;
+assign counter = ((cycle - 1) % 8);
 
 // TODO:
 // Even / Odd Frames (might fix scrolling issue)
@@ -471,32 +494,39 @@ logic [2:0] counter;
 
 // Always_comb for doing stuff
 
+logic [4:0] palette_idx; // idx into some palette
+logic [5:0] color_idx; // The color data retrieved from the palette?
+
 always_comb begin
 	// ========== Default Values =========================
-	ppu_hcopy_vram_request = 1'b0;
-	ppu_vcopy_vram_request = 1'b0;
+	
 	ppu_nmi_set_request = 1'b0;
 	ppu_nmi_clear_request = 1'b0;
 	ppu_read_request = 1'b0;
-	ppu_inc_vram_request = 1'b0;
+	
+	// Weird Register Increments
+	ppu_hinc_vram_request = 1'b0;
+	ppu_vinc_vram_request = 1'b0;
+	ppu_hcopy_vram_request = 1'b0;
+	ppu_vcopy_vram_request = 1'b0;
+	
+	color_idx = 6'b0;
+	palette_idx = 5'b0;
 	
 	PPU_ADDR = active_vram_address[11:0];
 	
 	if (~render_enable) begin
 		PPU_ADDR = active_vram_address;
 	end else if (render_enable) begin
+		//color_idx = cycle[5:0];
 		
 		//======== VISIBLE SCANLINES (0-239) ==============
 		if (scanline <= 10'd239) begin
-			// ----------CYCLE 0--------------------
-			if (cycle == 1'd0) begin
-				;
-			end
-			else begin
-			
+
 			// ----------CYCLES 1-256----------------
-			if (cycle > 10'd0 & cycle <= 10'd256) begin
+			if (cycle >= 10'd2 & cycle <= 10'd256) begin
 				// Do some fetching
+				//TODO: ppu is always reading, i guess thats okay
 				case (counter)
 					// Fetch nametable byte
 					3'd0: begin
@@ -514,23 +544,32 @@ always_comb begin
 					3'd3: ppu_read_request = 1'b1; // Dumby cycle
 					// fethc parttern table low 
 					3'd4: begin
-						PPU_ADDR = 14'd0; //??
+						PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address[14:12]}; //??
 						ppu_read_request = 1'b1;
 					end
 					
 					3'd5: ppu_read_request = 1'b1;
 					// fetch pattern tile high 
 					3'd6: begin
-						PPU_ADDR = 14'd0; //?? + 8 from pattern table tile low
+						PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address[14:12]}; //?? + 8 from pattern table tile low
 						ppu_read_request = 1'b1;
 					end
-					3'd7: ppu_read_request = 1'b1;
+					3'd7: begin
+						ppu_read_request = 1'b1;
+						ppu_hinc_vram_request = 1'b1;
+					end
 				endcase
 				
+				// Combine attribute data and ptable data into a palette index
+				palette_idx =  5'b0;
+				//palette_idx = '{1'b1, atable_data[0][1:0], ptable_data[1][counter], ptable_data[0][counter]};
+				color_idx = '{4'b0010, ptable_data[1][counter], ptable_data[0][counter]};
+				
+				
 				if (cycle == 10'd256) begin
-					//TODO: This is not that simple
 					// This needs to increment the veritcal position in v, the effective Y scroll coordinate
-					//ppu_inc_vram_request = 1'b1;
+					ppu_hinc_vram_request = 1'b1;
+					ppu_vinc_vram_request = 1'b1;
 				end
 				
 			end
@@ -551,14 +590,13 @@ always_comb begin
 			// ----------CYCLES 337-340----------------
 			// Do nothing
 			
-			end // Not cycle 0
+		 // Not cycle 0
 			
-		end
+		end // Not visible Scanlines
+		
 		//======== SCANLINE (240) ==============
 		// Do nothing
-		if (cycle >= 10'd328 | cycle <= 10'd256) begin
-			ppu_inc_vram_request = 1'b1;
-		end
+		
 		//===== SCANLINES 241-260 - START NMI Handling =========
 		// Start of vertical blanking
 		// Dont touch memory here
@@ -566,15 +604,16 @@ always_comb begin
 			ppu_nmi_set_request = 1'b1;
 		end
 		// "End of vertical blanking / sometime in pre-render scanline"
+		// ============PRE-render-Scanline (261) ===============
 		if (scanline == 261) begin 
 			ppu_nmi_clear_request = 1'b1;
 			// Reload vertical scroll bits
-			if (cycle >= 10'd280 & cycle <= 10'd340) begin
+			if (cycle >= 10'd280 & cycle <= 10'd305) begin
 				ppu_vcopy_vram_request = 1'b1;
 			end
 			// Fill shift registers with data for the first two tiles of the next scanline.
-		end
-		//===== END NMI Handling =========
+		end// ============END PRE-render-Scanline (261) ===============
+
 	end // if rendering_enable
 end
 
@@ -587,7 +626,6 @@ end
 always_ff @ (posedge CLK) begin
 	if (RESET) begin
 		ppu_linebuffer <= 1'b0;
-		counter <= 3'b0;
 		ntable_byte <= 8'd0;
 		
 	end else begin // NOT RESET
@@ -595,75 +633,86 @@ always_ff @ (posedge CLK) begin
 		if (scanline <= 10'd239) begin
 			// ----------CYCLE 0--------------------
 			if (cycle == 1'd0) begin
-				counter <= 3'b0;
+				;
 			end
 			else begin
-			counter <= counter + 1;
-			// TODO: Shift Shiftregs
-			// ----------CYCLES 1-256----------------
-			case (counter)
-				// Fetch nametable byte
-				3'd0: begin
-					; // Load data into shift regs
-				end
-				3'd1: begin
-					ntable_byte <= PPU_DATA_IN;
-				end
-				// Fetch attribute table byte
-				3'd2: begin
-					;
-				end
-				3'd3: begin
-					// TODO: Which atable_data??
-					atable_data[0] <= PPU_DATA_IN;
-				end
-				// fethc parttern table low 
-				3'd4: begin
-					;
-				end
 				
-				3'd5: begin
-					ptable_data[0] <= PPU_DATA_IN;
+				// TODO: Shift Shiftregs
+				// ----------CYCLES 1-256----------------
+				case (counter)
+					// Fetch nametable byte
+					3'd0: begin
+						; // Load data into shift regs
+					end
+					3'd1: begin
+						ntable_byte <= PPU_DATA_IN;
+					end
+					// Fetch attribute table byte
+					3'd2: begin
+						;
+					end
+					3'd3: begin
+						// TODO: Which atable_data??
+						// TODO: Fix this idiot, need to select from 1 of 4 possible 2 bit pairs in the byte
+						atable_data[0] <= PPU_DATA_IN;
+					end
+					// fethc parttern table low 
+					3'd4: begin
+						;
+					end
+					
+					3'd5: begin
+						ptable_data[0] <= PPU_DATA_IN;
+					end
+					// fetch pattern tile high 
+					3'd6: begin
+						;
+					end
+					3'd7: begin
+						ptable_data[1] <= PPU_DATA_IN;
+					end
+				endcase
+				if (cycle > 10'd0 & cycle <= 10'd256) begin
+					// Just draw the ptable data 
+					linebuffer[ppu_linebuffer][cycle] <= color_idx;
+					//Fetch random shit;
+					/**
+					if (scanline ==  10'd239) 
+						linebuffer[ppu_linebuffer][cycle] <= 6'h21;
+					else if (scanline < 10'd100)
+						linebuffer[ppu_linebuffer][cycle] <= ((scanline << 4) + cycle >> 3);//6'h21;
+					else 
+						linebuffer[ppu_linebuffer][cycle] <= 6'h21;
+					*/
 				end
-				// fetch pattern tile high 
-				3'd6: begin
+				// ----------CYCLES 257-320----------------
+				else if (cycle > 10'd256 & cycle <= 10'd320) begin
+					// Fetch tile data for sprites on next scanline
 					;
 				end
-				3'd7: begin
-					ptable_data[1] <= PPU_DATA_IN;
+				// ----------CYCLES 320-336----------------
+				else if (cycle > 10'd320 & cycle <= 10'd336) begin
+					// Fetch firs two tiles for the next scanline
+					;
 				end
-			endcase
-			if (cycle > 10'd0 & cycle <= 10'd256) begin
-				// Fetch random shit;
-				if (scanline < 10'd100)
-					linebuffer[ppu_linebuffer][cycle] <= 6'h21;
-				else 
-					linebuffer[ppu_linebuffer][cycle] <= 6'h28;
-			end
-			// ----------CYCLES 257-320----------------
-			else if (cycle > 10'd256 & cycle <= 10'd320) begin
-				// Fetch tile data for sprites on next scanline
-				;
-			end
-			// ----------CYCLES 320-336----------------
-			else if (cycle > 10'd320 & cycle <= 10'd336) begin
-				// Fetch firs two tiles for the next scanline
-				;
-			end
-			// ----------CYCLES 337-340----------------
-			// Do nothing
-			
-			// This is some random time in horizontal blanking
-			if (cycle == 10'd339) begin
-				ppu_linebuffer <= ~ppu_linebuffer;
-			end
+				// ----------CYCLES 337-340----------------
+				// Do nothing
+				
+				// This is some random time in horizontal blanking
+				
 			end // Not cycle 0
 			
-		end
+		end // End scanline (0-239)
 		//======== SCANLINE (240) ==============
-		// Do nothing
-		
-	end
+		else if (scanline == 10'd249) begin
+			; //linebuffer[ppu_linebuffer][cycle] <= 6'h28;
+		end
+		// Swap LineBuffer
+		if (cycle == 10'd340) begin
+			ppu_linebuffer <= ~ppu_linebuffer;
+		end
+	end // End not reset
+	
 end	
  
 //============ CPU-PPU ASYNC ==================================================================================
@@ -713,17 +762,6 @@ always_ff @ (posedge CLK) begin
 			ppu_load_vram_handle <= ~ppu_load_vram_handle;
 		end
 		
-		//TODO: Do we have to increment when we load also here also?? FUCK.
-		
-		// TODO: Implement this scrolling behavior?
-		// Load request from ppu
-		else if (ppu_hcopy_vram_request) begin
-			;
-		end
-		else if (ppu_vcopy_vram_request) begin
-			;
-		end
-		
 		// Increment request from CPU
 		else if (cpu_inc_vram_request ^ ppu_inc_vram_handle) begin
 			ppu_inc_vram_handle <= ~ppu_inc_vram_handle;
@@ -733,12 +771,57 @@ always_ff @ (posedge CLK) begin
 				active_vram_address <= active_vram_address + 1;
 		end
 		
-		// Increment request from PPU
-		else if (ppu_inc_vram_request) begin
-			if (addr_increment) 
-				active_vram_address <= active_vram_address + 32;
-			else
-				active_vram_address <= active_vram_address + 1;
+		//TODO: Do we have to increment when we load also here also?? FUCK.
+		//
+		//
+		//
+		// logic ppu_hcopy_vram_request;
+		// logic ppu_vcopy_vram_request;
+		// logic ppu_hinc_vram_request;
+		// logic ppu_vinc_vram_request;
+		
+		
+		// TODO: Maybe check if rendering is enabled here also??
+		//4 different operation that the PPU can request
+		
+		else if (ppu_hinc_vram_request) begin
+			if (active_vram_address.coarse_x == 31) begin
+				active_vram_address.coarse_x <= 0;
+				active_vram_address.nametable_x <= ~active_vram_address.nametable_x;
+			end
+			else begin
+				active_vram_address.coarse_x <= active_vram_address.coarse_x + 1;
+			end
+		end
+		
+		else if (ppu_vinc_vram_request) begin
+			if (active_vram_address.fine_y < 7) begin
+				active_vram_address.fine_y <= active_vram_address.fine_y + 1;
+			end
+			else begin
+				active_vram_address.fine_y <= 0;
+				if (active_vram_address.coarse_y == 29) begin
+					active_vram_address.coarse_y <= 0;
+					active_vram_address.nametable_y <= ~active_vram_address.nametable_y;
+				end else if (active_vram_address.coarse_y == 31) begin
+					active_vram_address.coarse_y <= 0;
+				end else begin
+					active_vram_address.coarse_y <= active_vram_address.coarse_y + 1;
+				end
+			end
+		end
+		
+		// Horizontal Copy Request
+		else if (ppu_hcopy_vram_request) begin
+			active_vram_address.nametable_x <= temp_vram_address.nametable_x;
+			active_vram_address.coarse_x <= temp_vram_address.coarse_x;
+		end
+		
+		// Vertttical Copy Request
+		else if (ppu_vcopy_vram_request) begin
+			active_vram_address.fine_y <= temp_vram_address.fine_y;
+			active_vram_address.nametable_y <= temp_vram_address.nametable_y;
+			active_vram_address.coarse_y <= temp_vram_address.coarse_y;
 		end
 	end
 end
@@ -835,9 +918,10 @@ end
 logic blank_n;
 
 // This depends on our resolution http://tinyvga.com/vga-timing/640x480@60Hz
-logic [10:0] drawx_intermediate, drawx, drawy;
+logic [10:0] drawx, drawy;
 
-vga_controller342 vga_controller (.Clk(VIDEO_CLK), .Reset(RESET), .hs(VGA_HS), .vs(VGA_VS), .blank(blank_n), .DrawX(drawx_intermediate), .DrawY(drawy));
+
+vga_controller342 vga_controller (.Clk(VIDEO_CLK), .Reset(RESET), .hs(VGA_HS), .vs(VGA_VS), .blank(blank_n), .DrawX(drawx), .DrawY(drawy));
  
 logic [11:0] colors [64] = '{12'h333,12'h014,12'h006,12'h326,12'h403,12'h503,12'h510,12'h420,12'h320,12'h120,12'h031,12'h040,12'h022,12'h000,12'h000,12'h000,
 12'h555,12'h036,12'h027,12'h407,12'h507,12'h704,12'h700,12'h630,12'h430,12'h140,12'h040,12'h053,12'h044,12'h000,12'h000,12'h000,
@@ -851,14 +935,14 @@ assign bingle = 10'd200;
 logic [5:0] pixel_clr_idx;
 
 // This reads back at twice the speed
+
+// Draw x and the PPU are getting out of sync.
+
+
 // We don't even have to worry about reading the same scanline twice it will just do it for us!
-assign pixel_clr_idx = linebuffer[vga_linebuffer][drawx_intermediate[7:0]];
+assign pixel_clr_idx = linebuffer[vga_linebuffer][drawx];
 
 always_ff @ (posedge VIDEO_CLK) begin 
-	if (cycle == 0) 
-		drawx <= 10'd0;
-	else
-		drawx <= drawx_intermediate; 
 	if (blank_n) begin
 		VGA_R <= colors[pixel_clr_idx][11:8] << 1;
 		VGA_G <= colors[pixel_clr_idx][7:4] << 1; // Make Brighter

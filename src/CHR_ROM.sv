@@ -27,11 +27,6 @@ module CHR_ROM (
 );
 
 
-/** CPU interrupt vectors at addresses:
-$FFFA–$FFFB = NMI vector
-$FFFC–$FFFD = Reset vector
-$FFFE–$FFFF = IRQ/BRK vector
-*/
 
 logic [7:0] mem [8192]; // 2^13 (THE WHOLE CPU ADDRESS SPACE!!)
 

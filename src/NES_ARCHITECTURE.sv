@@ -32,6 +32,8 @@ module NES_ARCHITECUTRE (
 	
 	input 				CPU_ENABLE,
 	input					CPU_RESET,
+	
+	
 
 	// ROM Programmer
 	input 				prg_rom_prgmr_wren, chr_rom_prgmr_wren,
@@ -47,6 +49,8 @@ module NES_ARCHITECUTRE (
 	output   [ 3: 0]   VGA_B,
 	
 	// Debug Signals
+	input [4:0] 		DEBUG_SWITCHES,
+	
 	output T65_Dbg  	cpu_debug,
 	output [15:0]    	ADDR_debug,
 	output 			 	CPU_RW_n_debug
@@ -142,7 +146,7 @@ always_comb begin : CPU_BUS_SELECTION
 		end
 		
 		// PPU Control Registers [$2000 - $3FFF] (Repeats every 8 bytes)
-		if (CPU_ADDR_BUS >= 16'h2000 &&  CPU_ADDR_BUS <= 16'h3FFF) begin
+		if (CPU_ADDR_BUS >= 16'h2000 && CPU_ADDR_BUS <= 16'h3FFF) begin
 			// Do Reads / Writes matter here?
 			CPU_DATA_BUS = PPU_CPU_DATA_OUT;
 			CPU_PPU_rden = 1'b1;
@@ -229,13 +233,16 @@ end
 assign ADDR_debug = CPU_ADDR;
 assign CPU_RW_n_debug = CPU_RW_n; 
 
+logic debug_enable_nmi;
+assign debug_enable_nmi = DEBUG_SWITCHES[0];
+
 //=======================================================
 //  Memory Instantiation
 //=======================================================
 
 
 logic MEM_CLK;
-assign MEM_CLK = PPU_CLK;
+assign MEM_CLK = MCLK;
 
 // System Ram
 logic sysram_enable;
@@ -252,7 +259,7 @@ logic NMI_n;
 CONTROLLER playerone(.rden(CONTROLLER_rden), .wren(CONTROLLER_wren), .data_in(CPU_DATA_BUS), .keycodes_in(controller_keycode), .data_out(CONTROLLER_DATA_OUT));
 
 CPU_2A03 cpu_inst(.CLK(CPU_CLK), .ENABLE(CPU_ENABLE), .RESET(CPU_RESET), .DATA_IN(CPU_DATA_BUS), .ADDR(CPU_ADDR), 
-				  .DATA_OUT(CPU_DATA_OUT), .RW_n(CPU_RW_n), .cpu_debug(cpu_debug));
+				  .DATA_OUT(CPU_DATA_OUT), .RW_n(CPU_RW_n), .cpu_debug(cpu_debug), .NMI_n(NMI_n));
 
 SYS_RAM sysram_inst(.clk(MEM_CLK), .data_in(CPU_DATA_BUS), .addr(CPU_ADDR_BUS[10:0]), .wren(SYSRAM_wren), .rden(SYSRAM_rden), .data_out(SYSRAM_DATA_OUT));
 

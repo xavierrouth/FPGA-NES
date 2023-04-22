@@ -41,7 +41,7 @@ module CONTROLLER (
 	input [7:0] keycodes_in, // Keycodes from NES
 	
 	
-	output [7:0] data_out // Only lowest bit of this is ever used
+	output logic [7:0] data_out // Only lowest bit of this is ever used
 );
 
 assign data_out[7:1] = 7'b0;

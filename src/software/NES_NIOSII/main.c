@@ -49,14 +49,14 @@ int main()
 	  // Write BB to $C000 to $C000 + i
 	  alt_u8 bytes = chr_rom_data[i];
 	  // Write Data (I don't feel like doing mirroring for now)
-	  write_prg_rom(0x0000 + i, bytes);
+	  write_chr_rom(0x0000 + i, bytes);
   }
 
   // Write Reset Vector
-  /**
+
   write_prg_rom(0xFFFC, 0x00);
   write_prg_rom(0xFFFD, 0xC0);
-  */
+
 
   printf("Done Programming \n");
 

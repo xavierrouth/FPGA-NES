@@ -163,7 +163,10 @@ module toplevel (
 	
 	logic CPU_CLK;
 	logic PPU_CLK;
+	
 	logic CPU_CLK_GATE;
+	logic PPU_CLK_GATE;
+	
 
 	
 	logic idiot_clk;
@@ -172,14 +175,12 @@ module toplevel (
 	// C1 is 21.5 MHz, this is the master NES clock, all other NES clocks relative to this.
 	
 	main_clkgen mainclk_inst(.inclk0(MAX10_CLK1_50), .c0(MCLK));
-	vga_pll gjaklrewdawd(.inclk0(MAX10_CLK1_50), .c0(VGA_CLK_REAL));
 	// NES MCLK (21.5MHz) input, 
 	// c0 is divided by 12
 	// C1 is divided by 4
 	// c2 is divided by 2
 	// TODO: Replace CPU_CLK_GATE with CPU_CLK when single-step is removed
-	nes_clkgen nesclk_inst(.inclk0(MCLK), .c0(CPU_CLK_GATE), .c1(PPU_CLK), .c2(VGA_CLK));
-	idiot_pll ajhwglkgjer(.inclk0(MAX10_CLK1_50), .c0(real_Vga_for_idiots), .c1(multiplied_vga_for_idiots));
+	nes_clkgen nesclk_inst(.inclk0(MCLK), .c0(CPU_CLK_GATE), .c1(PPU_CLK_GATE), .c2(VGA_CLK));
 	
 	
 //=======================================================
@@ -200,7 +201,7 @@ module toplevel (
 	
 	
 	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .PPU_CLK(PPU_CLK), .VGA_CLK(VGA_CLK), .CPU_RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
-						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data(rom_prgmr_data),
+						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data(rom_prgmr_data), .DEBUG_SWITCHES(SW[6:2]),
 						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren), .controller_keycode(keycode), .*);
 	
 	
@@ -219,22 +220,26 @@ module toplevel (
 	// SW[0] - High is manual CPU_CLK   (KEY[0]), low is PLL generated Clock
 	// SW[1] - High is manual ROM clock (KEY[0]
 	// SW[9:7] - Select what is displayed on the HEX
-	//
+	// SW[7:2]
 	//
 	//
 	logic CPU_ENABLE;
 	assign CPU_ENABLE = 1'b1;
 	
 	always_comb begin
-		if (SW[0])
+		if (SW[0]) begin
+			PPU_CLK = syncd_continue;
 			CPU_CLK = syncd_continue;
-		else
+		end
+		else begin
+			PPU_CLK = PPU_CLK_GATE;
 			CPU_CLK = CPU_CLK_GATE;
+		end
 	end
 		
 	
 	// Choose what to display on the HEX
-	/**
+	
 	always_ff @ (posedge MAX10_CLK1_50) begin
 		case (SW[9:7])
 			// Display ROM Programmer Contents
@@ -300,7 +305,7 @@ module toplevel (
 	
 	
 	//assign LEDR[7] = chr_rom_prgmr_wren | prg_rom_prgmr_wren;
-	*/
+
 	
 	
 //=======================================================
@@ -439,7 +444,7 @@ module toplevel (
 		.game_rom_conduit_chr_rom_write(chr_rom_prgmr_wren),     	//                        .rom_addr
 		
 		//LEDs and HEX
-		.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
+		//.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
 		.leds_export({hundreds, signs, LEDR}),
 		.keycode_export(keycode)
 		

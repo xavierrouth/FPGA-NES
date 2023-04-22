@@ -52,7 +52,9 @@ logic [2:0] CPU_ADDR;
 logic CPU_wren, CPU_rden; // CPU wants to read / CPU wants to write
 
 logic  [7:0] CPU_DATA_OUT;
-logic 	NMI_n;
+logic 		 NMI_n;
+
+logic debug_enable_nmi;
 
 //PPU BUS interface
 logic [7:0] PPU_DATA_IN;
@@ -81,7 +83,8 @@ PPU ppu_inst(.CLK(PPU_CLK), .CPU_CLK(CPU_CLK), .RESET(RESET), .VIDEO_CLK(VGA_CLK
 //=======================================================
 
 
-initial begin: TEST_VECTORSs
+initial begin: TEST_VECTORS
+debug_enable_nmi = 1'b1;
 RESET = 1'b0; #10
 RESET = 1'b1; #100
 RESET = 1'b0; 
