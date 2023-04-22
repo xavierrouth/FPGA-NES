@@ -43,7 +43,7 @@ end
 
 
 logic RESET;
-//input enable,
+logic ENABLE;
 
 // CPU BUS interface
 logic [7:0] CPU_DATA_IN;

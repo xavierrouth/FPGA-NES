@@ -91,7 +91,7 @@ module PPU (
 	input CPU_CLK, // 1.7 or something
 	input VIDEO_CLK, // 10.75 MHz (twice as fast)
 	input RESET,
-	//input enable,
+	input ENABLE,
 	
 	input debug_enable_nmi,
 	
@@ -522,12 +522,10 @@ always_comb begin
 		
 		//======== VISIBLE SCANLINES (0-239) ==============
 		if (scanline <= 10'd239) begin
-
-			// ----------CYCLES 1-256----------------
-			if (cycle >= 10'd2 & cycle <= 10'd256) begin
-				// Do some fetching
-				//TODO: ppu is always reading, i guess thats okay
-				case (counter)
+			// ----------CYCLES 1-256 and CYCLES 321-338
+			if ((cycle >= 1 & cycle < 258) | (cycle >= 321 & cycle < 338)) begin
+				// ===========  DO SOME FETCHING HERE  ==============
+				case (counter) // Case coutner
 					// Fetch nametable byte
 					3'd0: begin
 						PPU_ADDR = {2'b10, active_vram_address[11:0]};
@@ -544,76 +542,67 @@ always_comb begin
 					3'd3: ppu_read_request = 1'b1; // Dumby cycle
 					// fethc parttern table low 
 					3'd4: begin
-						PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address[14:12]}; //??
+						PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address.fine_y}; //??
 						ppu_read_request = 1'b1;
 					end
 					
 					3'd5: ppu_read_request = 1'b1;
 					// fetch pattern tile high 
 					3'd6: begin
-						PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address[14:12]}; //?? + 8 from pattern table tile low
+						PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address.fine_y}; //?? + 8 from pattern table tile low
 						ppu_read_request = 1'b1;
 					end
 					3'd7: begin
 						ppu_read_request = 1'b1;
 						ppu_hinc_vram_request = 1'b1;
 					end
-				endcase
-				
-				// Combine attribute data and ptable data into a palette index
-				palette_idx =  5'b0;
-				//palette_idx = '{1'b1, atable_data[0][1:0], ptable_data[1][counter], ptable_data[0][counter]};
-				color_idx = '{4'b0010, ptable_data[1][counter], ptable_data[0][counter]};
-				
+				endcase // End case counter
 				
 				if (cycle == 10'd256) begin
 					// This needs to increment the veritcal position in v, the effective Y scroll coordinate
-					ppu_hinc_vram_request = 1'b1;
 					ppu_vinc_vram_request = 1'b1;
 				end
 				
-			end
-			// ----------CYCLES 257-320----------------
-			else if (cycle > 10'd256 & cycle <= 10'd320) begin
-				if (cycle == 10'd257) begin
+				if (cycle == 257) begin
+					// Load shifters
 					ppu_hcopy_vram_request = 1'b1;
 				end
 				
-				// Fetch tile data for sprites on next scanline
-				;
+				//================= BACKGROUND PIXEL COMPOSITION=====================
+				palette_idx =  5'b0;
+				//palette_idx = '{1'b1, atable_data[0][1:0], ptable_data[1][counter], ptable_data[0][counter]};
+				if (scanline == 200) begin
+					color_idx = 6'h21;
+				end else if (cycle == 256) begin
+					color_idx = scanline[5:0];
+				end else
+					color_idx = {ptable_data[1][counter], ptable_data[0][counter]};
+				 //'{4'b0010, ptable_data[1][counter], ptable_data[0][counter]};
+				 // color_idx = ntable_byte
 			end
-			// ----------CYCLES 320-336----------------
-			else if (cycle > 10'd320 & cycle <= 10'd336) begin
-				// TODO: Fetch firs two tiles for the next scanline
-				;
+			// ----------CYCLES 257-320
+			if (cycle >= 257 & cycle <= 320) begin
+				// Do Sprite Stuff
 			end
-			// ----------CYCLES 337-340----------------
-			// Do nothing
-			
-		 // Not cycle 0
-			
-		end // Not visible Scanlines
-		
-		//======== SCANLINE (240) ==============
-		// Do nothing
-		
-		//===== SCANLINES 241-260 - START NMI Handling =========
-		// Start of vertical blanking
-		// Dont touch memory here
-		if (scanline == 241 & cycle == 1) begin 
-			ppu_nmi_set_request = 1'b1;
 		end
-		// "End of vertical blanking / sometime in pre-render scanline"
-		// ============PRE-render-Scanline (261) ===============
+		//======= POST RENDER SCANLINE (240) ==============
+		// Do Nothing
+		//======= POST RENDER SCANLINE (241-260) ==============
+		if (scanline == 241) begin
+			if (cycle == 1) begin
+				ppu_nmi_set_request = 1'b1;
+			end
+		end
+		//======== PRE RENDER SCANLINE (261) ==============
 		if (scanline == 261) begin 
-			ppu_nmi_clear_request = 1'b1;
-			// Reload vertical scroll bits
-			if (cycle >= 10'd280 & cycle <= 10'd305) begin
+			if (cycle == 1)
+				// End of Vertical Blanking
+				ppu_nmi_clear_request = 1'b1;
+			else if (cycle >= 280 & cycle <= 304) begin
+				// Reload vertical scroll bits TODO: Only if rendering is enabled?
 				ppu_vcopy_vram_request = 1'b1;
 			end
-			// Fill shift registers with data for the first two tiles of the next scanline.
-		end// ============END PRE-render-Scanline (261) ===============
-
+		end // End Pre Render Scanelin
 	end // if rendering_enable
 end
 
@@ -627,93 +616,45 @@ always_ff @ (posedge CLK) begin
 	if (RESET) begin
 		ppu_linebuffer <= 1'b0;
 		ntable_byte <= 8'd0;
-		
 	end else begin // NOT RESET
-		//======== VISIBLE SCANLINES (0-239) ==============
-		if (scanline <= 10'd239) begin
-			// ----------CYCLE 0--------------------
-			if (cycle == 1'd0) begin
+		if (render_enable) begin
+			// TODO: Handle Shifters here:
+			// Decided by the composition from earlier.
+			// Shift Attribute Table Data To left
+			
+			// Shift Pattern Table Data 
+			linebuffer[ppu_linebuffer][cycle] <= color_idx;
+			case (counter)
+				// Fetch nametable byte
+				3'd0: begin
+					// TODO: Load the shiftregs
+				end
+				3'd1: ntable_byte <= PPU_DATA_IN;
+				3'd2: ;
+				3'd3: begin
+					// TODO: Which atable_data??
+					// TODO: Fix this idiot, need to select from 1 of 4 possible 2 bit pairs in the byte
+					atable_data[0] <= PPU_DATA_IN;
+				end
+				// fethc parttern table low 
+				3'd4: ;
+				3'd5: ptable_data[0] <= PPU_DATA_IN;
+				// fetch pattern tile high 
+				3'd6: ;
+				3'd7: ptable_data[1] <= PPU_DATA_IN;
+			endcase
+			// Swap linebuffer once a scanline
+			if (cycle == 257) begin
+				// Do shifters stuff
 				;
 			end
-			else begin
-				
-				// TODO: Shift Shiftregs
-				// ----------CYCLES 1-256----------------
-				case (counter)
-					// Fetch nametable byte
-					3'd0: begin
-						; // Load data into shift regs
-					end
-					3'd1: begin
-						ntable_byte <= PPU_DATA_IN;
-					end
-					// Fetch attribute table byte
-					3'd2: begin
-						;
-					end
-					3'd3: begin
-						// TODO: Which atable_data??
-						// TODO: Fix this idiot, need to select from 1 of 4 possible 2 bit pairs in the byte
-						atable_data[0] <= PPU_DATA_IN;
-					end
-					// fethc parttern table low 
-					3'd4: begin
-						;
-					end
-					
-					3'd5: begin
-						ptable_data[0] <= PPU_DATA_IN;
-					end
-					// fetch pattern tile high 
-					3'd6: begin
-						;
-					end
-					3'd7: begin
-						ptable_data[1] <= PPU_DATA_IN;
-					end
-				endcase
-				if (cycle > 10'd0 & cycle <= 10'd256) begin
-					// Just draw the ptable data 
-					linebuffer[ppu_linebuffer][cycle] <= color_idx;
-					//Fetch random shit;
-					/**
-					if (scanline ==  10'd239) 
-						linebuffer[ppu_linebuffer][cycle] <= 6'h21;
-					else if (scanline < 10'd100)
-						linebuffer[ppu_linebuffer][cycle] <= ((scanline << 4) + cycle >> 3);//6'h21;
-					else 
-						linebuffer[ppu_linebuffer][cycle] <= 6'h21;
-					*/
-				end
-				// ----------CYCLES 257-320----------------
-				else if (cycle > 10'd256 & cycle <= 10'd320) begin
-					// Fetch tile data for sprites on next scanline
-					;
-				end
-				// ----------CYCLES 320-336----------------
-				else if (cycle > 10'd320 & cycle <= 10'd336) begin
-					// Fetch firs two tiles for the next scanline
-					;
-				end
-				// ----------CYCLES 337-340----------------
-				// Do nothing
-				
-				// This is some random time in horizontal blanking
-				
-			end // Not cycle 0
-			
-		end // End scanline (0-239)
-		//======== SCANLINE (240) ==============
-		else if (scanline == 10'd249) begin
-			; //linebuffer[ppu_linebuffer][cycle] <= 6'h28;
-		end
-		// Swap LineBuffer
-		if (cycle == 10'd340) begin
-			ppu_linebuffer <= ~ppu_linebuffer;
-		end
-	end // End not reset
-	
-end	
+			if (cycle == 10'd340) begin
+				ppu_linebuffer <= ~ppu_linebuffer;
+			end
+		end // End render enable
+	end
+end
+		
  
 //============ CPU-PPU ASYNC ==================================================================================
 // There are Various parts of the NES that are driven both by the PPU and by the CPU,
@@ -798,6 +739,7 @@ always_ff @ (posedge CLK) begin
 			if (active_vram_address.fine_y < 7) begin
 				active_vram_address.fine_y <= active_vram_address.fine_y + 1;
 			end
+			// Fine y should be 7.
 			else begin
 				active_vram_address.fine_y <= 0;
 				if (active_vram_address.coarse_y == 29) begin
@@ -833,9 +775,12 @@ end
 // ppu_write_request, ppu_read_request, ppu_read_handle, ppu_write_handle, cpu_read_request, cpu_write_request
 
 always_ff @ (posedge CLK) begin
-	if (RESET) begin
+	if (RESET | ~ENABLE) begin
 		PPU_READ <= 1'b0;
 		PPU_WRITE <= 1'b0;
+		ppu_write_handle <= 1'b0;
+		ppu_read_handle <= 1'b0;
+		
 	end
 	else begin
 		//TODO: Figure out if we need to handle anything with bus or data or address or just 

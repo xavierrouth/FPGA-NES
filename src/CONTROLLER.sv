@@ -58,11 +58,13 @@ always_ff @ (posedge rden or posedge wren) begin
 		else
 			keycodes <= keycodes;
 	end
-	if (rden) begin
+	else if (rden) begin
 		// Right shift out keycodes
-		keycodes <= {1'b1, keycodes[7:1]};
+		keycodes <= {1'b0, keycodes[7:1]};
 		data_out[0] <= keycodes[0];
 	end
+	else
+		keycodes <= keycodes;
 end
 
 
