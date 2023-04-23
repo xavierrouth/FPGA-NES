@@ -186,7 +186,10 @@ module toplevel (
 //=======================================================
 //  NES Architecture Instantiation
 //=======================================================
-
+	
+	logic NES_ENABLE;
+	assign NES_ENABLE = SW[1];
+	
 	T65_Dbg cpu_debug;
 	
 	logic [15:0]    ADDR_debug;
@@ -223,8 +226,7 @@ module toplevel (
 	// SW[7:2]
 	//
 	//
-	logic NES_ENABLE;
-	assign NES_ENABLE = SW[1];
+
 	
 	always_comb begin
 		if (SW[0]) begin

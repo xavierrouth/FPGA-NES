@@ -149,6 +149,7 @@ logic ppu_latch;
 
 // PPU_BUS_ADDR is the external interface
 logic [7:0] ppu_read_buffer;
+logic [7:0] ppu_write_buffer;
 logic [7:0] vram_addr_latched;
 
 //=======================================================
@@ -196,7 +197,6 @@ logic addr_increment; // 0 is 1, 1 is 32
 
 logic sprite_render_enable;
 logic background_render_enable;
-assign background_render_enable = 1'b1;
 
 //=======================================================
 // $2002 PPUSTATUS - Read Only
@@ -251,7 +251,7 @@ logic cpu_load_vram_request;
 logic cpu_inc_vram_request;
 logic cpu_nmi_clear_request;
 
-assign nmi_generate = debug_enable_nmi;
+//assign nmi_generate = debug_enable_nmi;
 // CPU Interface
 always_ff @ (posedge CPU_CLK) begin
 	// rden and wren are never active at the same time
@@ -270,7 +270,7 @@ always_ff @ (posedge CPU_CLK) begin
 			// Write Only
 			3'h0: begin 
 				// Use a struct to make this easier??
-				//nmi_generate <= CPU_DATA_IN[7];
+				nmi_generate <= CPU_DATA_IN[7];
 				sprite_size <= CPU_DATA_IN[5];
 				background_ptable_addr <= CPU_DATA_IN[4]; // 0-> $0000 or 1 -> $1000
 				sprite_ptable_addr <= CPU_DATA_IN[3];
@@ -281,7 +281,7 @@ always_ff @ (posedge CPU_CLK) begin
 			3'h1: begin
 				sprite_render_enable <= CPU_DATA_IN[4];
 				//TODO:
-				//background_render_enable <= CPU_DATA_IN[3];
+				background_render_enable <= CPU_DATA_IN[3];
 			end
 			3'h3: OAMADDR <= CPU_DATA_IN;
 			// Read Only
@@ -320,6 +320,7 @@ always_ff @ (posedge CPU_CLK) begin
 			end
 			3'h7: begin //PPU_DATA
 				// Request that a write occur
+				ppu_write_buffer <= CPU_DATA_IN;
 				cpu_write_request <= ~cpu_write_request;
 				// Request that vram be incremented
 				cpu_inc_vram_request <= ~cpu_inc_vram_request;
@@ -483,7 +484,7 @@ assign render_enable = background_render_enable | sprite_render_enable;
 assign extra_cycle = extra_cycle_latch & render_enable;
 
 logic [2:0] counter;
-assign counter = ((cycle - 1) % 8);
+assign counter = ((cycle - 1) % 8); // This is plus one because all our reads and writes are delayed
 
 // TODO:
 // Even / Odd Frames (might fix scrolling issue)
@@ -513,97 +514,99 @@ always_comb begin
 	color_idx = 6'b0;
 	palette_idx = 5'b0;
 	
-	PPU_ADDR = active_vram_address[11:0];
-	
+	//PPU_ADDR = active_vram_address[11:0];
+	PPU_ADDR = active_vram_address;
 	if (~render_enable) begin
-		PPU_ADDR = active_vram_address;
-	end else if (render_enable) begin
-		//color_idx = cycle[5:0];
-		
-		//======== VISIBLE SCANLINES (0-239) ==============
-		if (scanline <= 10'd239) begin
-			// ----------CYCLES 1-256 and CYCLES 321-338
-			if ((cycle >= 1 & cycle < 258) | (cycle >= 321 & cycle < 338)) begin
-				// ===========  DO SOME FETCHING HERE  ==============
-				case (counter) // Case coutner
-					// Fetch nametable byte
-					3'd0: begin
-						PPU_ADDR = {2'b10, active_vram_address[11:0]};
-						ppu_read_request = 1'b1;
-					end
-					3'd1: begin
-						ppu_read_request = 1'b1; // Dumby cycle
-					end
-					// Fetch attribute table byte
-					3'd2: begin
-						PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
-						ppu_read_request = 1'b1;
-					end
-					3'd3: ppu_read_request = 1'b1; // Dumby cycle
-					// fethc parttern table low 
-					3'd4: begin
-						PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address.fine_y}; //??
-						ppu_read_request = 1'b1;
-					end
-					
-					3'd5: ppu_read_request = 1'b1;
-					// fetch pattern tile high 
-					3'd6: begin
-						PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address.fine_y}; //?? + 8 from pattern table tile low
-						ppu_read_request = 1'b1;
-					end
-					3'd7: begin
-						ppu_read_request = 1'b1;
-						ppu_hinc_vram_request = 1'b1;
-					end
-				endcase // End case counter
-				
-				if (cycle == 10'd256) begin
-					// This needs to increment the veritcal position in v, the effective Y scroll coordinate
-					ppu_vinc_vram_request = 1'b1;
+		;//PPU_ADDR = active_vram_address;
+	end
+	//======== VISIBLE SCANLINES (0-239) ==============
+	if (scanline <= 10'd239 | scanline == 10'd261) begin
+		// ----------CYCLES 1-256 and CYCLES 321-338
+		if ((cycle >= 1 & cycle <= 256) | (cycle >= 321 & cycle < 338)) begin
+			// ===========  DO SOME FETCHING HERE  ==============
+			case (counter) // Case coutner
+				// Fetch nametable byte
+				3'd0: begin
+					PPU_ADDR = {2'b10, active_vram_address[11:0]};
+					ppu_read_request = 1'b1;
+				end
+				3'd1: begin
+					PPU_ADDR = {2'b10, active_vram_address[11:0]};
+				end
+				// Fetch attribute table byte
+				3'd2: begin
+					//PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
+					//ppu_read_request = 1'b1;
+				end
+				3'd3: begin
+					//PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
+					//ppu_read_request = 1'b1;
+				end
+				3'd4: begin
+					//PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address.fine_y}; //??
+					//ppu_read_request = 1'b1;
 				end
 				
-				if (cycle == 257) begin
-					// Load shifters
-					ppu_hcopy_vram_request = 1'b1;
+				3'd5: begin
+					//PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address.fine_y}; //??
+					//ppu_read_request = 1'b1;
 				end
-				
-				//================= BACKGROUND PIXEL COMPOSITION=====================
-				palette_idx =  5'b0;
-				//palette_idx = '{1'b1, atable_data[0][1:0], ptable_data[1][counter], ptable_data[0][counter]};
-				if (scanline == 200) begin
-					color_idx = 6'h21;
-				end else if (cycle == 256) begin
-					color_idx = scanline[5:0];
-				end else
-					color_idx = {ptable_data[1][counter], ptable_data[0][counter]};
-				 //'{4'b0010, ptable_data[1][counter], ptable_data[0][counter]};
-				 // color_idx = ntable_byte
+				// fetch pattern tile high 
+				3'd6: begin
+					//PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address.fine_y}; //?? + 8 from pattern table tile low
+					//ppu_read_request = 1'b1;
+				end
+				3'd7: begin
+					//PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address.fine_y}; //?? + 8 from pattern table tile low
+					//ppu_read_request = 1'b1;
+					ppu_hinc_vram_request = 1'b1;
+				end
+			endcase // End case counter
+			
+			if (cycle == 10'd256) begin
+				// This needs to increment the veritcal position in v, the effective Y scroll coordinate
+				ppu_hinc_vram_request = 1'b1;
+				ppu_vinc_vram_request = 1'b1;
 			end
-			// ----------CYCLES 257-320
-			if (cycle >= 257 & cycle <= 320) begin
-				// Do Sprite Stuff
-			end
+			
+			
+			
+			//================= BACKGROUND PIXEL COMPOSITION=====================
+			palette_idx =  5'b0;
+			//palette_idx = '{1'b1, atable_data[0][1:0], ptable_data[1][counter], ptable_data[0][counter]};
+			
+			color_idx = ntable_byte; // {ptable_data[1][cycle], ptable_data[0][cycle]};
+			 //'{4'b0010, ptable_data[1][counter], ptable_data[0][counter]};
+			 // color_idx = ntable_byte
 		end
-		//======= POST RENDER SCANLINE (240) ==============
-		// Do Nothing
-		//======= POST RENDER SCANLINE (241-260) ==============
-		if (scanline == 241) begin
-			if (cycle == 1) begin
-				ppu_nmi_set_request = 1'b1;
-			end
+		if (cycle == 257) begin
+			// Load shifters
+			ppu_hcopy_vram_request = 1'b1;
 		end
-		//======== PRE RENDER SCANLINE (261) ==============
-		if (scanline == 261) begin 
-			if (cycle == 1)
-				// End of Vertical Blanking
-				ppu_nmi_clear_request = 1'b1;
-			else if (cycle >= 280 & cycle <= 304) begin
-				// Reload vertical scroll bits TODO: Only if rendering is enabled?
-				ppu_vcopy_vram_request = 1'b1;
-			end
-		end // End Pre Render Scanelin
-	end // if rendering_enable
+		// ----------CYCLES 257-320
+		if (cycle >= 257 & cycle <= 320) begin
+			// Do Sprite Stuff
+		end
+	end
+	//======= POST RENDER SCANLINE (240) ==============
+	// Do Nothing
+	//======= POST RENDER SCANLINE (241-260) ==============
+	if (scanline == 241) begin
+		if (cycle == 1) begin
+			ppu_nmi_set_request = 1'b1;
+		end
+	end
+	//======== PRE RENDER SCANLINE (261) ==============
+	if (scanline == 261) begin 
+		if (cycle == 1)
+			// End of Vertical Blanking
+			ppu_nmi_clear_request = 1'b1;
+		else if (cycle >= 280 & cycle <= 304) begin
+			// Reload vertical scroll bits TODO: Only if rendering is enabled?
+			ppu_vcopy_vram_request = 1'b1;
+		end
+	end // End Pre Render Scanelin
+	// if rendering_enable
 end
 
 
@@ -724,47 +727,48 @@ always_ff @ (posedge CLK) begin
 		
 		// TODO: Maybe check if rendering is enabled here also??
 		//4 different operation that the PPU can request
-		
-		else if (ppu_hinc_vram_request) begin
-			if (active_vram_address.coarse_x == 31) begin
-				active_vram_address.coarse_x <= 0;
-				active_vram_address.nametable_x <= ~active_vram_address.nametable_x;
-			end
-			else begin
-				active_vram_address.coarse_x <= active_vram_address.coarse_x + 1;
-			end
-		end
-		
-		else if (ppu_vinc_vram_request) begin
-			if (active_vram_address.fine_y < 7) begin
-				active_vram_address.fine_y <= active_vram_address.fine_y + 1;
-			end
-			// Fine y should be 7.
-			else begin
-				active_vram_address.fine_y <= 0;
-				if (active_vram_address.coarse_y == 29) begin
-					active_vram_address.coarse_y <= 0;
-					active_vram_address.nametable_y <= ~active_vram_address.nametable_y;
-				end else if (active_vram_address.coarse_y == 31) begin
-					active_vram_address.coarse_y <= 0;
-				end else begin
-					active_vram_address.coarse_y <= active_vram_address.coarse_y + 1;
+		else if (render_enable) begin
+			if (ppu_hinc_vram_request) begin
+				if (active_vram_address.coarse_x == 31) begin
+					active_vram_address.coarse_x <= 0;
+					active_vram_address.nametable_x <= ~active_vram_address.nametable_x;
+				end
+				else begin
+					active_vram_address.coarse_x <= active_vram_address.coarse_x + 1;
 				end
 			end
+			// Horizontal Copy Request
+			else if (ppu_hcopy_vram_request) begin
+				active_vram_address.nametable_x <= temp_vram_address.nametable_x;
+				active_vram_address.coarse_x <= temp_vram_address.coarse_x;
+			end
+			
+			if (ppu_vinc_vram_request) begin
+				if (active_vram_address.fine_y != 3'b111) begin
+					active_vram_address.fine_y <= active_vram_address.fine_y + 1;
+				end
+				// Fine y should be 7.
+				else if (active_vram_address.fine_y == 3'b111) begin
+					active_vram_address.fine_y <= 0;
+					if (active_vram_address.coarse_y == 29) begin
+						active_vram_address.coarse_y <= 0;
+						active_vram_address.nametable_y <= ~active_vram_address.nametable_y;
+					end else if (active_vram_address.coarse_y == 31) begin
+						active_vram_address.coarse_y <= 0;
+					end else begin
+						active_vram_address.coarse_y <= active_vram_address.coarse_y + 1;
+					end
+				end
+			end
+			
+			// Vertttical Copy Request
+			else if (ppu_vcopy_vram_request) begin
+				active_vram_address.fine_y <= temp_vram_address.fine_y;
+				active_vram_address.nametable_y <= temp_vram_address.nametable_y;
+				active_vram_address.coarse_y <= temp_vram_address.coarse_y;
+			end
 		end
 		
-		// Horizontal Copy Request
-		else if (ppu_hcopy_vram_request) begin
-			active_vram_address.nametable_x <= temp_vram_address.nametable_x;
-			active_vram_address.coarse_x <= temp_vram_address.coarse_x;
-		end
-		
-		// Vertttical Copy Request
-		else if (ppu_vcopy_vram_request) begin
-			active_vram_address.fine_y <= temp_vram_address.fine_y;
-			active_vram_address.nametable_y <= temp_vram_address.nametable_y;
-			active_vram_address.coarse_y <= temp_vram_address.coarse_y;
-		end
 	end
 end
 
@@ -773,6 +777,7 @@ end
 //======== ASYNC PPU Write / Read Handling =======
 
 // ppu_write_request, ppu_read_request, ppu_read_handle, ppu_write_handle, cpu_read_request, cpu_write_request
+assign PPU_DATA_OUT = ppu_write_buffer;
 
 always_ff @ (posedge CLK) begin
 	if (RESET | ~ENABLE) begin
@@ -789,7 +794,7 @@ always_ff @ (posedge CLK) begin
 			PPU_READ <= 1'b1;
 			ppu_read_handle <= ~ppu_read_handle;
 		end
-		// TODO: What if we want to clear read? does this work?
+		// TODO: What if we want to clear read? does this work? // These are default values
 		else if (ppu_read_request)
 			PPU_READ <= 1'b1;
 		else 
@@ -799,7 +804,7 @@ always_ff @ (posedge CLK) begin
 			PPU_WRITE <= 1'b1;
 			ppu_write_handle <= ~ppu_write_handle;
 		end
-		// TODO: What if we want to clear write? does this work?
+		// TODO: What if we want to clear write? does this work? // These are default values
 		else if (ppu_write_request)
 			PPU_WRITE <= 1'b1;
 		else 

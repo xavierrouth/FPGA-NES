@@ -29,15 +29,18 @@ module VRAM(
 );
 
 // Size is 2^11
-
+//TODO: [11:10] should be 0 for no mirroring
+logic [13:0] addr_mirrored;
+assign addr_mirrored = {addr[13:12], 2'b00, addr[9:0]};
 // TODO: Minimize this
+
 logic [7:0] mem [16384]; // Whole PPU address space for now
 
 always_ff @ (posedge clk) begin
 	if (wren)
-		mem[addr] <= data_in;
+		mem[addr_mirrored] <= data_in;
 	if (rden)
-		data_out <= mem[addr];
+		data_out <= mem[addr_mirrored];
 	
 end
 

@@ -4051,3 +4051,412 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 
 !ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 17:12:53.287
 !MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+!SESSION 2023-04-22 18:03:24.432 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_05
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -pluginCustomization C:/intelfpga_lite/18.1/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product -pluginCustomization C:/intelfpga_lite/18.1/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2023-04-22 18:03:37.568
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1. ; version: 1.100.0.v20160217-0435
+!STACK 0
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:176)
+	at com.google.gson.Gson.fromJson(Gson.java:803)
+	at com.google.gson.Gson.fromJson(Gson.java:768)
+	at com.google.gson.Gson.fromJson(Gson.java:717)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:88)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.refreshConfiguration(IO.java:70)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:101)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:374)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:165)
+	... 9 more
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:03:48.770
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:03:50.695
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:04:13.099
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:04:13.783
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:04:15.650
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:10:21.799
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:10:23.678
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:11:36.735
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:11:38.580
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:13:25.245
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:13:32.069
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:14:42.215
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 18:14:49.030
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:01:18.161
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:01:20.800
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:03:50.795
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:03:55.613
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:25:39.286
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:25:41.966
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:37:18.993
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:37:25.833
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:38:38.801
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:38:45.619
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:51:55.803
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:52:02.450
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:53:52.544
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:53:59.172
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:56:57.349
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 19:57:04.178
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:04:54.212
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:05:01.069
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:05:52.277
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:05:59.086
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:06:58.781
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:07:01.201
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:15:37.158
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:15:42.245
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:17:42.386
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:17:45.405
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:23:15.121
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:23:21.760
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:26:43.458
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:26:50.266
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:28:06.225
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:28:09.753
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:30:49.252
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:30:55.874
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:34:26.887
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:34:33.746
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:41:19.608
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:41:24.547
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:42:38.641
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:42:44.944
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:43:32.320
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:43:38.953
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:44:53.084
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:44:59.678
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:45:29.039
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:45:35.571
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:52:30.850
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:52:37.673
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:53:38.890
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:53:39.508
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 20:53:46.443
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:00:07.788
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:00:14.639
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:06:22.173
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:06:26.799
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:18:56.482
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:18:59.009
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:26:29.698
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:26:36.545
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:31:44.493
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:31:46.464
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:32:50.722
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:32:57.553
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:35:00.861
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:35:02.704
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:46:17.507
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:46:24.338
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:53:01.610
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 21:53:03.513
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:03:16.961
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:03:23.553
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:11:34.724
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:11:41.600
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:23:47.027
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:23:53.890
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:32:07.542
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:32:14.371
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:36:51.887
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:36:58.727
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:37:38.761
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:37:39.408
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 22:37:46.216
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 23:00:25.138
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 23:00:32.001
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 23:30:56.076
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 23:31:02.960
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 23:33:53.663
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 23:34:00.523
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 23:34:39.235
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-22 23:34:46.082
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:23:39.851
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:23:46.509
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:32:33.057
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:32:39.903
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:35:17.901
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:35:24.752
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:38:56.281
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:38:56.914
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:38:58.742
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:39:27.779
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:39:28.421
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:39:30.271
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:40:18.359
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:40:19.016
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xa50]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-23 00:40:20.913
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xa50 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+!SESSION 2023-04-23 00:43:23.553 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_05
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -pluginCustomization C:/intelfpga_lite/18.1/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product -pluginCustomization C:/intelfpga_lite/18.1/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+
+!ENTRY org.eclipse.core.resources 2 10035 2023-04-23 00:43:27.001
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2023-04-23 00:43:36.647
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1. ; version: 1.100.0.v20160217-0435
+!STACK 0
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:176)
+	at com.google.gson.Gson.fromJson(Gson.java:803)
+	at com.google.gson.Gson.fromJson(Gson.java:768)
+	at com.google.gson.Gson.fromJson(Gson.java:717)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:88)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.refreshConfiguration(IO.java:70)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:101)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:374)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:165)
+	... 9 more

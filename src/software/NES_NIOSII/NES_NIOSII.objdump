@@ -39,15 +39,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  10 .debug_abbrev 0000a288  00000000  00000000  000472b1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_line   0000cb31  00000000  00000000  00051539  2**0
+ 11 .debug_line   0000cb2d  00000000  00000000  00051539  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_frame  00002f68  00000000  00000000  0005e06c  2**2
+ 12 .debug_frame  00002f68  00000000  00000000  0005e068  2**2
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_str    00004d91  00000000  00000000  00060fd4  2**0
+ 13 .debug_str    00004d91  00000000  00000000  00060fd0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_loc    00017b11  00000000  00000000  00065d65  2**0
+ 14 .debug_loc    00017b11  00000000  00000000  00065d61  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_alt_sim_info 00000040  00000000  00000000  0007d878  2**2
+ 15 .debug_alt_sim_info 00000040  00000000  00000000  0007d874  2**2
                   CONTENTS, READONLY, DEBUGGING
  16 .debug_ranges 00001948  00000000  00000000  0007d8b8  2**3
                   CONTENTS, READONLY, DEBUGGING
@@ -75,9 +75,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  28 .quartus_project_dir 00000013  00000000  00000000  000833d0  2**0
                   CONTENTS, READONLY
- 29 .jdi          000066f6  00000000  00000000  000833e3  2**0
+ 29 .jdi          00006756  00000000  00000000  000833e3  2**0
                   CONTENTS, READONLY
- 30 .sopcinfo     0008771f  00000000  00000000  00089ad9  2**0
+ 30 .sopcinfo     0008771f  00000000  00000000  00089b39  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 08000000 l    d  .entry	00000000 .entry
@@ -1553,7 +1553,7 @@ void write_chr_rom(alt_u16 address, alt_u8 data) {
  80007fc:	f800283a 	ret
 
 08000800 <main>:
-#include "donkey_kong.h"
+//#include "donkey_kong.h"
 #include "usb_host.h"
 #include "rom_programmer.h"
 
@@ -1797,69 +1797,69 @@ int main()
  8000a38:	10800003 	ldbu	r2,0(r2)
  8000a3c:	e0bffbc5 	stb	r2,-17(fp)
 					// A - K
-					if (kc == 14) nesKeycodes |= 0x01;
+					if (kc == 14) nesKeycodes |= 0x80;
  8000a40:	e0bffbc3 	ldbu	r2,-17(fp)
  8000a44:	10800398 	cmpnei	r2,r2,14
- 8000a48:	1000031e 	bne	r2,zero,8000a58 <main+0x258>
- 8000a4c:	e0bff903 	ldbu	r2,-28(fp)
- 8000a50:	10800054 	ori	r2,r2,1
- 8000a54:	e0bff905 	stb	r2,-28(fp)
+ 8000a48:	1000041e 	bne	r2,zero,8000a5c <main+0x25c>
+ 8000a4c:	e0fff903 	ldbu	r3,-28(fp)
+ 8000a50:	00bfe004 	movi	r2,-128
+ 8000a54:	1884b03a 	or	r2,r3,r2
+ 8000a58:	e0bff905 	stb	r2,-28(fp)
 					// B - L
-					if (kc == 15) nesKeycodes |= 0x02;
- 8000a58:	e0bffbc3 	ldbu	r2,-17(fp)
- 8000a5c:	108003d8 	cmpnei	r2,r2,15
- 8000a60:	1000031e 	bne	r2,zero,8000a70 <main+0x270>
- 8000a64:	e0bff903 	ldbu	r2,-28(fp)
- 8000a68:	10800094 	ori	r2,r2,2
- 8000a6c:	e0bff905 	stb	r2,-28(fp)
+					if (kc == 15) nesKeycodes |= 0x40;
+ 8000a5c:	e0bffbc3 	ldbu	r2,-17(fp)
+ 8000a60:	108003d8 	cmpnei	r2,r2,15
+ 8000a64:	1000031e 	bne	r2,zero,8000a74 <main+0x274>
+ 8000a68:	e0bff903 	ldbu	r2,-28(fp)
+ 8000a6c:	10801014 	ori	r2,r2,64
+ 8000a70:	e0bff905 	stb	r2,-28(fp)
 					// SELECT - '\'
-					if (kc == 49) nesKeycodes |= 0x04;
- 8000a70:	e0bffbc3 	ldbu	r2,-17(fp)
- 8000a74:	10800c58 	cmpnei	r2,r2,49
- 8000a78:	1000031e 	bne	r2,zero,8000a88 <main+0x288>
- 8000a7c:	e0bff903 	ldbu	r2,-28(fp)
- 8000a80:	10800114 	ori	r2,r2,4
- 8000a84:	e0bff905 	stb	r2,-28(fp)
+					if (kc == 49) nesKeycodes |=  0x20;
+ 8000a74:	e0bffbc3 	ldbu	r2,-17(fp)
+ 8000a78:	10800c58 	cmpnei	r2,r2,49
+ 8000a7c:	1000031e 	bne	r2,zero,8000a8c <main+0x28c>
+ 8000a80:	e0bff903 	ldbu	r2,-28(fp)
+ 8000a84:	10800814 	ori	r2,r2,32
+ 8000a88:	e0bff905 	stb	r2,-28(fp)
 					// START - 'enter;
-					if (kc == 40) nesKeycodes |= 0x08;
- 8000a88:	e0bffbc3 	ldbu	r2,-17(fp)
- 8000a8c:	10800a18 	cmpnei	r2,r2,40
- 8000a90:	1000031e 	bne	r2,zero,8000aa0 <main+0x2a0>
- 8000a94:	e0bff903 	ldbu	r2,-28(fp)
- 8000a98:	10800214 	ori	r2,r2,8
- 8000a9c:	e0bff905 	stb	r2,-28(fp)
+					if (kc == 40) nesKeycodes |=  0x10;
+ 8000a8c:	e0bffbc3 	ldbu	r2,-17(fp)
+ 8000a90:	10800a18 	cmpnei	r2,r2,40
+ 8000a94:	1000031e 	bne	r2,zero,8000aa4 <main+0x2a4>
+ 8000a98:	e0bff903 	ldbu	r2,-28(fp)
+ 8000a9c:	10800414 	ori	r2,r2,16
+ 8000aa0:	e0bff905 	stb	r2,-28(fp)
 					// UP - W
-					if (kc == 26) nesKeycodes |= 0x10;
- 8000aa0:	e0bffbc3 	ldbu	r2,-17(fp)
- 8000aa4:	10800698 	cmpnei	r2,r2,26
- 8000aa8:	1000031e 	bne	r2,zero,8000ab8 <main+0x2b8>
- 8000aac:	e0bff903 	ldbu	r2,-28(fp)
- 8000ab0:	10800414 	ori	r2,r2,16
- 8000ab4:	e0bff905 	stb	r2,-28(fp)
+					if (kc == 26) nesKeycodes |=  0x08;
+ 8000aa4:	e0bffbc3 	ldbu	r2,-17(fp)
+ 8000aa8:	10800698 	cmpnei	r2,r2,26
+ 8000aac:	1000031e 	bne	r2,zero,8000abc <main+0x2bc>
+ 8000ab0:	e0bff903 	ldbu	r2,-28(fp)
+ 8000ab4:	10800214 	ori	r2,r2,8
+ 8000ab8:	e0bff905 	stb	r2,-28(fp)
 					// DOWN - S
-					if (kc == 22) nesKeycodes |= 0x20;
- 8000ab8:	e0bffbc3 	ldbu	r2,-17(fp)
- 8000abc:	10800598 	cmpnei	r2,r2,22
- 8000ac0:	1000031e 	bne	r2,zero,8000ad0 <main+0x2d0>
- 8000ac4:	e0bff903 	ldbu	r2,-28(fp)
- 8000ac8:	10800814 	ori	r2,r2,32
- 8000acc:	e0bff905 	stb	r2,-28(fp)
+					if (kc == 22) nesKeycodes |=  0x04;
+ 8000abc:	e0bffbc3 	ldbu	r2,-17(fp)
+ 8000ac0:	10800598 	cmpnei	r2,r2,22
+ 8000ac4:	1000031e 	bne	r2,zero,8000ad4 <main+0x2d4>
+ 8000ac8:	e0bff903 	ldbu	r2,-28(fp)
+ 8000acc:	10800114 	ori	r2,r2,4
+ 8000ad0:	e0bff905 	stb	r2,-28(fp)
 					// LEFT - A
-					if (kc == 4) nesKeycodes |= 0x40;
- 8000ad0:	e0bffbc3 	ldbu	r2,-17(fp)
- 8000ad4:	10800118 	cmpnei	r2,r2,4
- 8000ad8:	1000031e 	bne	r2,zero,8000ae8 <main+0x2e8>
- 8000adc:	e0bff903 	ldbu	r2,-28(fp)
- 8000ae0:	10801014 	ori	r2,r2,64
- 8000ae4:	e0bff905 	stb	r2,-28(fp)
+					if (kc == 4) nesKeycodes |=  0x02;
+ 8000ad4:	e0bffbc3 	ldbu	r2,-17(fp)
+ 8000ad8:	10800118 	cmpnei	r2,r2,4
+ 8000adc:	1000031e 	bne	r2,zero,8000aec <main+0x2ec>
+ 8000ae0:	e0bff903 	ldbu	r2,-28(fp)
+ 8000ae4:	10800094 	ori	r2,r2,2
+ 8000ae8:	e0bff905 	stb	r2,-28(fp)
 					// RIGHT - D
-					if (kc == 7) nesKeycodes |= 0x80;
- 8000ae8:	e0bffbc3 	ldbu	r2,-17(fp)
- 8000aec:	108001d8 	cmpnei	r2,r2,7
- 8000af0:	1000041e 	bne	r2,zero,8000b04 <main+0x304>
- 8000af4:	e0fff903 	ldbu	r3,-28(fp)
- 8000af8:	00bfe004 	movi	r2,-128
- 8000afc:	1884b03a 	or	r2,r3,r2
+					if (kc == 7) nesKeycodes |=  0x01;
+ 8000aec:	e0bffbc3 	ldbu	r2,-17(fp)
+ 8000af0:	108001d8 	cmpnei	r2,r2,7
+ 8000af4:	1000031e 	bne	r2,zero,8000b04 <main+0x304>
+ 8000af8:	e0bff903 	ldbu	r2,-28(fp)
+ 8000afc:	10800054 	ori	r2,r2,1
  8000b00:	e0bff905 	stb	r2,-28(fp)
 					printf("%x ", kbdbuf.keycode[i]);
 				}
@@ -1874,9 +1874,9 @@ int main()
  8000b14:	10800190 	cmplti	r2,r2,6
  8000b18:	103fc41e 	bne	r2,zero,8000a2c <__alt_data_end+0xfc000a2c>
 					// LEFT - A
-					if (kc == 4) nesKeycodes |= 0x40;
+					if (kc == 4) nesKeycodes |=  0x02;
 					// RIGHT - D
-					if (kc == 7) nesKeycodes |= 0x80;
+					if (kc == 7) nesKeycodes |=  0x01;
 				}
 				setKeycode(nesKeycodes);
  8000b1c:	e0bff903 	ldbu	r2,-28(fp)

@@ -243,6 +243,9 @@ assign debug_enable_nmi = DEBUG_SWITCHES[0];
 logic CPU_ENABLE;
 assign CPU_ENABLE = ENABLE;
 
+logic CPU_RESET;
+assign CPU_RESET = RESET;
+
 logic PPU_ENABLE;
 assign PPU_ENABLE = ENABLE;
 

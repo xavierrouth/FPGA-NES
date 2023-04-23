@@ -18,8 +18,8 @@
 #include "system.h"
 #include <stdlib.h>
 #include <alt_types.h>
-//#include "nestest.h"
-#include "donkey_kong.h"
+#include "nestest.h"
+//#include "donkey_kong.h"
 #include "usb_host.h"
 #include "rom_programmer.h"
 
@@ -110,17 +110,17 @@ int main()
 					// B - L
 					if (kc == 15) nesKeycodes |= 0x02;
 					// SELECT - '\'
-					if (kc == 49) nesKeycodes |= 0x04;
+					if (kc == 49) nesKeycodes |=   0x04;
 					// START - 'enter;
-					if (kc == 40) nesKeycodes |= 0x08;
+					if (kc == 40) nesKeycodes |=   0x08;
 					// UP - W
-					if (kc == 26) nesKeycodes |= 0x10;
+					if (kc == 26) nesKeycodes |=  0x10;
 					// DOWN - S
-					if (kc == 22) nesKeycodes |= 0x20;
+					if (kc == 22) nesKeycodes |=  0x20;
 					// LEFT - A
-					if (kc == 4) nesKeycodes |= 0x40;
+					if (kc == 4) nesKeycodes |=   0x40;
 					// RIGHT - D
-					if (kc == 7) nesKeycodes |= 0x80;
+					if (kc == 7) nesKeycodes |=    0x80;
 				}
 				setKeycode(nesKeycodes);
 				printf("NES controller sees: %x ", nesKeycodes);
