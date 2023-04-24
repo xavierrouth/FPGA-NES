@@ -395,6 +395,7 @@ end
 // VRAM Data Tiles
 
 logic [15:0] ptable_data [2]; // Pattern Table Data
+logic [7:0] ptable_data_temp [2];
 logic [7:0]  atable_data [2]; // Attribute Table Data
 logic [7:0]  ntable_byte; // Unclear if this is needed
 
@@ -490,6 +491,28 @@ assign counter = ((cycle - 1) % 8); // This is plus one because all our reads an
 // Even / Odd Frames (might fix scrolling issue)
 
 //=======================================================
+//  NMI Logic Always Comb
+//=======================================================
+always_comb begin
+	// Start of vertical Blanking
+	ppu_nmi_set_request = 1'b0;
+	ppu_nmi_clear_request = 1'b0;
+	
+	
+	if (scanline == 241) begin
+		if (cycle == 1) begin
+			ppu_nmi_set_request = 1'b1;
+		end
+	end
+	// End of Vertical Blanking
+	if (scanline == 261) begin 
+		if (cycle == 1) begin
+			ppu_nmi_clear_request = 1'b1;
+		end
+	end 
+end
+
+//=======================================================
 //  Rendering Logic Always Comb
 //=======================================================
 
@@ -501,8 +524,6 @@ logic [5:0] color_idx; // The color data retrieved from the palette?
 always_comb begin
 	// ========== Default Values =========================
 	
-	ppu_nmi_set_request = 1'b0;
-	ppu_nmi_clear_request = 1'b0;
 	ppu_read_request = 1'b0;
 	
 	// Weird Register Increments
@@ -518,16 +539,16 @@ always_comb begin
 	PPU_ADDR = active_vram_address;
 	if (~render_enable) begin
 		;//PPU_ADDR = active_vram_address;
-	end
+	// IF RENDERING ENABLED:
 	//======== VISIBLE SCANLINES (0-239) ==============
-	if (scanline <= 10'd239 | scanline == 10'd261) begin
+	end else if (scanline <= 10'd239 | scanline == 10'd261) begin
 		// ----------CYCLES 1-256 and CYCLES 321-338
 		if ((cycle >= 1 & cycle <= 256) | (cycle >= 321 & cycle < 338)) begin
 			// ===========  DO SOME FETCHING HERE  ==============
 			case (counter) // Case coutner
 				// Fetch nametable byte
 				3'd0: begin
-					PPU_ADDR = {2'b10, active_vram_address[11:0]};
+					//PPU_ADDR = {2'b10, active_vram_address[11:0]};
 					ppu_read_request = 1'b1;
 				end
 				3'd1: begin
@@ -536,28 +557,28 @@ always_comb begin
 				// Fetch attribute table byte
 				3'd2: begin
 					//PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
-					//ppu_read_request = 1'b1;
+					ppu_read_request = 1'b1;
 				end
 				3'd3: begin
-					//PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
+					PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
 					//ppu_read_request = 1'b1;
 				end
 				3'd4: begin
 					//PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address.fine_y}; //??
-					//ppu_read_request = 1'b1;
+					ppu_read_request = 1'b1;
 				end
 				
 				3'd5: begin
-					//PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address.fine_y}; //??
+					PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address.fine_y}; //??
 					//ppu_read_request = 1'b1;
 				end
 				// fetch pattern tile high 
 				3'd6: begin
 					//PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address.fine_y}; //?? + 8 from pattern table tile low
-					//ppu_read_request = 1'b1;
+					ppu_read_request = 1'b1;
 				end
 				3'd7: begin
-					//PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address.fine_y}; //?? + 8 from pattern table tile low
+					PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address.fine_y}; //?? + 8 from pattern table tile low
 					//ppu_read_request = 1'b1;
 					ppu_hinc_vram_request = 1'b1;
 				end
@@ -575,9 +596,9 @@ always_comb begin
 			palette_idx =  5'b0;
 			//palette_idx = '{1'b1, atable_data[0][1:0], ptable_data[1][counter], ptable_data[0][counter]};
 			
-			color_idx = ntable_byte; // {ptable_data[1][cycle], ptable_data[0][cycle]};
+			color_idx = {ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]}; 
 			 //'{4'b0010, ptable_data[1][counter], ptable_data[0][counter]};
-			 // color_idx = ntable_byte
+			//color_idx = ntable_byte;
 		end
 		if (cycle == 257) begin
 			// Load shifters
@@ -593,14 +614,14 @@ always_comb begin
 	//======= POST RENDER SCANLINE (241-260) ==============
 	if (scanline == 241) begin
 		if (cycle == 1) begin
-			ppu_nmi_set_request = 1'b1;
+			;//ppu_nmi_set_request = 1'b1;
 		end
 	end
 	//======== PRE RENDER SCANLINE (261) ==============
 	if (scanline == 261) begin 
 		if (cycle == 1)
-			// End of Vertical Blanking
-			ppu_nmi_clear_request = 1'b1;
+			;// End of Vertical Blanking
+			//ppu_nmi_clear_request = 1'b1;
 		else if (cycle >= 280 & cycle <= 304) begin
 			// Reload vertical scroll bits TODO: Only if rendering is enabled?
 			ppu_vcopy_vram_request = 1'b1;
@@ -627,10 +648,15 @@ always_ff @ (posedge CLK) begin
 			
 			// Shift Pattern Table Data 
 			linebuffer[ppu_linebuffer][cycle] <= color_idx;
+			
+			ptable_data[1] <= {ptable_data[1][14:0], ptable_data[1][0]}; //shift pattern data
+			ptable_data[0] <= {ptable_data[0][14:0], ptable_data[0][0]};
 			case (counter)
 				// Fetch nametable byte
 				3'd0: begin
 					// TODO: Load the shiftregs
+					ptable_data[1][7:0] <= ptable_data_temp[1];
+					ptable_data[0][7:0] <= ptable_data_temp[0];
 				end
 				3'd1: ntable_byte <= PPU_DATA_IN;
 				3'd2: ;
@@ -641,10 +667,10 @@ always_ff @ (posedge CLK) begin
 				end
 				// fethc parttern table low 
 				3'd4: ;
-				3'd5: ptable_data[0] <= PPU_DATA_IN;
+				3'd5: ptable_data_temp[0] <= PPU_DATA_IN;
 				// fetch pattern tile high 
 				3'd6: ;
-				3'd7: ptable_data[1] <= PPU_DATA_IN;
+				3'd7: ptable_data_temp[1] <= PPU_DATA_IN;
 			endcase
 			// Swap linebuffer once a scanline
 			if (cycle == 257) begin

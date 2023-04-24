@@ -1,5 +1,5 @@
 Timing Analyzer report for FPGA-NES
-Sun Apr 23 21:37:51 2023
+Sun Apr 23 23:07:08 2023
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -94,15 +94,15 @@ refer to the applicable agreement for further details.
 ; Number detected on machine ; 20          ;
 ; Maximum allowed            ; 10          ;
 ;                            ;             ;
-; Average used               ; 3.35        ;
+; Average used               ; 3.19        ;
 ; Maximum used               ; 10          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  28.7%      ;
-;     Processor 3            ;  26.0%      ;
-;     Processor 4            ;  25.8%      ;
-;     Processors 5-10        ;  25.7%      ;
+;     Processor 2            ;  27.4%      ;
+;     Processor 3            ;  24.3%      ;
+;     Processor 4            ;  24.0%      ;
+;     Processors 5-10        ;  23.9%      ;
 +----------------------------+-------------+
 
 
@@ -111,10 +111,10 @@ refer to the applicable agreement for further details.
 +--------------------------------------------------------------------------------+--------+--------------------------+
 ; SDC File Path                                                                  ; Status ; Read at                  ;
 +--------------------------------------------------------------------------------+--------+--------------------------+
-; toplevel_soc/synthesis/submodules/altera_reset_controller.sdc                  ; OK     ; Sun Apr 23 21:37:48 2023 ;
-; toplevel_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.sdc ; OK     ; Sun Apr 23 21:37:48 2023 ;
-; toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu.sdc            ; OK     ; Sun Apr 23 21:37:48 2023 ;
-; FPGA-NES.sdc                                                                   ; OK     ; Sun Apr 23 21:37:48 2023 ;
+; toplevel_soc/synthesis/submodules/altera_reset_controller.sdc                  ; OK     ; Sun Apr 23 23:07:05 2023 ;
+; toplevel_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.sdc ; OK     ; Sun Apr 23 23:07:05 2023 ;
+; toplevel_soc/synthesis/submodules/toplevel_soc_nios2_gen2_0_cpu.sdc            ; OK     ; Sun Apr 23 23:07:05 2023 ;
+; FPGA-NES.sdc                                                                   ; OK     ; Sun Apr 23 23:07:05 2023 ;
 +--------------------------------------------------------------------------------+--------+--------------------------+
 
 
@@ -139,13 +139,13 @@ refer to the applicable agreement for further details.
 +-----------+-----------------+----------------------------------------------------------+------+
 ; Fmax      ; Restricted Fmax ; Clock Name                                               ; Note ;
 +-----------+-----------------+----------------------------------------------------------+------+
-; 43.96 MHz ; 43.96 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ;      ;
-; 52.84 MHz ; 52.84 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ;      ;
-; 58.93 MHz ; 58.93 MHz       ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ;      ;
-; 67.36 MHz ; 67.36 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ;      ;
-; 72.1 MHz  ; 72.1 MHz        ; altera_reserved_tck                                      ;      ;
-; 72.47 MHz ; 72.47 MHz       ; MAX10_CLK1_50                                            ;      ;
-; 94.86 MHz ; 94.86 MHz       ; u0|sdram_pll|sd1|pll7|clk[0]                             ;      ;
+; 44.32 MHz ; 44.32 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ;      ;
+; 55.19 MHz ; 55.19 MHz       ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ;      ;
+; 61.53 MHz ; 61.53 MHz       ; altera_reserved_tck                                      ;      ;
+; 64.45 MHz ; 64.45 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ;      ;
+; 64.77 MHz ; 64.77 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ;      ;
+; 66.5 MHz  ; 66.5 MHz        ; MAX10_CLK1_50                                            ;      ;
+; 91.09 MHz ; 91.09 MHz       ; u0|sdram_pll|sd1|pll7|clk[0]                             ;      ;
 +-----------+-----------------+----------------------------------------------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
@@ -155,13 +155,13 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------------------------------------------------------+--------+---------------+
 ; Clock                                                    ; Slack  ; End Point TNS ;
 +----------------------------------------------------------+--------+---------------+
-; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -7.842 ; -1752.775     ;
-; MAX10_CLK1_50                                            ; -7.009 ; -153.010      ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; -4.838 ; -226.829      ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -3.706 ; -9134.705     ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -3.395 ; -121.217      ;
-; u0|sdram_pll|sd1|pll7|clk[0]                             ; 9.458  ; 0.000         ;
-; altera_reserved_tck                                      ; 43.065 ; 0.000         ;
+; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -7.984 ; -1743.059     ;
+; MAX10_CLK1_50                                            ; -7.513 ; -156.469      ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; -4.872 ; -229.195      ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -3.568 ; -127.966      ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -3.517 ; -3419.182     ;
+; u0|sdram_pll|sd1|pll7|clk[0]                             ; 9.022  ; 0.000         ;
+; altera_reserved_tck                                      ; 41.874 ; 0.000         ;
 +----------------------------------------------------------+--------+---------------+
 
 
@@ -170,13 +170,13 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------------------------------------------------------+--------+---------------+
 ; Clock                                                    ; Slack  ; End Point TNS ;
 +----------------------------------------------------------+--------+---------------+
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -0.340 ; -10.105       ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -0.416 ; -8.153        ;
 ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.241 ; -0.480        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 0.161  ; 0.000         ;
-; MAX10_CLK1_50                                            ; 0.230  ; 0.000         ;
-; u0|sdram_pll|sd1|pll7|clk[0]                             ; 0.327  ; 0.000         ;
-; altera_reserved_tck                                      ; 0.342  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 0.561  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -0.046 ; -0.094        ;
+; MAX10_CLK1_50                                            ; 0.233  ; 0.000         ;
+; u0|sdram_pll|sd1|pll7|clk[0]                             ; 0.325  ; 0.000         ;
+; altera_reserved_tck                                      ; 0.341  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 0.570  ; 0.000         ;
 +----------------------------------------------------------+--------+---------------+
 
 
@@ -185,10 +185,10 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------------------------------------------+--------+---------------+
 ; Clock                                                   ; Slack  ; End Point TNS ;
 +---------------------------------------------------------+--------+---------------+
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -1.814 ; -3.628        ;
-; u0|sdram_pll|sd1|pll7|clk[0]                            ; 14.393 ; 0.000         ;
-; MAX10_CLK1_50                                           ; 14.403 ; 0.000         ;
-; altera_reserved_tck                                     ; 48.051 ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -1.786 ; -3.572        ;
+; MAX10_CLK1_50                                           ; 13.786 ; 0.000         ;
+; u0|sdram_pll|sd1|pll7|clk[0]                            ; 14.524 ; 0.000         ;
+; altera_reserved_tck                                     ; 48.015 ; 0.000         ;
 +---------------------------------------------------------+--------+---------------+
 
 
@@ -197,10 +197,10 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------------------------------------------+--------+---------------+
 ; Clock                                                   ; Slack  ; End Point TNS ;
 +---------------------------------------------------------+--------+---------------+
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.554 ; -1.108        ;
-; altera_reserved_tck                                     ; 1.270  ; 0.000         ;
-; u0|sdram_pll|sd1|pll7|clk[0]                            ; 3.444  ; 0.000         ;
-; MAX10_CLK1_50                                           ; 4.089  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.545 ; -1.090        ;
+; altera_reserved_tck                                     ; 0.937  ; 0.000         ;
+; u0|sdram_pll|sd1|pll7|clk[0]                            ; 3.347  ; 0.000         ;
+; MAX10_CLK1_50                                           ; 4.692  ; 0.000         ;
 +---------------------------------------------------------+--------+---------------+
 
 
@@ -209,13 +209,13 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------------------------------------------------------+---------+---------------+
 ; Clock                                                    ; Slack   ; End Point TNS ;
 +----------------------------------------------------------+---------+---------------+
-; MAX10_CLK1_50                                            ; 9.551   ; 0.000         ;
+; MAX10_CLK1_50                                            ; 9.550   ; 0.000         ;
 ; u0|sdram_pll|sd1|pll7|clk[0]                             ; 9.708   ; 0.000         ;
 ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 22.923  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 46.221  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 46.228  ; 0.000         ;
 ; altera_reserved_tck                                      ; 49.531  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 92.693  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 278.781 ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 92.755  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 278.789 ; 0.000         ;
 +----------------------------------------------------------+---------+---------------+
 
 
@@ -228,7 +228,7 @@ Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 Number of Synchronizer Chains Found: 22
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 0.409
-Worst Case Available Settling Time: 33.538 ns
+Worst Case Available Settling Time: 33.375 ns
 
 Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 1.8
@@ -242,13 +242,13 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +-----------+-----------------+----------------------------------------------------------+------+
 ; Fmax      ; Restricted Fmax ; Clock Name                                               ; Note ;
 +-----------+-----------------+----------------------------------------------------------+------+
-; 47.02 MHz ; 47.02 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ;      ;
-; 56.36 MHz ; 56.36 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ;      ;
-; 63.18 MHz ; 63.18 MHz       ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ;      ;
-; 72.04 MHz ; 72.04 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ;      ;
-; 77.64 MHz ; 77.64 MHz       ; altera_reserved_tck                                      ;      ;
-; 78.04 MHz ; 78.04 MHz       ; MAX10_CLK1_50                                            ;      ;
-; 101.6 MHz ; 101.6 MHz       ; u0|sdram_pll|sd1|pll7|clk[0]                             ;      ;
+; 48.37 MHz ; 48.37 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ;      ;
+; 59.2 MHz  ; 59.2 MHz        ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ;      ;
+; 67.09 MHz ; 67.09 MHz       ; altera_reserved_tck                                      ;      ;
+; 68.65 MHz ; 68.65 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ;      ;
+; 69.15 MHz ; 69.15 MHz       ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ;      ;
+; 71.78 MHz ; 71.78 MHz       ; MAX10_CLK1_50                                            ;      ;
+; 98.52 MHz ; 98.52 MHz       ; u0|sdram_pll|sd1|pll7|clk[0]                             ;      ;
 +-----------+-----------------+----------------------------------------------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
@@ -258,13 +258,13 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------------------------------------------------------+--------+---------------+
 ; Clock                                                    ; Slack  ; End Point TNS ;
 +----------------------------------------------------------+--------+---------------+
-; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -6.898 ; -1527.477     ;
-; MAX10_CLK1_50                                            ; -6.669 ; -146.939      ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; -4.048 ; -188.264      ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -3.024 ; -7213.243     ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -2.725 ; -95.374       ;
-; u0|sdram_pll|sd1|pll7|clk[0]                             ; 10.157 ; 0.000         ;
-; altera_reserved_tck                                      ; 43.560 ; 0.000         ;
+; MAX10_CLK1_50                                            ; -7.140 ; -149.572      ;
+; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -6.983 ; -1521.528     ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; -4.087 ; -190.345      ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -2.931 ; -101.281      ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -2.899 ; -2749.944     ;
+; u0|sdram_pll|sd1|pll7|clk[0]                             ; 9.850  ; 0.000         ;
+; altera_reserved_tck                                      ; 42.547 ; 0.000         ;
 +----------------------------------------------------------+--------+---------------+
 
 
@@ -273,13 +273,13 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------------------------------------------------------+--------+---------------+
 ; Clock                                                    ; Slack  ; End Point TNS ;
 +----------------------------------------------------------+--------+---------------+
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -0.540 ; -42.144       ;
-; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.224 ; -0.442        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -0.100 ; -0.367        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -0.648 ; -33.928       ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -0.315 ; -1.499        ;
+; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.227 ; -0.450        ;
 ; MAX10_CLK1_50                                            ; 0.228  ; 0.000         ;
-; u0|sdram_pll|sd1|pll7|clk[0]                             ; 0.293  ; 0.000         ;
-; altera_reserved_tck                                      ; 0.307  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 0.515  ; 0.000         ;
+; u0|sdram_pll|sd1|pll7|clk[0]                             ; 0.292  ; 0.000         ;
+; altera_reserved_tck                                      ; 0.306  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 0.534  ; 0.000         ;
 +----------------------------------------------------------+--------+---------------+
 
 
@@ -288,10 +288,10 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------------------------------------------+--------+---------------+
 ; Clock                                                   ; Slack  ; End Point TNS ;
 +---------------------------------------------------------+--------+---------------+
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -1.264 ; -2.528        ;
-; u0|sdram_pll|sd1|pll7|clk[0]                            ; 14.919 ; 0.000         ;
-; MAX10_CLK1_50                                           ; 14.958 ; 0.000         ;
-; altera_reserved_tck                                     ; 48.231 ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -1.250 ; -2.500        ;
+; MAX10_CLK1_50                                           ; 14.393 ; 0.000         ;
+; u0|sdram_pll|sd1|pll7|clk[0]                            ; 15.041 ; 0.000         ;
+; altera_reserved_tck                                     ; 48.206 ; 0.000         ;
 +---------------------------------------------------------+--------+---------------+
 
 
@@ -300,10 +300,10 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------------------------------------------+--------+---------------+
 ; Clock                                                   ; Slack  ; End Point TNS ;
 +---------------------------------------------------------+--------+---------------+
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.762 ; -1.524        ;
-; altera_reserved_tck                                     ; 1.178  ; 0.000         ;
-; u0|sdram_pll|sd1|pll7|clk[0]                            ; 3.095  ; 0.000         ;
-; MAX10_CLK1_50                                           ; 3.755  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.741 ; -1.482        ;
+; altera_reserved_tck                                     ; 0.861  ; 0.000         ;
+; u0|sdram_pll|sd1|pll7|clk[0]                            ; 3.009  ; 0.000         ;
+; MAX10_CLK1_50                                           ; 4.328  ; 0.000         ;
 +---------------------------------------------------------+--------+---------------+
 
 
@@ -312,13 +312,13 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +----------------------------------------------------------+---------+---------------+
 ; Clock                                                    ; Slack   ; End Point TNS ;
 +----------------------------------------------------------+---------+---------------+
-; MAX10_CLK1_50                                            ; 9.581   ; 0.000         ;
-; u0|sdram_pll|sd1|pll7|clk[0]                             ; 9.687   ; 0.000         ;
+; MAX10_CLK1_50                                            ; 9.580   ; 0.000         ;
+; u0|sdram_pll|sd1|pll7|clk[0]                             ; 9.689   ; 0.000         ;
 ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 22.941  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 46.211  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 46.219  ; 0.000         ;
 ; altera_reserved_tck                                      ; 49.547  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 92.656  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 278.712 ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 92.712  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 278.731 ; 0.000         ;
 +----------------------------------------------------------+---------+---------------+
 
 
@@ -331,7 +331,7 @@ Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 Number of Synchronizer Chains Found: 22
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 0.409
-Worst Case Available Settling Time: 34.086 ns
+Worst Case Available Settling Time: 33.947 ns
 
 Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 1.8
@@ -345,13 +345,13 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +----------------------------------------------------------+--------+---------------+
 ; Clock                                                    ; Slack  ; End Point TNS ;
 +----------------------------------------------------------+--------+---------------+
-; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -3.545 ; -785.332      ;
-; MAX10_CLK1_50                                            ; -3.167 ; -69.750       ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; -1.973 ; -91.148       ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -1.409 ; -3319.395     ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -1.247 ; -44.010       ;
-; u0|sdram_pll|sd1|pll7|clk[0]                             ; 15.230 ; 0.000         ;
-; altera_reserved_tck                                      ; 47.219 ; 0.000         ;
+; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -3.635 ; -781.446      ;
+; MAX10_CLK1_50                                            ; -3.344 ; -70.628       ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; -1.953 ; -90.972       ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -1.313 ; -1191.457     ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -1.253 ; -43.961       ;
+; u0|sdram_pll|sd1|pll7|clk[0]                             ; 15.106 ; 0.000         ;
+; altera_reserved_tck                                      ; 46.620 ; 0.000         ;
 +----------------------------------------------------------+--------+---------------+
 
 
@@ -360,13 +360,13 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +----------------------------------------------------------+--------+---------------+
 ; Clock                                                    ; Slack  ; End Point TNS ;
 +----------------------------------------------------------+--------+---------------+
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -0.538 ; -384.101      ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -0.307 ; -3.511        ;
-; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.149 ; -0.297        ;
-; MAX10_CLK1_50                                            ; 0.088  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -0.592 ; -117.710      ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -0.435 ; -6.808        ;
+; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.150 ; -0.298        ;
+; MAX10_CLK1_50                                            ; 0.092  ; 0.000         ;
 ; u0|sdram_pll|sd1|pll7|clk[0]                             ; 0.143  ; 0.000         ;
-; altera_reserved_tck                                      ; 0.150  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 0.207  ; 0.000         ;
+; altera_reserved_tck                                      ; 0.149  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 0.224  ; 0.000         ;
 +----------------------------------------------------------+--------+---------------+
 
 
@@ -375,10 +375,10 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +---------------------------------------------------------+--------+---------------+
 ; Clock                                                   ; Slack  ; End Point TNS ;
 +---------------------------------------------------------+--------+---------------+
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.590 ; -1.180        ;
-; MAX10_CLK1_50                                           ; 17.218 ; 0.000         ;
-; u0|sdram_pll|sd1|pll7|clk[0]                            ; 17.352 ; 0.000         ;
-; altera_reserved_tck                                     ; 49.362 ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.553 ; -1.106        ;
+; MAX10_CLK1_50                                           ; 16.891 ; 0.000         ;
+; u0|sdram_pll|sd1|pll7|clk[0]                            ; 17.417 ; 0.000         ;
+; altera_reserved_tck                                     ; 49.345 ; 0.000         ;
 +---------------------------------------------------------+--------+---------------+
 
 
@@ -387,10 +387,10 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +---------------------------------------------------------+--------+---------------+
 ; Clock                                                   ; Slack  ; End Point TNS ;
 +---------------------------------------------------------+--------+---------------+
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.591 ; -1.182        ;
-; altera_reserved_tck                                     ; 0.551  ; 0.000         ;
-; u0|sdram_pll|sd1|pll7|clk[0]                            ; 1.647  ; 0.000         ;
-; MAX10_CLK1_50                                           ; 1.961  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -0.621 ; -1.242        ;
+; altera_reserved_tck                                     ; 0.409  ; 0.000         ;
+; u0|sdram_pll|sd1|pll7|clk[0]                            ; 1.609  ; 0.000         ;
+; MAX10_CLK1_50                                           ; 2.258  ; 0.000         ;
 +---------------------------------------------------------+--------+---------------+
 
 
@@ -399,13 +399,13 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 +----------------------------------------------------------+---------+---------------+
 ; Clock                                                    ; Slack   ; End Point TNS ;
 +----------------------------------------------------------+---------+---------------+
-; MAX10_CLK1_50                                            ; 9.402   ; 0.000         ;
+; MAX10_CLK1_50                                            ; 9.401   ; 0.000         ;
 ; u0|sdram_pll|sd1|pll7|clk[0]                             ; 9.720   ; 0.000         ;
 ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 22.966  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 46.269  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 46.267  ; 0.000         ;
 ; altera_reserved_tck                                      ; 49.385  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 92.738  ; 0.000         ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 278.743 ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 92.720  ; 0.000         ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 278.735 ; 0.000         ;
 +----------------------------------------------------------+---------+---------------+
 
 
@@ -418,7 +418,7 @@ Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
 Number of Synchronizer Chains Found: 22
 Shortest Synchronizer Chain: 2 Registers
 Fraction of Chains for which MTBFs Could Not be Calculated: 0.409
-Worst Case Available Settling Time: 37.235 ns
+Worst Case Available Settling Time: 37.140 ns
 
 Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 1.8
@@ -427,28 +427,28 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 
 
 
-+------------------------------------------------------------------------------------------------------------------------------+
-; Multicorner Timing Analysis Summary                                                                                          ;
-+-----------------------------------------------------------+------------+----------+----------+---------+---------------------+
-; Clock                                                     ; Setup      ; Hold     ; Recovery ; Removal ; Minimum Pulse Width ;
-+-----------------------------------------------------------+------------+----------+----------+---------+---------------------+
-; Worst-case Slack                                          ; -7.842     ; -0.540   ; -1.814   ; -0.762  ; 9.402               ;
-;  MAX10_CLK1_50                                            ; -7.009     ; 0.088    ; 14.403   ; 1.961   ; 9.402               ;
-;  altera_reserved_tck                                      ; 43.065     ; 0.150    ; 48.051   ; 0.551   ; 49.385              ;
-;  mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -7.842     ; -0.241   ; N/A      ; N/A     ; 22.923              ;
-;  nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -3.395     ; -0.307   ; -1.814   ; -0.762  ; 278.712             ;
-;  nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -3.706     ; -0.540   ; N/A      ; N/A     ; 92.656              ;
-;  nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; -4.838     ; 0.207    ; N/A      ; N/A     ; 46.211              ;
-;  u0|sdram_pll|sd1|pll7|clk[0]                             ; 9.458      ; 0.143    ; 14.393   ; 1.647   ; 9.687               ;
-; Design-wide TNS                                           ; -11388.536 ; -387.909 ; -3.628   ; -1.524  ; 0.0                 ;
-;  MAX10_CLK1_50                                            ; -153.010   ; 0.000    ; 0.000    ; 0.000   ; 0.000               ;
-;  altera_reserved_tck                                      ; 0.000      ; 0.000    ; 0.000    ; 0.000   ; 0.000               ;
-;  mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -1752.775  ; -0.480   ; N/A      ; N/A     ; 0.000               ;
-;  nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -121.217   ; -3.511   ; -3.628   ; -1.524  ; 0.000               ;
-;  nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -9134.705  ; -384.101 ; N/A      ; N/A     ; 0.000               ;
-;  nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; -226.829   ; 0.000    ; N/A      ; N/A     ; 0.000               ;
-;  u0|sdram_pll|sd1|pll7|clk[0]                             ; 0.000      ; 0.000    ; 0.000    ; 0.000   ; 0.000               ;
-+-----------------------------------------------------------+------------+----------+----------+---------+---------------------+
++-----------------------------------------------------------------------------------------------------------------------------+
+; Multicorner Timing Analysis Summary                                                                                         ;
++-----------------------------------------------------------+-----------+----------+----------+---------+---------------------+
+; Clock                                                     ; Setup     ; Hold     ; Recovery ; Removal ; Minimum Pulse Width ;
++-----------------------------------------------------------+-----------+----------+----------+---------+---------------------+
+; Worst-case Slack                                          ; -7.984    ; -0.648   ; -1.786   ; -0.741  ; 9.401               ;
+;  MAX10_CLK1_50                                            ; -7.513    ; 0.092    ; 13.786   ; 2.258   ; 9.401               ;
+;  altera_reserved_tck                                      ; 41.874    ; 0.149    ; 48.015   ; 0.409   ; 49.385              ;
+;  mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -7.984    ; -0.241   ; N/A      ; N/A     ; 22.923              ;
+;  nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -3.568    ; -0.435   ; -1.786   ; -0.741  ; 278.731             ;
+;  nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -3.517    ; -0.648   ; N/A      ; N/A     ; 92.712              ;
+;  nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; -4.872    ; 0.224    ; N/A      ; N/A     ; 46.219              ;
+;  u0|sdram_pll|sd1|pll7|clk[0]                             ; 9.022     ; 0.143    ; 14.524   ; 1.609   ; 9.689               ;
+; Design-wide TNS                                           ; -5675.871 ; -124.816 ; -3.572   ; -1.482  ; 0.0                 ;
+;  MAX10_CLK1_50                                            ; -156.469  ; 0.000    ; 0.000    ; 0.000   ; 0.000               ;
+;  altera_reserved_tck                                      ; 0.000     ; 0.000    ; 0.000    ; 0.000   ; 0.000               ;
+;  mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; -1743.059 ; -0.480   ; N/A      ; N/A     ; 0.000               ;
+;  nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; -127.966  ; -6.808   ; -3.572   ; -1.482  ; 0.000               ;
+;  nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; -3419.182 ; -117.710 ; N/A      ; N/A     ; 0.000               ;
+;  nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; -229.195  ; 0.000    ; N/A      ; N/A     ; 0.000               ;
+;  u0|sdram_pll|sd1|pll7|clk[0]                             ; 0.000     ; 0.000    ; 0.000    ; 0.000   ; 0.000               ;
++-----------------------------------------------------------+-----------+----------+----------+---------+---------------------+
 
 
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -1071,25 +1071,25 @@ Typical MTBF values are calculated based on the nominal silicon characteristics,
 ; altera_reserved_tck                                      ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; false path ; 0          ; 0        ; 0        ;
 ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 6405       ; 2          ; 0        ; 0        ;
 ; MAX10_CLK1_50                                            ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 2114       ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 98148      ; 2          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 4561       ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 99252      ; 2          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 25575      ; 0          ; 0        ; 0        ;
 ; altera_reserved_tck                                      ; MAX10_CLK1_50                                            ; false path ; false path ; 0        ; 0        ;
-; MAX10_CLK1_50                                            ; MAX10_CLK1_50                                            ; 125290     ; 0          ; 0        ; 0        ;
+; MAX10_CLK1_50                                            ; MAX10_CLK1_50                                            ; 124618     ; 0          ; 0        ; 0        ;
 ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; MAX10_CLK1_50                                            ; 325        ; 0          ; 0        ; 0        ;
 ; u0|sdram_pll|sd1|pll7|clk[0]                             ; MAX10_CLK1_50                                            ; 68         ; 0          ; 0        ; 0        ;
-; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 4261       ; 0          ; 0        ; 0        ;
-; MAX10_CLK1_50                                            ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 40         ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 293587     ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 309        ; 0          ; 0        ; 0        ;
-; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 24         ; 0          ; 0        ; 0        ;
-; MAX10_CLK1_50                                            ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 3171       ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 6352       ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 128883     ; 0          ; 0        ; 0        ;
+; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 4338       ; 0          ; 0        ; 0        ;
+; MAX10_CLK1_50                                            ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 45         ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 297612     ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 397        ; 0          ; 0        ; 0        ;
+; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 96         ; 0          ; 0        ; 0        ;
+; MAX10_CLK1_50                                            ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 1175       ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 11704      ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 63905      ; 0          ; 0        ; 0        ;
 ; MAX10_CLK1_50                                            ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 63         ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 79002      ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 79354      ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 6669       ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 7301       ; 0          ; 0        ; 0        ;
 ; MAX10_CLK1_50                                            ; u0|sdram_pll|sd1|pll7|clk[0]                             ; 105        ; 0          ; 0        ; 0        ;
-; u0|sdram_pll|sd1|pll7|clk[0]                             ; u0|sdram_pll|sd1|pll7|clk[0]                             ; 26682      ; 0          ; 0        ; 0        ;
+; u0|sdram_pll|sd1|pll7|clk[0]                             ; u0|sdram_pll|sd1|pll7|clk[0]                             ; 26684      ; 0          ; 0        ; 0        ;
 +----------------------------------------------------------+----------------------------------------------------------+------------+------------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -1105,25 +1105,25 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 ; altera_reserved_tck                                      ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; false path ; 0          ; 0        ; 0        ;
 ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 6405       ; 2          ; 0        ; 0        ;
 ; MAX10_CLK1_50                                            ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 2114       ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 98148      ; 2          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 4561       ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 99252      ; 2          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; 25575      ; 0          ; 0        ; 0        ;
 ; altera_reserved_tck                                      ; MAX10_CLK1_50                                            ; false path ; false path ; 0        ; 0        ;
-; MAX10_CLK1_50                                            ; MAX10_CLK1_50                                            ; 125290     ; 0          ; 0        ; 0        ;
+; MAX10_CLK1_50                                            ; MAX10_CLK1_50                                            ; 124618     ; 0          ; 0        ; 0        ;
 ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; MAX10_CLK1_50                                            ; 325        ; 0          ; 0        ; 0        ;
 ; u0|sdram_pll|sd1|pll7|clk[0]                             ; MAX10_CLK1_50                                            ; 68         ; 0          ; 0        ; 0        ;
-; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 4261       ; 0          ; 0        ; 0        ;
-; MAX10_CLK1_50                                            ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 40         ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 293587     ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 309        ; 0          ; 0        ; 0        ;
-; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 24         ; 0          ; 0        ; 0        ;
-; MAX10_CLK1_50                                            ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 3171       ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 6352       ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 128883     ; 0          ; 0        ; 0        ;
+; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 4338       ; 0          ; 0        ; 0        ;
+; MAX10_CLK1_50                                            ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 45         ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 297612     ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; 397        ; 0          ; 0        ; 0        ;
+; mainclk_inst|altpll_component|auto_generated|pll1|clk[0] ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 96         ; 0          ; 0        ; 0        ;
+; MAX10_CLK1_50                                            ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 1175       ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[0]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 11704      ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; 63905      ; 0          ; 0        ; 0        ;
 ; MAX10_CLK1_50                                            ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 63         ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 79002      ; 0          ; 0        ; 0        ;
-; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 79354      ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[1]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 6669       ; 0          ; 0        ; 0        ;
+; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; nesclk_inst|altpll_component|auto_generated|pll1|clk[2]  ; 7301       ; 0          ; 0        ; 0        ;
 ; MAX10_CLK1_50                                            ; u0|sdram_pll|sd1|pll7|clk[0]                             ; 105        ; 0          ; 0        ; 0        ;
-; u0|sdram_pll|sd1|pll7|clk[0]                             ; u0|sdram_pll|sd1|pll7|clk[0]                             ; 26682      ; 0          ; 0        ; 0        ;
+; u0|sdram_pll|sd1|pll7|clk[0]                             ; u0|sdram_pll|sd1|pll7|clk[0]                             ; 26684      ; 0          ; 0        ; 0        ;
 +----------------------------------------------------------+----------------------------------------------------------+------------+------------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -1181,8 +1181,8 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ; Unconstrained Clocks            ; 0     ; 0    ;
 ; Unconstrained Input Ports       ; 27    ; 27   ;
 ; Unconstrained Input Port Paths  ; 354   ; 354  ;
-; Unconstrained Output Ports      ; 106   ; 106  ;
-; Unconstrained Output Port Paths ; 251   ; 251  ;
+; Unconstrained Output Ports      ; 104   ; 104  ;
+; Unconstrained Output Port Paths ; 249   ; 249  ;
 +---------------------------------+-------+------+
 
 
@@ -1341,11 +1341,9 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ; VGA_B[3]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_G[1]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_G[2]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[3]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_HS              ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_R[1]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_R[2]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[3]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_VS              ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; altera_reserved_tdo ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 +---------------------+---------------------------------------------------------------------------------------+
@@ -1490,11 +1488,9 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ; VGA_B[3]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_G[1]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_G[2]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_G[3]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_HS              ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_R[1]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_R[2]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
-; VGA_R[3]            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; VGA_VS              ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; altera_reserved_tdo ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 +---------------------+---------------------------------------------------------------------------------------+
@@ -1506,7 +1502,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime Timing Analyzer
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Sun Apr 23 21:37:46 2023
+    Info: Processing started: Sun Apr 23 23:07:03 2023
 Info: Command: quartus_sta FPGA-NES -c FPGA-NES
 Info: qsta_default_script.tcl version: #1
 Info (20032): Parallel compilation is enabled and will use up to 10 processors
@@ -1583,50 +1579,50 @@ Info: Found TIMING_ANALYZER_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
 Info: Analyzing Slow 1200mV 85C Model
 Info: Can't run Report Timing Closure Recommendations. The current device family is not supported.
 Critical Warning (332148): Timing requirements not met
-Info (332146): Worst-case setup slack is -7.842
+Info (332146): Worst-case setup slack is -7.984
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -7.842           -1752.775 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    -7.009            -153.010 MAX10_CLK1_50 
-    Info (332119):    -4.838            -226.829 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):    -3.706           -9134.705 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):    -3.395            -121.217 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     9.458               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):    43.065               0.000 altera_reserved_tck 
-Info (332146): Worst-case hold slack is -0.340
+    Info (332119):    -7.984           -1743.059 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    -7.513            -156.469 MAX10_CLK1_50 
+    Info (332119):    -4.872            -229.195 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    -3.568            -127.966 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    -3.517           -3419.182 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):     9.022               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):    41.874               0.000 altera_reserved_tck 
+Info (332146): Worst-case hold slack is -0.416
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.340             -10.105 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):    -0.416              -8.153 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
     Info (332119):    -0.241              -0.480 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.161               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.230               0.000 MAX10_CLK1_50 
-    Info (332119):     0.327               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):     0.342               0.000 altera_reserved_tck 
-    Info (332119):     0.561               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
-Info (332146): Worst-case recovery slack is -1.814
+    Info (332119):    -0.046              -0.094 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.233               0.000 MAX10_CLK1_50 
+    Info (332119):     0.325               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):     0.341               0.000 altera_reserved_tck 
+    Info (332119):     0.570               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
+Info (332146): Worst-case recovery slack is -1.786
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -1.814              -3.628 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    14.393               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):    14.403               0.000 MAX10_CLK1_50 
-    Info (332119):    48.051               0.000 altera_reserved_tck 
-Info (332146): Worst-case removal slack is -0.554
+    Info (332119):    -1.786              -3.572 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    13.786               0.000 MAX10_CLK1_50 
+    Info (332119):    14.524               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):    48.015               0.000 altera_reserved_tck 
+Info (332146): Worst-case removal slack is -0.545
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.554              -1.108 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     1.270               0.000 altera_reserved_tck 
-    Info (332119):     3.444               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):     4.089               0.000 MAX10_CLK1_50 
-Info (332146): Worst-case minimum pulse width slack is 9.551
+    Info (332119):    -0.545              -1.090 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.937               0.000 altera_reserved_tck 
+    Info (332119):     3.347               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):     4.692               0.000 MAX10_CLK1_50 
+Info (332146): Worst-case minimum pulse width slack is 9.550
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     9.551               0.000 MAX10_CLK1_50 
+    Info (332119):     9.550               0.000 MAX10_CLK1_50 
     Info (332119):     9.708               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
     Info (332119):    22.923               0.000 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    46.221               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    46.228               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
     Info (332119):    49.531               0.000 altera_reserved_tck 
-    Info (332119):    92.693               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):   278.781               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    92.755               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):   278.789               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
 Info (332114): Report Metastability: Found 22 synchronizer chains.
     Info (332114): Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
     Info (332114): Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
@@ -1634,7 +1630,7 @@ Info (332114): Report Metastability: Found 22 synchronizer chains.
     Info (332114): Number of Synchronizer Chains Found: 22
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.409
-    Info (332114): Worst Case Available Settling Time: 33.538 ns
+    Info (332114): Worst Case Available Settling Time: 33.375 ns
     Info (332114): 
     Info (332114): Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
     Info (332114):   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 1.8
@@ -1647,50 +1643,50 @@ Info (332097): The following timing edges are non-unate.  The Timing Analyzer wi
     Info (332098): Cell: altera_internal_jtag  from: tck  to: tckutap
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
-Info (332146): Worst-case setup slack is -6.898
+Info (332146): Worst-case setup slack is -7.140
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -6.898           -1527.477 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    -6.669            -146.939 MAX10_CLK1_50 
-    Info (332119):    -4.048            -188.264 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):    -3.024           -7213.243 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):    -2.725             -95.374 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    10.157               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):    43.560               0.000 altera_reserved_tck 
-Info (332146): Worst-case hold slack is -0.540
+    Info (332119):    -7.140            -149.572 MAX10_CLK1_50 
+    Info (332119):    -6.983           -1521.528 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    -4.087            -190.345 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    -2.931            -101.281 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    -2.899           -2749.944 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):     9.850               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):    42.547               0.000 altera_reserved_tck 
+Info (332146): Worst-case hold slack is -0.648
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.540             -42.144 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):    -0.224              -0.442 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    -0.100              -0.367 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    -0.648             -33.928 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):    -0.315              -1.499 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    -0.227              -0.450 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
     Info (332119):     0.228               0.000 MAX10_CLK1_50 
-    Info (332119):     0.293               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):     0.307               0.000 altera_reserved_tck 
-    Info (332119):     0.515               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
-Info (332146): Worst-case recovery slack is -1.264
+    Info (332119):     0.292               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):     0.306               0.000 altera_reserved_tck 
+    Info (332119):     0.534               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
+Info (332146): Worst-case recovery slack is -1.250
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -1.264              -2.528 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    14.919               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):    14.958               0.000 MAX10_CLK1_50 
-    Info (332119):    48.231               0.000 altera_reserved_tck 
-Info (332146): Worst-case removal slack is -0.762
+    Info (332119):    -1.250              -2.500 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    14.393               0.000 MAX10_CLK1_50 
+    Info (332119):    15.041               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):    48.206               0.000 altera_reserved_tck 
+Info (332146): Worst-case removal slack is -0.741
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.762              -1.524 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     1.178               0.000 altera_reserved_tck 
-    Info (332119):     3.095               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):     3.755               0.000 MAX10_CLK1_50 
-Info (332146): Worst-case minimum pulse width slack is 9.581
+    Info (332119):    -0.741              -1.482 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.861               0.000 altera_reserved_tck 
+    Info (332119):     3.009               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):     4.328               0.000 MAX10_CLK1_50 
+Info (332146): Worst-case minimum pulse width slack is 9.580
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     9.581               0.000 MAX10_CLK1_50 
-    Info (332119):     9.687               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):     9.580               0.000 MAX10_CLK1_50 
+    Info (332119):     9.689               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
     Info (332119):    22.941               0.000 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    46.211               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    46.219               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
     Info (332119):    49.547               0.000 altera_reserved_tck 
-    Info (332119):    92.656               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):   278.712               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    92.712               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):   278.731               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
 Info (332114): Report Metastability: Found 22 synchronizer chains.
     Info (332114): Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
     Info (332114): Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
@@ -1698,7 +1694,7 @@ Info (332114): Report Metastability: Found 22 synchronizer chains.
     Info (332114): Number of Synchronizer Chains Found: 22
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.409
-    Info (332114): Worst Case Available Settling Time: 34.086 ns
+    Info (332114): Worst Case Available Settling Time: 33.947 ns
     Info (332114): 
     Info (332114): Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
     Info (332114):   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 1.8
@@ -1709,50 +1705,50 @@ Info (332097): The following timing edges are non-unate.  The Timing Analyzer wi
     Info (332098): Cell: altera_internal_jtag  from: tck  to: tckutap
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Critical Warning (332148): Timing requirements not met
-Info (332146): Worst-case setup slack is -3.545
+Info (332146): Worst-case setup slack is -3.635
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -3.545            -785.332 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    -3.167             -69.750 MAX10_CLK1_50 
-    Info (332119):    -1.973             -91.148 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
-    Info (332119):    -1.409           -3319.395 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):    -1.247             -44.010 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    15.230               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):    47.219               0.000 altera_reserved_tck 
-Info (332146): Worst-case hold slack is -0.538
+    Info (332119):    -3.635            -781.446 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    -3.344             -70.628 MAX10_CLK1_50 
+    Info (332119):    -1.953             -90.972 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    -1.313           -1191.457 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):    -1.253             -43.961 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    15.106               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):    46.620               0.000 altera_reserved_tck 
+Info (332146): Worst-case hold slack is -0.592
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.538            -384.101 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):    -0.307              -3.511 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    -0.149              -0.297 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.088               0.000 MAX10_CLK1_50 
+    Info (332119):    -0.592            -117.710 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):    -0.435              -6.808 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    -0.150              -0.298 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.092               0.000 MAX10_CLK1_50 
     Info (332119):     0.143               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):     0.150               0.000 altera_reserved_tck 
-    Info (332119):     0.207               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
-Info (332146): Worst-case recovery slack is -0.590
+    Info (332119):     0.149               0.000 altera_reserved_tck 
+    Info (332119):     0.224               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
+Info (332146): Worst-case recovery slack is -0.553
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.590              -1.180 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    17.218               0.000 MAX10_CLK1_50 
-    Info (332119):    17.352               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):    49.362               0.000 altera_reserved_tck 
-Info (332146): Worst-case removal slack is -0.591
+    Info (332119):    -0.553              -1.106 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    16.891               0.000 MAX10_CLK1_50 
+    Info (332119):    17.417               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):    49.345               0.000 altera_reserved_tck 
+Info (332146): Worst-case removal slack is -0.621
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    -0.591              -1.182 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):     0.551               0.000 altera_reserved_tck 
-    Info (332119):     1.647               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
-    Info (332119):     1.961               0.000 MAX10_CLK1_50 
-Info (332146): Worst-case minimum pulse width slack is 9.402
+    Info (332119):    -0.621              -1.242 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):     0.409               0.000 altera_reserved_tck 
+    Info (332119):     1.609               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
+    Info (332119):     2.258               0.000 MAX10_CLK1_50 
+Info (332146): Worst-case minimum pulse width slack is 9.401
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     9.402               0.000 MAX10_CLK1_50 
+    Info (332119):     9.401               0.000 MAX10_CLK1_50 
     Info (332119):     9.720               0.000 u0|sdram_pll|sd1|pll7|clk[0] 
     Info (332119):    22.966               0.000 mainclk_inst|altpll_component|auto_generated|pll1|clk[0] 
-    Info (332119):    46.269               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
+    Info (332119):    46.267               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[2] 
     Info (332119):    49.385               0.000 altera_reserved_tck 
-    Info (332119):    92.738               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
-    Info (332119):   278.743               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
+    Info (332119):    92.720               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[1] 
+    Info (332119):   278.735               0.000 nesclk_inst|altpll_component|auto_generated|pll1|clk[0] 
 Info (332114): Report Metastability: Found 22 synchronizer chains.
     Info (332114): Worst-Case MTBF of Design is 1e+09 years or 3.15e+16 seconds.
     Info (332114): Typical MTBF of Design is 1e+09 years or 3.15e+16 seconds.
@@ -1760,7 +1756,7 @@ Info (332114): Report Metastability: Found 22 synchronizer chains.
     Info (332114): Number of Synchronizer Chains Found: 22
     Info (332114): Shortest Synchronizer Chain: 2 Registers
     Info (332114): Fraction of Chains for which MTBFs Could Not be Calculated: 0.409
-    Info (332114): Worst Case Available Settling Time: 37.235 ns
+    Info (332114): Worst Case Available Settling Time: 37.140 ns
     Info (332114): 
     Info (332114): Worst-Case MTBF values are calculated based on the worst-case silicon characteristics, with worst-case operating conditions.
     Info (332114):   - Under worst-case conditions, an increase of 100ps in available settling time will increase MTBF values by a factor of 1.8
@@ -1769,9 +1765,9 @@ Info (332114): Report Metastability: Found 22 synchronizer chains.
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 13 warnings
-    Info: Peak virtual memory: 5023 megabytes
-    Info: Processing ended: Sun Apr 23 21:37:51 2023
+    Info: Peak virtual memory: 4999 megabytes
+    Info: Processing ended: Sun Apr 23 23:07:08 2023
     Info: Elapsed time: 00:00:05
-    Info: Total CPU time (on all processors): 00:00:09
+    Info: Total CPU time (on all processors): 00:00:07
 
 
