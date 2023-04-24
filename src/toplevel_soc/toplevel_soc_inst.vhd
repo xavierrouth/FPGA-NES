@@ -1,9 +1,10 @@
 	component toplevel_soc is
 		port (
 			clk_clk                        : in    std_logic                     := 'X';             -- clk
-			game_rom_conduit_to_game_rom   : out   std_logic_vector(7 downto 0);                     -- to_game_rom
-			game_rom_conduit_write_rom     : out   std_logic;                                        -- write_rom
+			game_rom_conduit_rom_data      : out   std_logic_vector(7 downto 0);                     -- rom_data
+			game_rom_conduit_prg_rom_write : out   std_logic;                                        -- prg_rom_write
 			game_rom_conduit_rom_addr      : out   std_logic_vector(15 downto 0);                    -- rom_addr
+			game_rom_conduit_chr_rom_write : out   std_logic;                                        -- chr_rom_write
 			hex_digits_export              : out   std_logic_vector(15 downto 0);                    -- export
 			i2c_0_i2c_serial_sda_in        : in    std_logic                     := 'X';             -- sda_in
 			i2c_0_i2c_serial_scl_in        : in    std_logic                     := 'X';             -- scl_in
@@ -29,16 +30,18 @@
 			spi0_SS_n                      : out   std_logic;                                        -- SS_n
 			usb_gpx_export                 : in    std_logic                     := 'X';             -- export
 			usb_irq_export                 : in    std_logic                     := 'X';             -- export
-			usb_rst_export                 : out   std_logic                                         -- export
+			usb_rst_export                 : out   std_logic;                                        -- export
+			master_clk_clk                 : out   std_logic                                         -- clk
 		);
 	end component toplevel_soc;
 
 	u0 : component toplevel_soc
 		port map (
 			clk_clk                        => CONNECTED_TO_clk_clk,                        --                     clk.clk
-			game_rom_conduit_to_game_rom   => CONNECTED_TO_game_rom_conduit_to_game_rom,   --        game_rom_conduit.to_game_rom
-			game_rom_conduit_write_rom     => CONNECTED_TO_game_rom_conduit_write_rom,     --                        .write_rom
+			game_rom_conduit_rom_data      => CONNECTED_TO_game_rom_conduit_rom_data,      --        game_rom_conduit.rom_data
+			game_rom_conduit_prg_rom_write => CONNECTED_TO_game_rom_conduit_prg_rom_write, --                        .prg_rom_write
 			game_rom_conduit_rom_addr      => CONNECTED_TO_game_rom_conduit_rom_addr,      --                        .rom_addr
+			game_rom_conduit_chr_rom_write => CONNECTED_TO_game_rom_conduit_chr_rom_write, --                        .chr_rom_write
 			hex_digits_export              => CONNECTED_TO_hex_digits_export,              --              hex_digits.export
 			i2c_0_i2c_serial_sda_in        => CONNECTED_TO_i2c_0_i2c_serial_sda_in,        --        i2c_0_i2c_serial.sda_in
 			i2c_0_i2c_serial_scl_in        => CONNECTED_TO_i2c_0_i2c_serial_scl_in,        --                        .scl_in
@@ -64,6 +67,7 @@
 			spi0_SS_n                      => CONNECTED_TO_spi0_SS_n,                      --                        .SS_n
 			usb_gpx_export                 => CONNECTED_TO_usb_gpx_export,                 --                 usb_gpx.export
 			usb_irq_export                 => CONNECTED_TO_usb_irq_export,                 --                 usb_irq.export
-			usb_rst_export                 => CONNECTED_TO_usb_rst_export                  --                 usb_rst.export
+			usb_rst_export                 => CONNECTED_TO_usb_rst_export,                 --                 usb_rst.export
+			master_clk_clk                 => CONNECTED_TO_master_clk_clk                  --              master_clk.clk
 		);
 

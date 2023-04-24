@@ -17,6 +17,7 @@ module toplevel_soc (
 		input  wire [1:0]  key_external_connection_export, // key_external_connection.export
 		output wire [7:0]  keycode_export,                 //                 keycode.export
 		output wire [13:0] leds_export,                    //                    leds.export
+		output wire        master_clk_clk,                 //              master_clk.clk
 		input  wire        reset_reset_n,                  //                   reset.reset_n
 		output wire        sdram_clk_clk,                  //               sdram_clk.clk
 		output wire [12:0] sdram_wire_addr,                //              sdram_wire.addr
@@ -38,6 +39,7 @@ module toplevel_soc (
 	);
 
 	wire         sdram_pll_c0_clk;                                                // sdram_pll:c0 -> [mm_interconnect_0:sdram_pll_c0_clk, rst_controller_001:clk, sdram:clk]
+	wire         main_clkgen_pll_locked_conduit_export;                           // main_clkgen_pll:locked -> main_clkgen_pll:areset
 	wire  [31:0] nios2_gen2_0_data_master_readdata;                               // mm_interconnect_0:nios2_gen2_0_data_master_readdata -> nios2_gen2_0:d_readdata
 	wire         nios2_gen2_0_data_master_waitrequest;                            // mm_interconnect_0:nios2_gen2_0_data_master_waitrequest -> nios2_gen2_0:d_waitrequest
 	wire         nios2_gen2_0_data_master_debugaccess;                            // nios2_gen2_0:debug_mem_slave_debugaccess_to_roms -> mm_interconnect_0:nios2_gen2_0_data_master_debugaccess
@@ -81,6 +83,11 @@ module toplevel_soc (
 	wire         mm_interconnect_0_sdram_pll_pll_slave_read;                      // mm_interconnect_0:sdram_pll_pll_slave_read -> sdram_pll:read
 	wire         mm_interconnect_0_sdram_pll_pll_slave_write;                     // mm_interconnect_0:sdram_pll_pll_slave_write -> sdram_pll:write
 	wire  [31:0] mm_interconnect_0_sdram_pll_pll_slave_writedata;                 // mm_interconnect_0:sdram_pll_pll_slave_writedata -> sdram_pll:writedata
+	wire  [31:0] mm_interconnect_0_main_clkgen_pll_pll_slave_readdata;            // main_clkgen_pll:readdata -> mm_interconnect_0:main_clkgen_pll_pll_slave_readdata
+	wire   [1:0] mm_interconnect_0_main_clkgen_pll_pll_slave_address;             // mm_interconnect_0:main_clkgen_pll_pll_slave_address -> main_clkgen_pll:address
+	wire         mm_interconnect_0_main_clkgen_pll_pll_slave_read;                // mm_interconnect_0:main_clkgen_pll_pll_slave_read -> main_clkgen_pll:read
+	wire         mm_interconnect_0_main_clkgen_pll_pll_slave_write;               // mm_interconnect_0:main_clkgen_pll_pll_slave_write -> main_clkgen_pll:write
+	wire  [31:0] mm_interconnect_0_main_clkgen_pll_pll_slave_writedata;           // mm_interconnect_0:main_clkgen_pll_pll_slave_writedata -> main_clkgen_pll:writedata
 	wire         mm_interconnect_0_sdram_s1_chipselect;                           // mm_interconnect_0:sdram_s1_chipselect -> sdram:az_cs
 	wire  [15:0] mm_interconnect_0_sdram_s1_readdata;                             // sdram:za_data -> mm_interconnect_0:sdram_s1_readdata
 	wire         mm_interconnect_0_sdram_s1_waitrequest;                          // sdram:za_waitrequest -> mm_interconnect_0:sdram_s1_waitrequest
@@ -132,7 +139,7 @@ module toplevel_soc (
 	wire         irq_mapper_receiver2_irq;                                        // timer_0:irq -> irq_mapper:receiver2_irq
 	wire         irq_mapper_receiver3_irq;                                        // spi_0:irq -> irq_mapper:receiver3_irq
 	wire  [31:0] nios2_gen2_0_irq_irq;                                            // irq_mapper:sender_irq -> nios2_gen2_0:irq
-	wire         rst_controller_reset_out_reset;                                  // rst_controller:reset_out -> [game_rom_programmer_0:RESET, hex_digits_pio:reset_n, i2c_0:rst_n, irq_mapper:reset, jtag_uart_0:rst_n, key:reset_n, keycode:reset_n, leds_pio:reset_n, mm_interconnect_0:nios2_gen2_0_reset_reset_bridge_in_reset_reset, nios2_gen2_0:reset_n, rst_translator:in_reset, sdram_pll:reset, spi_0:reset_n, sysid_qsys_0:reset_n, timer_0:reset_n, usb_gpx:reset_n, usb_irq:reset_n, usb_rst:reset_n]
+	wire         rst_controller_reset_out_reset;                                  // rst_controller:reset_out -> [game_rom_programmer_0:RESET, hex_digits_pio:reset_n, i2c_0:rst_n, irq_mapper:reset, jtag_uart_0:rst_n, key:reset_n, keycode:reset_n, leds_pio:reset_n, main_clkgen_pll:reset, mm_interconnect_0:nios2_gen2_0_reset_reset_bridge_in_reset_reset, nios2_gen2_0:reset_n, rst_translator:in_reset, sdram_pll:reset, spi_0:reset_n, sysid_qsys_0:reset_n, timer_0:reset_n, usb_gpx:reset_n, usb_irq:reset_n, usb_rst:reset_n]
 	wire         rst_controller_reset_out_reset_req;                              // rst_controller:reset_req -> [nios2_gen2_0:reset_req, rst_translator:reset_req_in]
 	wire         nios2_gen2_0_debug_reset_request_reset;                          // nios2_gen2_0:debug_reset_request -> [rst_controller:reset_in1, rst_controller_001:reset_in1]
 	wire         rst_controller_001_reset_out_reset;                              // rst_controller_001:reset_out -> [mm_interconnect_0:sdram_reset_reset_bridge_in_reset_reset, sdram:reset_n]
@@ -227,6 +234,33 @@ module toplevel_soc (
 		.chipselect (mm_interconnect_0_leds_pio_s1_chipselect), //                    .chipselect
 		.readdata   (mm_interconnect_0_leds_pio_s1_readdata),   //                    .readdata
 		.out_port   (leds_export)                               // external_connection.export
+	);
+
+	toplevel_soc_main_clkgen_pll main_clkgen_pll (
+		.clk                (clk_clk),                                               //       inclk_interface.clk
+		.reset              (rst_controller_reset_out_reset),                        // inclk_interface_reset.reset
+		.read               (mm_interconnect_0_main_clkgen_pll_pll_slave_read),      //             pll_slave.read
+		.write              (mm_interconnect_0_main_clkgen_pll_pll_slave_write),     //                      .write
+		.address            (mm_interconnect_0_main_clkgen_pll_pll_slave_address),   //                      .address
+		.readdata           (mm_interconnect_0_main_clkgen_pll_pll_slave_readdata),  //                      .readdata
+		.writedata          (mm_interconnect_0_main_clkgen_pll_pll_slave_writedata), //                      .writedata
+		.c0                 (master_clk_clk),                                        //                    c0.clk
+		.areset             (main_clkgen_pll_locked_conduit_export),                 //        areset_conduit.export
+		.locked             (main_clkgen_pll_locked_conduit_export),                 //        locked_conduit.export
+		.scandone           (),                                                      //           (terminated)
+		.scandataout        (),                                                      //           (terminated)
+		.c1                 (),                                                      //           (terminated)
+		.c2                 (),                                                      //           (terminated)
+		.c3                 (),                                                      //           (terminated)
+		.c4                 (),                                                      //           (terminated)
+		.phasedone          (),                                                      //           (terminated)
+		.phasecounterselect (3'b000),                                                //           (terminated)
+		.phaseupdown        (1'b0),                                                  //           (terminated)
+		.phasestep          (1'b0),                                                  //           (terminated)
+		.scanclk            (1'b0),                                                  //           (terminated)
+		.scanclkena         (1'b0),                                                  //           (terminated)
+		.scandata           (1'b0),                                                  //           (terminated)
+		.configupdate       (1'b0)                                                   //           (terminated)
 	);
 
 	toplevel_soc_nios2_gen2_0 nios2_gen2_0 (
@@ -419,6 +453,11 @@ module toplevel_soc (
 		.leds_pio_s1_readdata                           (mm_interconnect_0_leds_pio_s1_readdata),                          //                                         .readdata
 		.leds_pio_s1_writedata                          (mm_interconnect_0_leds_pio_s1_writedata),                         //                                         .writedata
 		.leds_pio_s1_chipselect                         (mm_interconnect_0_leds_pio_s1_chipselect),                        //                                         .chipselect
+		.main_clkgen_pll_pll_slave_address              (mm_interconnect_0_main_clkgen_pll_pll_slave_address),             //                main_clkgen_pll_pll_slave.address
+		.main_clkgen_pll_pll_slave_write                (mm_interconnect_0_main_clkgen_pll_pll_slave_write),               //                                         .write
+		.main_clkgen_pll_pll_slave_read                 (mm_interconnect_0_main_clkgen_pll_pll_slave_read),                //                                         .read
+		.main_clkgen_pll_pll_slave_readdata             (mm_interconnect_0_main_clkgen_pll_pll_slave_readdata),            //                                         .readdata
+		.main_clkgen_pll_pll_slave_writedata            (mm_interconnect_0_main_clkgen_pll_pll_slave_writedata),           //                                         .writedata
 		.nios2_gen2_0_debug_mem_slave_address           (mm_interconnect_0_nios2_gen2_0_debug_mem_slave_address),          //             nios2_gen2_0_debug_mem_slave.address
 		.nios2_gen2_0_debug_mem_slave_write             (mm_interconnect_0_nios2_gen2_0_debug_mem_slave_write),            //                                         .write
 		.nios2_gen2_0_debug_mem_slave_read              (mm_interconnect_0_nios2_gen2_0_debug_mem_slave_read),             //                                         .read

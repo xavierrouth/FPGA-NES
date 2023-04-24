@@ -1,8 +1,9 @@
 	toplevel_soc u0 (
 		.clk_clk                        (<connected-to-clk_clk>),                        //                     clk.clk
-		.game_rom_conduit_to_game_rom   (<connected-to-game_rom_conduit_to_game_rom>),   //        game_rom_conduit.to_game_rom
-		.game_rom_conduit_write_rom     (<connected-to-game_rom_conduit_write_rom>),     //                        .write_rom
+		.game_rom_conduit_rom_data      (<connected-to-game_rom_conduit_rom_data>),      //        game_rom_conduit.rom_data
+		.game_rom_conduit_prg_rom_write (<connected-to-game_rom_conduit_prg_rom_write>), //                        .prg_rom_write
 		.game_rom_conduit_rom_addr      (<connected-to-game_rom_conduit_rom_addr>),      //                        .rom_addr
+		.game_rom_conduit_chr_rom_write (<connected-to-game_rom_conduit_chr_rom_write>), //                        .chr_rom_write
 		.hex_digits_export              (<connected-to-hex_digits_export>),              //              hex_digits.export
 		.i2c_0_i2c_serial_sda_in        (<connected-to-i2c_0_i2c_serial_sda_in>),        //        i2c_0_i2c_serial.sda_in
 		.i2c_0_i2c_serial_scl_in        (<connected-to-i2c_0_i2c_serial_scl_in>),        //                        .scl_in
@@ -28,6 +29,7 @@
 		.spi0_SS_n                      (<connected-to-spi0_SS_n>),                      //                        .SS_n
 		.usb_gpx_export                 (<connected-to-usb_gpx_export>),                 //                 usb_gpx.export
 		.usb_irq_export                 (<connected-to-usb_irq_export>),                 //                 usb_irq.export
-		.usb_rst_export                 (<connected-to-usb_rst_export>)                  //                 usb_rst.export
+		.usb_rst_export                 (<connected-to-usb_rst_export>),                 //                 usb_rst.export
+		.master_clk_clk                 (<connected-to-master_clk_clk>)                  //              master_clk.clk
 	);
 

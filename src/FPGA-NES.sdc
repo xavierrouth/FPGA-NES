@@ -6,7 +6,12 @@ create_clock -period "50.0 MHz" [get_ports MAX10_CLK1_50]
 #**************************************************************
 # Create Generated Clock
 #**************************************************************
-derive_pll_clocks
+derive_pll_clocks -create_base_clocks
+
+create_generated_clock -divide_by 12 -source [get_nodes *MCLK*] -name {clock_divider:cpuclkgen|clock_out} 
+create_generated_clock -divide_by 4 -source [get_nodes *MCLK*] -name {clock_divider:ppuclkgen|clock_out}
+create_generated_clock -divide_by 2 -source [get_nodes *MCLK*] -name {clock_divider:vgaclkgen|clock_out}
+ 
 
 
 
@@ -49,3 +54,11 @@ set_output_delay -max -clock clk_dram_ext 1.6  [get_ports {DRAM_DQ* DRAM_*DQM}]
 set_output_delay -min -clock clk_dram_ext -0.9 [get_ports {DRAM_DQ* DRAM_*DQM}]
 set_output_delay -max -clock clk_dram_ext 1.6  [get_ports {DRAM_ADDR* DRAM_BA* DRAM_RAS_N DRAM_CAS_N DRAM_WE_N DRAM_CKE DRAM_CS_N}]
 set_output_delay -min -clock clk_dram_ext -0.9 [get_ports {DRAM_ADDR* DRAM_BA* DRAM_RAS_N DRAM_CAS_N DRAM_WE_N DRAM_CKE DRAM_CS_N}]
+
+#=====================False Paths===============
+set_false_path -from [get_pins -compatibility_mode *T65:CPU*] -through [get_pins -compatibility_mode *] -to [get_pins -compatibility_mode *hex_num*]
+set_false_path -from [get_pins -compatibility_mode *d_writedata*] -through [get_pins -compatibility_mode *] -to [get_pins -compatibility_mode *PRG_ROM*]
+set_false_path -from [get_pins -compatibility_mode *d_writedata*] -through [get_pins -compatibility_mode *] -to [get_pins -compatibility_mode *CHR_ROM*]
+set_false_path -from [get_pins -compatibility_mode *ROM_PRGMR*] -through [get_pins -compatibility_mode *] -to [get_pins -compatibility_mode *PRG_ROM*]
+set_false_path -from [get_pins -compatibility_mode *ROM_PRGMR*] -through [get_pins -compatibility_mode *] -to [get_pins -compatibility_mode *CHR_ROM*]
+set_false_path -from [get_pins -compatibility_mode *pushbuttons*] -through [get_pins -compatibility_mode *] -to [get_pins -compatibility_mode *]

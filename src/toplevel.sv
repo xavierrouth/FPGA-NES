@@ -168,19 +168,21 @@ module toplevel (
 	logic PPU_CLK_GATE;
 	
 
-	
-	logic idiot_clk;
+
 	// 50 MHz input, 
 	// c0 is 25.175 for VGA timing.
 	// C1 is 21.5 MHz, this is the master NES clock, all other NES clocks relative to this.
-	
 	main_clkgen mainclk_inst(.inclk0(MAX10_CLK1_50), .c0(MCLK));
-	// NES MCLK (21.5MHz) input, 
-	// c0 is divided by 12
-	// C1 is divided by 4
-	// c2 is divided by 2
-	// TODO: Replace CPU_CLK_GATE with CPU_CLK when single-step is removed
-	nes_clkgen nesclk_inst(.inclk0(MCLK), .c0(CPU_CLK_GATE), .c1(PPU_CLK_GATE), .c2(VGA_CLK));
+	nes_clkgen nesclk_inst(.inclk0(MCLK), .c0(CPU_CLK), .c1(PPU_CLK), .c2(VGA_CLK));
+	
+	// c0 is CPU
+	// c1 is PPU
+	// c2 is VGA
+	// C3 is master
+	//clock_divider #(12) cpuclkgen (.clock_in(MCLK), .clock_out(CPU_CLK));
+	//clock_divider #(4) ppuclkgen (.clock_in(MCLK), .clock_out(PPU_CLK));
+	//clock_divider #(2) vgaclkgen (.clock_in(MCLK), .clock_out(VGA_CLK));
+
 	
 	
 //=======================================================
@@ -227,7 +229,7 @@ module toplevel (
 	//
 	//
 
-	
+	/**
 	always_comb begin
 		if (SW[0]) begin
 			PPU_CLK = syncd_continue;
@@ -238,7 +240,7 @@ module toplevel (
 			CPU_CLK = CPU_CLK_GATE;
 		end
 	end
-		
+	*/
 	
 	// Choose what to display on the HEX
 	
@@ -437,6 +439,12 @@ module toplevel (
 		.usb_rst_export(USB_RST),
 		.usb_irq_export(USB_IRQ),
 		.usb_gpx_export(USB_GPX),
+		
+		//Clocks
+		//.cpu_clk_clk(CPU_CLK),
+		//.master_clk_clk(MCLK),
+		//.ppu_clk_clk(PPU_CLK),
+		//.vga_clk_clk(VGA_CLK),
 		
 		// Game Rom Programmer
 	

@@ -3,11 +3,11 @@
  <debug showDebugMenu="0" />
  <systemtable filter="All Interfaces" showClockDomains="1" showResetDomains="0">
   <columns>
-   <connections preferredWidth="175" />
+   <connections preferredWidth="207" />
    <irq preferredWidth="34" />
    <inputclock preferredWidth="124" />
   </columns>
  </systemtable>
- <library expandedCategories="Project/ECE 385 Custom IPs,Project,Library" />
+ <library expandedCategories="Project,Library" />
  <window width="1920" height="1032" x="0" y="0" />
 </preferences>

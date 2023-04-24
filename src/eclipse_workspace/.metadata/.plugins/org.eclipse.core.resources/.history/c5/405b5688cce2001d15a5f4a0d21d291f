@@ -18,7 +18,8 @@
 #include "system.h"
 #include <stdlib.h>
 #include <alt_types.h>
-#include "nestest.h"
+//#include "nestest.h"
+#include "donkey_kong.h"
 #include "usb_host.h"
 #include "rom_programmer.h"
 
@@ -49,14 +50,14 @@ int main()
 	  // Write BB to $C000 to $C000 + i
 	  alt_u8 bytes = chr_rom_data[i];
 	  // Write Data (I don't feel like doing mirroring for now)
-	  write_prg_rom(0x0000 + i, bytes);
+	  write_chr_rom(0x0000 + i, bytes);
   }
 
   // Write Reset Vector
-  /**
-  write_prg_rom(0xFFFC, 0x00);
-  write_prg_rom(0xFFFD, 0xC0);
-  */
+
+  //write_prg_rom(0xFFFC, 0x00);
+  //write_prg_rom(0xFFFD, 0xC0);
+
 
   printf("Done Programming \n");
 
@@ -100,12 +101,30 @@ int main()
 					printf("%x ", kbdbuf.keycode[i]);
 				}
 				// overwrite setKeycode to translate to NES
-				BYTE nesKeycodes = 0;
+				BYTE nesKeycodes = 0x00;
 
 				for (int i = 0; i < 6; i++) {
-					kbdbuf.keycode[i];
+					BYTE kc = kbdbuf.keycode[i];
+					// A - K
+					if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+					// B - L
+					if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+					// SELECT - '\'
+					if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+					// START - 'enter;
+					if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+					// UP - W
+					if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+					// DOWN - S
+					if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+					// LEFT - A
+					if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+					// RIGHT - D
+					if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
 				}
 				setKeycode(nesKeycodes);
+				printf("NES controller sees: %x ", nesKeycodes);
+				printf("\n");
 				printSignedHex0(kbdbuf.keycode[0]);
 				printSignedHex1(kbdbuf.keycode[1]);
 				printf("\n");

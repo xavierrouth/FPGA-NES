@@ -150,7 +150,7 @@ logic ppu_latch;
 // PPU_BUS_ADDR is the external interface
 logic [7:0] ppu_read_buffer;
 logic [7:0] ppu_write_buffer;
-logic [7:0] vram_addr_latched;
+logic [13:0] vram_addr_buffer;
 
 //=======================================================
 //  Control Regs - Meaning and Decoding (https://www.nesdev.org/wiki/PPU_registers)
@@ -608,7 +608,8 @@ always_comb begin
 		if (cycle >= 257 & cycle <= 320) begin
 			// Do Sprite Stuff
 		end
-	end
+	end // end if rendering enabled
+	
 	//======= POST RENDER SCANLINE (240) ==============
 	// Do Nothing
 	//======= POST RENDER SCANLINE (241-260) ==============
@@ -624,7 +625,8 @@ always_comb begin
 			//ppu_nmi_clear_request = 1'b1;
 		else if (cycle >= 280 & cycle <= 304) begin
 			// Reload vertical scroll bits TODO: Only if rendering is enabled?
-			ppu_vcopy_vram_request = 1'b1;
+			if (render_enable)
+				ppu_vcopy_vram_request = 1'b1;
 		end
 	end // End Pre Render Scanelin
 	// if rendering_enable
@@ -727,19 +729,29 @@ always_ff @ (posedge CLK) begin
 	end
 	else begin
 		// Load request from CPU
-		if (cpu_load_vram_request ^ ppu_load_vram_handle) begin
-			active_vram_address <= temp_vram_address;
-			ppu_load_vram_handle <= ~ppu_load_vram_handle;
-		end
+		// Wait until write / read is done before doing handle
 		
-		// Increment request from CPU
-		else if (cpu_inc_vram_request ^ ppu_inc_vram_handle) begin
-			ppu_inc_vram_handle <= ~ppu_inc_vram_handle;
-			if (addr_increment) 
-				active_vram_address <= active_vram_address + 32;
-			else
-				active_vram_address <= active_vram_address + 1;
-		end
+		// OR, we can latch the address when we send the write request like we do with the data,
+		// this sucks though.
+		
+		// Make sure the write request happens before we increment the address
+		if (~(cpu_write_request ^ ppu_write_handle) & ~(cpu_read_request ^ ppu_read_handle)) begin
+		
+			if (cpu_load_vram_request ^ ppu_load_vram_handle) begin
+				active_vram_address <= temp_vram_address;
+				ppu_load_vram_handle <= ~ppu_load_vram_handle;
+			end
+			
+			// Increment request from CPU
+			else if (cpu_inc_vram_request ^ ppu_inc_vram_handle) begin
+				ppu_inc_vram_handle <= ~ppu_inc_vram_handle;
+				if (addr_increment) 
+					active_vram_address <= active_vram_address + 32;
+				else
+					active_vram_address <= active_vram_address + 1;
+			end
+		
+		
 		
 		//TODO: Do we have to increment when we load also here also?? FUCK.
 		//
@@ -753,48 +765,48 @@ always_ff @ (posedge CLK) begin
 		
 		// TODO: Maybe check if rendering is enabled here also??
 		//4 different operation that the PPU can request
-		else if (render_enable) begin
-			if (ppu_hinc_vram_request) begin
-				if (active_vram_address.coarse_x == 31) begin
-					active_vram_address.coarse_x <= 0;
-					active_vram_address.nametable_x <= ~active_vram_address.nametable_x;
-				end
-				else begin
-					active_vram_address.coarse_x <= active_vram_address.coarse_x + 1;
-				end
-			end
-			// Horizontal Copy Request
-			else if (ppu_hcopy_vram_request) begin
-				active_vram_address.nametable_x <= temp_vram_address.nametable_x;
-				active_vram_address.coarse_x <= temp_vram_address.coarse_x;
-			end
-			
-			if (ppu_vinc_vram_request) begin
-				if (active_vram_address.fine_y != 3'b111) begin
-					active_vram_address.fine_y <= active_vram_address.fine_y + 1;
-				end
-				// Fine y should be 7.
-				else if (active_vram_address.fine_y == 3'b111) begin
-					active_vram_address.fine_y <= 0;
-					if (active_vram_address.coarse_y == 29) begin
-						active_vram_address.coarse_y <= 0;
-						active_vram_address.nametable_y <= ~active_vram_address.nametable_y;
-					end else if (active_vram_address.coarse_y == 31) begin
-						active_vram_address.coarse_y <= 0;
-					end else begin
-						active_vram_address.coarse_y <= active_vram_address.coarse_y + 1;
+			else if (render_enable) begin
+				if (ppu_hinc_vram_request) begin
+					if (active_vram_address.coarse_x == 31) begin
+						active_vram_address.coarse_x <= 0;
+						active_vram_address.nametable_x <= ~active_vram_address.nametable_x;
+					end
+					else begin
+						active_vram_address.coarse_x <= active_vram_address.coarse_x + 1;
 					end
 				end
+				// Horizontal Copy Request
+				else if (ppu_hcopy_vram_request) begin
+					active_vram_address.nametable_x <= temp_vram_address.nametable_x;
+					active_vram_address.coarse_x <= temp_vram_address.coarse_x;
+				end
+				
+				if (ppu_vinc_vram_request) begin
+					if (active_vram_address.fine_y != 3'b111) begin
+						active_vram_address.fine_y <= active_vram_address.fine_y + 1;
+					end
+					// Fine y should be 7.
+					else if (active_vram_address.fine_y == 3'b111) begin
+						active_vram_address.fine_y <= 0;
+						if (active_vram_address.coarse_y == 29) begin
+							active_vram_address.coarse_y <= 0;
+							active_vram_address.nametable_y <= ~active_vram_address.nametable_y;
+						end else if (active_vram_address.coarse_y == 31) begin
+							active_vram_address.coarse_y <= 0;
+						end else begin
+							active_vram_address.coarse_y <= active_vram_address.coarse_y + 1;
+						end
+					end
+				end
+				
+				// Vertttical Copy Request
+				else if (ppu_vcopy_vram_request) begin
+					active_vram_address.fine_y <= temp_vram_address.fine_y;
+					active_vram_address.nametable_y <= temp_vram_address.nametable_y;
+					active_vram_address.coarse_y <= temp_vram_address.coarse_y;
+				end
 			end
-			
-			// Vertttical Copy Request
-			else if (ppu_vcopy_vram_request) begin
-				active_vram_address.fine_y <= temp_vram_address.fine_y;
-				active_vram_address.nametable_y <= temp_vram_address.nametable_y;
-				active_vram_address.coarse_y <= temp_vram_address.coarse_y;
-			end
-		end
-		
+		end // End read / write handle guard
 	end
 end
 

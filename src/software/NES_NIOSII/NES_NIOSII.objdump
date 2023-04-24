@@ -75,9 +75,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  28 .quartus_project_dir 00000013  00000000  00000000  00083478  2**0
                   CONTENTS, READONLY
- 29 .jdi          000066b7  00000000  00000000  0008348b  2**0
+ 29 .jdi          00006759  00000000  00000000  0008348b  2**0
                   CONTENTS, READONLY
- 30 .sopcinfo     0008771f  00000000  00000000  00089b42  2**0
+ 30 .sopcinfo     00097a98  00000000  00000000  00089be4  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 08000000 l    d  .entry	00000000 .entry
@@ -1229,13 +1229,13 @@ void setLED(int LED) {
  8000464:	df000104 	addi	fp,sp,4
  8000468:	e13fff15 	stw	r4,-4(fp)
 	IOWR_ALTERA_AVALON_PIO_DATA(LEDS_PIO_BASE,
- 800046c:	00827404 	movi	r2,2512
+ 800046c:	00828404 	movi	r2,2576
  8000470:	10c00037 	ldwio	r3,0(r2)
  8000474:	01000044 	movi	r4,1
  8000478:	e0bfff17 	ldw	r2,-4(fp)
  800047c:	2084983a 	sll	r2,r4,r2
  8000480:	1886b03a 	or	r3,r3,r2
- 8000484:	00827404 	movi	r2,2512
+ 8000484:	00828404 	movi	r2,2576
  8000488:	10c00035 	stwio	r3,0(r2)
 			(IORD_ALTERA_AVALON_PIO_DATA(LEDS_PIO_BASE) | (0x001 << LED)));
 }
@@ -1253,14 +1253,14 @@ void clearLED(int LED) {
  80004a8:	df000104 	addi	fp,sp,4
  80004ac:	e13fff15 	stw	r4,-4(fp)
 	IOWR_ALTERA_AVALON_PIO_DATA(LEDS_PIO_BASE,
- 80004b0:	00827404 	movi	r2,2512
+ 80004b0:	00828404 	movi	r2,2576
  80004b4:	10c00037 	ldwio	r3,0(r2)
  80004b8:	01000044 	movi	r4,1
  80004bc:	e0bfff17 	ldw	r2,-4(fp)
  80004c0:	2084983a 	sll	r2,r4,r2
  80004c4:	0084303a 	nor	r2,zero,r2
  80004c8:	1886703a 	and	r3,r3,r2
- 80004cc:	00827404 	movi	r2,2512
+ 80004cc:	00828404 	movi	r2,2576
  80004d0:	10c00035 	stwio	r3,0(r2)
 			(IORD_ALTERA_AVALON_PIO_DATA(LEDS_PIO_BASE) & ~(0x001 << LED)));
 
@@ -1285,7 +1285,7 @@ void printSignedHex0(signed char value) {
 	BYTE ones = 0;
  8000504:	e03ffe45 	stb	zero,-7(fp)
 	WORD pio_val = IORD_ALTERA_AVALON_PIO_DATA(HEX_DIGITS_PIO_BASE);
- 8000508:	00827804 	movi	r2,2528
+ 8000508:	00828804 	movi	r2,2592
  800050c:	10800037 	ldwio	r2,0(r2)
  8000510:	e0bffe8d 	sth	r2,-6(fp)
 	if (value < 0) {
@@ -1360,7 +1360,7 @@ void printSignedHex0(signed char value) {
 
 	IOWR_ALTERA_AVALON_PIO_DATA(HEX_DIGITS_PIO_BASE, pio_val);
  80005dc:	e0fffe8b 	ldhu	r3,-6(fp)
- 80005e0:	00827804 	movi	r2,2528
+ 80005e0:	00828804 	movi	r2,2592
  80005e4:	10c00035 	stwio	r3,0(r2)
 }
  80005e8:	0001883a 	nop
@@ -1384,7 +1384,7 @@ void printSignedHex1(signed char value) {
 	BYTE ones = 0;
  800061c:	e03ffd45 	stb	zero,-11(fp)
 	DWORD pio_val = IORD_ALTERA_AVALON_PIO_DATA(HEX_DIGITS_PIO_BASE);
- 8000620:	00827804 	movi	r2,2528
+ 8000620:	00828804 	movi	r2,2592
  8000624:	10800037 	ldwio	r2,0(r2)
  8000628:	e0bffe15 	stw	r2,-8(fp)
 	if (value < 0) {
@@ -1469,7 +1469,7 @@ void printSignedHex1(signed char value) {
 
 	IOWR_ALTERA_AVALON_PIO_DATA(HEX_DIGITS_PIO_BASE, pio_val);
  8000714:	e0fffe17 	ldw	r3,-8(fp)
- 8000718:	00827804 	movi	r2,2528
+ 8000718:	00828804 	movi	r2,2592
  800071c:	10c00035 	stwio	r3,0(r2)
 }
  8000720:	0001883a 	nop
@@ -1490,7 +1490,7 @@ void setKeycode(WORD keycode)
  8000748:	e0bfff0d 	sth	r2,-4(fp)
 	IOWR_ALTERA_AVALON_PIO_DATA(KEYCODE_BASE, keycode);
  800074c:	e0ffff0b 	ldhu	r3,-4(fp)
- 8000750:	00828804 	movi	r2,2592
+ 8000750:	00829804 	movi	r2,2656
  8000754:	10c00035 	stwio	r3,0(r2)
 }
  8000758:	0001883a 	nop
@@ -3655,7 +3655,7 @@ void MAX3421E_reset(void) {
 	//hardware reset, then software reset
 	IOWR_ALTERA_AVALON_PIO_DATA(USB_RST_BASE, 0);
  8001d98:	0007883a 	mov	r3,zero
- 8001d9c:	00827c04 	movi	r2,2544
+ 8001d9c:	00828c04 	movi	r2,2608
  8001da0:	10c00035 	stwio	r3,0(r2)
 	usleep(1000000);
  8001da4:	010003f4 	movhi	r4,15
@@ -3663,7 +3663,7 @@ void MAX3421E_reset(void) {
  8001dac:	8010b280 	call	8010b28 <usleep>
 	IOWR_ALTERA_AVALON_PIO_DATA(USB_RST_BASE, 1);
  8001db0:	00c00044 	movi	r3,1
- 8001db4:	00827c04 	movi	r2,2544
+ 8001db4:	00828c04 	movi	r2,2608
  8001db8:	10c00035 	stwio	r3,0(r2)
 	BYTE tmp = 0;
  8001dbc:	e03fff05 	stb	zero,-4(fp)
@@ -3992,7 +3992,7 @@ void MAX3421E_Task(void) {
  8002070:	df000015 	stw	fp,0(sp)
  8002074:	d839883a 	mov	fp,sp
 	if ( IORD_ALTERA_AVALON_PIO_DATA(USB_IRQ_BASE) == 0) {
- 8002078:	00828404 	movi	r2,2576
+ 8002078:	00829404 	movi	r2,2640
  800207c:	10800037 	ldwio	r2,0(r2)
  8002080:	1000041e 	bne	r2,zero,8002094 <MAX3421E_Task+0x2c>
 		printf("MAX interrupt\n\r");
@@ -4003,7 +4003,7 @@ void MAX3421E_Task(void) {
  8002090:	80020cc0 	call	80020cc <MaxIntHandler>
 	}
 	if ( IORD_ALTERA_AVALON_PIO_DATA(USB_GPX_BASE) == 1) {
- 8002094:	00828004 	movi	r2,2560
+ 8002094:	00829004 	movi	r2,2624
  8002098:	10800037 	ldwio	r2,0(r2)
  800209c:	10800058 	cmpnei	r2,r2,1
  80020a0:	1000041e 	bne	r2,zero,80020b4 <MAX3421E_Task+0x4c>
