@@ -33,8 +33,10 @@
 //=======================================================
 
 module CONTROLLER (
-
+	
+	input clk,
 	input rden, wren,
+	input reset,
 	
 	input [7:0] data_in,
 	
@@ -44,28 +46,73 @@ module CONTROLLER (
 	output logic [7:0] data_out // Only lowest bit of this is ever used
 );
 
+logic [7:0] keycodes; 
+
 assign data_out[7:1] = 7'b0;
 
-logic [7:0] keycodes;
+logic strobe;
+
+logic shift_req;
+logic shift_handle;
 
 // TODO: Add second controller
-// TODO: This is all wrong, we should adapt the clock outside of this
-always_ff @ (posedge rden or posedge wren) begin
-	// TOOD: This should load continously on CLK not only on wren.
-	if (wren) begin
-		if (data_in[0]) // Parallel load
+
+//We Have to do the clk flags thing to handle this async stuff, I think its the best way at this point
+
+// Positive edge detector
+logic rden_prev;
+
+
+
+always_ff @ (posedge clk) begin
+	if (~reset) begin
+		// Wait to detect a posedge
+		if (~rden_prev)
+			rden_prev <= rden;
+		else if (~rden) 
+			rden_prev <= 1'b0; // nwsdawdwdasdegedge detected, so reset
+		else 
+			rden_prev <= rden_prev; // No change, so keep trucking
+			
+		// posedge signal a "shift request"
+		// Edge and that edge is positive
+		if (rden_prev != rden & rden == 1'b1) begin
+			shift_req <= ~shift_req;
+			data_out[0] <= keycodes[0];
+		end
+		
+		// Hnadle Stuff
+		if (wren)
+			strobe <= data_in[0];
+		// Do we shift on wren?
+		
+		// Handle Shifts
+		
+		// What happens if we get a shift request when strobing?, we want to ignore it, not buffer it until strobing is done
+		// ALWAYS handle the shift request
+		if (shift_req ^ shift_handle) begin
+			shift_handle <= ~shift_handle;
+			
+			if (~strobe) 
+				keycodes <= {1'b1, keycodes[7:1]};
+			else // Strobe
+				keycodes <= keycodes_in;
+		end
+		
+		if (strobe)
 			keycodes <= keycodes_in;
-		else
-			keycodes <= keycodes;
+		
+		
+			
+	end else begin // Reset
+		rden_prev <= 1'b0;
+		shift_req <= 1'b0;
+		keycodes <= 8'b0;
+		strobe <= 1'b0;
+		shift_handle <= 1'b0;
+		data_out[0] <= 1'b0;
 	end
-	else if (rden) begin
-		// Right shift out keycodes
-		keycodes <= {1'b0, keycodes[7:1]};
-		data_out[0] <= keycodes[0];
-	end
-	else
-		keycodes <= keycodes;
+	
 end
-
-
+	
 endmodule

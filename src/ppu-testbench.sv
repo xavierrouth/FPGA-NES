@@ -37,7 +37,8 @@ end
 //  WEGWEKJGKJ
 //=======================================================
 
-
+logic clk;
+assign clk = PPU_CLK;
 logic RESET;
 logic ENABLE;
 
@@ -69,10 +70,15 @@ logic   [ 3: 0]   VGA_B;
 
 integer TestsFailed = 0;
 
+logic rden, wren;
+logic reset;
+logic[7:0] data_in, keycodes_in, data_out;
+
 //=======================================================
 //  DUT Instantiationisnitanwo
 //=======================================================
-PPU ppu_inst(.CLK(PPU_CLK), .CPU_CLK(CPU_CLK), .RESET(RESET), .VIDEO_CLK(VGA_CLK), .*);
+//PPU ppu_inst(.CLK(PPU_CLK), .CPU_CLK(CPU_CLK), .RESET(RESET), .VIDEO_CLK(VGA_CLK), .*);
+CONTROLLER controller_inst(.*);
 
 //=======================================================
 //  Test Vectors
@@ -83,8 +89,58 @@ PPU ppu_inst(.CLK(PPU_CLK), .CPU_CLK(CPU_CLK), .RESET(RESET), .VIDEO_CLK(VGA_CLK
 // #3 is CPU CLK
 
 initial begin: TEST_VECTORS
+#1
+reset = 1'b0; #4
+reset = 1'b1; #4 
+rden = 1'b1;#2
+rden = 1'b0;#2
+wren = 1'b1; #2 
+wren = 1'b0; #2
+reset = 1'b0; #4
+
+keycodes_in = 8'b01010101;
+data_in = 8'b00000001;
+
+#2
+wren = 1'b1;
+#2
+wren = 1'b0;
+#2
+
+data_in = 8'b00000000;
+#2
+wren = 1'b1;
+#2
+wren = 1'b0;
 
 
+rden = 1'b1; #2 
+rden = 1'b0; #2
+
+rden = 1'b1; #2 
+rden = 1'b0; #2
+
+rden = 1'b1; #2 
+rden = 1'b0; #2
+rden = 1'b1; #2 
+rden = 1'b0; #2
+rden = 1'b1; #2 
+rden = 1'b0; #2
+
+rden = 1'b1; #2 
+rden = 1'b0; #2
+rden = 1'b1; #2 
+rden = 1'b0; #2
+rden = 1'b1; #2 
+rden = 1'b0; #2
+
+rden = 1'b1; #2
+rden = 1'b0; 
+
+
+
+
+/**
 debug_enable_nmi = 1'b1;
 RESET = 1'b0; #10
 RESET = 1'b1; #100
@@ -134,7 +190,7 @@ CPU_wren = 1'b0;
 //CPU_wren = 1'b0; #12
 
 // Okay just wait i guess
-
+*/
 end
 
 endmodule
