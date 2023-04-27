@@ -175,6 +175,15 @@ logic CHR_ROM_rden;
 logic [7:0] VRAM_DATA_OUT;
 logic VRAM_rden, VRAM_wren;
 
+//FRAME_PALETTE Signals
+logic [7:0] FRAME_PALETTE_DATA_OUT;
+logic FRAME_PALETTE_rden, FRAME_PALETTE_wren;
+
+//Additional internal frame palette signals --> dual port for PPU rendering
+logic [4:0] FRAME_PALETTE_RENDER_ADDR;
+logic [7:0] FRAME_PALETTE_RENDER_DATA;
+logic FRAME_PALETTE_RENDER_rden;
+
 //=======================================================
 //  PPU Bus Architecture / Memory Mapped Logic
 //=======================================================
@@ -187,6 +196,8 @@ always_comb begin : PPU_BUS_SELECTION
 	VRAM_rden = 1'b0;
 	VRAM_wren = 1'b0;
 	CHR_ROM_rden = 1'b0;
+	FRAME_PALETTE_rden = 1'b0;
+	FRAME_PALETTE_wren = 1'b0;
 
 	// ------ Priority Mux Bus Control ---------
 
@@ -195,7 +206,9 @@ always_comb begin : PPU_BUS_SELECTION
 	
 	// VRAM / Name Tables [$2000 - $27FF] // Weir dMirroring stuff who cares rn
 	
-	// Palette RAM [$3F00 - $3FFF] // Weir dMirroring stuff who cares rn
+	// Palette RAM [$3F00 - $3EFF] // Weir dMirroring stuff who cares rn
+	
+	// Frame Palette RAM [$3F00 - $3FFF]  //with mirrored palette at [$3f00 - $3f1f]
 	
 	
 	// ------ PPU Write --------- 
@@ -203,8 +216,11 @@ always_comb begin : PPU_BUS_SELECTION
 		PPU_DATA_BUS = PPU_DATA_OUT;
 		
 		// VRAM / Name Tables [$2000 - $3FFF]
-		if (PPU_ADDR_BUS >= 14'h2000)
+		if (PPU_ADDR_BUS >= 14'h2000 & PPU_ADDR_BUS < 14'h3F00)
 			VRAM_wren = 1'b1;
+			
+		if (PPU_ADDR_BUS >= 14'h3F00)
+			FRAME_PALETTE_wren = 1'b1;
 	end
 	 
 	// ------ PPU Read  ---------
@@ -217,10 +233,15 @@ always_comb begin : PPU_BUS_SELECTION
 		end
 		
 		// TODO: Name Tables from Palette?
-		// VRAM / Name Tables / Palette [$2000 - $3FFF]
-		else if (PPU_ADDR_BUS >= 14'h2000) begin
+		// VRAM / Name Tables / Palette [$2000 - $3EFF]
+		else if (PPU_ADDR_BUS >= 14'h2000 & PPU_ADDR_BUS < 14'h3F00) begin
 			PPU_DATA_BUS = VRAM_DATA_OUT;
 			VRAM_rden = 1'b1;
+		end
+		// FRAME_PALETTE [$3F00 - $3FFF]
+		else if (PPU_ADDR_BUS >= 14'h3F00) begin
+			PPU_DATA_BUS = FRAME_PALETTE_DATA_OUT;
+			FRAME_PALETTE_rden = 1'b1;
 		end
 	end
 end
@@ -278,8 +299,10 @@ CHR_ROM chr_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(PPU_A
 					
 PPU ppu_inst(.CLK(PPU_CLK), .ENABLE(PPU_ENABLE), .RESET(RESET), .VIDEO_CLK(VGA_CLK), .NMI_n(NMI_n), .CPU_DATA_IN(CPU_DATA_BUS), .CPU_ADDR(CPU_ADDR[2:0]), 
 				.CPU_DATA_OUT(PPU_CPU_DATA_OUT), .CPU_wren(CPU_PPU_wren), .CPU_rden(CPU_PPU_rden), 
-				.PPU_DATA_IN(PPU_DATA_BUS), .PPU_DATA_OUT(PPU_DATA_OUT), .PPU_ADDR(PPU_ADDR), .PPU_READ(PPU_READ), .PPU_WRITE(PPU_WRITE), .*);
+				.PPU_DATA_IN(PPU_DATA_BUS), .PPU_DATA_OUT(PPU_DATA_OUT), .PPU_ADDR(PPU_ADDR), .PPU_READ(PPU_READ), .PPU_WRITE(PPU_WRITE), .FRAME_PALETTE_RENDER_ADDR(FRAME_PALETTE_RENDER_ADDR), .FRAME_PALETTE_RENDER_READ(FRAME_PALETTE_RENDER_rden), .FRAME_PALETTE_RENDER_DATA_IN(FRAME_PALETTE_RENDER_DATA), .*);
 				
 VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
-			
+
+FRAME_PALETTE frame_palette_inst(.clk(MEM_CLK), .rden(FRAME_PALETTE_rden), .wren(FRAME_PALETTE_wren), .render_rden(FRAME_PALETTE_RENDER_rden), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .render_addr(FRAME_PALETTE_RENDER_ADDR), .data_out(FRAME_PALETTE_DATA_OUT), .render_data(FRAME_PALETTE_RENDER_DATA));
+
 endmodule

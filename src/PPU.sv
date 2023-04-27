@@ -111,6 +111,11 @@ module PPU (
 	output logic [13:0] PPU_ADDR,
 	output logic PPU_WRITE, PPU_READ, // PPU wants to read, ppu want to write
 	
+	//FRAME PALETTE interface
+	output logic [4:0] FRAME_PALETTE_RENDER_ADDR,
+	output logic FRAME_PALETTE_RENDER_READ,
+	input logic [7:0] FRAME_PALETTE_RENDER_DATA_IN,
+	
 	// Video Output
 	output logic          VGA_HS,
 	output logic          VGA_VS,
@@ -398,6 +403,7 @@ logic [15:0] ptable_data [2]; // Pattern Table Data
 logic [7:0] ptable_data_temp [2];
 logic [7:0]  atable_data [2]; // Attribute Table Data
 logic [7:0]  ntable_byte; // Unclear if this is needed
+logic [7:0] palette_data [2];
 
 // OAM
 logic [63:0][3:0][7:0] OAM;
@@ -485,7 +491,9 @@ assign render_enable = background_render_enable | sprite_render_enable;
 assign extra_cycle = extra_cycle_latch & render_enable;
 
 logic [2:0] counter;
+logic [1:0] attribute_counter;
 assign counter = ((cycle - 1) % 8); // This is plus one because all our reads and writes are delayed
+assign attribute_counter = {((scanline) % 32) >> 4, ((cycle-1) % 32) >> 4 }; //Divides each line by 8 32 pixel sections, determines if first or second 16 bits
 
 // TODO:
 // Even / Odd Frames (might fix scrolling issue)
@@ -525,6 +533,8 @@ always_comb begin
 	// ========== Default Values =========================
 	
 	ppu_read_request = 1'b0;
+	FRAME_PALETTE_RENDER_READ = 1'b0;
+	FRAME_PALETTE_RENDER_ADDR = 4'd0;
 	
 	// Weird Register Increments
 	ppu_hinc_vram_request = 1'b0;
@@ -544,6 +554,9 @@ always_comb begin
 	end else if (scanline <= 10'd239 | scanline == 10'd261) begin
 		// ----------CYCLES 1-256 and CYCLES 321-338
 		if ((cycle >= 1 & cycle <= 256) | (cycle >= 321 & cycle < 338)) begin
+		
+			 FRAME_PALETTE_RENDER_READ = 1'b1;
+			 FRAME_PALETTE_RENDER_ADDR = {1'b0, palette_data[1][7-fine_x], palette_data[0][7-fine_x], ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
 			// ===========  DO SOME FETCHING HERE  ==============
 			case (counter) // Case coutner
 				// Fetch nametable byte
@@ -649,16 +662,40 @@ always_ff @ (posedge CLK) begin
 			// Shift Attribute Table Data To left
 			
 			// Shift Pattern Table Data 
-			linebuffer[ppu_linebuffer][cycle] <= color_idx;
+			linebuffer[ppu_linebuffer][cycle] <= FRAME_PALETTE_RENDER_DATA_IN[5:0];
 			
 			ptable_data[1] <= {ptable_data[1][14:0], ptable_data[1][0]}; //shift pattern data
 			ptable_data[0] <= {ptable_data[0][14:0], ptable_data[0][0]};
+			palette_data[1] <= {palette_data[1][6:0], palette_data[1][0]};
+			palette_data[0] <= {palette_data[0][6:0], palette_data[0][0]};
+			
+			// load color idx from frame palette
+			
+			
 			case (counter)
 				// Fetch nametable byte
 				3'd0: begin
 					// TODO: Load the shiftregs
 					ptable_data[1][7:0] <= ptable_data_temp[1];
 					ptable_data[0][7:0] <= ptable_data_temp[0];
+					
+					if(attribute_counter == 2'd0) begin
+						palette_data[0][0] <= atable_data[0][0];
+						palette_data[1][0] <= atable_data[0][1];
+						end
+					if(attribute_counter == 2'd1) begin
+						palette_data[0][0] <= atable_data[0][2];
+						palette_data[1][0] <= atable_data[0][3];
+						end
+					if(attribute_counter == 2'd2) begin
+						palette_data[0][0] <= atable_data[0][4];
+						palette_data[1][0] <= atable_data[0][5];
+						end
+					if(attribute_counter == 2'd3) begin
+						palette_data[0][0] <= atable_data[0][6];
+						palette_data[1][0] <= atable_data[0][7];
+						end
+							
 				end
 				3'd1: ntable_byte <= PPU_DATA_IN;
 				3'd2: ;
