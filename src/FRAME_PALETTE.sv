@@ -22,18 +22,47 @@ module FRAME_PALETTE ( input clk,
 
 );
 
-logic [7:0] memory [32];
+logic [7:0] memory [32]; // This goes up to $20
 
+logic [4:0] addr_mirrored;
+logic [4:0] render_addr_mirrored;
+
+// handle mirroring
+always_comb begin
+	case (addr)
+		5'h10: addr_mirrored = 5'h00;
+		5'h14: addr_mirrored = 5'h04;
+		5'h18: addr_mirrored = 5'h08;
+		5'h1C: addr_mirrored = 5'h0C;
+		5'h04: addr_mirrored = 5'h00;
+		5'h08: addr_mirrored = 5'h00;
+		5'h0C: addr_mirrored = 5'h00;
+		default: addr_mirrored = addr;
+	endcase
+	case (render_addr)
+		5'h10: render_addr_mirrored = 5'h00;
+		5'h14: render_addr_mirrored = 5'h04;
+		5'h18: render_addr_mirrored = 5'h08;
+		5'h1C: render_addr_mirrored = 5'h0C;
+		5'h04: render_addr_mirrored = 5'h00;
+		5'h08: render_addr_mirrored = 5'h00;
+		5'h0C: render_addr_mirrored = 5'h00;
+		default: render_addr_mirrored = render_addr;
+	endcase
+end
+
+//4th entry needs to get mirrored down
+// IE $3F04 goes to 
 always_ff @ (posedge clk) begin
 
 	if(wren)
-	memory[addr] <= data_in;
+	memory[addr_mirrored] <= data_in;
 	
 	if(rden)
-	data_out <= memory[addr];
+	data_out <= memory[addr_mirrored];
 	
 	if(render_rden)
-	render_data <= memory[render_addr];
+	render_data <= memory[render_addr_mirrored];
 
 end
 

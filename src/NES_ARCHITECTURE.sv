@@ -86,7 +86,33 @@ logic SYSRAM_wren, SYSRAM_rden;
 logic [7:0] PRG_ROM_DATA_OUT;
 logic PRG_ROM_rden;
 
+// DMA Signals
+logic DMA_start;
+logic DMA_active;
 
+logic [7:0] data_buffer;
+logic [7:0] DMA_addr;
+// TODO: Rework so we can do both at the same time?
+logic DMA_read;
+logic DMA_write;
+
+//=======================================================
+//  DMA State Machine
+//=======================================================
+// TODO: Can we run this faster??
+always_ff @ (posedge CPU_CLK) begin
+	// This might get stuck high
+	if (~CPU_RW_n && (CPU_ADDR_BUS == 16'h4014)) begin
+		DMA_addr <= CPU_DATA_BUS;
+		DMA_active <= 1'b1;
+	end
+	
+	else if (DMA_active) begin
+		if (DMA_addr == 0)
+			DMA_active <= 1'b0;
+		DMA_addr <= DMA_addr + 1;
+	end
+end
 //=======================================================
 //  CPU Bus Architecture / Memory Mapped Logic
 //=======================================================
@@ -101,55 +127,69 @@ always_comb begin : CPU_BUS_SELECTION
 	CPU_PPU_wren = 1'b0;
 	CPU_PPU_rden = 1'b0;
 	
-	CPU_DATA_BUS = 8'hAA;
+	CPU_DATA_BUS = 8'hFF;
 	PRG_ROM_rden = 1'b0;
 	
 	CONTROLLER_rden = 1'b0;
 	CONTROLLER_wren = 1'b0;
 	
-	// ------ CPU Write ---------
-	if (~CPU_RW_n) begin
-		CPU_DATA_BUS = CPU_DATA_OUT;
-		
-		// System Ram [$0000 - $0FFF]
-		if (CPU_ADDR_BUS <= 16'h0FFF)
-			SYSRAM_wren = 1'b1;
-		
-		// CONTROLLER [$4016]
-		if (CPU_ADDR_BUS == 16'h4016) begin
-			CONTROLLER_wren = 1'b1;
-		end
-		
-		// PPU Control Registers [$2000 - $3FFF] (Repeats every 8 bytes)
-		if ((CPU_ADDR_BUS >= 16'h2000) & (CPU_ADDR_BUS <= 16'h3FFF)) begin
-			CPU_PPU_wren = 1'b1;
-		end
+	DMA_write = 1'b0;
+	
+	// DMA is active
+	if (DMA_active) begin
+		SYSRAM_rden = 1'b1;
+		CPU_DATA_BUS = SYSRAM_DATA_OUT;
+		DMA_write = 1'b1;
 	end
-	
-	// ------ CPU Read  ---------
-	else if (CPU_RW_n) begin
-	
-		// System Ram [$0000 - $0FFF]
-		if (CPU_ADDR_BUS <= 16'h0FFF) begin
-			CPU_DATA_BUS = SYSRAM_DATA_OUT;
-			SYSRAM_rden = 1'b1;
-		end
-		// CONTROLLER [$4016 - $4017]
-		if (CPU_ADDR_BUS == 16'h4016 | CPU_ADDR_BUS == 16'h4017) begin
-			CONTROLLER_rden = 1'b1;
-			CPU_DATA_BUS = CONTROLLER_DATA_OUT;
-		end
-		// PRG-ROM [$4020 - $FFFF]
-		else if (CPU_ADDR_BUS >= 16'h4020) begin
-			CPU_DATA_BUS = PRG_ROM_DATA_OUT;
-			PRG_ROM_rden = 1'b1;
+	// ------ CPU Write ---------
+	else begin
+		if (~CPU_RW_n) begin
+			CPU_DATA_BUS = CPU_DATA_OUT;
+			
+			// System Ram [$0000 - $0FFF]
+			if (CPU_ADDR_BUS <= 16'h0FFF)
+				SYSRAM_wren = 1'b1;
+			
+			// CONTROLLER [$4016]
+			if (CPU_ADDR_BUS == 16'h4016) begin
+				CONTROLLER_wren = 1'b1;
+			end
+			
+			if (CPU_ADDR_BUS == 16'h4014) begin
+				; // Handled by DMA State Machine DMA_start = 1'b1;
+			end
+			
+			// PPU Control Registers [$2000 - $3FFF] (Repeats every 8 bytes)
+			if ((CPU_ADDR_BUS >= 16'h2000) & (CPU_ADDR_BUS <= 16'h3FFF)) begin
+				CPU_PPU_wren = 1'b1;
+			end
 		end
 		
-		// PPU Control Registers [$2000 - $3FFF] (Repeats every 8 bytes)
-		if (CPU_ADDR_BUS >= 16'h2000 && CPU_ADDR_BUS <= 16'h3FFF) begin
-			// Do Reads / Writes matter here?
-			CPU_DATA_BUS = PPU_CPU_DATA_OUT;
-			CPU_PPU_rden = 1'b1;
+		// ------ CPU Read  ---------
+		else if (CPU_RW_n) begin
+		
+			// System Ram [$0000 - $0FFF]
+			if (CPU_ADDR_BUS <= 16'h0FFF) begin
+				CPU_DATA_BUS = SYSRAM_DATA_OUT;
+				SYSRAM_rden = 1'b1;
+			end
+			// CONTROLLER [$4016 - $4017]
+			if (CPU_ADDR_BUS == 16'h4016 | CPU_ADDR_BUS == 16'h4017) begin
+				CONTROLLER_rden = 1'b1;
+				CPU_DATA_BUS = CONTROLLER_DATA_OUT;
+			end
+			// PRG-ROM [$4020 - $FFFF]
+			else if (CPU_ADDR_BUS >= 16'h4020) begin
+				CPU_DATA_BUS = PRG_ROM_DATA_OUT;
+				PRG_ROM_rden = 1'b1;
+			end
+			
+			// PPU Control Registers [$2000 - $3FFF] (Repeats every 8 bytes)
+			if (CPU_ADDR_BUS >= 16'h2000 && CPU_ADDR_BUS <= 16'h3FFF) begin
+				// Do Reads / Writes matter here?
+				CPU_DATA_BUS = PPU_CPU_DATA_OUT;
+				CPU_PPU_rden = 1'b1;
+			end
 		end
 	end
 end
@@ -202,7 +242,6 @@ always_comb begin : PPU_BUS_SELECTION
 	// ------ Priority Mux Bus Control ---------
 
 	// CHR-ROM / Pattern Tables [$0000 - $1FFF]
-	
 	
 	// VRAM / Name Tables [$2000 - $27FF] // Weir dMirroring stuff who cares rn
 	
@@ -262,7 +301,7 @@ assign debug_enable_nmi = DEBUG_SWITCHES[0];
 //=======================================================
 
 logic CPU_ENABLE;
-assign CPU_ENABLE = ENABLE;
+assign CPU_ENABLE = ENABLE & ~DMA_active; // when DMA_active is high, then CPU is disabled
 
 logic CPU_RESET;
 assign CPU_RESET = RESET;
@@ -299,9 +338,11 @@ CHR_ROM chr_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(PPU_A
 					
 PPU ppu_inst(.CLK(PPU_CLK), .ENABLE(PPU_ENABLE), .RESET(RESET), .VIDEO_CLK(VGA_CLK), .NMI_n(NMI_n), .CPU_DATA_IN(CPU_DATA_BUS), .CPU_ADDR(CPU_ADDR[2:0]), 
 				.CPU_DATA_OUT(PPU_CPU_DATA_OUT), .CPU_wren(CPU_PPU_wren), .CPU_rden(CPU_PPU_rden), 
-				.PPU_DATA_IN(PPU_DATA_BUS), .PPU_DATA_OUT(PPU_DATA_OUT), .PPU_ADDR(PPU_ADDR), .PPU_READ(PPU_READ), .PPU_WRITE(PPU_WRITE), .FRAME_PALETTE_RENDER_ADDR(FRAME_PALETTE_RENDER_ADDR), .FRAME_PALETTE_RENDER_READ(FRAME_PALETTE_RENDER_rden), .FRAME_PALETTE_RENDER_DATA_IN(FRAME_PALETTE_RENDER_DATA), .*);
+				.PPU_DATA_IN(PPU_DATA_BUS), .PPU_DATA_OUT(PPU_DATA_OUT), .PPU_ADDR(PPU_ADDR), .PPU_READ(PPU_READ), .PPU_WRITE(PPU_WRITE), 
+				.FRAME_PALETTE_RENDER_ADDR(FRAME_PALETTE_RENDER_ADDR), .FRAME_PALETTE_RENDER_READ(FRAME_PALETTE_RENDER_rden), .FRAME_PALETTE_RENDER_DATA_IN(FRAME_PALETTE_RENDER_DATA), 
+				.DMA_write(DMA_write), .DMA_address(DMA_addr), .DMA_data(CPU_DATA_BUS), .*);
 				
-VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
+VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .mirroring(1'b0), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
 
 FRAME_PALETTE frame_palette_inst(.clk(MEM_CLK), .rden(FRAME_PALETTE_rden), .wren(FRAME_PALETTE_wren), .render_rden(FRAME_PALETTE_RENDER_rden), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .render_addr(FRAME_PALETTE_RENDER_ADDR), .data_out(FRAME_PALETTE_DATA_OUT), .render_data(FRAME_PALETTE_RENDER_DATA));
 

@@ -23,6 +23,8 @@ module VRAM(
 	input [7:0] data_in,
 	input [13:0] addr,
 	
+	input mirroring,
+	
 	input wren, rden,
 	
 	output logic [7:0] data_out
@@ -30,11 +32,17 @@ module VRAM(
 
 // Size is 2^11
 //TODO: [11:10] should be 0 for no mirroring
-logic [13:0] addr_mirrored;
-assign addr_mirrored = {addr[13:12], 2'b00, addr[9:0]};
+
+
+logic [10:0] addr_mirrored;
+
+assign addr_mirrored = {mirroring, addr[9:0]};
+
+
+
 // TODO: Minimize this
 
-logic [7:0] mem [16384]; // Whole PPU address space for now
+logic [7:0] mem [2048]; // Whole PPU address space for now
 
 always_ff @ (posedge clk) begin
 	if (wren)

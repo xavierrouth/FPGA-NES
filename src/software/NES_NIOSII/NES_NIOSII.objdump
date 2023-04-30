@@ -39,7 +39,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  10 .debug_abbrev 0000a288  00000000  00000000  00047351  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_line   0000cb39  00000000  00000000  000515d9  2**0
+ 11 .debug_line   0000cb3b  00000000  00000000  000515d9  2**0
                   CONTENTS, READONLY, DEBUGGING
  12 .debug_frame  00002f68  00000000  00000000  0005e114  2**2
                   CONTENTS, READONLY, DEBUGGING
@@ -75,9 +75,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  28 .quartus_project_dir 00000013  00000000  00000000  00083478  2**0
                   CONTENTS, READONLY
- 29 .jdi          00006759  00000000  00000000  0008348b  2**0
+ 29 .jdi          000067f9  00000000  00000000  0008348b  2**0
                   CONTENTS, READONLY
- 30 .sopcinfo     00097a98  00000000  00000000  00089be4  2**0
+ 30 .sopcinfo     00097a98  00000000  00000000  00089c84  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 08000000 l    d  .entry	00000000 .entry
@@ -1553,7 +1553,7 @@ void write_chr_rom(alt_u16 address, alt_u8 data) {
  80007fc:	f800283a 	ret
 
 08000800 <main>:
-#include "donkey_kong.h"
+//#include "mario.h"
 #include "usb_host.h"
 #include "rom_programmer.h"
 

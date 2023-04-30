@@ -304,6 +304,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "VGA_R[0]",
+					"strict" : false
+				},
+				{
 					"name" : "VGA_R[1]",
 					"strict" : false
 				},

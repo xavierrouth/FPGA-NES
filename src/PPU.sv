@@ -104,14 +104,19 @@ module PPU (
 	output logic [7:0] CPU_DATA_OUT,
 	output logic		 NMI_n,
 	
-	//PPU BUS interface
+	// DMA Interface
+	input DMA_write,
+	input [7:0] DMA_address,
+	input [7:0] DMA_data,
+	
+	// PPU BUS interface
 	input [7:0] PPU_DATA_IN,
 	
 	output logic [7:0] PPU_DATA_OUT,
 	output logic [13:0] PPU_ADDR,
 	output logic PPU_WRITE, PPU_READ, // PPU wants to read, ppu want to write
 	
-	//FRAME PALETTE interface
+	// FRAME PALETTE interface
 	output logic [4:0] FRAME_PALETTE_RENDER_ADDR,
 	output logic FRAME_PALETTE_RENDER_READ,
 	input logic [7:0] FRAME_PALETTE_RENDER_DATA_IN,
@@ -216,7 +221,22 @@ logic background_render_enable;
 logic status_vblank;
 
 logic sprite0_hit;
-logic ppu_sprite_eval;
+logic sprite_overflow;
+
+//=======================================================
+// $2003 OAMADDR - Write
+// Literally just write an address I think
+//=======================================================
+logic [7:0] oam_address;
+
+//=======================================================
+// $2004 OAMDATA - Read / Write
+// Literally just write an address I think
+// Writes will increment OAMADDR after the write; 
+// reads during vertical or forced blanking return the value from OAM at that address but do not increment
+// reads during rendering are bad, TODO (expose internal OAM access during sprite evaluation and loading)
+//=======================================================
+logic [7:0] oam_data;
 
 //=======================================================
 // PPUSCROLL - 16 bit - Write Twice
@@ -256,6 +276,7 @@ logic cpu_load_vram_request;
 logic cpu_inc_vram_request;
 logic cpu_nmi_clear_request;
 
+
 //assign nmi_generate = debug_enable_nmi;
 // CPU Interface
 always_ff @ (posedge CPU_CLK) begin
@@ -267,8 +288,11 @@ always_ff @ (posedge CPU_CLK) begin
 		cpu_nmi_clear_request <= 1'b0;
 		cpu_load_vram_request <= 1'b0;
 		ppu_latch <= 1'b0;
+		OAM <= '{default:'0};
 	end
-	
+	else if (DMA_write) begin
+		OAM[DMA_address] <= DMA_data;
+	end
 	//-------------CPU WRITE--------------------------
 	else if (CPU_wren) begin // CPU Write
 		case (CPU_ADDR)
@@ -288,15 +312,16 @@ always_ff @ (posedge CPU_CLK) begin
 				//TODO:
 				background_render_enable <= CPU_DATA_IN[3];
 			end
-			3'h3: OAMADDR <= CPU_DATA_IN;
+			3'h3: oam_address <= CPU_DATA_IN;
 			// Read Only
 			3'h2: ;
 			// Read / Write
 			3'h4: begin
 				// TODO: Fix this?
 				// Increment OAMADDR after write
-				OAMDATA <= CPU_DATA_IN;
-				OAMADDR <= OAMADDR + 1;
+				// Multiple drivers sigh
+				OAM[oam_address] <= CPU_DATA_IN;
+				oam_address <= oam_address + 1;
 			end
 			// Write Twice
 			3'h5: begin //PPUSCROLL
@@ -377,10 +402,11 @@ always_comb begin
 				// Output PPUSTATUS data
 				CPU_DATA_OUT[7] = status_vblank;
 				CPU_DATA_OUT[6] = sprite0_hit;
-				CPU_DATA_OUT[5] = ppu_sprite_eval;
+				CPU_DATA_OUT[5] = sprite_overflow;
 			end
 			3'h3: ;
-			3'h4: ;
+			3'h4: CPU_DATA_OUT = OAM[oam_address]; // OAM Data
+				
 			3'h5: ;
 			3'h6: ;
 			3'h7: begin
@@ -397,24 +423,14 @@ end
 //  Cycle and Scanline Engine
 //=======================================================
 
-// VRAM Data Tiles
-
-logic [15:0] ptable_data [2]; // Pattern Table Data
-logic [7:0] ptable_data_temp [2];
-logic [7:0]  atable_data [2]; // Attribute Table Data
-logic [7:0]  ntable_byte; // Unclear if this is needed
-logic [7:0] palette_data [2];
-
-// OAM
-logic [63:0][3:0][7:0] OAM;
-
 // Scanline and Cycle Engine (Very similar to VGA controller)
 
 logic [9:0] cycle, scanline, next_cycle, next_scanline;
+logic [9:0] scanline_intermediate;
 logic extra_cycle_latch;
 logic extra_cycle;
 
-
+assign scanline = scanline_intermediate + 1;
 
 parameter [9:0] cycle_count = 10'd340; //
 parameter [9:0] scanline_count = 10'd261;
@@ -424,7 +440,7 @@ logic ppu_vs, ppu_hs;
 always @(posedge CLK) begin
 	if (RESET) begin
 		cycle <= 10'd0;
-		scanline <= 10'd0;
+		scanline_intermediate <= 10'd0;
 		next_cycle <= 10'd0;
 		next_scanline <= 10'd0;
 		ppu_vs <= 1'b0;
@@ -444,7 +460,7 @@ always @(posedge CLK) begin
 			next_cycle <= next_cycle + 1;
 			
 		cycle <= next_cycle;
-		scanline <= next_scanline;
+		scanline_intermediate <= next_scanline;
 	end
 	
 end
@@ -492,8 +508,11 @@ assign extra_cycle = extra_cycle_latch & render_enable;
 
 logic [2:0] counter;
 logic [1:0] attribute_counter;
+logic [9:0] cycleminone;
+assign cycleminone = cycle-1;
 assign counter = ((cycle - 1) % 8); // This is plus one because all our reads and writes are delayed
-assign attribute_counter = {((scanline) % 32) >> 4, ((cycle-1) % 32) >> 4 }; //Divides each line by 8 32 pixel sections, determines if first or second 16 bits
+
+assign attribute_counter = {scanline[4], cycleminone[4]}; //Divides each line by 8 32 pixel sections, determines if first or second 16 bits
 
 // TODO:
 // Even / Odd Frames (might fix scrolling issue)
@@ -521,7 +540,7 @@ always_comb begin
 end
 
 //=======================================================
-//  Rendering Logic Always Comb
+//  PPU Internal Data 
 //=======================================================
 
 // Always_comb for doing stuff
@@ -529,21 +548,67 @@ end
 logic [4:0] palette_idx; // idx into some palette
 logic [5:0] color_idx; // The color data retrieved from the palette?
 
+logic [1:0] palette_data_in; // This is the awerl;gerbjka;
+
+// VRAM Data Tiles
+
+logic [15:0] ptable_data [2]; // Pattern Table Data
+logic [7:0] ptable_data_temp [2];
+logic [7:0]  atable_byte; // Attribute Table Data
+logic [1:0]  atable_bits;
+logic [7:0]  ntable_byte; // Unclear if this is needed
+logic [15:0] palette_data [2];
+
+// OAM
+logic [3:0][7:0] OAM [64];
+
+logic [3:0][7:0] sprites [8]; // This is secondary OAM
+
+logic [7:0] sprite_shifters [8];
+logic [7:0] sprite_attributes [8];
+logic [7:0] sprite_x_position [8];
+
+// Misc 
+logic [7:0] oam_clear_counter;
+
+logic [5:0] sprite_oam_idx;
+logic [1:0] sprite_byte_idx;
+logic [3:0] sprite_counter;
+logic [5:0] sprite_fetch_idx;
+
+// This is the palette idx
+// First bit chooses foreground vs background
+assign palette_idx = {1'b0, palette_data[1][15-fine_x], palette_data[0][15-fine_x], ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
+//assign palette_idx = {1'b0, palette_data_in, ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
+assign FRAME_PALETTE_RENDER_ADDR = palette_idx;
+
+//assign color_idx = {ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]}; 
+//assign color_idx = ntable_byte;
+assign color_idx = FRAME_PALETTE_RENDER_DATA_IN[5:0];
+
+//=======================================================
+//  DMA and OAM handling
+//=======================================================
+
+// This happens in the CPU interfacing bl walys__ff
+
+
+//=======================================================
+//  Rendering Logic Always Comb
+//=======================================================
+
 always_comb begin
 	// ========== Default Values =========================
 	
 	ppu_read_request = 1'b0;
 	FRAME_PALETTE_RENDER_READ = 1'b0;
-	FRAME_PALETTE_RENDER_ADDR = 4'd0;
+	//FRAME_PALETTE_RENDER_ADDR = 4'd0;
 	
 	// Weird Register Increments
 	ppu_hinc_vram_request = 1'b0;
 	ppu_vinc_vram_request = 1'b0;
 	ppu_hcopy_vram_request = 1'b0;
 	ppu_vcopy_vram_request = 1'b0;
-	
-	color_idx = 6'b0;
-	palette_idx = 5'b0;
 	
 	//PPU_ADDR = active_vram_address[11:0];
 	PPU_ADDR = active_vram_address;
@@ -553,46 +618,46 @@ always_comb begin
 	//======== VISIBLE SCANLINES (0-239) ==============
 	end else if (scanline <= 10'd239 | scanline == 10'd261) begin
 		// ----------CYCLES 1-256 and CYCLES 321-338
-		if ((cycle >= 1 & cycle <= 256) | (cycle >= 321 & cycle < 338)) begin
+		if ((cycle >= 1 & cycle <= 256) | (cycle >= 321 & cycle < 338)) begin //TODO: Less than 338?
 		
 			 FRAME_PALETTE_RENDER_READ = 1'b1;
-			 FRAME_PALETTE_RENDER_ADDR = {1'b0, palette_data[1][7-fine_x], palette_data[0][7-fine_x], ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
 			// ===========  DO SOME FETCHING HERE  ==============
 			case (counter) // Case coutner
 				// Fetch nametable byte
 				3'd0: begin
-					//PPU_ADDR = {2'b10, active_vram_address[11:0]};
+					PPU_ADDR = {2'b10, active_vram_address[11:0]};
 					ppu_read_request = 1'b1;
 				end
 				3'd1: begin
 					PPU_ADDR = {2'b10, active_vram_address[11:0]};
+					ppu_read_request = 1'b1;
 				end
 				// Fetch attribute table byte
 				3'd2: begin
-					//PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
+					PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
 					ppu_read_request = 1'b1;
 				end
 				3'd3: begin
 					PPU_ADDR = {2'b10, active_vram_address[11:10], 4'b1111, active_vram_address[9:7], active_vram_address[4:2]};
-					//ppu_read_request = 1'b1;
+					ppu_read_request = 1'b1;
 				end
 				3'd4: begin
-					//PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address.fine_y}; //??
+					PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address.fine_y}; //??
 					ppu_read_request = 1'b1;
 				end
 				
 				3'd5: begin
 					PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b0, active_vram_address.fine_y}; //??
-					//ppu_read_request = 1'b1;
+					ppu_read_request = 1'b1;
 				end
 				// fetch pattern tile high 
 				3'd6: begin
-					//PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address.fine_y}; //?? + 8 from pattern table tile low
+					PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address.fine_y}; //?? + 8 from pattern table tile low
 					ppu_read_request = 1'b1;
 				end
 				3'd7: begin
 					PPU_ADDR = {1'b0, background_ptable_addr, ntable_byte, 1'b1, active_vram_address.fine_y}; //?? + 8 from pattern table tile low
-					//ppu_read_request = 1'b1;
+					ppu_read_request = 1'b1;
 					ppu_hinc_vram_request = 1'b1;
 				end
 			endcase // End case counter
@@ -606,12 +671,8 @@ always_comb begin
 			
 			
 			//================= BACKGROUND PIXEL COMPOSITION=====================
-			palette_idx =  5'b0;
-			//palette_idx = '{1'b1, atable_data[0][1:0], ptable_data[1][counter], ptable_data[0][counter]};
 			
-			color_idx = {ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]}; 
-			 //'{4'b0010, ptable_data[1][counter], ptable_data[0][counter]};
-			//color_idx = ntable_byte;
+
 		end
 		if (cycle == 257) begin
 			// Load shifters
@@ -650,76 +711,157 @@ end
 //  Rendering Logic Always FF
 //=======================================================
 
+
 // Always_ff For doing stuff
 always_ff @ (posedge CLK) begin
 	if (RESET) begin
 		ppu_linebuffer <= 1'b0;
 		ntable_byte <= 8'd0;
+		oam_clear_counter <= 8'd0;
+		sprite_oam_idx <= 6'd0;
+		sprite_byte_idx <= 2'd0;
+		sprite_counter <= 4'd0;
+		sprite_fetch_idx <= 6'd0;
 	end else begin // NOT RESET
 		if (render_enable) begin
-			// TODO: Handle Shifters here:
-			// Decided by the composition from earlier.
-			// Shift Attribute Table Data To left
+			// Color_idx decided by the composition logic.		
+			linebuffer[ppu_linebuffer][cycle] <= color_idx;
 			
-			// Shift Pattern Table Data 
-			linebuffer[ppu_linebuffer][cycle] <= FRAME_PALETTE_RENDER_DATA_IN[5:0];
-			
-			ptable_data[1] <= {ptable_data[1][14:0], ptable_data[1][0]}; //shift pattern data
-			ptable_data[0] <= {ptable_data[0][14:0], ptable_data[0][0]};
-			palette_data[1] <= {palette_data[1][6:0], palette_data[1][0]};
-			palette_data[0] <= {palette_data[0][6:0], palette_data[0][0]};
-			
-			// load color idx from frame palette
-			
-			
-			case (counter)
-				// Fetch nametable byte
-				3'd0: begin
-					// TODO: Load the shiftregs
-					ptable_data[1][7:0] <= ptable_data_temp[1];
-					ptable_data[0][7:0] <= ptable_data_temp[0];
+			//================= Visible Scanlines =====================
+			if (scanline <= 10'd239 | scanline == 10'd261) begin
+				//================= BACKGROUND RENDERING=====================
+				if ((cycle >= 1 & cycle <= 256) | (cycle >= 321 & cycle < 338)) begin 
 					
-					if(attribute_counter == 2'd0) begin
-						palette_data[0][0] <= atable_data[0][0];
-						palette_data[1][0] <= atable_data[0][1];
-						end
-					if(attribute_counter == 2'd1) begin
-						palette_data[0][0] <= atable_data[0][2];
-						palette_data[1][0] <= atable_data[0][3];
-						end
-					if(attribute_counter == 2'd2) begin
-						palette_data[0][0] <= atable_data[0][4];
-						palette_data[1][0] <= atable_data[0][5];
-						end
-					if(attribute_counter == 2'd3) begin
-						palette_data[0][0] <= atable_data[0][6];
-						palette_data[1][0] <= atable_data[0][7];
-						end
+					// Update Shifters:
+					
+					// Shift Pattern Table Data 
+					ptable_data[1] <= {ptable_data[1][14:0], 1'b0}; //shift pattern data
+					ptable_data[0] <= {ptable_data[0][14:0], 1'b0};
+					
+					// Palette Data Shifters
+					palette_data[1] <= {palette_data[1][14:0], 1'b0}; 
+					palette_data[0] <= {palette_data[0][14:0], 1'b0};
+					
+					case (counter)
+						// Fetch nametable byte
+						3'd0: begin
 							
+							ptable_data[1][7:0] <= ptable_data_temp[1];
+							ptable_data[0][7:0] <= ptable_data_temp[0];
+							
+							// Load attribute table data / palette data 
+							// We need to use coarse_x and coarse_y when we load atable_byte, not after
+							palette_data[1][7:0] <= {8{atable_bits[1]}};
+							palette_data[0][7:0] <= {8{atable_bits[0]}};
+							
+						end
+						// Fetch nametable byte
+						3'd1: ntable_byte <= PPU_DATA_IN; // Sometimes dumym fetches but don't load data
+						3'd2: ;
+						3'd3: begin
+							case ({active_vram_address.coarse_x[1], active_vram_address.coarse_y[1]})
+								2'b00: begin // upper Left
+									atable_bits[1] <= {PPU_DATA_IN[1]};
+									atable_bits[0] <= {PPU_DATA_IN[0]};
+								end 
+								2'b10: begin // upper right
+									atable_bits[1] <= {PPU_DATA_IN[3]};
+									atable_bits[0] <= {PPU_DATA_IN[2]};
+								end 
+								2'b01: begin // bottom left
+									atable_bits[1] <= {PPU_DATA_IN[5]};
+									atable_bits[0] <= {PPU_DATA_IN[4]};
+								end 
+								2'b11: begin // bottom right
+									atable_bits[1] <= {PPU_DATA_IN[7]};
+									atable_bits[0] <= {PPU_DATA_IN[6]};
+								end 
+							endcase
+							atable_byte <= PPU_DATA_IN;
+						end
+						// fethc parttern table low 
+						3'd4: ;
+						3'd5: ptable_data_temp[0] <= PPU_DATA_IN;
+						// fetch pattern tile high 
+						3'd6: ;
+						3'd7: ptable_data_temp[1] <= PPU_DATA_IN;
+					endcase
+				end // End visible cycles
+				
+				//================= SPRITE RENDERING=====================
+				// Basically clear all of our counters
+				if (cycle == 0) begin
+					sprite_oam_idx <= 6'd0;
+					sprite_byte_idx <= 2'd0;
+					sprite_counter <= 0;
+					sprite_fetch_idx <= 1'b0;
 				end
-				3'd1: ntable_byte <= PPU_DATA_IN;
-				3'd2: ;
-				3'd3: begin
-					// TODO: Which atable_data??
-					// TODO: Fix this idiot, need to select from 1 of 4 possible 2 bit pairs in the byte
-					atable_data[0] <= PPU_DATA_IN;
+				// Clear Secondary OAM
+				if (cycle > 0 && cycle <= 64) begin
+					oam_clear_counter <= oam_clear_counter + 1;
+					sprites[oam_clear_counter] <= 8'hFF;
+					
 				end
-				// fethc parttern table low 
-				3'd4: ;
-				3'd5: ptable_data_temp[0] <= PPU_DATA_IN;
-				// fetch pattern tile high 
-				3'd6: ;
-				3'd7: ptable_data_temp[1] <= PPU_DATA_IN;
-			endcase
-			// Swap linebuffer once a scanline
-			if (cycle == 257) begin
-				// Do shifters stuff
-				;
-			end
+				// Sprite Evaluation
+				if (cycle > 64 && cycle <= 256) begin
+					// Read OAM on odd cycles
+					// Write sprites on Even cycles
+					if (sprite_counter < 8) begin
+						sprites[sprite_counter][0] <= OAM[sprite_oam_idx][0]; // Read Y coordinate
+						// Check if Y coordinate is in Range
+						// diff = (scanline - OAM[sprite_oam_idx][0]);
+						// Found Sprite
+						if (((scanline - OAM[sprite_oam_idx][0]) >= 0) && ((scanline - OAM[sprite_oam_idx][0]) < (8 + 8 * sprite_size ))) begin
+						   sprites[sprite_oam_idx] <= OAM[sprite_oam_idx];
+							sprite_counter <= sprite_counter + 1;
+						end
+						
+						// Increment N
+						sprite_oam_idx <= sprite_oam_idx + 1;
+						
+					end
+				end
+				if (sprite_counter > 8) begin
+					sprite_overflow <= 1'b1;
+				end
+				// Sprite Fetches
+				if (cycle > 256 && cycle <= 320) begin
+					// 8 Cycles per sprite
+					case (counter - 1) // Todo: figure out what this should be
+						// 
+						// [7:0] sprite_shifters [8];
+						// [7:0] sprite_attributes [8];
+						// [7:0] sprite_x_position [8];
+						3'd0: sprite_attributes[sprite_fetch_idx] <= sprites[sprite_fetch_idx];
+						3'd1: sprite_x_position[sprite_fetch_idx] <= sprites[sprite_fetch_idx];
+						3'd2: ; 
+						3'd3: ;
+						3'd4: ; // Set address according to sprite_shifters[sprite_fetch_idx][1];
+						3'd5: sprite_shifters[sprite_fetch_idx] <= PPU_DATA_IN;
+						3'd6: ; 
+						3'd7: sprite_fetch_idx <= sprite_fetch_idx + 1;
+					endcase
+				end
+				//do something?
+				if (cycle > 320) begin
+					
+				end
+			end // End visible scanlines
 			if (cycle == 10'd340) begin
 				ppu_linebuffer <= ~ppu_linebuffer;
 			end
+			// Swap linebuffer once a scanline
+			if (cycle == 257) begin
+				// TODO: Do shifters stuff?
+				;
+			end
+			
 		end // End render enable
+		// PRE RENDER SCANLINE
+		if (scanline == 261) begin 
+			if (cycle == 1)
+				sprite_overflow <= 1'b0;
+		end
 	end
 end
 		
@@ -969,9 +1111,45 @@ assign pixel_clr_idx = linebuffer[vga_linebuffer][drawx];
 
 always_ff @ (posedge VIDEO_CLK) begin 
 	if (blank_n) begin
-		VGA_R <= colors[pixel_clr_idx][11:8] << 1;
-		VGA_G <= colors[pixel_clr_idx][7:4] << 1; // Make Brighter
-		VGA_B <= colors[pixel_clr_idx][3:0] << 1;
+		if (drawy < 100) begin
+			VGA_R <= colors[pixel_clr_idx][11:8] << 1;
+			VGA_G <= colors[pixel_clr_idx][7:4] << 1; // Make Brighter TODO: Color Emphasis Bits
+			VGA_B <= colors[pixel_clr_idx][3:0] << 1;
+		end
+		else if (drawy < 120) begin
+			VGA_R <= OAM[0][0];
+			VGA_G <= 4'b0000;
+			VGA_B <= 4'b0000;
+		end else if (drawy < 140) begin
+			VGA_R <= sprites[0][0];
+			VGA_G <= 4'b0000;
+			VGA_B <= 4'b0000;
+		end else if (drawy < 160) begin
+			VGA_R <= OAM[0][1];
+			VGA_G <= 4'b0000;
+			VGA_B <= 4'b0000;
+		end else if (drawy < 180) begin
+			VGA_R <= OAM[0][2];
+			VGA_G <= 4'b0000;
+			VGA_B <= 4'b0000;
+		end else if (drawy < 200) begin
+			VGA_R <= OAM[0][3];
+			VGA_G <= 4'b0000;
+			VGA_B <= 4'b0000;
+		end else if (drawy < 220) begin
+			VGA_R <= sprites[0][1];
+			VGA_G <= 4'b0000;
+			VGA_B <= 4'b0000;
+		end else if (drawy < 240) begin
+			VGA_R <= sprites[0][2];
+			VGA_G <= 4'b0000;
+			VGA_B <= 4'b0000;
+		end else if (drawy < 260) begin
+			VGA_R <= sprites[0][3];
+			VGA_G <= 4'b0000;
+			VGA_B <= 4'b0000;
+		end
+		
 		
 	end
 	
