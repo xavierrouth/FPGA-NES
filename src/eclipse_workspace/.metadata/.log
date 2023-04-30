@@ -5598,3 +5598,21 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 
 !ENTRY com.altera.sbtgui.launch 1 0 2023-04-29 19:26:58.503
 !MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xaa0 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-30 11:19:03.542
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xaa0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-30 11:19:05.397
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xaa0 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-30 11:24:50.124
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xaa0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-30 11:24:53.392
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xaa0 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-30 16:50:42.874
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0xaa0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-04-30 16:50:44.717
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0xaa0 --reset-target /cygdrive/c/dev/FPGA-NES/src/software/NES_NIOSII/NES_NIOSII.elf]

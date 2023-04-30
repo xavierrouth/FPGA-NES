@@ -205,6 +205,7 @@ logic addr_increment; // 0 is 1, 1 is 32
 //=======================================================
 //TODO: Have BGR color emphasis shift the vga output values left
 
+logic [2:0] bgr_color_emphasis;
 logic sprite_render_enable;
 logic background_render_enable;
 
@@ -308,8 +309,8 @@ always_ff @ (posedge CPU_CLK) begin
 				temp_vram_address.nametable_x <= CPU_DATA_IN[0];
 			end
 			3'h1: begin
+				bgr_color_emphasis <= CPU_DATA_IN[7:5];
 				sprite_render_enable <= CPU_DATA_IN[4];
-				//TODO:
 				background_render_enable <= CPU_DATA_IN[3];
 			end
 			3'h3: oam_address <= CPU_DATA_IN;
@@ -564,9 +565,11 @@ logic [3:0][7:0] OAM [64];
 
 logic [3:0][7:0] sprites [8]; // This is secondary OAM
 
-logic [7:0] sprite_shifters [8];
-logic [7:0] sprite_attributes [8];
-logic [7:0] sprite_x_position [8];
+// Each sprite gets a pair
+logic [7:0] sprite_shifters [8][2]; // This contains the tile data of the sprites for a scanline
+										   // This needs to get loaded from a PPU fetch during sprite evaluation
+logic [7:0] sprite_attributes [8]; // This contains the attribute data of the sprites
+logic [7:0] sprite_x_position [8]; // This counts down the x position until the sprite becomes active
 
 // Misc 
 logic [7:0] oam_clear_counter;
@@ -578,13 +581,36 @@ logic [5:0] sprite_fetch_idx;
 
 // This is the palette idx
 // First bit chooses foreground vs background
-assign palette_idx = {1'b0, palette_data[1][15-fine_x], palette_data[0][15-fine_x], ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
-//assign palette_idx = {1'b0, palette_data_in, ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
-assign FRAME_PALETTE_RENDER_ADDR = palette_idx;
 
-//assign color_idx = {ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]}; 
-//assign color_idx = ntable_byte;
-assign color_idx = FRAME_PALETTE_RENDER_DATA_IN[5:0];
+//=======================================================
+//  Background vs Foreground Pixel Composition (Rendering Logic Always Comb Pt. 2)
+//=======================================================
+
+always_comb begin
+	
+	
+	// Do foreground
+	//genvar i;
+	
+	
+	
+	// If there are no sprites at all, then our background pixel color pallete idx is just:
+	// {1'b0, palette_data[1][15-fine_x], palette_data[0][15-fine_x], ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
+	// The full index into our frame pallete, composed of the palette we want, and then the color in that palette.
+	palette_idx = {1'b0, palette_data[1][15-fine_x], palette_data[0][15-fine_x], ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
+	
+	
+	// I think these are always the same, but we can draw different stuff here if we want to debug
+	//palette_idx = {1'b0, palette_data_in, ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
+	FRAME_PALETTE_RENDER_ADDR = palette_idx;
+
+	//color_idx = {ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]}; 
+	//color_idx = ntable_byte;
+	color_idx = FRAME_PALETTE_RENDER_DATA_IN[5:0];
+
+end
+
+
 
 //=======================================================
 //  DMA and OAM handling
@@ -679,8 +705,26 @@ always_comb begin
 			ppu_hcopy_vram_request = 1'b1;
 		end
 		// ----------CYCLES 257-320
+		//================= SPRITE STUFF ========================
 		if (cycle >= 257 & cycle <= 320) begin
-			// Do Sprite Stuff
+			// sprite_fetch_idx is updated by our always_ff logic
+			// the 1th index is the one that contains the ptable entry
+			// for 8x8 sprites
+			// TODO: Change this for 8x16 sprites? UGH
+			// use ppuctrl_bit
+			
+			// fetch lower byte of ptable
+			if (counter <= 3) begin
+				PPU_ADDR = {1'b0, background_ptable_addr, sprites[sprite_fetch_idx][1], 1'b0, sprites[sprite_fetch_idx][0] - scanline}; //??
+				ppu_read_request = 1'b1;
+			// fetch upper byte of ptable
+			end else if (counter >= 4) begin
+				PPU_ADDR = {1'b0, background_ptable_addr, sprites[sprite_fetch_idx][1], 1'b1, sprites[sprite_fetch_idx][0] - scanline}; //??
+				ppu_read_request = 1'b1;
+			end
+			// Low parts need to be formed based on the current scanline as well as the y value of the sprite
+			// Lets just subtract them maybe??
+			// sprites[sprite_fetch_idx][1] replaces ntable_byte
 		end
 	end // end if rendering enabled
 	
@@ -789,6 +833,34 @@ always_ff @ (posedge CLK) begin
 				end // End visible cycles
 				
 				//================= SPRITE RENDERING=====================
+				//--------HANDLE SPRITES FOR CURRENT SCANLINE-------------
+				if ((cycle >= 1 & cycle <= 256)) begin
+					// Oh my we have lots of work to do, everything we need should be in scanline stuff before,
+					// Bascially lets just shift the registers at the correct times and let the priority mux and 
+					// composition logic in the alway_comb handle the difficult stuff
+					
+					// For each sprite, in parallel (Generate / for loop), we have to do:
+					
+					// If any x values aren't 0, then we decrement them
+					// If they are 0, then the sprite is "active" and we can start shifting the data to the left.
+					/**
+					genvar i;
+					generate
+						for (i = 0; i <8; i++) begin
+							// X coordinate
+							if (sprite_x_position[i] > 0)
+								sprite_x_position[i] <= sprite_x_position[i] - 1;
+							else if (sprite_x_position[i] == 0) begin
+								sprite_shifters[i][0] <= {sprite_shifters[i][0][6:0], 1'b0}; // Left shift
+								sprite_shifters[i][1] <= {sprite_shifters[i][1][6:0], 1'b0}; // Left shift
+							end
+						end
+					endgenerate
+					*/
+				
+				end
+				//------DO SPRITE EVALUATION FOR NEXT SCANLINE------------:
+				
 				// Basically clear all of our counters
 				if (cycle == 0) begin
 					sprite_oam_idx <= 6'd0;
@@ -807,12 +879,15 @@ always_ff @ (posedge CLK) begin
 					// Read OAM on odd cycles
 					// Write sprites on Even cycles
 					if (sprite_counter < 8) begin
+						// Check all sprites in OAM
 						sprites[sprite_counter][0] <= OAM[sprite_oam_idx][0]; // Read Y coordinate
+						
 						// Check if Y coordinate is in Range
 						// diff = (scanline - OAM[sprite_oam_idx][0]);
-						// Found Sprite
+						
 						if (((scanline - OAM[sprite_oam_idx][0]) >= 0) && ((scanline - OAM[sprite_oam_idx][0]) < (8 + 8 * sprite_size ))) begin
-						   sprites[sprite_oam_idx] <= OAM[sprite_oam_idx];
+							// Found Sprite, so load it and increment.
+						   sprites[sprite_counter] <= OAM[sprite_oam_idx];
 							sprite_counter <= sprite_counter + 1;
 						end
 						
@@ -821,32 +896,41 @@ always_ff @ (posedge CLK) begin
 						
 					end
 				end
+				// TODO: DO SPRITE OVERFLOW
+				// If we had over? IDK if this matters 
 				if (sprite_counter > 8) begin
+				
 					sprite_overflow <= 1'b1;
 				end
+				// At this point we have all our sprites for the next scanline loaded into sprites[]
+				// Now we have to load them into the registers used for the active scanline, so that we can draw them correctly
+				// We also need to do fetches from ptable data in order to figure out what they actually are.
 				// Sprite Fetches
 				if (cycle > 256 && cycle <= 320) begin
-					// 8 Cycles per sprite
+					// 8 Cycles per sprite, 8 Sprites (320-256 = 64)
 					case (counter - 1) // Todo: figure out what this should be
-						// 
+						// THIS IS ALL COMPLETELY ARBITRARY LOL 
 						// [7:0] sprite_shifters [8];
 						// [7:0] sprite_attributes [8];
 						// [7:0] sprite_x_position [8];
 						3'd0: sprite_attributes[sprite_fetch_idx] <= sprites[sprite_fetch_idx];
 						3'd1: sprite_x_position[sprite_fetch_idx] <= sprites[sprite_fetch_idx];
-						3'd2: ; 
+						3'd2: sprite_shifters[sprite_fetch_idx][0] <= PPU_DATA_IN; 
 						3'd3: ;
-						3'd4: ; // Set address according to sprite_shifters[sprite_fetch_idx][1];
-						3'd5: sprite_shifters[sprite_fetch_idx] <= PPU_DATA_IN;
-						3'd6: ; 
+						3'd4: ; // Set address according to sprites[sprite_fetch_idx][1];
+						3'd5: ;
+						3'd6: sprite_shifters[sprite_fetch_idx][1] <= PPU_DATA_IN; 
 						3'd7: sprite_fetch_idx <= sprite_fetch_idx + 1;
 					endcase
 				end
+				// At this point all our sprites for the next scanline that is about to happen are prepared, 
+				// so good job us! Yay! Yay! hooray!! yay!
 				//do something?
 				if (cycle > 320) begin
-					
+					;
 				end
-			end // End visible scanlines
+			end //================= END VISIBLE SCANLINES =====================
+			
 			if (cycle == 10'd340) begin
 				ppu_linebuffer <= ~ppu_linebuffer;
 			end
@@ -1112,10 +1196,17 @@ assign pixel_clr_idx = linebuffer[vga_linebuffer][drawx];
 always_ff @ (posedge VIDEO_CLK) begin 
 	if (blank_n) begin
 		if (drawy < 100) begin
-			VGA_R <= colors[pixel_clr_idx][11:8] << 1;
-			VGA_G <= colors[pixel_clr_idx][7:4] << 1; // Make Brighter TODO: Color Emphasis Bits
-			VGA_B <= colors[pixel_clr_idx][3:0] << 1;
+			VGA_R <= colors[pixel_clr_idx][11:8] << (1 + bgr_color_emphasis[0]);
+			VGA_G <= colors[pixel_clr_idx][7:4] << (1 + bgr_color_emphasis[1]); // Make Brighter TODO: Color Emphasis Bits
+			VGA_B <= colors[pixel_clr_idx][3:0] << (1 + bgr_color_emphasis[2]);
 		end
+		/**
+		else begin
+			VGA_R <= colors[pixel_clr_idx][11:8] << (1 + bgr_color_emphasis[0]);
+			VGA_G <= colors[pixel_clr_idx][7:4] << (1 + bgr_color_emphasis[1]); // Make Brighter TODO: Color Emphasis Bits
+			VGA_B <= colors[pixel_clr_idx][3:0] << (1 + bgr_color_emphasis[2]);
+		end
+		*/
 		else if (drawy < 120) begin
 			VGA_R <= OAM[0][0];
 			VGA_G <= 4'b0000;
@@ -1149,7 +1240,6 @@ always_ff @ (posedge VIDEO_CLK) begin
 			VGA_G <= 4'b0000;
 			VGA_B <= 4'b0000;
 		end
-		
 		
 	end
 	

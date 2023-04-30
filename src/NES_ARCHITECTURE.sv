@@ -91,7 +91,9 @@ logic DMA_start;
 logic DMA_active;
 
 logic [7:0] data_buffer;
-logic [7:0] DMA_addr;
+logic [7:0] DMA_addr_high;
+logic [7:0] DMA_addr_low;
+
 // TODO: Rework so we can do both at the same time?
 logic DMA_read;
 logic DMA_write;
@@ -103,21 +105,21 @@ logic DMA_write;
 always_ff @ (posedge CPU_CLK) begin
 	// This might get stuck high
 	if (~CPU_RW_n && (CPU_ADDR_BUS == 16'h4014)) begin
-		DMA_addr <= CPU_DATA_BUS;
+		DMA_addr_high <= CPU_DATA_BUS;
 		DMA_active <= 1'b1;
 	end
 	
 	else if (DMA_active) begin
-		if (DMA_addr == 0)
+		if (DMA_addr_low == 255) begin
 			DMA_active <= 1'b0;
-		DMA_addr <= DMA_addr + 1;
+			DMA_addr_low <= 8'b0;
+		end else
+			DMA_addr_low <= DMA_addr_low + 1;
 	end
 end
 //=======================================================
 //  CPU Bus Architecture / Memory Mapped Logic
 //=======================================================
-
-assign CPU_ADDR_BUS = CPU_ADDR; // I think this is always the case
 
 always_comb begin : CPU_BUS_SELECTION
 	// Default Values
@@ -132,11 +134,13 @@ always_comb begin : CPU_BUS_SELECTION
 	
 	CONTROLLER_rden = 1'b0;
 	CONTROLLER_wren = 1'b0;
+	CPU_ADDR_BUS = CPU_ADDR;
 	
 	DMA_write = 1'b0;
 	
 	// DMA is active
 	if (DMA_active) begin
+		CPU_ADDR_BUS = {DMA_addr_high, DMA_addr_low};
 		SYSRAM_rden = 1'b1;
 		CPU_DATA_BUS = SYSRAM_DATA_OUT;
 		DMA_write = 1'b1;
@@ -340,9 +344,9 @@ PPU ppu_inst(.CLK(PPU_CLK), .ENABLE(PPU_ENABLE), .RESET(RESET), .VIDEO_CLK(VGA_C
 				.CPU_DATA_OUT(PPU_CPU_DATA_OUT), .CPU_wren(CPU_PPU_wren), .CPU_rden(CPU_PPU_rden), 
 				.PPU_DATA_IN(PPU_DATA_BUS), .PPU_DATA_OUT(PPU_DATA_OUT), .PPU_ADDR(PPU_ADDR), .PPU_READ(PPU_READ), .PPU_WRITE(PPU_WRITE), 
 				.FRAME_PALETTE_RENDER_ADDR(FRAME_PALETTE_RENDER_ADDR), .FRAME_PALETTE_RENDER_READ(FRAME_PALETTE_RENDER_rden), .FRAME_PALETTE_RENDER_DATA_IN(FRAME_PALETTE_RENDER_DATA), 
-				.DMA_write(DMA_write), .DMA_address(DMA_addr), .DMA_data(CPU_DATA_BUS), .*);
+				.DMA_write(DMA_write), .DMA_address(DMA_addr_low), .DMA_data(CPU_DATA_BUS), .*);
 				
-VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .mirroring(1'b0), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
+VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .mirroring(1'b1), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
 
 FRAME_PALETTE frame_palette_inst(.clk(MEM_CLK), .rden(FRAME_PALETTE_rden), .wren(FRAME_PALETTE_wren), .render_rden(FRAME_PALETTE_RENDER_rden), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .render_addr(FRAME_PALETTE_RENDER_ADDR), .data_out(FRAME_PALETTE_DATA_OUT), .render_data(FRAME_PALETTE_RENDER_DATA));
 
