@@ -292,7 +292,7 @@ always_ff @ (posedge CPU_CLK) begin
 		OAM <= '{default:'0};
 	end
 	else if (DMA_write) begin
-		OAM[DMA_address] <= DMA_data;
+		OAM[DMA_address[7:2]][DMA_address[1:0]] <= DMA_data;
 	end
 	//-------------CPU WRITE--------------------------
 	else if (CPU_wren) begin // CPU Write
@@ -321,7 +321,7 @@ always_ff @ (posedge CPU_CLK) begin
 				// TODO: Fix this?
 				// Increment OAMADDR after write
 				// Multiple drivers sigh
-				OAM[oam_address] <= CPU_DATA_IN;
+				OAM[oam_address[7:2]][oam_address[1:0]] <= CPU_DATA_IN;
 				oam_address <= oam_address + 1;
 			end
 			// Write Twice
@@ -406,7 +406,7 @@ always_comb begin
 				CPU_DATA_OUT[5] = sprite_overflow;
 			end
 			3'h3: ;
-			3'h4: CPU_DATA_OUT = OAM[oam_address]; // OAM Data
+			3'h4: CPU_DATA_OUT = OAM[oam_address[7:2]][oam_address[1:0]]; // OAM Data
 				
 			3'h5: ;
 			3'h6: ;
@@ -573,8 +573,11 @@ logic [7:0] sprite_shifters [8][2]; // This contains the tile data of the sprite
 logic [7:0] sprite_attributes [8]; // This contains the attribute data of the sprites
 logic [7:0] sprite_x_position [8]; // This counts down the x position until the sprite becomes active
 
+// TODO: NMame this
+logic [7:0] sprite_fine_y;
+
 // Misc 
-logic [7:0] oam_clear_counter;
+logic [5:0] oam_clear_counter;
 
 logic [5:0] sprite_oam_idx;
 logic [1:0] sprite_byte_idx;
@@ -584,23 +587,33 @@ logic [5:0] sprite_fetch_idx;
 // This is the palette idx
 // First bit chooses foreground vs background
 
-//=======================================================
+//====================================================================================
 //  Background vs Foreground Pixel Composition (Rendering Logic Always Comb Pt. 2)
-//=======================================================
+//====================================================================================
 
 always_comb begin
 	// Default Values
 	sprite_idx = 5'b00;
 	background_idx = 5'b00;
 	palette_idx = 5'b00;
+	
+	
+	// Flip Vertically
+	// TODO: Scanline - 1 might be right or might be wrong
+	if (sprites[sprite_fetch_idx][2][7]) // In Baseball, this doesn't work any it sucks! Use baseball to allign sprites properly
+		sprite_fine_y = 8 - ((scanline - 1) - (sprites[sprite_fetch_idx][0]));
+	else 
+		sprite_fine_y = ((scanline - 1) - sprites[sprite_fetch_idx][0]);
+	// Dont flip vertically
 	// Do foreground
+	
 	
 	for (int i = 0; i < 8; i++) begin
 		// If any of the counters are 0 then lets draw the x value of that sprite
 		if (sprite_x_position[i] == 0) begin
 			// We need to figure out how to do this with priority going to the first one to resolve multiple drivers
-			// TODO: Make this use sprite palette eventually, but for now just use some random tile palette
-			sprite_idx = {1'b0, palette_data[1][15-fine_x], palette_data[0][15-fine_x], sprite_shifters[i][1][7], sprite_shifters[i][0][7]}; // Draw the leftmost bit of this
+			//sprite_attributes[i][1:0];
+			sprite_idx = {1'b1, sprite_attributes[i][1:0], sprite_shifters[i][1][7], sprite_shifters[i][0][7]}; // Draw the leftmost bit of this
 		end
 	
 	end
@@ -731,12 +744,16 @@ always_comb begin
 			// use ppuctrl_bit
 			
 			// fetch lower byte of ptable
+			// TODO: 734
+			// pringlehead = (sprites[sprite_fetch_idx][0] - scanline)
+			// We want to subtract the y and take a modulo in some way to make the fine y tile-specific.
+			// This is why we do [2:0] because tiles are y
 			if (counter <= 3) begin
-				PPU_ADDR = {1'b0, background_ptable_addr, sprites[sprite_fetch_idx][1], 1'b0, sprites[sprite_fetch_idx][0] - scanline}; //??
+				PPU_ADDR = {1'b0, sprite_ptable_addr, sprites[sprite_fetch_idx][1], 1'b0, sprite_fine_y[2:0]}; //??
 				ppu_read_request = 1'b1;
 			// fetch upper byte of ptable
 			end else if (counter >= 4) begin
-				PPU_ADDR = {1'b0, background_ptable_addr, sprites[sprite_fetch_idx][1], 1'b1, sprites[sprite_fetch_idx][0] - scanline}; //??
+				PPU_ADDR = {1'b0, sprite_ptable_addr, sprites[sprite_fetch_idx][1], 1'b1, sprite_fine_y[2:0]}; //??
 				ppu_read_request = 1'b1;
 			end
 			// Low parts need to be formed based on the current scanline as well as the y value of the sprite
@@ -778,7 +795,7 @@ always_ff @ (posedge CLK) begin
 	if (RESET) begin
 		ppu_linebuffer <= 1'b0;
 		ntable_byte <= 8'd0;
-		oam_clear_counter <= 8'd0;
+		oam_clear_counter <= 5'd0;
 		sprite_oam_idx <= 6'd0;
 		sprite_byte_idx <= 2'd0;
 		sprite_counter <= 4'd0;
@@ -851,7 +868,7 @@ always_ff @ (posedge CLK) begin
 				
 				//================= SPRITE RENDERING=====================
 				//--------HANDLE SPRITES FOR CURRENT SCANLINE-------------
-				if ((cycle >= 1 & cycle <= 256)) begin
+				if ((cycle >= 2 & cycle <= 256)) begin
 					// Oh my we have lots of work to do, everything we need should be in scanline stuff before,
 					// Bascially lets just shift the registers at the correct times and let the priority mux and 
 					// composition logic in the alway_comb handle the difficult stuff
@@ -890,7 +907,7 @@ always_ff @ (posedge CLK) begin
 				// Clear Secondary OAM
 				if (cycle > 0 && cycle <= 64) begin
 					oam_clear_counter <= oam_clear_counter + 1;
-					sprites[oam_clear_counter] <= 8'hFF;
+					sprites[oam_clear_counter[5:2]][oam_clear_counter[1:0]] <= 8'hFF;
 					
 				end
 				// Sprite Evaluation
@@ -902,11 +919,14 @@ always_ff @ (posedge CLK) begin
 						sprites[sprite_counter][0] <= OAM[sprite_oam_idx][0]; // Read Y coordinate
 						
 						// Check if Y coordinate is in Range
-						// diff = (scanline - OAM[sprite_oam_idx][0]);
-						
-						if (((scanline - OAM[sprite_oam_idx][0]) >= 0) && ((scanline - OAM[sprite_oam_idx][0]) < (8 + 8 * sprite_size ))) begin
+						// diff = ((scanline + 1) - OAM[sprite_oam_idx][0]);
+						// (Scanline - 1) is here to draw all our sprites one lower than they were being drawn
+						// TODO: We might need to change this back if we find another fix
+						if ((((scanline - 1) - OAM[sprite_oam_idx][0]) >= 0) && (((scanline - 1) - OAM[sprite_oam_idx][0]) < (8 + 8 * sprite_size ))) begin
 							// Found Sprite, so load it and increment.
-						   sprites[sprite_counter] <= OAM[sprite_oam_idx];
+						   sprites[sprite_counter][1] <= OAM[sprite_oam_idx][1];
+							sprites[sprite_counter][2] <= OAM[sprite_oam_idx][2];
+							sprites[sprite_counter][3] <= OAM[sprite_oam_idx][3];
 							sprite_counter <= sprite_counter + 1;
 						end
 						
@@ -934,11 +954,36 @@ always_ff @ (posedge CLK) begin
 						// [7:0] sprite_x_position [8];
 						3'd0: sprite_attributes[sprite_fetch_idx] <= sprites[sprite_fetch_idx][2];
 						3'd1: sprite_x_position[sprite_fetch_idx] <= sprites[sprite_fetch_idx][3];
-						3'd2: sprite_shifters[sprite_fetch_idx][0] <= PPU_DATA_IN; 
+							
+						3'd2: begin 
+							if (sprite_attributes[sprite_fetch_idx][6]) begin // High = Flip Sprite Horizontally
+								sprite_shifters[sprite_fetch_idx][0][0] <= PPU_DATA_IN[7];
+								sprite_shifters[sprite_fetch_idx][0][1] <= PPU_DATA_IN[6];
+								sprite_shifters[sprite_fetch_idx][0][2] <= PPU_DATA_IN[5];
+								sprite_shifters[sprite_fetch_idx][0][3] <= PPU_DATA_IN[4];
+								sprite_shifters[sprite_fetch_idx][0][4] <= PPU_DATA_IN[3];
+								sprite_shifters[sprite_fetch_idx][0][5] <= PPU_DATA_IN[2];
+								sprite_shifters[sprite_fetch_idx][0][6] <= PPU_DATA_IN[1];
+								sprite_shifters[sprite_fetch_idx][0][7] <= PPU_DATA_IN[0];
+							end else
+								sprite_shifters[sprite_fetch_idx][0] <= PPU_DATA_IN; 
+						end 
 						3'd3: ;
 						3'd4: ; // Set address according to sprites[sprite_fetch_idx][1];
 						3'd5: ;
-						3'd6: sprite_shifters[sprite_fetch_idx][1] <= PPU_DATA_IN; 
+						3'd6: begin 
+							if (sprite_attributes[sprite_fetch_idx][6]) begin // High = Flip Sprite Horizontally
+								sprite_shifters[sprite_fetch_idx][1][0] <= PPU_DATA_IN[7];
+								sprite_shifters[sprite_fetch_idx][1][1] <= PPU_DATA_IN[6];
+								sprite_shifters[sprite_fetch_idx][1][2] <= PPU_DATA_IN[5];
+								sprite_shifters[sprite_fetch_idx][1][3] <= PPU_DATA_IN[4];
+								sprite_shifters[sprite_fetch_idx][1][4] <= PPU_DATA_IN[3];
+								sprite_shifters[sprite_fetch_idx][1][5] <= PPU_DATA_IN[2];
+								sprite_shifters[sprite_fetch_idx][1][6] <= PPU_DATA_IN[1];
+								sprite_shifters[sprite_fetch_idx][1][7] <= PPU_DATA_IN[0];
+							end else
+								sprite_shifters[sprite_fetch_idx][1] <= PPU_DATA_IN; 
+						end 
 						3'd7: sprite_fetch_idx <= sprite_fetch_idx + 1;
 					endcase
 				end
