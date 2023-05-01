@@ -547,6 +547,8 @@ end
 // Always_comb for doing stuff
 
 logic [4:0] palette_idx; // idx into some palette
+logic [4:0] sprite_idx;
+logic [4:0] background_idx;
 logic [5:0] color_idx; // The color data retrieved from the palette?
 
 logic [1:0] palette_data_in; // This is the awerl;gerbjka;
@@ -587,18 +589,33 @@ logic [5:0] sprite_fetch_idx;
 //=======================================================
 
 always_comb begin
-	
-	
+	// Default Values
+	sprite_idx = 5'b00;
+	background_idx = 5'b00;
+	palette_idx = 5'b00;
 	// Do foreground
-	//genvar i;
 	
+	for (int i = 0; i < 8; i++) begin
+		// If any of the counters are 0 then lets draw the x value of that sprite
+		if (sprite_x_position[i] == 0) begin
+			// We need to figure out how to do this with priority going to the first one to resolve multiple drivers
+			// TODO: Make this use sprite palette eventually, but for now just use some random tile palette
+			sprite_idx = {1'b0, palette_data[1][15-fine_x], palette_data[0][15-fine_x], sprite_shifters[i][1][7], sprite_shifters[i][0][7]}; // Draw the leftmost bit of this
+		end
+	
+	end
 	
 	
 	// If there are no sprites at all, then our background pixel color pallete idx is just:
 	// {1'b0, palette_data[1][15-fine_x], palette_data[0][15-fine_x], ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
 	// The full index into our frame pallete, composed of the palette we want, and then the color in that palette.
-	palette_idx = {1'b0, palette_data[1][15-fine_x], palette_data[0][15-fine_x], ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
+	background_idx = {1'b0, palette_data[1][15-fine_x], palette_data[0][15-fine_x], ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
 	
+	// TODO: Implement actual priortity and flipped drawing here
+	if (sprite_idx[1:0] == 2'b00) // DEBUG: I'm thinking this is ALWAys true OOPS when it shuoldn't be
+		palette_idx = background_idx;
+	else
+		palette_idx = sprite_idx;
 	
 	// I think these are always the same, but we can draw different stuff here if we want to debug
 	//palette_idx = {1'b0, palette_data_in, ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
@@ -843,20 +860,21 @@ always_ff @ (posedge CLK) begin
 					
 					// If any x values aren't 0, then we decrement them
 					// If they are 0, then the sprite is "active" and we can start shifting the data to the left.
-					/**
-					genvar i;
-					generate
-						for (i = 0; i <8; i++) begin
-							// X coordinate
-							if (sprite_x_position[i] > 0)
-								sprite_x_position[i] <= sprite_x_position[i] - 1;
-							else if (sprite_x_position[i] == 0) begin
-								sprite_shifters[i][0] <= {sprite_shifters[i][0][6:0], 1'b0}; // Left shift
-								sprite_shifters[i][1] <= {sprite_shifters[i][1][6:0], 1'b0}; // Left shift
-							end
+					
+					
+					for (int i = 0; i <8; i++) begin
+						// X coordinate
+						if (sprite_x_position[i] > 0)
+							sprite_x_position[i] <= sprite_x_position[i] - 1;
+						else if (sprite_x_position[i] == 0) begin
+							sprite_shifters[i][0] <= {sprite_shifters[i][0][6:0], 1'b0}; // Left shift
+							sprite_shifters[i][1] <= {sprite_shifters[i][1][6:0], 1'b0}; // Left shift
+							// Once the sprite is done, 11 is the background color already, so yay!
+							// Or is 00 the background color... TODO: FIX ME
 						end
-					endgenerate
-					*/
+					end
+					
+					
 				
 				end
 				//------DO SPRITE EVALUATION FOR NEXT SCANLINE------------:
@@ -867,6 +885,7 @@ always_ff @ (posedge CLK) begin
 					sprite_byte_idx <= 2'd0;
 					sprite_counter <= 0;
 					sprite_fetch_idx <= 1'b0;
+					oam_clear_counter <= 0;
 				end
 				// Clear Secondary OAM
 				if (cycle > 0 && cycle <= 64) begin
@@ -908,13 +927,13 @@ always_ff @ (posedge CLK) begin
 				// Sprite Fetches
 				if (cycle > 256 && cycle <= 320) begin
 					// 8 Cycles per sprite, 8 Sprites (320-256 = 64)
-					case (counter - 1) // Todo: figure out what this should be
+					case (counter) // Todo: figure out what this should be
 						// THIS IS ALL COMPLETELY ARBITRARY LOL 
 						// [7:0] sprite_shifters [8];
 						// [7:0] sprite_attributes [8];
 						// [7:0] sprite_x_position [8];
-						3'd0: sprite_attributes[sprite_fetch_idx] <= sprites[sprite_fetch_idx];
-						3'd1: sprite_x_position[sprite_fetch_idx] <= sprites[sprite_fetch_idx];
+						3'd0: sprite_attributes[sprite_fetch_idx] <= sprites[sprite_fetch_idx][2];
+						3'd1: sprite_x_position[sprite_fetch_idx] <= sprites[sprite_fetch_idx][3];
 						3'd2: sprite_shifters[sprite_fetch_idx][0] <= PPU_DATA_IN; 
 						3'd3: ;
 						3'd4: ; // Set address according to sprites[sprite_fetch_idx][1];
@@ -1200,13 +1219,13 @@ always_ff @ (posedge VIDEO_CLK) begin
 			VGA_G <= colors[pixel_clr_idx][7:4] << (1 + bgr_color_emphasis[1]); // Make Brighter TODO: Color Emphasis Bits
 			VGA_B <= colors[pixel_clr_idx][3:0] << (1 + bgr_color_emphasis[2]);
 		end
-		/**
+		
 		else begin
 			VGA_R <= colors[pixel_clr_idx][11:8] << (1 + bgr_color_emphasis[0]);
 			VGA_G <= colors[pixel_clr_idx][7:4] << (1 + bgr_color_emphasis[1]); // Make Brighter TODO: Color Emphasis Bits
 			VGA_B <= colors[pixel_clr_idx][3:0] << (1 + bgr_color_emphasis[2]);
 		end
-		*/
+		/**
 		else if (drawy < 120) begin
 			VGA_R <= OAM[0][0];
 			VGA_G <= 4'b0000;
@@ -1240,6 +1259,7 @@ always_ff @ (posedge VIDEO_CLK) begin
 			VGA_G <= 4'b0000;
 			VGA_B <= 4'b0000;
 		end
+		*/
 		
 	end
 	

@@ -18,8 +18,8 @@
 #include "system.h"
 #include <stdlib.h>
 #include <alt_types.h>
-//#include "nestest.h"
-#include "donkey_kong.h"
+#include "nestest.h"
+//#include "donkey_kong.h"
 //#include "baseball.h"
 //#include "color_test.h"
 //#include "palette_test.h"

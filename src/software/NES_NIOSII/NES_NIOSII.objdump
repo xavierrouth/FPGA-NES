@@ -39,15 +39,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  10 .debug_abbrev 0000a288  00000000  00000000  00047351  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_line   0000cb3b  00000000  00000000  000515d9  2**0
+ 11 .debug_line   0000cb37  00000000  00000000  000515d9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_frame  00002f68  00000000  00000000  0005e114  2**2
+ 12 .debug_frame  00002f68  00000000  00000000  0005e110  2**2
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_str    00004d91  00000000  00000000  0006107c  2**0
+ 13 .debug_str    00004d91  00000000  00000000  00061078  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_loc    00017b11  00000000  00000000  00065e0d  2**0
+ 14 .debug_loc    00017b11  00000000  00000000  00065e09  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_alt_sim_info 00000040  00000000  00000000  0007d920  2**2
+ 15 .debug_alt_sim_info 00000040  00000000  00000000  0007d91c  2**2
                   CONTENTS, READONLY, DEBUGGING
  16 .debug_ranges 00001948  00000000  00000000  0007d960  2**3
                   CONTENTS, READONLY, DEBUGGING
@@ -75,9 +75,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  28 .quartus_project_dir 00000013  00000000  00000000  00083478  2**0
                   CONTENTS, READONLY
- 29 .jdi          000067f9  00000000  00000000  0008348b  2**0
+ 29 .jdi          00006763  00000000  00000000  0008348b  2**0
                   CONTENTS, READONLY
- 30 .sopcinfo     00097a98  00000000  00000000  00089c84  2**0
+ 30 .sopcinfo     00097a98  00000000  00000000  00089bee  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 08000000 l    d  .entry	00000000 .entry
