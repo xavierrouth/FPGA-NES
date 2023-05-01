@@ -1351,3 +1351,621 @@ Info:                  65413 KBytes free for stack + heap.
 Info: Creating NES_NIOSII.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
 [NES_NIOSII build complete]
+10:51:25 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+[NES_NIOSII build complete]
+10:53:37 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:113:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:115:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:117:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:119:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:121:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:123:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:76:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 115 KBytes program size (code + initialized data).
+Info:                  65413 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]
+11:02:33 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:113:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:115:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:117:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:119:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:121:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:123:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:76:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 115 KBytes program size (code + initialized data).
+Info:                  65413 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]
+11:03:10 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+[NES_NIOSII build complete]
+12:54:58 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+[NES_NIOSII build complete]
+12:58:23 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:113:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:115:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:117:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:119:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:121:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:123:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:76:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 115 KBytes program size (code + initialized data).
+Info:                  65413 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]
+12:59:15 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:113:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:115:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:117:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:119:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:121:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:123:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:76:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 131 KBytes program size (code + initialized data).
+Info:                  65397 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]
+13:06:34 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:113:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:115:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:117:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:119:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:121:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:123:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:76:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 115 KBytes program size (code + initialized data).
+Info:                  65413 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]
+13:12:13 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:113:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:115:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:117:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:119:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:121:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:123:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:76:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 131 KBytes program size (code + initialized data).
+Info:                  65397 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]
+13:12:40 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:113:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:115:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:117:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:119:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:121:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:123:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:76:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 115 KBytes program size (code + initialized data).
+Info:                  65413 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]
+13:13:09 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:113:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:115:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:117:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:119:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:121:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:123:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:76:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 115 KBytes program size (code + initialized data).
+Info:                  65413 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]
+13:26:07 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:113:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:115:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:117:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:119:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:121:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:123:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:76:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 115 KBytes program size (code + initialized data).
+Info:                  65413 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]
+13:26:27 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:114:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:116:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:118:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:120:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:122:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:124:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:126:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:128:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:77:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 155 KBytes program size (code + initialized data).
+Info:                  65373 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]
+14:00:52 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:114:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:116:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:118:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:120:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:122:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:124:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:126:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:128:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:77:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 115 KBytes program size (code + initialized data).
+Info:                  65413 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]
+14:01:26 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+make all 
+Info: Building ../NES_NIOSII_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../NES_NIOSII_bsp//HAL/inc -I../NES_NIOSII_bsp/ -I../NES_NIOSII_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:18:0:
+../NES_NIOSII_bsp/system.h:190:36: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ #define GAME_ROM_PROGRAMMER_0_BASE 0xa80
+                                    ^
+rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
+ static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
+                                                                ^
+main.c: In function 'main':
+main.c:114:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+             ^
+main.c:116:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+             ^
+main.c:118:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+             ^
+main.c:120:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+             ^
+main.c:122:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+             ^
+main.c:124:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+             ^
+main.c:126:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+             ^
+main.c:128:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+      if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+             ^
+main.c:77:7: warning: unused variable 'keycode' [-Wunused-variable]
+  WORD keycode;
+       ^
+Info: Linking NES_NIOSII.elf
+nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682321319 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
+Info: (NES_NIOSII.elf) 115 KBytes program size (code + initialized data).
+Info:                  65413 KBytes free for stack + heap.
+Info: Creating NES_NIOSII.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
+[NES_NIOSII build complete]

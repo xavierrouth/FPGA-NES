@@ -187,8 +187,6 @@ logic [7:0] PPUCTRL, PPUMASK, PPUSTATUS, OAMADDR, OAMDATA, PPUSCROLL, PPUADDR, P
 // This should always be 0???. Yes I think its unused
 //=======================================================
 
-//TODO: Pack these as a struct?
-
 logic nmi_generate;
 logic sprite_size;
 logic background_ptable_addr;
@@ -200,11 +198,14 @@ logic addr_increment; // 0 is 1, 1 is 32
 // [7:5] - BGR color emphasis
 // [4] - sprite enable
 // [3] - background enable
-// TODO: .... Who cares for now...
-
+// [2] - Show sprites in leftmost 8 pixels
+// [1] - Show background in leftmost 8 pixels
+// [0] - Greyscale
 //=======================================================
-//TODO: Have BGR color emphasis shift the vga output values left
 
+logic show_edge_sprites;
+logic show_edge_background;
+logic greyscale_enable; //TODO: Implement greyscale
 logic [2:0] bgr_color_emphasis;
 logic sprite_render_enable;
 logic background_render_enable;
@@ -312,6 +313,9 @@ always_ff @ (posedge CPU_CLK) begin
 				bgr_color_emphasis <= CPU_DATA_IN[7:5];
 				sprite_render_enable <= CPU_DATA_IN[4];
 				background_render_enable <= CPU_DATA_IN[3];
+				show_edge_sprites <= CPU_DATA_IN[2];
+				show_edge_background <= CPU_DATA_IN[1];
+ 				greyscale_enable <= CPU_DATA_IN[0];
 			end
 			3'h3: oam_address <= CPU_DATA_IN;
 			// Read Only
@@ -572,9 +576,12 @@ logic [7:0] sprite_shifters [8][2]; // This contains the tile data of the sprite
 										   // This needs to get loaded from a PPU fetch during sprite evaluation
 logic [7:0] sprite_attributes [8]; // This contains the attribute data of the sprites
 logic [7:0] sprite_x_position [8]; // This counts down the x position until the sprite becomes active
+logic [7:0] sprite_y_position [8]; // This saves the value of the y position so we can use it to calculate how we are flipping the sprites verttically
 
 // TODO: NMame this
 logic [7:0] sprite_fine_y;
+
+logic sprite_priority; // This is the sprite that gets chosen for priority in some fucky way who knows if it works.
 
 // Misc 
 logic [5:0] oam_clear_counter;
@@ -583,6 +590,11 @@ logic [5:0] sprite_oam_idx;
 logic [1:0] sprite_byte_idx;
 logic [3:0] sprite_counter;
 logic [5:0] sprite_fetch_idx;
+
+// Sprite 0 Hit
+logic sprite0_hit_possible; // Was sprite 0 selected by sprite evaluation for this scanline?
+logic sprite0_hit_rendering; // Am I currently rendering the sprite which is sprite 0
+logic set_sprite0_hit; // This is the always_comb version that is checked when deciding if we want to set the sprite0_hit (always_ff) version.
 
 // This is the palette idx
 // First bit chooses foreground vs background
@@ -596,39 +608,80 @@ always_comb begin
 	sprite_idx = 5'b00;
 	background_idx = 5'b00;
 	palette_idx = 5'b00;
+	sprite_priority = 1'b0;
+	set_sprite0_hit = 1'b0;
+	sprite0_hit_rendering = 1'b0;
+	
 	
 	
 	// Flip Vertically
 	// TODO: Scanline - 1 might be right or might be wrong
 	if (sprites[sprite_fetch_idx][2][7]) // In Baseball, this doesn't work any it sucks! Use baseball to allign sprites properly
-		sprite_fine_y = 8 - ((scanline - 1) - (sprites[sprite_fetch_idx][0]));
+		sprite_fine_y = 7 - (scanline_intermediate - (sprite_y_position[sprite_fetch_idx]));
 	else 
-		sprite_fine_y = ((scanline - 1) - sprites[sprite_fetch_idx][0]);
+		sprite_fine_y = (scanline_intermediate - sprite_y_position[sprite_fetch_idx]);
 	// Dont flip vertically
 	// Do foreground
 	
-	
-	for (int i = 0; i < 8; i++) begin
-		// If any of the counters are 0 then lets draw the x value of that sprite
-		if (sprite_x_position[i] == 0) begin
-			// We need to figure out how to do this with priority going to the first one to resolve multiple drivers
-			//sprite_attributes[i][1:0];
-			sprite_idx = {1'b1, sprite_attributes[i][1:0], sprite_shifters[i][1][7], sprite_shifters[i][0][7]}; // Draw the leftmost bit of this
+	// If Render Sprites
+	if (sprite_render_enable) begin
+		for (int i = 7; i >= 0; i--) begin
+			// If any of the counters are 0 then lets draw the x value of that sprite
+			if (sprite_x_position[i] == 0) begin
+				// We need to figure out how to do this with priority going to the first one to resolve multiple drivers
+				//sprite_attributes[i][1:0];
+				// Draw the leftmost bit of this
+				
+				if ({sprite_shifters[i][1][7], sprite_shifters[i][0][7]} != 0) begin// Chose the one that isn't equal to 0. That makes sense
+					sprite_idx = {1'b1, sprite_attributes[i][1:0], sprite_shifters[i][1][7], sprite_shifters[i][0][7]};//j = i; // Does this work??
+					sprite_priority = sprite_attributes[i][5];
+					if (i == 0) begin
+						sprite0_hit_rendering = 1'b1;
+					end
+				end
+			end
 		end
-	
 	end
 	
+	// How to choose first pixel that is NOT 00?? 
 	
 	// If there are no sprites at all, then our background pixel color pallete idx is just:
 	// {1'b0, palette_data[1][15-fine_x], palette_data[0][15-fine_x], ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
 	// The full index into our frame pallete, composed of the palette we want, and then the color in that palette.
+	//sprite_idx = {1'b1, sprite_attributes[j][1:0], sprite_shifters[j][1][7], sprite_shifters[j][0][7]};
 	background_idx = {1'b0, palette_data[1][15-fine_x], palette_data[0][15-fine_x], ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
 	
-	// TODO: Implement actual priortity and flipped drawing here
-	if (sprite_idx[1:0] == 2'b00) // DEBUG: I'm thinking this is ALWAys true OOPS when it shuoldn't be
-		palette_idx = background_idx;
-	else
-		palette_idx = sprite_idx;
+	if ((background_idx[1:0] == 0) && (sprite_idx[1:0] == 0)) begin
+		// // What happens here?
+		palette_idx = 5'b00000; // Does this just draw the background color lol?
+	end
+	else if ((background_idx[1:0] == 0) && (sprite_idx[1:0] > 0)) begin
+		palette_idx = sprite_idx; 
+	end
+	else if ((background_idx[1:0] > 0) && (sprite_idx[1:0] == 0)) begin
+		palette_idx = background_idx; 
+	end
+	else if ((background_idx[1:0] > 0) && (sprite_idx[1:0] > 0)) begin
+		if (sprite_priority) //sprite_attributes[j][5])
+			palette_idx = background_idx;
+		else
+			palette_idx = sprite_idx;
+			
+		// Do sprite 0 hit logic when both backgruond and foreground have non-transparent (non 00) pixel values!!	
+		if (sprite0_hit_rendering && sprite0_hit_possible) begin
+			if (background_render_enable && sprite_render_enable) begin
+				if (~(show_edge_sprites | show_edge_background)) begin
+					if (cycle >= 9 && cycle < 258)
+						set_sprite0_hit = 1'b1;
+				end else begin
+					if (cycle >= 1 && cycle < 258)
+						set_sprite0_hit = 1'b1;
+				end
+			end
+		end
+	end
+	
+	
 	
 	// I think these are always the same, but we can draw different stuff here if we want to debug
 	//palette_idx = {1'b0, palette_data_in, ptable_data[1][15-fine_x], ptable_data[0][15-fine_x]};
@@ -643,11 +696,22 @@ end
 
 
 //=======================================================
-//  DMA and OAM handling
+//  Sprite 0 Hit Flag Handling
 //=======================================================
 
-// This happens in the CPU interfacing bl walys__ff
-
+always_ff @ (posedge CLK) begin
+	if (~RESET)
+		// Cleared at dot 1 of the pre-render line
+		if (cycle == 1 && scanline == 261) begin
+			sprite0_hit <= 1'b0;
+		end
+		else if (set_sprite0_hit)
+			sprite0_hit <= 1'b1;
+			
+		 
+	else	
+		sprite0_hit <= 1'b0;
+end
 
 //=======================================================
 //  Rendering Logic Always Comb
@@ -903,6 +967,7 @@ always_ff @ (posedge CLK) begin
 					sprite_counter <= 0;
 					sprite_fetch_idx <= 1'b0;
 					oam_clear_counter <= 0;
+					sprite0_hit_possible <= 1'b0;
 				end
 				// Clear Secondary OAM
 				if (cycle > 0 && cycle <= 64) begin
@@ -922,8 +987,10 @@ always_ff @ (posedge CLK) begin
 						// diff = ((scanline + 1) - OAM[sprite_oam_idx][0]);
 						// (Scanline - 1) is here to draw all our sprites one lower than they were being drawn
 						// TODO: We might need to change this back if we find another fix
-						if ((((scanline - 1) - OAM[sprite_oam_idx][0]) >= 0) && (((scanline - 1) - OAM[sprite_oam_idx][0]) < (8 + 8 * sprite_size ))) begin
+						if (((scanline_intermediate - OAM[sprite_oam_idx][0]) >= 0) && ((scanline_intermediate - OAM[sprite_oam_idx][0]) < (8 + 8 * sprite_size ))) begin
 							// Found Sprite, so load it and increment.
+							if (sprite_oam_idx == 0)
+								sprite0_hit_possible <= 1'b1;
 						   sprites[sprite_counter][1] <= OAM[sprite_oam_idx][1];
 							sprites[sprite_counter][2] <= OAM[sprite_oam_idx][2];
 							sprites[sprite_counter][3] <= OAM[sprite_oam_idx][3];
@@ -937,7 +1004,7 @@ always_ff @ (posedge CLK) begin
 				end
 				// TODO: DO SPRITE OVERFLOW
 				// If we had over? IDK if this matters 
-				if (sprite_counter > 8) begin
+				if (sprite_counter == 8) begin
 				
 					sprite_overflow <= 1'b1;
 				end
@@ -953,7 +1020,10 @@ always_ff @ (posedge CLK) begin
 						// [7:0] sprite_attributes [8];
 						// [7:0] sprite_x_position [8];
 						3'd0: sprite_attributes[sprite_fetch_idx] <= sprites[sprite_fetch_idx][2];
-						3'd1: sprite_x_position[sprite_fetch_idx] <= sprites[sprite_fetch_idx][3];
+						3'd1: begin
+							sprite_x_position[sprite_fetch_idx] <= sprites[sprite_fetch_idx][3];
+							sprite_y_position[sprite_fetch_idx] <= sprites[sprite_fetch_idx][0];
+						end 
 							
 						3'd2: begin 
 							if (sprite_attributes[sprite_fetch_idx][6]) begin // High = Flip Sprite Horizontally

@@ -21,7 +21,7 @@ module VRAM(
 	//input enable,
 	
 	input [7:0] data_in,
-	input [13:0] addr,
+	input [9:0] addr,
 	
 	input mirroring,
 	

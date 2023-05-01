@@ -346,7 +346,7 @@ PPU ppu_inst(.CLK(PPU_CLK), .ENABLE(PPU_ENABLE), .RESET(RESET), .VIDEO_CLK(VGA_C
 				.FRAME_PALETTE_RENDER_ADDR(FRAME_PALETTE_RENDER_ADDR), .FRAME_PALETTE_RENDER_READ(FRAME_PALETTE_RENDER_rden), .FRAME_PALETTE_RENDER_DATA_IN(FRAME_PALETTE_RENDER_DATA), 
 				.DMA_write(DMA_write), .DMA_address(DMA_addr_low), .DMA_data(CPU_DATA_BUS), .*);
 				
-VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .mirroring(1'b1), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
+VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS[9:0]), .mirroring(1'b0), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
 
 FRAME_PALETTE frame_palette_inst(.clk(MEM_CLK), .rden(FRAME_PALETTE_rden), .wren(FRAME_PALETTE_wren), .render_rden(FRAME_PALETTE_RENDER_rden), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .render_addr(FRAME_PALETTE_RENDER_ADDR), .data_out(FRAME_PALETTE_DATA_OUT), .render_data(FRAME_PALETTE_RENDER_DATA));
 

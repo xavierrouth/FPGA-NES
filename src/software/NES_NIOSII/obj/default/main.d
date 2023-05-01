@@ -1,7 +1,6 @@
 obj/default/main.o: main.c ../NES_NIOSII_bsp/system.h \
  ../NES_NIOSII_bsp/linker.h ../NES_NIOSII_bsp//HAL/inc/alt_types.h \
- donkey_kong.h usb_host.h \
- ../NES_NIOSII_bsp//drivers/inc/altera_avalon_spi.h \
+ baseball.h usb_host.h ../NES_NIOSII_bsp//drivers/inc/altera_avalon_spi.h \
  ../NES_NIOSII_bsp//drivers/inc/altera_avalon_spi_regs.h \
  ../NES_NIOSII_bsp//HAL/inc/io.h ../NES_NIOSII_bsp//HAL/inc/alt_types.h \
  ../NES_NIOSII_bsp//drivers/inc/altera_avalon_pio_regs.h \
@@ -16,7 +15,7 @@ obj/default/main.o: main.c ../NES_NIOSII_bsp/system.h \
 
 ../NES_NIOSII_bsp//HAL/inc/alt_types.h:
 
-donkey_kong.h:
+baseball.h:
 
 usb_host.h:
 
