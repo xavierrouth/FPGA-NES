@@ -1,17 +1,10 @@
 //=======================================================
 //  VRAM
 //  - This module represents the video ram that is available to the PPU,
-//		This consists of two main components, nametables and palettes.
+//		This consists of nametables
 // 
 //  - Nametable PPU BUS Section [$2000 - $27FF] NOTE: Weird Mirroring
-//
-//
-//	 - Palette PPU BUS Section [$3F00 - $3F1F] NOTE: Weird Mirroring
-//
-//
-//  - TODO:
-//		Mirroring and Mappers, Maybe split into two sections eventually
-// 	look into PPUDATA read buffer
+//	
 //
 //  
 //=======================================================
@@ -21,7 +14,7 @@ module VRAM(
 	//input enable,
 	
 	input [7:0] data_in,
-	input [9:0] addr,
+	input [11:0] addr,
 	
 	input mirroring,
 	
@@ -30,13 +23,22 @@ module VRAM(
 	output logic [7:0] data_out
 );
 
-// Size is 2^11
+// Size is 2^11 to address 20KiB
 //TODO: [11:10] should be 0 for no mirroring
 
 
+// If we are doing vertical mirroring, we want to ignore bit 11.
+// If we are doing horizontal mirroring, we want to ignore bit 10.
+
 logic [10:0] addr_mirrored;
 
-assign addr_mirrored = {mirroring, addr[9:0]};
+always_comb begin
+	if (mirroring == 1'b1) // Lets say this is vertical mirroring
+		addr_mirrored = {addr[10:0]}; // Ignore bit 11
+	else 
+		addr_mirrored = {addr[11], addr[9:0]}; // Ignore bit 10
+end
+
 
 
 
