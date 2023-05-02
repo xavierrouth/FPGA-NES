@@ -1,4 +1,4 @@
-22:51:14 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+23:03:02 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
 make all 
 Info: Building ../NES_NIOSII_bsp/
 C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
@@ -13,31 +13,31 @@ rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
  static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
                                                                 ^
 main.c: In function 'main':
-main.c:117:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:121:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
              ^
-main.c:119:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:123:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
              ^
-main.c:121:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
              ^
-main.c:123:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
              ^
-main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:129:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
              ^
-main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:131:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
              ^
-main.c:129:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:133:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
              ^
-main.c:131:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:135:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
              ^
-main.c:80:7: warning: unused variable 'keycode' [-Wunused-variable]
+main.c:84:7: warning: unused variable 'keycode' [-Wunused-variable]
   WORD keycode;
        ^
 Info: Linking NES_NIOSII.elf
@@ -49,5 +49,5 @@ Info: Creating NES_NIOSII.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
 [NES_NIOSII build complete]
 
-22:51:15 Build Finished (took 1s.257ms)
+23:03:03 Build Finished (took 1s.301ms)
 
