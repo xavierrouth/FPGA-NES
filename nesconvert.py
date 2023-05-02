@@ -16,7 +16,6 @@ def main():
         # Write bytes here
 
         # Read Header
-        print(infile.read(6))
         nes = infile.read(3)
         if (nes != b'NES'):
             print("Header is wonky")
