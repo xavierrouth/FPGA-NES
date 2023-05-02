@@ -21,9 +21,10 @@
 //#include "nestest.h"
 //#include "donkey_kong.h"
 //#include "kungfu.h"
-#include "baseball.h"
+//#include "baseball.h"
 //#include "color_test.h"
 //#include "palette_test.h"
+#include "ppu01.h"
 //#include "mario.h"
 #include "usb_host.h"
 #include "rom_programmer.h"
@@ -42,6 +43,8 @@ int main()
 
 
   // Write Program Rom
+  write_header_info(0, 1);
+
   for (int i = 0; i < prg_rom_size; i++) {
 	  // Write BB to $C000 to $C000 + i
 	  alt_u8 bytes = prg_rom_data[i];

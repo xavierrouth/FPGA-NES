@@ -202,6 +202,8 @@ module toplevel (
 	logic [7:0]  rom_prgmr_data; 
 	logic chr_rom_prgmr_wren, prg_rom_prgmr_wren; 
 	
+	logic mirroring_mode, is_chr_ram;
+	
 	// Switch Between Manual Clock and Normal Clock
 	
 	
@@ -452,6 +454,9 @@ module toplevel (
 		.game_rom_conduit_prg_rom_write(prg_rom_prgmr_wren),     	//                        .write_rom
 		.game_rom_conduit_rom_addr(rom_prgmr_addr), 
 		.game_rom_conduit_chr_rom_write(chr_rom_prgmr_wren),     	//                        .rom_addr
+		
+		.game_rom_conduit_mirror(mirroring_mode),        //                        .mirror
+		.game_rom_conduit_chr_raml(is_chr_ram),
 		
 		//LEDs and HEX
 		//.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),

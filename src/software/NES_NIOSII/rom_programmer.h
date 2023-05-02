@@ -18,4 +18,18 @@ void write_chr_rom(alt_u16 address, alt_u8 data) {
 	rom_programmer->rom = 0x00000000 | ((address) | (data << (16)));
 }
 
+void write_header_info(int is_vertical, int is_chr_ram) {
+	// bit 30 sets mirroring mode to 29
+	alt_u32 pringle = 0x00000000;
+	if (is_vertical){
+		pringle |= 0x20000000; // Set bit 29 high
+	}
+	if (is_chr_ram) {
+		pringle |= 0x08000000;
+	}
+
+	// Sets bits 30 and 28 high to signal that wwe want to set the mirroring and chr_ram modes.
+	rom_programmer->rom = 0x50000000 | pringle | 0x80000000; // set top bit high so we pretend like we are writing to prg rom
+}
+
 #endif /* __ROM_PRGMR_H_ */

@@ -9,6 +9,8 @@ module toplevel_soc (
 		output wire        game_rom_conduit_prg_rom_write, //                        .prg_rom_write
 		output wire [15:0] game_rom_conduit_rom_addr,      //                        .rom_addr
 		output wire        game_rom_conduit_chr_rom_write, //                        .chr_rom_write
+		output wire        game_rom_conduit_mirror,        //                        .mirror
+		output wire        game_rom_conduit_chr_raml,      //                        .chr_raml
 		output wire [15:0] hex_digits_export,              //              hex_digits.export
 		input  wire        i2c_0_i2c_serial_sda_in,        //        i2c_0_i2c_serial.sda_in
 		input  wire        i2c_0_i2c_serial_scl_in,        //                        .scl_in
@@ -145,16 +147,18 @@ module toplevel_soc (
 	wire         rst_controller_001_reset_out_reset;                              // rst_controller_001:reset_out -> [mm_interconnect_0:sdram_reset_reset_bridge_in_reset_reset, sdram:reset_n]
 
 	ROM_PRGMR game_rom_programmer_0 (
-		.AVL_ADDR      (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_address),    //  avl_mm_slave.address
-		.AVL_WRITE     (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_write),      //              .write
-		.AVL_WRITEDATA (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_writedata),  //              .writedata
-		.AVL_CS        (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_chipselect), //              .chipselect
-		.ROM_DATA      (game_rom_conduit_rom_data),                                       // game_rom_port.rom_data
-		.PRG_ROM_WRITE (game_rom_conduit_prg_rom_write),                                  //              .prg_rom_write
-		.ROM_ADDR      (game_rom_conduit_rom_addr),                                       //              .rom_addr
-		.CHR_ROM_WRITE (game_rom_conduit_chr_rom_write),                                  //              .chr_rom_write
-		.CLK           (clk_clk),                                                         //           clk.clk
-		.RESET         (rst_controller_reset_out_reset)                                   //         reset.reset
+		.AVL_ADDR       (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_address),    //  avl_mm_slave.address
+		.AVL_WRITE      (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_write),      //              .write
+		.AVL_WRITEDATA  (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_writedata),  //              .writedata
+		.AVL_CS         (mm_interconnect_0_game_rom_programmer_0_avl_mm_slave_chipselect), //              .chipselect
+		.ROM_DATA       (game_rom_conduit_rom_data),                                       // game_rom_port.rom_data
+		.PRG_ROM_WRITE  (game_rom_conduit_prg_rom_write),                                  //              .prg_rom_write
+		.ROM_ADDR       (game_rom_conduit_rom_addr),                                       //              .rom_addr
+		.CHR_ROM_WRITE  (game_rom_conduit_chr_rom_write),                                  //              .chr_rom_write
+		.mirroring_mode (game_rom_conduit_mirror),                                         //              .mirror
+		.is_chr_ram     (game_rom_conduit_chr_raml),                                       //              .chr_raml
+		.CLK            (clk_clk),                                                         //           clk.clk
+		.RESET          (rst_controller_reset_out_reset)                                   //         reset.reset
 	);
 
 	toplevel_soc_hex_digits_pio hex_digits_pio (

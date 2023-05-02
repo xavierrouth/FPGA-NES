@@ -39,7 +39,14 @@ module NES_ARCHITECUTRE (
 	input 				prg_rom_prgmr_wren, chr_rom_prgmr_wren,
 	input [15:0]		rom_prgmr_addr,
 	input [7:0]			rom_prgmr_data,
+	
 	input [7:0] 		controller_keycode,
+	
+	// Header Signals
+	input 				is_chr_ram,
+	input 				mirroring_mode, // 1 is vertical, 0 is horizontal
+	
+	
 
 	// Video 
 	output             VGA_HS,
@@ -215,6 +222,10 @@ logic PPU_READ, PPU_WRITE; // Let's split this into two signals, unlike CPU
 logic [7:0] CHR_ROM_DATA_OUT;
 logic CHR_ROM_rden;
 
+logic [7:0] CHR_RAM_DATA_OUT;
+logic CHR_RAM_wren;
+logic CHR_RAM_rden;
+
 // VRAM Signals
 logic [7:0] VRAM_DATA_OUT;
 logic VRAM_rden, VRAM_wren;
@@ -240,6 +251,8 @@ always_comb begin : PPU_BUS_SELECTION
 	VRAM_rden = 1'b0;
 	VRAM_wren = 1'b0;
 	CHR_ROM_rden = 1'b0;
+	CHR_RAM_wren = 1'b0;
+	CHR_RAM_rden = 1'b0;
 	FRAME_PALETTE_rden = 1'b0;
 	FRAME_PALETTE_wren = 1'b0;
 
@@ -257,7 +270,10 @@ always_comb begin : PPU_BUS_SELECTION
 	// ------ PPU Write --------- 
 	if (PPU_WRITE) begin
 		PPU_DATA_BUS = PPU_DATA_OUT;
-		
+		// Only used for chr_RAM.
+		if (PPU_ADDR_BUS <= 14'h1FFF & is_chr_ram)
+			CHR_RAM_wren = 1'b1;
+
 		// VRAM / Name Tables [$2000 - $3FFF]
 		if (PPU_ADDR_BUS >= 14'h2000 & PPU_ADDR_BUS < 14'h3F00)
 			VRAM_wren = 1'b1;
@@ -271,8 +287,13 @@ always_comb begin : PPU_BUS_SELECTION
 	
 		// CHR-ROM / Pattern Tables [$0000 - $1FFF]
 		if (PPU_ADDR_BUS <= 14'h1FFF) begin
-			PPU_DATA_BUS = CHR_ROM_DATA_OUT;
-			CHR_ROM_rden = 1'b1;
+			if (~is_chr_ram) begin
+				PPU_DATA_BUS = CHR_ROM_DATA_OUT;
+				CHR_ROM_rden = 1'b1;
+			end else begin
+				PPU_DATA_BUS = CHR_RAM_DATA_OUT;
+				CHR_RAM_rden = 1'b1;
+			end
 		end
 		
 		// TODO: Name Tables from Palette?
@@ -340,13 +361,16 @@ PRG_ROM prg_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(CPU_A
 CHR_ROM chr_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(PPU_ADDR_BUS[13:0]), .prgmr_addr(rom_prgmr_addr), 
 					.nes_rden(CHR_ROM_rden), .prgmr_wren(chr_rom_prgmr_wren), .nes_data_out(CHR_ROM_DATA_OUT));
 					
+CHR_RAM chr_ram_inst(.clk(MEM_CLK), .nes_addr(PPU_ADDR_BUS[13:0]), .nes_data(PPU_DATA_BUS), .nes_rden(CHR_RAM_rden), .nes_data_out(CHR_RAM_DATA_OUT),
+					.nes_wren(CHR_RAM_wren));
+					
 PPU ppu_inst(.CLK(PPU_CLK), .ENABLE(PPU_ENABLE), .RESET(RESET), .VIDEO_CLK(VGA_CLK), .NMI_n(NMI_n), .CPU_DATA_IN(CPU_DATA_BUS), .CPU_ADDR(CPU_ADDR[2:0]), 
 				.CPU_DATA_OUT(PPU_CPU_DATA_OUT), .CPU_wren(CPU_PPU_wren), .CPU_rden(CPU_PPU_rden), 
 				.PPU_DATA_IN(PPU_DATA_BUS), .PPU_DATA_OUT(PPU_DATA_OUT), .PPU_ADDR(PPU_ADDR), .PPU_READ(PPU_READ), .PPU_WRITE(PPU_WRITE), 
 				.FRAME_PALETTE_RENDER_ADDR(FRAME_PALETTE_RENDER_ADDR), .FRAME_PALETTE_RENDER_READ(FRAME_PALETTE_RENDER_rden), .FRAME_PALETTE_RENDER_DATA_IN(FRAME_PALETTE_RENDER_DATA), 
 				.DMA_write(DMA_write), .DMA_address(DMA_addr_low), .DMA_data(CPU_DATA_BUS), .*);
 				
-VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS[11:0]), .mirroring(1'b0), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
+VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS[11:0]), .mirroring(mirroring_mode), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
 
 FRAME_PALETTE frame_palette_inst(.clk(MEM_CLK), .rden(FRAME_PALETTE_rden), .wren(FRAME_PALETTE_wren), .render_rden(FRAME_PALETTE_RENDER_rden), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .render_addr(FRAME_PALETTE_RENDER_ADDR), .data_out(FRAME_PALETTE_DATA_OUT), .render_data(FRAME_PALETTE_RENDER_DATA));
 

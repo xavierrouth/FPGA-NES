@@ -18,14 +18,13 @@ module CHR_ROM (
 
 	input [15:0] nes_addr,
 	input [15:0] prgmr_addr,
-
+	
 	input nes_rden, prgmr_wren, // Read only from NES side, write only (maybe read) from NIOS loading side
 
 	output logic [7:0] nes_data_out, // Data out to bus
 	
 	output [7:0] debug_out
 );
-
 
 
 logic [7:0] mem [8192]; // 2^13 (THE WHOLE CPU ADDRESS SPACE!!)
@@ -38,6 +37,9 @@ always_ff @ (posedge clk) begin
 	// NIOS prgmr Side
 	if (prgmr_wren)
 		mem[prgmr_addr] <= prgmr_data;
+		
+	//else if (nes_wren)
+	//   mem[nes_addr] <= nes_data;
 		
 	
 end
