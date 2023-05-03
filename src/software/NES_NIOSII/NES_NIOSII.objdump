@@ -1595,7 +1595,7 @@ void write_header_info(int is_vertical, int is_chr_ram) {
  8000860:	f800283a 	ret
 
 08000864 <main>:
-#include "game_roms/mario.h"
+//#include "game_roms/kungfu.h"
 //#include "game_roms/donkey_kong.h"
 //#include "game_roms/baseball.h"
 
@@ -1614,11 +1614,11 @@ int main()
  8000880:	010200b4 	movhi	r4,2050
  8000884:	213b0c04 	addi	r4,r4,-5072
  8000888:	80035280 	call	8003528 <puts>
-   * $FFFE�$FFFF = IRQ/BRK vector
    */
 
 
   // Write Program Rom
+
   write_header_info(1, 0);
  800088c:	000b883a 	mov	r5,zero
  8000890:	01000044 	movi	r4,1
@@ -1646,8 +1646,8 @@ int main()
  80008cc:	1009883a 	mov	r4,r2
  80008d0:	800076c0 	call	800076c <write_prg_rom>
 
-
   // Write Program Rom
+
   write_header_info(1, 0);
 
   for (int i = 0; i < prg_rom_size; i++) {
@@ -1661,7 +1661,7 @@ int main()
 	  write_prg_rom(0x8000 + i, bytes);
   }
 
-  // Write CHR Rom
+  //Write CHR Rom
   for (int i = 0; i < chr_rom_size; i++) {
  80008ec:	e03ff615 	stw	zero,-40(fp)
  80008f0:	00000f06 	br	8000930 <main+0xcc>
@@ -1685,7 +1685,7 @@ int main()
 	  write_prg_rom(0x8000 + i, bytes);
   }
 
-  // Write CHR Rom
+  //Write CHR Rom
   for (int i = 0; i < chr_rom_size; i++) {
  8000924:	e0bff617 	ldw	r2,-40(fp)
  8000928:	10800044 	addi	r2,r2,1

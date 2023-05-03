@@ -34,9 +34,6 @@ always_comb begin
 		5'h14: addr_mirrored = 5'h04;
 		5'h18: addr_mirrored = 5'h08;
 		5'h1C: addr_mirrored = 5'h0C;
-		5'h04: addr_mirrored = 5'h00;
-		5'h08: addr_mirrored = 5'h00;
-		5'h0C: addr_mirrored = 5'h00;
 		default: addr_mirrored = addr;
 	endcase
 	case (render_addr)
@@ -44,9 +41,6 @@ always_comb begin
 		5'h14: render_addr_mirrored = 5'h04;
 		5'h18: render_addr_mirrored = 5'h08;
 		5'h1C: render_addr_mirrored = 5'h0C;
-		5'h04: render_addr_mirrored = 5'h00;
-		5'h08: render_addr_mirrored = 5'h00;
-		5'h0C: render_addr_mirrored = 5'h00;
 		default: render_addr_mirrored = render_addr;
 	endcase
 end
@@ -56,13 +50,13 @@ end
 always_ff @ (posedge clk) begin
 
 	if(wren)
-	memory[addr_mirrored] <= data_in;
+		memory[addr_mirrored] <= data_in;
 	
 	if(rden)
-	data_out <= memory[addr_mirrored];
+		data_out <= memory[addr_mirrored];
 	
 	if(render_rden)
-	render_data <= memory[render_addr_mirrored];
+		render_data <= memory[render_addr_mirrored];
 
 end
 

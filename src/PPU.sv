@@ -444,10 +444,11 @@ logic [9:0] scanline_intermediate;
 logic extra_cycle_latch;
 logic extra_cycle;
 
-assign scanline = scanline_intermediate + 1;
+// We have to do this because we buffer the output once. 
+assign scanline = scanline_intermediate; // + 1;
 
 parameter [9:0] cycle_count = 10'd340; //
-parameter [9:0] scanline_count = 10'd261;
+parameter [9:0] scanline_count = 10'd261; // Hmmmm
 
 logic ppu_vs, ppu_hs;
 
@@ -866,7 +867,7 @@ end
 // Always_ff For doing stuff
 always_ff @ (posedge CLK) begin
 	if (RESET) begin
-		ppu_linebuffer <= 1'b0;
+		
 		ntable_byte <= 8'd0;
 		oam_clear_counter <= 5'd0;
 		sprite_oam_idx <= 6'd0;
@@ -880,8 +881,7 @@ always_ff @ (posedge CLK) begin
 			//================= Visible Scanlines =====================
 			if (scanline <= 10'd239 | scanline == 10'd261) begin
 			
-			// Color_idx decided by the composition logic.		
-			linebuffer[ppu_linebuffer][cycle] <= color_idx;
+			
 			
 				//================= BACKGROUND RENDERING=====================
 				if ((cycle >= 1 & cycle <= 256) | (cycle >= 321 & cycle < 338)) begin 
@@ -1077,9 +1077,7 @@ always_ff @ (posedge CLK) begin
 				end
 			end //================= END VISIBLE SCANLINES =====================
 			
-			if (cycle == 10'd340) begin
-				ppu_linebuffer <= ~ppu_linebuffer;
-			end
+			
 			// Swap linebuffer once a scanline
 			if (cycle == 257) begin
 				// TODO: Do shifters stuff?
@@ -1317,11 +1315,50 @@ end
 //    have VGA run twice as fast for each scanline. However we still need to keep VSYNC the same, so we
 //    read each scanline twice. This will work out and everyone will be happy.
 //
-// TODO: FIX WEIRD VERTICAL SCROLLING
+//  THINKING ABOUT SCANLINES AND LINEBUFFERS:
+//		At any line Y, we will be drawing the information from *scanline* of the same index. Our current implementation,
+//    starting at (scanline == 261) fills the shift registers for the next scanline. Then at (scanline == 0),
+//    the linebuffer will be filled with the correct information. So instead of outputting to the screen, 
+//    it is outputted to the linebuffer.
+//    
+//    The linebuffer will be ready and full for (screen scanline 0) at (emulation scanline 1). 
+//    So thats when we should start drawing at y coordinate 0 (when emulation scanline == 1). 
+//    In this system, the screen scanline should lag behind the emulation scanline by 1.
+//		We can continue using emulation scanline for most parts of of our system, including deciding when to load the linebuffer.
 //
+//		But when reading from the linebuffer, this needs to be determined by the screen scanline.
+//		
+//		
+//		I think we can do this by moving the vertical blank forward by 2.
+// 
+//		Lets say we are always drawing from the linebuffer, 
+// 
 //
 //=======================================================
 
+always_ff @ (posedge CLK) begin
+	// This should be deicded by scanline_intermediate somehow?
+	// Color_idx decided by the composition logic.
+	// Think about this:
+	if (RESET) begin
+		ppu_linebuffer <= 1'b0;
+	end
+	
+	else begin
+	// Visible Scanlines
+	// "Draw" (load linebuffers) from 0 to 239 (240 visible scanlines total)
+		if (scanline < 10'd240) begin
+			linebuffer[ppu_linebuffer][cycle] <= color_idx;
+		end
+		else
+			linebuffer[ppu_linebuffer][cycle] <= 6'h28;
+		
+		// When do we swap the linebuffer?
+		if (cycle == 10'd340) begin
+			ppu_linebuffer <= ~ppu_linebuffer;
+		end
+	end
+end
 
 // Read back from this at twice the speed in 
 

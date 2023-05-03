@@ -3,7 +3,7 @@
     <hash md5_digest_80b="5ca8a7d02b86369badb9"/>
   </project>
   <file_info>
-    <file device="10M50DCF484C7G" path="FPGA-NES.sof" usercode="0xFFFFFFFF"/>
+    <file device="10M50DAF484C7G" path="FPGA-NES.sof" usercode="0xFFFFFFFF"/>
   </file_info>
   <hub_info hub_ir_width="10" ir_width="10" node_addr_width="2" node_count="3"/>
   <node_info>

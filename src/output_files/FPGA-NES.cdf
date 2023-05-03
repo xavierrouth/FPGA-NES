@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(10M50DCF484) Path("C:/dev/FPGA-NES/src/output_files/") File("FPGA-NES.sof") MfrSpec(OpMask(1));
+		Device PartName(10M50DAF484) Path("C:/dev/FPGA-NES/src/output_files/") File("FPGA-NES.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

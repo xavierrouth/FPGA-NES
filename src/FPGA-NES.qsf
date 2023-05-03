@@ -37,7 +37,7 @@
 
 
 set_global_assignment -name FAMILY "MAX 10"
-set_global_assignment -name DEVICE 10M50DCF484C7G
+set_global_assignment -name DEVICE 10M50DAF484C7G
 set_global_assignment -name TOP_LEVEL_ENTITY toplevel
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "15:17:14  APRIL 12, 2023"
@@ -248,37 +248,6 @@ set_global_assignment -name EDA_TEST_BENCH_NAME ppu_testbench -section_id eda_si
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id ppu_testbench
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME ppu_testbench -section_id ppu_testbench
 set_global_assignment -name EDA_TEST_BENCH_FILE "ppu-testbench.sv" -section_id ppu_testbench
-set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller.sv
-set_global_assignment -name QIP_FILE t65/t65.qip
-set_global_assignment -name QIP_FILE toplevel_soc/synthesis/toplevel_soc.qip
-set_global_assignment -name SYSTEMVERILOG_FILE HexDriver.sv
-set_global_assignment -name SYSTEMVERILOG_FILE toplevel.sv
-set_global_assignment -name SYSTEMVERILOG_FILE CPU_2A03.sv
-set_global_assignment -name SIGNALTAP_FILE signaltap.stp
-set_global_assignment -name SYSTEMVERILOG_FILE NES_ARCHITECTURE.sv
-set_global_assignment -name SDC_FILE "FPGA-NES.sdc"
-set_global_assignment -name SYSTEMVERILOG_FILE "arch-testbench.sv"
-set_global_assignment -name SYSTEMVERILOG_FILE testbench.sv
-set_global_assignment -name SYSTEMVERILOG_FILE CARTRIDGE.sv
-set_global_assignment -name SYSTEMVERILOG_FILE SYS_RAM.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ROM_PRGMR.sv
-set_global_assignment -name SYSTEMVERILOG_FILE synchronizers.sv
-set_global_assignment -name SYSTEMVERILOG_FILE PRG_ROM.sv
-set_global_assignment -name SYSTEMVERILOG_FILE PPU.sv
-set_global_assignment -name SYSTEMVERILOG_FILE CHR_ROM.sv
-set_global_assignment -name SYSTEMVERILOG_FILE VRAM.sv
-set_global_assignment -name QIP_FILE main_clkgen.qip
-set_global_assignment -name QIP_FILE nes_clkgen.qip
-set_global_assignment -name SYSTEMVERILOG_FILE CONTROLLER.sv
-set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller1280.sv
-set_global_assignment -name QIP_FILE idiot_pll.qip
-set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller1152.sv
-set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller1024.sv
-set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller342.sv
-set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller640.sv
-set_global_assignment -name QIP_FILE vga_pll.qip
-set_global_assignment -name SYSTEMVERILOG_FILE COLOR_PALETTE.sv
-set_global_assignment -name SYSTEMVERILOG_FILE "ppu-testbench.sv"
 set_global_assignment -name OPTIMIZATION_MODE "HIGH POWER EFFORT"
 set_global_assignment -name ROUTER_CLOCKING_TOPOLOGY_ANALYSIS ON
 set_global_assignment -name PHYSICAL_SYNTHESIS_ASYNCHRONOUS_SIGNAL_PIPELINING ON
@@ -290,13 +259,10 @@ set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_RETIMING ON
 set_global_assignment -name ROUTER_LCELL_INSERTION_AND_LOGIC_DUPLICATION ON
 set_global_assignment -name ROUTER_TIMING_OPTIMIZATION_LEVEL MAXIMUM
 set_global_assignment -name QII_AUTO_PACKED_REGISTERS NORMAL
-set_global_assignment -name SYSTEMVERILOG_FILE clock_divider.sv
-set_global_assignment -name SYSTEMVERILOG_FILE FRAME_PALETTE.sv
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name TIMING_ANALYZER_MULTICORNER_ANALYSIS ON
-set_global_assignment -name SYSTEMVERILOG_FILE CHR_RAM.sv
 set_global_assignment -name SLD_NODE_CREATOR_ID 110 -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_ENTITY_NAME sld_signaltap -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_clk -to "NES_ARCHITECUTRE:NES|PPU_CLK" -section_id auto_signaltap_0
@@ -727,5 +693,50 @@ set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[19] -
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[23] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[25] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[28] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
+set_global_assignment -name ENABLE_OCT_DONE ON
+set_global_assignment -name EXTERNAL_FLASH_FALLBACK_ADDRESS 00000000
+set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
+set_global_assignment -name INTERNAL_FLASH_UPDATE_MODE "SINGLE IMAGE WITH ERAM"
+set_global_assignment -name CRC_ERROR_OPEN_DRAIN OFF
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
+set_global_assignment -name MIF_FILE "supermario-prg.mif"
+set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller.sv
+set_global_assignment -name QIP_FILE t65/t65.qip
+set_global_assignment -name QIP_FILE toplevel_soc/synthesis/toplevel_soc.qip
+set_global_assignment -name SYSTEMVERILOG_FILE HexDriver.sv
+set_global_assignment -name SYSTEMVERILOG_FILE toplevel.sv
+set_global_assignment -name SYSTEMVERILOG_FILE CPU_2A03.sv
+set_global_assignment -name SIGNALTAP_FILE signaltap.stp
+set_global_assignment -name SYSTEMVERILOG_FILE NES_ARCHITECTURE.sv
+set_global_assignment -name SDC_FILE "FPGA-NES.sdc"
+set_global_assignment -name SYSTEMVERILOG_FILE "arch-testbench.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE testbench.sv
+set_global_assignment -name SYSTEMVERILOG_FILE CARTRIDGE.sv
+set_global_assignment -name SYSTEMVERILOG_FILE SYS_RAM.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ROM_PRGMR.sv
+set_global_assignment -name SYSTEMVERILOG_FILE synchronizers.sv
+set_global_assignment -name SYSTEMVERILOG_FILE PRG_ROM.sv
+set_global_assignment -name SYSTEMVERILOG_FILE PPU.sv
+set_global_assignment -name SYSTEMVERILOG_FILE CHR_ROM.sv
+set_global_assignment -name SYSTEMVERILOG_FILE VRAM.sv
+set_global_assignment -name QIP_FILE main_clkgen.qip
+set_global_assignment -name QIP_FILE nes_clkgen.qip
+set_global_assignment -name SYSTEMVERILOG_FILE CONTROLLER.sv
+set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller1280.sv
+set_global_assignment -name QIP_FILE idiot_pll.qip
+set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller1152.sv
+set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller1024.sv
+set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller342.sv
+set_global_assignment -name SYSTEMVERILOG_FILE VGA_controller640.sv
+set_global_assignment -name QIP_FILE vga_pll.qip
+set_global_assignment -name SYSTEMVERILOG_FILE COLOR_PALETTE.sv
+set_global_assignment -name SYSTEMVERILOG_FILE "ppu-testbench.sv"
+set_global_assignment -name SYSTEMVERILOG_FILE clock_divider.sv
+set_global_assignment -name SYSTEMVERILOG_FILE FRAME_PALETTE.sv
+set_global_assignment -name SYSTEMVERILOG_FILE CHR_RAM.sv
+set_global_assignment -name MIF_FILE sys_ram.mif
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name SLD_FILE db/signaltap_auto_stripped.stp

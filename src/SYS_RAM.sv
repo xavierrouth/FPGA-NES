@@ -28,7 +28,7 @@ module SYS_RAM(
 
 // Size is 2^11
 
-logic [7:0] mem [2048];
+logic [7:0] mem [2048] /* synthesis ram_init_file = " sys_ram.mif" */;
 
 always_ff @ (posedge clk) begin
 	if (wren)

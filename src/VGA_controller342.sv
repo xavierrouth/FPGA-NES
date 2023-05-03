@@ -93,9 +93,9 @@ module  vga_controller342 ( input     Clk,       // 10.7 MHz clock
    if (Reset)
      begin
         nexth <= 11'h0;
-        nextv <= 11'h0;
+        nextv <= v_tot - 11'd1;
         hcount <= 11'h0;
-        vcount <= 11'h0;
+        vcount <= v_tot - 11'd1;
         vs <= 1'b0;
         hs <= 1'b0;
      end
