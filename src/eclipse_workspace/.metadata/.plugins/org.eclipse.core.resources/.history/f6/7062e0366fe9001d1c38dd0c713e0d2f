@@ -1,0 +1,201 @@
+/*
+ * "Hello World" example.
+ *
+ * This example prints 'Hello from Nios II' to the STDOUT stream. It runs on
+ * the Nios II 'standard', 'full_featured', 'fast', and 'low_cost' example
+ * designs. It runs with or without the MicroC/OS-II RTOS and requires a STDOUT
+ * device in your system's hardware.
+ * The memory footprint of this hosted application is ~69 kbytes by default
+ * using the standard reference design.
+ *
+ * For a reduced footprint version of this template, and an explanation of how
+ * to reduce the memory footprint for a given application, see the
+ * "small_hello_world" template.
+ *
+ */
+
+#include <stdio.h>
+#include "system.h"
+#include <stdlib.h>
+#include <alt_types.h>
+#include "usb_host.h"
+#include "rom_programmer.h"
+
+// Include the rom you want to run here:
+// TESTS:
+//#include "test_roms/nestest.h"
+//#include "test_roms/basics.h"
+//#include "test_roms/palette_ram.h"
+//#include "test_roms/sprite_ram.h"
+//#include "test_roms/timing_basics.h"
+//#include "test_roms/vbl_clear_time.h"
+//#include "test_roms/vram_access.h"
+// GAMES:
+//#include "game_roms/mario.h"
+//#include "game_roms/donkey_kong.h"
+
+int main()
+{
+  printf("Hello from Nios II!\n");
+
+  printf("Beginning Programming \n");
+  // Format is 0x00[DATA (2 Bytes) ][ADDR (4 Bytes)];
+  /**
+   * $FFFA�$FFFB = NMI vector
+   * $FFFC�$FFFD = Reset vector
+   * $FFFE�$FFFF = IRQ/BRK vector
+   */
+
+
+  // Write Program Rom
+  write_header_info(1, 0);
+
+  for (int i = 0; i < prg_rom_size; i++) {
+	  // Write BB to $C000 to $C000 + i
+	  alt_u8 bytes = prg_rom_data[i];
+	  // Write Data (I don't feel like doing mirroring for now)
+	  write_prg_rom(0xC000 + i, bytes);
+	  write_prg_rom(0x8000 + i, bytes);
+  }
+
+  // Write CHR Rom
+  for (int i = 0; i < chr_rom_size; i++) {
+	  // Write BB to $C000 to $C000 + i
+	  alt_u8 bytes = chr_rom_data[i];
+	  // Write Data (I don't feel like doing mirroring for now)
+	  write_chr_rom(0x0000 + i, bytes);
+  }
+
+  // Write Reset Vector
+
+  //write_prg_rom(0xFFFC, 0x00);
+  //write_prg_rom(0xFFFD, 0xC0);
+
+
+  printf("Done Programming \n");
+
+  // USB polling stuff
+  BYTE rcode;
+  BOOT_MOUSE_REPORT buf;		//USB mouse report
+	BOOT_KBD_REPORT kbdbuf;
+
+	BYTE runningdebugflag = 0;//flag to dump out a bunch of information when we first get to USB_STATE_RUNNING
+	BYTE errorflag = 0; //flag once we get an error device so we don't keep dumping out state info
+	BYTE device;
+	WORD keycode;
+
+	printf("initializing MAX3421E...\n");
+	MAX3421E_init();
+	printf("initializing USB...\n");
+	USB_init();
+	printf("Test reg_rd: %x \n", MAXreg_rd(rREVISION));
+	while (1) {
+		printf(".");
+		MAX3421E_Task();
+		USB_Task();
+		//usleep (500000);
+		if (GetUsbTaskState() == USB_STATE_RUNNING) {
+			if (!runningdebugflag) {
+				runningdebugflag = 1;
+				setLED(9);
+				device = GetDriverandReport();
+			} else if (device == 1) {
+				//run keyboard debug polling
+				rcode = kbdPoll(&kbdbuf);
+				if (rcode == hrNAK) {
+					continue; //NAK means no new data
+				} else if (rcode) {
+					printf("Rcode: ");
+					printf("%x \n", rcode);
+					continue;
+				}
+				printf("keycodes: ");
+				for (int i = 0; i < 6; i++) {
+					printf("%x ", kbdbuf.keycode[i]);
+				}
+				// overwrite setKeycode to translate to NES
+				BYTE nesKeycodes = 0x00;
+
+				for (int i = 0; i < 6; i++) {
+					BYTE kc = kbdbuf.keycode[i];
+					// A - K
+					if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+					// B - L
+					if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+					// SELECT - '\'
+					if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+					// START - 'enter;
+					if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+					// UP - W
+					if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+					// DOWN - S
+					if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+					// LEFT - A
+					if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+					// RIGHT - D
+					if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+				}
+				setKeycode(nesKeycodes);
+				printf("NES controller sees: %x ", nesKeycodes);
+				printf("\n");
+				printSignedHex0(kbdbuf.keycode[0]);
+				printSignedHex1(kbdbuf.keycode[1]);
+				printf("\n");
+			}
+
+			else if (device == 2) {
+				rcode = mousePoll(&buf);
+				if (rcode == hrNAK) {
+					//NAK means no new data
+					continue;
+				} else if (rcode) {
+					printf("Rcode: ");
+					printf("%x \n", rcode);
+					continue;
+				}
+				printf("X displacement: ");
+				printf("%d ", (signed char) buf.Xdispl);
+				printSignedHex0((signed char) buf.Xdispl);
+				printf("Y displacement: ");
+				printf("%d ", (signed char) buf.Ydispl);
+				printSignedHex1((signed char) buf.Ydispl);
+				printf("Buttons: ");
+				printf("%x\n", buf.button);
+				if (buf.button & 0x04)
+					setLED(2);
+				else
+					clearLED(2);
+				if (buf.button & 0x02)
+					setLED(1);
+				else
+					clearLED(1);
+				if (buf.button & 0x01)
+					setLED(0);
+				else
+					clearLED(0);
+			}
+		} else if (GetUsbTaskState() == USB_STATE_ERROR) {
+			if (!errorflag) {
+				errorflag = 1;
+				clearLED(9);
+				printf("USB Error State\n");
+				//print out string descriptor here
+			}
+		} else //not in USB running state
+		{
+
+			printf("USB task state: ");
+			printf("%x\n", GetUsbTaskState());
+			if (runningdebugflag) {	//previously running, reset USB hardware just to clear out any funky state, HS/FS etc
+				runningdebugflag = 0;
+				MAX3421E_init();
+				USB_init();
+			}
+			errorflag = 0;
+			clearLED(9);
+		}
+
+	}
+
+  return 0;
+}

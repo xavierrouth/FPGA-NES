@@ -114,7 +114,7 @@ module PPU (
 	
 	output logic [7:0] PPU_DATA_OUT,
 	output logic [13:0] PPU_ADDR,
-	output logic PPU_WRITE, PPU_READ, // PPU wants to read, ppu want to write
+	output logic PPU_WRITE, PPU_READ_OUT, // PPU wants to read, ppu want to write
 	
 	// FRAME PALETTE interface
 	output logic [4:0] FRAME_PALETTE_RENDER_ADDR,
@@ -139,6 +139,8 @@ module PPU (
 //            Our data will appear on the lower eight address pins
 //
 //=======================================================
+
+logic PPU_READ;
 
 // State Registers
 typedef struct packed {
@@ -278,7 +280,10 @@ logic cpu_load_vram_request;
 logic cpu_inc_vram_request;
 logic cpu_nmi_clear_request;
 
+logic cpu_frame_palette_read; // THIS IS A VERY SPECIAL AND FUCKY SIGNAL THAT SHOULD BE GATED ACCORDINGLY
 
+logic [7:0] DMA_plus_OAM_address;
+assign DMA_plus_OAM_address = DMA_address + oam_address;
 //assign nmi_generate = debug_enable_nmi;
 // CPU Interface
 always_ff @ (posedge CPU_CLK) begin
@@ -293,7 +298,8 @@ always_ff @ (posedge CPU_CLK) begin
 		OAM <= '{default:'0};
 	end
 	else if (DMA_write) begin
-		OAM[DMA_address[7:2]][DMA_address[1:0]] <= DMA_data;
+		// Add OAM and DMA adressses together
+		OAM[DMA_plus_OAM_address[7:2]][DMA_plus_OAM_address[1:0]] <= DMA_data;
 	end
 	//-------------CPU WRITE--------------------------
 	else if (CPU_wren) begin // CPU Write
@@ -384,9 +390,9 @@ always_ff @ (posedge CPU_CLK) begin
 			3'h5: ;
 			3'h6: ;
 			3'h7: begin
+				// This whole implementatino is so fucky
 				cpu_read_request <= ~cpu_read_request;
-				//TODO: This updates too soon, this needs to update later, just think about it
-				ppu_read_buffer <= PPU_DATA_IN;
+				cpu_inc_vram_request <= ~cpu_inc_vram_request;
 			end
 		endcase // End ADDR Case
 	end // End read
@@ -396,6 +402,7 @@ always_comb begin
 	//-------------CPU READ---------------------------
 	// Default Values
 	CPU_DATA_OUT = 8'h0; //TODO: What should the default of this be?
+	cpu_frame_palette_read = 1'b0;
 	
 	if (CPU_rden) begin // CPU Read
 		case (CPU_ADDR)
@@ -415,10 +422,12 @@ always_comb begin
 			3'h5: ;
 			3'h6: ;
 			3'h7: begin
-				if (CPU_ADDR >= 14'h3F00)
-					CPU_DATA_OUT = PPU_DATA_IN;
+				if (PPU_ADDR >= 14'h3F00) begin // Reading from palettes
+					CPU_DATA_OUT = PPU_DATA_IN; //PPU_DATA_IN; // PPU Data in doesn't update in time. // We nee
+					cpu_frame_palette_read = 1'b1;
+				end
 				else
-					CPU_DATA_OUT = ppu_read_buffer;
+					CPU_DATA_OUT = ppu_read_buffer; // Read from read_buffer
 			end
 		endcase // End ADDR Case
 	end // End read
@@ -700,14 +709,14 @@ end
 //=======================================================
 
 always_ff @ (posedge CLK) begin
-	if (~RESET)
+	if (~RESET) begin
 		// Cleared at dot 1 of the pre-render line
 		if (cycle == 1 && scanline == 261) begin
 			sprite0_hit <= 1'b0;
 		end
 		else if (set_sprite0_hit)
 			sprite0_hit <= 1'b1;
-			
+	end
 		 
 	else	
 		sprite0_hit <= 1'b0;
@@ -866,11 +875,14 @@ always_ff @ (posedge CLK) begin
 		sprite_fetch_idx <= 6'd0;
 	end else begin // NOT RESET
 		if (render_enable) begin
-			// Color_idx decided by the composition logic.		
-			linebuffer[ppu_linebuffer][cycle] <= color_idx;
+			
 			
 			//================= Visible Scanlines =====================
 			if (scanline <= 10'd239 | scanline == 10'd261) begin
+			
+			// Color_idx decided by the composition logic.		
+			linebuffer[ppu_linebuffer][cycle] <= color_idx;
+			
 				//================= BACKGROUND RENDERING=====================
 				if ((cycle >= 1 & cycle <= 256) | (cycle >= 321 & cycle < 338)) begin 
 					
@@ -1211,8 +1223,11 @@ end
 
 //======== ASYNC PPU Write / Read Handling =======
 
+logic one_after_read;
+logic one_after_write;
 // ppu_write_request, ppu_read_request, ppu_read_handle, ppu_write_handle, cpu_read_request, cpu_write_request
 assign PPU_DATA_OUT = ppu_write_buffer;
+assign PPU_READ_OUT = cpu_frame_palette_read | PPU_READ; // This is so fucky
 
 always_ff @ (posedge CLK) begin
 	if (RESET | ~ENABLE) begin
@@ -1220,26 +1235,41 @@ always_ff @ (posedge CLK) begin
 		PPU_WRITE <= 1'b0;
 		ppu_write_handle <= 1'b0;
 		ppu_read_handle <= 1'b0;
+		one_after_read <= 1'b0;
 		
 	end
 	else begin
-		//TODO: Figure out if we need to handle anything with bus or data or address or just 
-		// Reads
-		if (cpu_read_request ^ ppu_read_handle) begin
-			PPU_READ <= 1'b1;
-			ppu_read_handle <= ~ppu_read_handle;
+	
+		// Reads + Special Non-buffered Palettte Read
+		if (cpu_frame_palette_read) begin
+			ppu_read_buffer <= PPU_DATA_IN;
 		end
-		// TODO: What if we want to clear read? does this work? // These are default values
-		else if (ppu_read_request)
-			PPU_READ <= 1'b1;
-		else 
-			PPU_READ <= 1'b0;
+		else begin
+			// Actual Reads
+			if (cpu_read_request ^ ppu_read_handle) begin
+				PPU_READ <= 1'b1;
+				one_after_read <= 1'b1;
+				ppu_read_handle <= ~ppu_read_handle;
+			end
+			
+			else if (ppu_read_request) begin
+				PPU_READ <= 1'b1;
+				one_after_read <= 1'b1;
+			end else 
+				PPU_READ <= 1'b0;
+			
+			if (one_after_read) begin
+				ppu_read_buffer <= PPU_DATA_IN;
+				one_after_read <= 1'b0;
+			end
+		end
+		
 		// Writes
 		if (cpu_write_request ^ ppu_write_handle) begin
 			PPU_WRITE <= 1'b1;
 			ppu_write_handle <= ~ppu_write_handle;
 		end
-		// TODO: What if we want to clear write? does this work? // These are default values
+		
 		else if (ppu_write_request)
 			PPU_WRITE <= 1'b1;
 		else 

@@ -18,20 +18,22 @@
 #include "system.h"
 #include <stdlib.h>
 #include <alt_types.h>
-//#include "nestest.h"
-//#include "donkey_kong.h"
-//#include "kungfu.h"
-//#include "baseball.h"
-//#include "color_test.h"
-//#include "palette_test.h"
-//#include "ppu02.h"
-//#include "palette_ram.h"
-//#include "vhl_clear_time.h"
-#include "vram_access.h"
-//#include "sprite_ram.h"
-//#include "mario.h"
 #include "usb_host.h"
 #include "rom_programmer.h"
+
+// Include the rom you want to run here:
+// TESTS:
+//#include "test_roms/nestest.h"
+//#include "test_roms/basics.h"
+//#include "test_roms/palette_ram.h"
+//#include "test_roms/sprite_ram.h"
+//#include "test_roms/vbl_clear_time.h"
+//#include "test_roms/vram_access.h"
+//#include "test_roms/allpads.h"
+// GAMES:
+#include "game_roms/mario.h"
+//#include "game_roms/donkey_kong.h"
+//#include "game_roms/baseball.h"
 
 int main()
 {
@@ -47,13 +49,13 @@ int main()
 
 
   // Write Program Rom
-  write_header_info(0, 1);
+  write_header_info(1, 0);
 
   for (int i = 0; i < prg_rom_size; i++) {
 	  // Write BB to $C000 to $C000 + i
 	  alt_u8 bytes = prg_rom_data[i];
 	  // Write Data (I don't feel like doing mirroring for now)
-	  write_prg_rom(0xC000 + i, bytes);
+	  //write_prg_rom(0xC000 + i, bytes);
 	  write_prg_rom(0x8000 + i, bytes);
   }
 

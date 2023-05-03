@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete 2 resources" deleteContents="false" description="Delete 2 resources" element1="/NES_NIOSII/ppu01.h" element2="/NES_NIOSII/ppu02.h" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="2" stamp="1683082999377"/>&#x0A;<refactoring comment="Delete 6 resources" deleteContents="false" description="Delete 6 resources" element1="/NES_NIOSII/color_test.h" element2="/NES_NIOSII/palette_ram.h" element3="/NES_NIOSII/palette_test.h" element4="/NES_NIOSII/sprite_ram.h" element5="/NES_NIOSII/vhl_clear_time.h" element6="/NES_NIOSII/vram_access.h" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="6" stamp="1683083012447"/>
+</session>

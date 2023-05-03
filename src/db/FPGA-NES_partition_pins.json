@@ -428,6 +428,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "SW[1]",
+					"strict" : false
+				},
+				{
 					"name" : "MAX10_CLK1_50",
 					"strict" : false
 				},
@@ -441,10 +445,6 @@
 				},
 				{
 					"name" : "SW[7]",
-					"strict" : false
-				},
-				{
-					"name" : "SW[1]",
 					"strict" : false
 				},
 				{
