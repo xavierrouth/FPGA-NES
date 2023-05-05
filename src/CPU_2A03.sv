@@ -12,7 +12,8 @@ module CPU_2A03 (
 	input				 ENABLE,
 	input 			 RESET,
 	input 			 NMI_n,
-	
+	input 			 IRQ_n,
+		
 	input 	[7:0]  DATA_IN,
 	
 	
@@ -52,7 +53,7 @@ T65 CPU(.mode(2'b00),
 		  .Clk(CLK),
 		  .Rdy(~PAUSE),
 		  .Abort_n(1'b1),
-		  .IRQ_n(1'b1),
+		  .IRQ_n(IRQ_n), // This was tied high
 		  .NMI_n(NMI_n),
 		  .SO_n(1'b1),
 		  .R_W_n(RW_n), // High is read

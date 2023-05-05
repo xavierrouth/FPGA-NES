@@ -1,4 +1,4 @@
-17:54:23 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
+03:57:24 **** Incremental Build of configuration Nios II for project NES_NIOSII ****
 make all 
 Info: Building ../NES_NIOSII_bsp/
 C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../NES_NIOSII_bsp/
@@ -13,41 +13,41 @@ rom_programmer.h:11:64: note: in expansion of macro 'GAME_ROM_PROGRAMMER_0_BASE'
  static volatile struct ROM_PROGRAMMER_STRUCT* rom_programmer = GAME_ROM_PROGRAMMER_0_BASE;
                                                                 ^
 main.c: In function 'main':
-main.c:125:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:135:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
              ^
-main.c:127:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:137:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
              ^
-main.c:129:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:139:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
              ^
-main.c:131:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:141:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
              ^
-main.c:133:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:143:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
              ^
-main.c:135:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:145:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
              ^
-main.c:137:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:147:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
              ^
-main.c:139:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
+main.c:149:13: warning: suggest parentheses around comparison in operand of '|' [-Wparentheses]
       if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
              ^
-main.c:88:7: warning: unused variable 'keycode' [-Wunused-variable]
+main.c:98:7: warning: unused variable 'keycode' [-Wunused-variable]
   WORD keycode;
        ^
 Info: Linking NES_NIOSII.elf
 nios2-elf-g++  -T'../NES_NIOSII_bsp//linker.x' -msys-crt0='../NES_NIOSII_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../NES_NIOSII_bsp/   -Wl,-Map=NES_NIOSII.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o NES_NIOSII.elf obj/default/main.o obj/default/sgtl5000/sgtl5000.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
 nios2-elf-insert NES_NIOSII.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0xaa0 --timestamp 1682997777 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name toplevel_soc --quartus_project_dir "C:/dev/FPGA-NES/src" --jdi ../..//output_files/FPGA-NES.jdi --sopcinfo C:/dev/FPGA-NES/src/software/NES_NIOSII_bsp/../../toplevel_soc.sopcinfo
-Info: (NES_NIOSII.elf) 132 KBytes program size (code + initialized data).
-Info:                  65397 KBytes free for stack + heap.
+Info: (NES_NIOSII.elf) 120 KBytes program size (code + initialized data).
+Info:                  65408 KBytes free for stack + heap.
 Info: Creating NES_NIOSII.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source NES_NIOSII.elf >NES_NIOSII.objdump
 [NES_NIOSII build complete]
 
-17:54:25 Build Finished (took 1s.251ms)
+03:57:26 Build Finished (took 1s.252ms)
 

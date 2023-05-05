@@ -27,12 +27,15 @@ module NES_ARCHITECUTRE (
 	input					MCLK,
 	input					CPU_CLK,
 	input					PPU_CLK,
-	
-	input 				VGA_CLK,
+	 
+	input 				VGA_CLK, // Video
+	input					LRCLK, // Audio
+	input					SCLK,
 	
 	input 				ENABLE,
 	input					RESET,
 	
+	input					MEM_RESET,
 	
 
 	// ROM Programmer
@@ -49,11 +52,14 @@ module NES_ARCHITECUTRE (
 	
 
 	// Video 
-	output             VGA_HS,
-	output             VGA_VS,
-	output   [ 3: 0]   VGA_R,
-	output   [ 3: 0]   VGA_G,
-	output   [ 3: 0]   VGA_B,
+	output            VGA_HS,
+	output            VGA_VS,
+	output   [ 3: 0]  VGA_R,
+	output   [ 3: 0]  VGA_G,
+	output   [ 3: 0]  VGA_B,
+	
+	// Audio
+	output				audio_sample,
 	
 	// Debug Signals
 	input [4:0] 		DEBUG_SWITCHES,
@@ -105,6 +111,10 @@ logic [7:0] DMA_addr_low;
 logic DMA_read;
 logic DMA_write;
 
+// APU Signals
+logic [7:0] APU_DATA_OUT;
+logic APU_wren, APU_rden;
+
 //=======================================================
 //  DMA State Machine
 //=======================================================
@@ -139,6 +149,9 @@ always_comb begin : CPU_BUS_SELECTION
 	CPU_DATA_BUS = 8'hFF;
 	PRG_ROM_rden = 1'b0;
 	
+	APU_wren = 1'b0;
+	APU_rden = 1'b0;
+	
 	CONTROLLER_rden = 1'b0;
 	CONTROLLER_wren = 1'b0;
 	CPU_ADDR_BUS = CPU_ADDR;
@@ -161,14 +174,24 @@ always_comb begin : CPU_BUS_SELECTION
 			if (CPU_ADDR_BUS <= 16'h0FFF)
 				SYSRAM_wren = 1'b1;
 			
+			// APU [$4000 - $4013] [$4015] [$4017]
+			if ((CPU_ADDR_BUS >= 16'h4000 && CPU_ADDR_BUS <= 16'h4013) || (CPU_ADDR_BUS == 16'h4015) || (CPU_ADDR_BUS == 16'h4017)) begin
+				APU_wren = 1'b1;
+			end
+				
+			// DMA [$4014]
+			if (CPU_ADDR_BUS == 16'h4014) begin
+				; // Handled by DMA State Machine DMA_start = 1'b1;
+			end
+			
+
+			
 			// CONTROLLER [$4016]
 			if (CPU_ADDR_BUS == 16'h4016) begin
 				CONTROLLER_wren = 1'b1;
 			end
 			
-			if (CPU_ADDR_BUS == 16'h4014) begin
-				; // Handled by DMA State Machine DMA_start = 1'b1;
-			end
+			
 			
 			// PPU Control Registers [$2000 - $3FFF] (Repeats every 8 bytes)
 			if ((CPU_ADDR_BUS >= 16'h2000) & (CPU_ADDR_BUS <= 16'h3FFF)) begin
@@ -183,6 +206,11 @@ always_comb begin : CPU_BUS_SELECTION
 			if (CPU_ADDR_BUS <= 16'h0FFF) begin
 				CPU_DATA_BUS = SYSRAM_DATA_OUT;
 				SYSRAM_rden = 1'b1;
+			end
+			// APU Status Register
+			if (CPU_ADDR_BUS == 16'h4015) begin
+				APU_rden = 1'b1;
+				CPU_DATA_BUS = APU_DATA_OUT;
 			end
 			// CONTROLLER [$4016 - $4017]
 			if (CPU_ADDR_BUS == 16'h4016 | CPU_ADDR_BUS == 16'h4017) begin
@@ -344,8 +372,12 @@ assign MEM_CLK = MCLK;
 logic sysram_enable;
 assign sysram_enable = 1'b1;
 
-
 logic NMI_n;
+logic APU_frame_IRQ_n; // Tied high
+logic APU_frame_IRQ;
+assign APU_frame_IRQ_n = ~APU_frame_IRQ;
+
+
 
 //=======================================================
 //  Module Instatiation
@@ -354,14 +386,14 @@ logic NMI_n;
 CONTROLLER playerone(.rden(CONTROLLER_rden), .clk(MEM_CLK), .reset(RESET), .wren(CONTROLLER_wren), .data_in(CPU_DATA_BUS), .keycodes_in(controller_keycode), .data_out(CONTROLLER_DATA_OUT));
 
 CPU_2A03 cpu_inst(.CLK(CPU_CLK), .ENABLE(CPU_ENABLE), .RESET(CPU_RESET), .DATA_IN(CPU_DATA_BUS), .ADDR(CPU_ADDR), 
-				  .DATA_OUT(CPU_DATA_OUT), .RW_n(CPU_RW_n), .cpu_debug(cpu_debug), .NMI_n(NMI_n));
+				  .DATA_OUT(CPU_DATA_OUT), .RW_n(CPU_RW_n), .cpu_debug(cpu_debug), .NMI_n(NMI_n), .IRQ_n(APU_frame_IRQ_n));
 
-SYS_RAM sysram_inst(.clk(MEM_CLK), .data_in(CPU_DATA_BUS), .addr(CPU_ADDR_BUS[10:0]), .wren(SYSRAM_wren), .rden(SYSRAM_rden), .data_out(SYSRAM_DATA_OUT));
+SYS_RAM sysram_inst(.clk(MEM_CLK), .reset(MEM_RESET), .data_in(CPU_DATA_BUS), .addr(CPU_ADDR_BUS[10:0]), .wren(SYSRAM_wren), .rden(SYSRAM_rden), .data_out(SYSRAM_DATA_OUT));
 
-PRG_ROM prg_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(CPU_ADDR_BUS[15:0]), .prgmr_addr(rom_prgmr_addr), 
+PRG_ROM prg_rom_inst(.clk(MEM_CLK), .reset(MEM_RESET), .prgmr_data(rom_prgmr_data), .nes_addr(CPU_ADDR_BUS[15:0]), .prgmr_addr(rom_prgmr_addr), 
 					.nes_rden(PRG_ROM_rden), .prgmr_wren(prg_rom_prgmr_wren), .nes_data_out(PRG_ROM_DATA_OUT));
 					
-CHR_ROM chr_rom_inst(.clk(MEM_CLK), .prgmr_data(rom_prgmr_data), .nes_addr(PPU_ADDR_BUS[13:0]), .prgmr_addr(rom_prgmr_addr), 
+CHR_ROM chr_rom_inst(.clk(MEM_CLK), .reset(MEM_RESET), .prgmr_data(rom_prgmr_data), .nes_addr(PPU_ADDR_BUS[13:0]), .prgmr_addr(rom_prgmr_addr), 
 					.nes_rden(CHR_ROM_rden), .prgmr_wren(chr_rom_prgmr_wren), .nes_data_out(CHR_ROM_DATA_OUT));
 					
 CHR_RAM chr_ram_inst(.clk(MEM_CLK), .nes_addr(PPU_ADDR_BUS[13:0]), .nes_data(PPU_DATA_BUS), .nes_rden(CHR_RAM_rden), .nes_data_out(CHR_RAM_DATA_OUT),
@@ -373,8 +405,10 @@ PPU ppu_inst(.CLK(PPU_CLK), .ENABLE(PPU_ENABLE), .RESET(RESET), .VIDEO_CLK(VGA_C
 				.FRAME_PALETTE_RENDER_ADDR(FRAME_PALETTE_RENDER_ADDR), .FRAME_PALETTE_RENDER_READ(FRAME_PALETTE_RENDER_rden), .FRAME_PALETTE_RENDER_DATA_IN(FRAME_PALETTE_RENDER_DATA), 
 				.DMA_write(DMA_write), .DMA_address(DMA_addr_low), .DMA_data(CPU_DATA_BUS), .*);
 				
-VRAM vram_inst(.clk(MEM_CLK), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS[11:0]), .mirroring(mirroring_mode), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
+VRAM vram_inst(.clk(MEM_CLK), .reset(MEM_RESET), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS[11:0]), .mirroring(mirroring_mode), .wren(VRAM_wren), .rden(VRAM_rden), .data_out(VRAM_DATA_OUT));
 
-FRAME_PALETTE frame_palette_inst(.clk(MEM_CLK), .rden(FRAME_PALETTE_rden), .wren(FRAME_PALETTE_wren), .render_rden(FRAME_PALETTE_RENDER_rden), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .render_addr(FRAME_PALETTE_RENDER_ADDR), .data_out(FRAME_PALETTE_DATA_OUT), .render_data(FRAME_PALETTE_RENDER_DATA));
+FRAME_PALETTE frame_palette_inst(.clk(MEM_CLK), .reset(MEM_RESET), .rden(FRAME_PALETTE_rden), .wren(FRAME_PALETTE_wren), .render_rden(FRAME_PALETTE_RENDER_rden), .data_in(PPU_DATA_BUS), .addr(PPU_ADDR_BUS), .render_addr(FRAME_PALETTE_RENDER_ADDR), .data_out(FRAME_PALETTE_DATA_OUT), .render_data(FRAME_PALETTE_RENDER_DATA));
 
+APU apu_inst(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .LRCLK(LRCLK), .SCLK(SCLK), .RESET(CPU_RESET), .CPU_DATA_IN(CPU_DATA_BUS), .CPU_ADDR(CPU_ADDR[4:0]),
+				.CPU_rden(APU_rden), .CPU_wren(APU_wren), .CPU_DATA_OUT(APU_DATA_OUT), .frame_irq(APU_frame_IRQ), .DOUT(audio_sample));
 endmodule

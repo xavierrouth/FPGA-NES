@@ -11,6 +11,7 @@
 
 module VRAM(
 	input clk,
+	input reset,
 	//input enable,
 	
 	input [7:0] data_in,

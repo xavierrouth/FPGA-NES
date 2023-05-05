@@ -404,6 +404,34 @@
 					"strict" : false
 				},
 				{
+					"name" : "I2C_SDA",
+					"strict" : false
+				},
+				{
+					"name" : "I2C_SCL",
+					"strict" : false
+				},
+				{
+					"name" : "ARDUINO_IO[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ARDUINO_IO[2]",
+					"strict" : false
+				},
+				{
+					"name" : "ARDUINO_IO[3]",
+					"strict" : false
+				},
+				{
+					"name" : "ARDUINO_IO[4]",
+					"strict" : false
+				},
+				{
+					"name" : "ARDUINO_IO[5]",
+					"strict" : false
+				},
+				{
 					"name" : "ARDUINO_IO[9]",
 					"strict" : false
 				},
@@ -428,10 +456,6 @@
 					"strict" : false
 				},
 				{
-					"name" : "SW[1]",
-					"strict" : false
-				},
-				{
 					"name" : "MAX10_CLK1_50",
 					"strict" : false
 				},
@@ -448,7 +472,15 @@
 					"strict" : false
 				},
 				{
+					"name" : "SW[1]",
+					"strict" : false
+				},
+				{
 					"name" : "KEY[0]",
+					"strict" : false
+				},
+				{
+					"name" : "SW[0]",
 					"strict" : false
 				},
 				{

@@ -110,7 +110,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : AA16      :        :                   :      
 ARDUINO_IO[9]                : AA17      : bidir  : 2.5 V             :         : 4         : Y              
 GND                          : AA18      : gnd    :                   :         :           :                
 ARDUINO_IO[11]               : AA19      : bidir  : 2.5 V             :         : 4         : Y              
-ARDUINO_IO[15]               : AA20      : bidir  : 2.5 V             :         : 4         : Y              
+I2C_SCL                      : AA20      : bidir  : 2.5 V             :         : 4         : Y              
 DRAM_DQ[3]                   : AA21      : bidir  : 2.5 V             :         : 5         : Y              
 DRAM_DQ[2]                   : AA22      : bidir  : 2.5 V             :         : 5         : Y              
 GND                          : AB1       : gnd    :                   :         :           :                
@@ -133,7 +133,7 @@ ARDUINO_IO[8]                : AB17      : bidir  : 2.5 V             :         
 RESERVED_INPUT_WITH_WEAK_PULLUP : AB18      :        :                   :         : 4         :                
 ARDUINO_IO[10]               : AB19      : bidir  : 2.5 V             :         : 4         : Y              
 ARDUINO_IO[13]               : AB20      : bidir  : 2.5 V             :         : 4         : Y              
-ARDUINO_IO[14]               : AB21      : bidir  : 2.5 V             :         : 4         : Y              
+I2C_SDA                      : AB21      : bidir  : 2.5 V             :         : 4         : Y              
 GND                          : AB22      : gnd    :                   :         :           :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : B1        :        :                   :         : 8         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : B2        :        :                   :         : 8         :                

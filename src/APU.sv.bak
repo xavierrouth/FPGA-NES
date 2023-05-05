@@ -1,0 +1,25 @@
+//=======================================================
+//  APU
+//  - This module represents the PPU (Picture Procesing Unit) of the NES architecture.
+//    It is connected to its own personal BUS, and also must be connected to a VGA adapter 
+//    at some point in the architecture.
+//
+//  - CPU BUS Section [$2000 - $3FFF] ~ Alot
+//  - NOTE: This is mirrored every 8 bytes, meaning we only have a 3 bit address into
+//    the control registers
+//
+//  - PPU BUS Layout
+//    [$0000-$0FFF] Pattern Table 0
+//	   [$1000-$1FFF] Pattern Table 1
+//
+// 	[$2000-$23FF] Nametable 0
+//		[$2400-$27FF] Nametable 1
+//		[$2800-$2BFF] Nametable 2
+//		[$2C00-$2FFF] Nametable 3
+//
+//		[$3000-$3EFF] Mirrors of Nametables (only until $2EFF)
+//		
+//		[$3F00-$3F1F] Palette RAM indexes
+//		[$3F20-$3FFF] Mirrors of Palette Ram
+//
+//======================================================

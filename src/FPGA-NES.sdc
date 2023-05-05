@@ -63,5 +63,6 @@ set_false_path -from [get_pins -compatibility_mode *ROM_PRGMR*] -through [get_pi
 set_false_path -from [get_pins -compatibility_mode *ROM_PRGMR*] -through [get_pins -compatibility_mode *] -to [get_pins -compatibility_mode *CHR_ROM*]
 set_false_path -from [get_pins -compatibility_mode *pushbuttons*] -through [get_pins -compatibility_mode *] -to [get_pins -compatibility_mode *]
 set_false_path -from [get_registers *soc_keycode*] -through [get_pins -compatibility_mode *] -to [get_registers *CONTROLLER:playerone*]
-
+set_false_path -from [get_pins -compatibility_mode *ROM_PRGMR*] -through [get_pins -compatibility_mode *] -to [get_pins -compatibility_mode *NES_ARCHITECUTRE:NES*]
+#set_false_path -from [get_pins -compatibility_mode *ROM_PRGMR*] -through [get_pins -compatibility_mode *] -to [get_pins -compatibility_mode *sld_signaltap*]
 

@@ -17,6 +17,7 @@
 module SYS_RAM(
 	input clk,
 	//input enable,
+	input reset,
 	
 	input [7:0] data_in,
 	input [10:0] addr,
@@ -31,11 +32,20 @@ module SYS_RAM(
 logic [7:0] mem [2048] /* synthesis ram_init_file = " sys_ram.mif" */;
 
 always_ff @ (posedge clk) begin
+	
+	
 	if (wren)
 		mem[addr] <= data_in;
 	if (rden)
 		data_out <= mem[addr];
 	
+	
+	/*
+	if (wren)
+			mem[addr] <= data_in;
+	if (rden)
+		data_out <= mem[addr];
+	*/
 end
 
 endmodule

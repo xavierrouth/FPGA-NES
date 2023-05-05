@@ -1,0 +1,4 @@
+//Audio i2C
+#include "altera_avalon_i2c.h"
+#include "altera_avalon_i2c_regs.h"
+#include "sgtl5000/sgtl5000.h"

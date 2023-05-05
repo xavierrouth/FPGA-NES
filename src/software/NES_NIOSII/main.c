@@ -20,8 +20,15 @@
 #include <alt_types.h>
 #include "usb_host.h"
 #include "rom_programmer.h"
-
+#include "audio.h"
 // Include the rom you want to run here:
+// APU TESTS:
+//#include "apu_test_roms/apu_len_ctr.h"
+//#include "apu_test_roms/apu_irq_flag.h"
+//#include "apu_test_roms/apu_irq_timing.h"
+//#include "apu_test_roms/apu_jitter.h"
+//#include "apu_test_roms/apu_len_table.h"
+//#include "apu_test_roms/apu_len_timing.h"
 // TESTS:
 //#include "test_roms/nestest.h"
 //#include "test_roms/basics.h"
@@ -31,7 +38,8 @@
 //#include "test_roms/vram_access.h"
 //#include "test_roms/allpads.h"
 // GAMES:
-#include "game_roms/mario.h"
+#include "game_roms/ice_climbers.h"
+//#include "game_roms/mario.h"
 //#include "game_roms/kungfu.h"
 //#include "game_roms/donkey_kong.h"
 //#include "game_roms/baseball.h"
@@ -50,14 +58,16 @@ int main()
 
 
   // Write Program Rom
-
-  write_header_info(1, 0);
+  init_audio();
+  write_header_info(0, 0);
 
   for (int i = 0; i < prg_rom_size; i++) {
 	  // Write BB to $C000 to $C000 + i
 	  alt_u8 bytes = prg_rom_data[i];
 	  // Write Data (I don't feel like doing mirroring for now)
-	  //write_prg_rom(0xC000 + i, bytes);
+	  if (prg_rom_size == 16384) {
+		  write_prg_rom(0xC000 + i, bytes);
+	  }
 	  write_prg_rom(0x8000 + i, bytes);
   }
 

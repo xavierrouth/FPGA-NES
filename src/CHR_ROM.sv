@@ -13,6 +13,7 @@
 
 module CHR_ROM (
 	input clk,
+	input reset,
 
 	input [7:0] prgmr_data,
 
@@ -30,16 +31,29 @@ module CHR_ROM (
 logic [7:0] mem [8192]; // 2^13 (THE WHOLE CPU ADDRESS SPACE!!)
 
 always_ff @ (posedge clk) begin
-	// NES side
+	/**
+	if (~reset) begin
+		// NES side
+		if (nes_rden)
+			nes_data_out <= mem[nes_addr];
+
+		// NIOS prgmr Side
+		if (prgmr_wren)
+			mem[prgmr_addr] <= prgmr_data;
+			
+	end
+	
+	
+	if (reset) 
+		mem <= '{default:'0};
+	*/
+	
 	if (nes_rden)
-		nes_data_out <= mem[nes_addr];
+			nes_data_out <= mem[nes_addr];
 
 	// NIOS prgmr Side
 	if (prgmr_wren)
 		mem[prgmr_addr] <= prgmr_data;
-		
-	//else if (nes_wren)
-	//   mem[nes_addr] <= nes_data;
 		
 	
 end

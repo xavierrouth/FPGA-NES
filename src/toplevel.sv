@@ -59,10 +59,13 @@ module toplevel (
       output   [ 3: 0]   VGA_G,
       output   [ 3: 0]   VGA_B,
 		
-		
+		///////// AUDIO /////////
+		inout 				 I2C_SDA, // Arudino_IO14
+		inout 				 I2C_SCL, // Arudino_IO15
+
 
       ///////// ARDUINO /////////
-      inout    [15: 0]   ARDUINO_IO,
+      inout    [13: 0]   ARDUINO_IO,
       inout              ARDUINO_RESET_N 
 
 );
@@ -131,9 +134,9 @@ module toplevel (
 //=======================================================
 
 	logic syncd_reset_h;
-	logic syncd_continue;
+	logic syncd_mem_reset_h;
 
-	sync pushbuttons[1:0] (.Clk(MAX10_CLK1_50), .d({~KEY[0], ~KEY[1]}), .q({syncd_reset_h, syncd_continue}));	
+	sync pushbuttons[1:0] (.Clk(MAX10_CLK1_50), .d({~KEY[0], ~KEY[1]}), .q({syncd_reset_h, syncd_mem_reset_h}));	
 	
 //=======================================================
 //  Switch / Button Inputs
@@ -205,11 +208,13 @@ module toplevel (
 	logic mirroring_mode, is_chr_ram;
 	
 	// Switch Between Manual Clock and Normal Clock
+	logic NES_AUDIO_OUT;
 	
 	
 	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .ENABLE(NES_ENABLE), .PPU_CLK(PPU_CLK), .VGA_CLK(VGA_CLK), .RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
 						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data(rom_prgmr_data), .DEBUG_SWITCHES(SW[6:2]),
-						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren), .controller_keycode(keycode), .*);
+						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren), .controller_keycode(keycode), 
+						 .SCLK(ARDUINO_IO[5]), .LRCLK(ARDUINO_IO[4]), .audio_sample(NES_AUDIO_OUT), .MEM_RESET(syncd_mem_reset_h), .*);
 	
 	
 	/**
@@ -317,15 +322,18 @@ module toplevel (
 //=======================================================
 //  Toplevel SGTL5000 Audio Routing
 //=======================================================
-
-	logic I2C_SDA, I2C_SCL;
+	// Input
+	logic play_mode;
+	assign play_mode = SW[0];
+	
+	//logic inout I2C_SDA, I2C_SCL;
 	
 	// Arduino Ports
-	assign I2C_SDA = ARDUINO_IO[14];
-	assign I2C_SCL = ARDUINO_IO[15];
+	//assign I2C_SDA = ARDUINO_IO[14];
+	//assign I2C_SCL = ARDUINO_IO[15];
 	
 	// Audio I2C Slave
-	/**
+	
 	logic	s_sda_in;
 	logic	s_scl_in;
 	logic	s_sda_oe;
@@ -352,22 +360,24 @@ module toplevel (
 	
 	// 44.1kHz Sampling Rate
 	
-	sgtl_audio_interface I2S(.MCLK(ARDUINO_IO[3]), .LRCLK(ARDUINO_IO[4]), .SCLK(ARDUINO_IO[5]), .target_freq(SW[9:2]), .wave_select(SW[1:0]), .reset(Reset_h), .DOUT(sample_gen_dout));
+	//sgtl_audio_interface I2S(.MCLK(ARDUINO_IO[3]), .LRCLK(ARDUINO_IO[4]), .SCLK(ARDUINO_IO[5]), .target_freq(SW[9:2]), .wave_select(SW[1:0]), .reset(Reset_h), .DOUT(sample_gen_dout));
 	
 	assign ARDUINO_IO[1] = 1'bz; // Input to FPGA
 	assign sample_gen_dout = 1'bz;
 	
 	logic SGTL_SERIAL_DIN;
 	
+	
 	always_comb begin
 		if (play_mode)
 			SGTL_SERIAL_DIN = ARDUINO_IO[1];
 		else
-			SGTL_SERIAL_DIN = sample_gen_dout;
+			SGTL_SERIAL_DIN = NES_AUDIO_OUT;
 	end
 	
+	
 	assign ARDUINO_IO[2] = SGTL_SERIAL_DIN; // Output from FPGA
-	*/
+
 	
 	
 //=======================================================

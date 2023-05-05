@@ -10,6 +10,7 @@
 //
 
 module FRAME_PALETTE ( input clk,
+							  input reset,
 
 							  input rden,
 							  input wren,

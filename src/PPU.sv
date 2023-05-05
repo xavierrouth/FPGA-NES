@@ -28,12 +28,6 @@
 //
 //  - OAM Layout
 //
-//  - TODO:
-//		Adapt for VGA
-//
-//
-//  - PAL vs NTSC:
-//    pal has 5 clks per pixel, and ntsc has 4 clks per pixel
 //
 //=======================================================
 
