@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'toplevel_soc'
  * SOPC Builder design path: ../../toplevel_soc.sopcinfo
  *
- * Generated: Mon May 01 22:26:07 CDT 2023
+ * Generated: Fri May 05 11:30:25 CDT 2023
  */
 
 /*
@@ -212,7 +212,7 @@
  */
 
 #define ALT_MODULE_CLASS_hex_digits_pio altera_avalon_pio
-#define HEX_DIGITS_PIO_BASE 0xa20
+#define HEX_DIGITS_PIO_BASE 0xa10
 #define HEX_DIGITS_PIO_BIT_CLEARING_EDGE_REGISTER 0
 #define HEX_DIGITS_PIO_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define HEX_DIGITS_PIO_CAPTURE 0
@@ -274,7 +274,7 @@
  */
 
 #define ALT_MODULE_CLASS_key altera_avalon_pio
-#define KEY_BASE 0xa00
+#define KEY_BASE 0x9f0
 #define KEY_BIT_CLEARING_EDGE_REGISTER 0
 #define KEY_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define KEY_CAPTURE 0
@@ -301,7 +301,7 @@
  */
 
 #define ALT_MODULE_CLASS_keycode altera_avalon_pio
-#define KEYCODE_BASE 0xa60
+#define KEYCODE_BASE 0xa50
 #define KEYCODE_BIT_CLEARING_EDGE_REGISTER 0
 #define KEYCODE_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define KEYCODE_CAPTURE 0
@@ -323,12 +323,39 @@
 
 
 /*
+ * keycode2 configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_keycode2 altera_avalon_pio
+#define KEYCODE2_BASE 0x9e0
+#define KEYCODE2_BIT_CLEARING_EDGE_REGISTER 0
+#define KEYCODE2_BIT_MODIFYING_OUTPUT_REGISTER 0
+#define KEYCODE2_CAPTURE 0
+#define KEYCODE2_DATA_WIDTH 8
+#define KEYCODE2_DO_TEST_BENCH_WIRING 0
+#define KEYCODE2_DRIVEN_SIM_VALUE 0
+#define KEYCODE2_EDGE_TYPE "NONE"
+#define KEYCODE2_FREQ 50000000
+#define KEYCODE2_HAS_IN 0
+#define KEYCODE2_HAS_OUT 1
+#define KEYCODE2_HAS_TRI 0
+#define KEYCODE2_IRQ -1
+#define KEYCODE2_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define KEYCODE2_IRQ_TYPE "NONE"
+#define KEYCODE2_NAME "/dev/keycode2"
+#define KEYCODE2_RESET_VALUE 0
+#define KEYCODE2_SPAN 16
+#define KEYCODE2_TYPE "altera_avalon_pio"
+
+
+/*
  * leds_pio configuration
  *
  */
 
 #define ALT_MODULE_CLASS_leds_pio altera_avalon_pio
-#define LEDS_PIO_BASE 0xa10
+#define LEDS_PIO_BASE 0xa00
 #define LEDS_PIO_BIT_CLEARING_EDGE_REGISTER 0
 #define LEDS_PIO_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define LEDS_PIO_CAPTURE 0
@@ -355,7 +382,7 @@
  */
 
 #define ALT_MODULE_CLASS_main_clkgen_pll altpll
-#define MAIN_CLKGEN_PLL_BASE 0x9f0
+#define MAIN_CLKGEN_PLL_BASE 0xa60
 #define MAIN_CLKGEN_PLL_IRQ -1
 #define MAIN_CLKGEN_PLL_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define MAIN_CLKGEN_PLL_NAME "/dev/main_clkgen_pll"
@@ -459,7 +486,7 @@
 #define SYSID_QSYS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_0_NAME "/dev/sysid_qsys_0"
 #define SYSID_QSYS_0_SPAN 8
-#define SYSID_QSYS_0_TIMESTAMP 1682997777
+#define SYSID_QSYS_0_TIMESTAMP 1683303818
 #define SYSID_QSYS_0_TYPE "altera_avalon_sysid_qsys"
 
 
@@ -495,7 +522,7 @@
  */
 
 #define ALT_MODULE_CLASS_usb_gpx altera_avalon_pio
-#define USB_GPX_BASE 0xa40
+#define USB_GPX_BASE 0xa30
 #define USB_GPX_BIT_CLEARING_EDGE_REGISTER 0
 #define USB_GPX_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define USB_GPX_CAPTURE 0
@@ -522,7 +549,7 @@
  */
 
 #define ALT_MODULE_CLASS_usb_irq altera_avalon_pio
-#define USB_IRQ_BASE 0xa50
+#define USB_IRQ_BASE 0xa40
 #define USB_IRQ_BIT_CLEARING_EDGE_REGISTER 0
 #define USB_IRQ_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define USB_IRQ_CAPTURE 0
@@ -549,7 +576,7 @@
  */
 
 #define ALT_MODULE_CLASS_usb_rst altera_avalon_pio
-#define USB_RST_BASE 0xa30
+#define USB_RST_BASE 0xa20
 #define USB_RST_BIT_CLEARING_EDGE_REGISTER 0
 #define USB_RST_BIT_MODIFYING_OUTPUT_REGISTER 0
 #define USB_RST_CAPTURE 0

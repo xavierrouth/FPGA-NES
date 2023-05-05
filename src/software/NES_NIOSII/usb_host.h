@@ -125,7 +125,12 @@ void printSignedHex1(signed char value) {
 	IOWR_ALTERA_AVALON_PIO_DATA(HEX_DIGITS_PIO_BASE, pio_val);
 }
 
-void setKeycode(WORD keycode)
+void setKeycodeOne(WORD keycode)
 {
 	IOWR_ALTERA_AVALON_PIO_DATA(KEYCODE_BASE, keycode);
+}
+
+void setKeycodeTwo(WORD keycode)
+{
+	IOWR_ALTERA_AVALON_PIO_DATA(KEYCODE2_BASE, keycode);
 }

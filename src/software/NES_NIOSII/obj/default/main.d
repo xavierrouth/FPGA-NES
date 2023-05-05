@@ -17,7 +17,7 @@ obj/default/main.o: main.c ../NES_NIOSII_bsp/system.h \
  ../NES_NIOSII_bsp//HAL/inc/priv/alt_no_error.h \
  ../NES_NIOSII_bsp//HAL/inc/os/alt_flag.h \
  ../NES_NIOSII_bsp//drivers/inc/altera_avalon_i2c_regs.h \
- sgtl5000/sgtl5000.h sgtl5000/GenericTypeDefs.h game_roms/ice_climbers.h
+ sgtl5000/sgtl5000.h sgtl5000/GenericTypeDefs.h game_roms/mario.h
 
 ../NES_NIOSII_bsp/system.h:
 
@@ -81,4 +81,4 @@ sgtl5000/sgtl5000.h:
 
 sgtl5000/GenericTypeDefs.h:
 
-game_roms/ice_climbers.h:
+game_roms/mario.h:

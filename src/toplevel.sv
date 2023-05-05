@@ -80,6 +80,7 @@ module toplevel (
 	logic [1:0] signs;
 	logic [1:0] hundreds;
 	logic [7:0] keycode;
+	logic [7:0] keycode2;
 
 //=======================================================
 //  Toplevel Outside / Board Connections
@@ -213,8 +214,8 @@ module toplevel (
 	
 	NES_ARCHITECUTRE NES(.MCLK(MCLK), .CPU_CLK(CPU_CLK), .ENABLE(NES_ENABLE), .PPU_CLK(PPU_CLK), .VGA_CLK(VGA_CLK), .RESET(syncd_reset_h), .cpu_debug(cpu_debug), .ADDR_debug(ADDR_debug), 
 						 .CPU_RW_n_debug(CPU_RW_n_debug), .rom_prgmr_addr(rom_prgmr_addr), .rom_prgmr_data(rom_prgmr_data), .DEBUG_SWITCHES(SW[6:2]),
-						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren), .controller_keycode(keycode), 
-						 .SCLK(ARDUINO_IO[5]), .LRCLK(ARDUINO_IO[4]), .audio_sample(NES_AUDIO_OUT), .MEM_RESET(syncd_mem_reset_h), .*);
+						 .chr_rom_prgmr_wren(chr_rom_prgmr_wren), .prg_rom_prgmr_wren(prg_rom_prgmr_wren), .controller1_keycode(keycode), 
+						 .controller2_keycode(keycode2), .SCLK(ARDUINO_IO[5]), .LRCLK(ARDUINO_IO[4]), .audio_sample(NES_AUDIO_OUT), .MEM_RESET(syncd_mem_reset_h), .*);
 	
 	
 	/**
@@ -471,7 +472,8 @@ module toplevel (
 		//LEDs and HEX
 		//.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
 		.leds_export({hundreds, signs, LEDR}),
-		.keycode_export(keycode)
+		.keycode_export(keycode),
+		.keycode2_export(keycode2)
 		
 		
 	 );

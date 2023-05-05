@@ -2,9 +2,6 @@
 <launchConfiguration type="com.altera.sbtgui.launch.hardware.Nios2HardwareLaunchConfiguration">
 <booleanAttribute key="acceptBadSysId" value="true"/>
 <booleanAttribute key="acceptBadTimestamp" value="true"/>
-<stringAttribute key="byteStreamDeviceCableName" value="USB-Blaster on localhost [USB-0]"/>
-<stringAttribute key="byteStreamDeviceDeviceID" value="1"/>
-<stringAttribute key="byteStreamDeviceInstanceID" value="0"/>
 <booleanAttribute key="downloadProgram" value="true"/>
 <stringAttribute key="elfFile" value="C:\dev\FPGA-NES\src\software\NES_NIOSII\NES_NIOSII.elf"/>
 <stringAttribute key="org.eclipse.cdt.debug.mi.core.GDB_INIT" value=""/>
@@ -16,7 +13,6 @@
 <booleanAttribute key="org.eclipse.cdt.launch.ENABLE_VARIABLE_BOOKKEEPING" value="false"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="NES_NIOSII.elf"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="NES_NIOSII"/>
-<stringAttribute key="processorCableName" value="USB-Blaster on localhost [USB-0]"/>
 <stringAttribute key="processorDeviceIndex" value="1"/>
 <stringAttribute key="processorInstanceId" value="0"/>
 <booleanAttribute key="resetHardware" value="true"/>

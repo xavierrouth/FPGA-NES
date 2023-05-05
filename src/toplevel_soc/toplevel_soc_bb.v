@@ -5,6 +5,8 @@ module toplevel_soc (
 	game_rom_conduit_prg_rom_write,
 	game_rom_conduit_rom_addr,
 	game_rom_conduit_chr_rom_write,
+	game_rom_conduit_mirror,
+	game_rom_conduit_chr_raml,
 	hex_digits_export,
 	i2c_0_i2c_serial_sda_in,
 	i2c_0_i2c_serial_scl_in,
@@ -13,6 +15,7 @@ module toplevel_soc (
 	key_external_connection_export,
 	keycode_export,
 	leds_export,
+	master_clk_clk,
 	reset_reset_n,
 	sdram_clk_clk,
 	sdram_wire_addr,
@@ -31,13 +34,15 @@ module toplevel_soc (
 	usb_gpx_export,
 	usb_irq_export,
 	usb_rst_export,
-	master_clk_clk);	
+	keycode2_export);	
 
 	input		clk_clk;
 	output	[7:0]	game_rom_conduit_rom_data;
 	output		game_rom_conduit_prg_rom_write;
 	output	[15:0]	game_rom_conduit_rom_addr;
 	output		game_rom_conduit_chr_rom_write;
+	output		game_rom_conduit_mirror;
+	output		game_rom_conduit_chr_raml;
 	output	[15:0]	hex_digits_export;
 	input		i2c_0_i2c_serial_sda_in;
 	input		i2c_0_i2c_serial_scl_in;
@@ -46,6 +51,7 @@ module toplevel_soc (
 	input	[1:0]	key_external_connection_export;
 	output	[7:0]	keycode_export;
 	output	[13:0]	leds_export;
+	output		master_clk_clk;
 	input		reset_reset_n;
 	output		sdram_clk_clk;
 	output	[12:0]	sdram_wire_addr;
@@ -64,5 +70,5 @@ module toplevel_soc (
 	input		usb_gpx_export;
 	input		usb_irq_export;
 	output		usb_rst_export;
-	output		master_clk_clk;
+	output	[7:0]	keycode2_export;
 endmodule

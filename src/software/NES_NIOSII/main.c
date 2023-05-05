@@ -38,8 +38,8 @@
 //#include "test_roms/vram_access.h"
 //#include "test_roms/allpads.h"
 // GAMES:
-#include "game_roms/ice_climbers.h"
-//#include "game_roms/mario.h"
+//#include "game_roms/ice_climbers.h"
+#include "game_roms/mario.h"
 //#include "game_roms/kungfu.h"
 //#include "game_roms/donkey_kong.h"
 //#include "game_roms/baseball.h"
@@ -59,7 +59,7 @@ int main()
 
   // Write Program Rom
   init_audio();
-  write_header_info(0, 0);
+  write_header_info(1, 0);
 
   for (int i = 0; i < prg_rom_size; i++) {
 	  // Write BB to $C000 to $C000 + i
@@ -127,29 +127,53 @@ int main()
 					printf("%x ", kbdbuf.keycode[i]);
 				}
 				// overwrite setKeycode to translate to NES
-				BYTE nesKeycodes = 0x00;
+				BYTE nesKeycodesOne = 0x00;
+				BYTE nesKeycodesTwo = 0x00;
 
 				for (int i = 0; i < 6; i++) {
 					BYTE kc = kbdbuf.keycode[i];
+					// Controller One
+
 					// A - K
-					if (kc == 14 | kc == 30) nesKeycodes |= 0x01;
+					if (kc == 14 | kc == 30) nesKeycodesOne |= 0x01;
 					// B - L
-					if (kc == 15 | kc == 31) nesKeycodes |= 0x02;
+					if (kc == 15 | kc == 31) nesKeycodesOne |= 0x02;
 					// SELECT - '\'
-					if (kc == 49 | kc == 32) nesKeycodes |=   0x04;
+					if (kc == 49 | kc == 32) nesKeycodesOne |=   0x04;
 					// START - 'enter;
-					if (kc == 40 | kc == 33) nesKeycodes |=   0x08;
+					if (kc == 40 | kc == 33) nesKeycodesOne |=   0x08;
 					// UP - W
-					if (kc == 26 | kc == 34) nesKeycodes |=  0x10;
+					if (kc == 26 | kc == 34) nesKeycodesOne |=  0x10;
 					// DOWN - S
-					if (kc == 22 | kc == 35) nesKeycodes |=  0x20;
+					if (kc == 22 | kc == 35) nesKeycodesOne |=  0x20;
 					// LEFT - A
-					if (kc == 4 | kc == 36) nesKeycodes |=   0x40;
+					if (kc == 4 | kc == 36) nesKeycodesOne |=   0x40;
 					// RIGHT - D
-					if (kc == 7 | kc == 37) nesKeycodes |=    0x80;
+					if (kc == 7 | kc == 37) nesKeycodesOne |=    0x80;
+
+					// Controller Two
+					// A - K
+					if (kc == 54 | kc == 30) nesKeycodesTwo |= 0x01;
+					// B - L
+					if (kc == 55 | kc == 31) nesKeycodesTwo |= 0x02;
+					// SELECT - '\'
+					if (kc == 77 | kc == 32) nesKeycodesTwo |=   0x04;
+					// START - 'enter;
+					if (kc == 78 | kc == 33) nesKeycodesTwo |=   0x08;
+					// UP - W
+					if (kc == 82 | kc == 34) nesKeycodesTwo |=  0x10;
+					// DOWN - S
+					if (kc == 81 | kc == 35) nesKeycodesTwo |=  0x20;
+					// LEFT - A
+					if (kc == 80 | kc == 36) nesKeycodesTwo |=   0x40;
+					// RIGHT - D
+					if (kc == 79 | kc == 37) nesKeycodesTwo |=    0x80;
 				}
-				setKeycode(nesKeycodes);
-				printf("NES controller sees: %x ", nesKeycodes);
+				setKeycodeOne(nesKeycodesOne);
+				setKeycodeTwo(nesKeycodesTwo);
+				printf("NES controller 1 sees: %x ", nesKeycodesOne);
+				printf("\n");
+				printf("NES controller 2 sees: %x ", nesKeycodesTwo);
 				printf("\n");
 				printSignedHex0(kbdbuf.keycode[0]);
 				printSignedHex1(kbdbuf.keycode[1]);

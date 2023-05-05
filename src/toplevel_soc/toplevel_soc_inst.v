@@ -4,6 +4,8 @@
 		.game_rom_conduit_prg_rom_write (<connected-to-game_rom_conduit_prg_rom_write>), //                        .prg_rom_write
 		.game_rom_conduit_rom_addr      (<connected-to-game_rom_conduit_rom_addr>),      //                        .rom_addr
 		.game_rom_conduit_chr_rom_write (<connected-to-game_rom_conduit_chr_rom_write>), //                        .chr_rom_write
+		.game_rom_conduit_mirror        (<connected-to-game_rom_conduit_mirror>),        //                        .mirror
+		.game_rom_conduit_chr_raml      (<connected-to-game_rom_conduit_chr_raml>),      //                        .chr_raml
 		.hex_digits_export              (<connected-to-hex_digits_export>),              //              hex_digits.export
 		.i2c_0_i2c_serial_sda_in        (<connected-to-i2c_0_i2c_serial_sda_in>),        //        i2c_0_i2c_serial.sda_in
 		.i2c_0_i2c_serial_scl_in        (<connected-to-i2c_0_i2c_serial_scl_in>),        //                        .scl_in
@@ -12,6 +14,7 @@
 		.key_external_connection_export (<connected-to-key_external_connection_export>), // key_external_connection.export
 		.keycode_export                 (<connected-to-keycode_export>),                 //                 keycode.export
 		.leds_export                    (<connected-to-leds_export>),                    //                    leds.export
+		.master_clk_clk                 (<connected-to-master_clk_clk>),                 //              master_clk.clk
 		.reset_reset_n                  (<connected-to-reset_reset_n>),                  //                   reset.reset_n
 		.sdram_clk_clk                  (<connected-to-sdram_clk_clk>),                  //               sdram_clk.clk
 		.sdram_wire_addr                (<connected-to-sdram_wire_addr>),                //              sdram_wire.addr
@@ -30,6 +33,6 @@
 		.usb_gpx_export                 (<connected-to-usb_gpx_export>),                 //                 usb_gpx.export
 		.usb_irq_export                 (<connected-to-usb_irq_export>),                 //                 usb_irq.export
 		.usb_rst_export                 (<connected-to-usb_rst_export>),                 //                 usb_rst.export
-		.master_clk_clk                 (<connected-to-master_clk_clk>)                  //              master_clk.clk
+		.keycode2_export                (<connected-to-keycode2_export>)                 //                keycode2.export
 	);
 

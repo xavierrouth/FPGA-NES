@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>May 4, 2023 6:31:22 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1683243082652</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>May 5, 2023 11:37:02 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1683304622730</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\dev\FPGA-NES\src\software\NES_NIOSII_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\toplevel_soc.sopcinfo</SopcDesignFile>
@@ -917,49 +917,55 @@
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
-                <slaveDescriptor>main_clkgen_pll</slaveDescriptor>
-                <addressRange>0x000009F0 - 0x000009FF</addressRange>
+                <slaveDescriptor>keycode2</slaveDescriptor>
+                <addressRange>0x000009E0 - 0x000009EF</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>key</slaveDescriptor>
-                <addressRange>0x00000A00 - 0x00000A0F</addressRange>
+                <addressRange>0x000009F0 - 0x000009FF</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>leds_pio</slaveDescriptor>
-                <addressRange>0x00000A10 - 0x00000A1F</addressRange>
+                <addressRange>0x00000A00 - 0x00000A0F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>hex_digits_pio</slaveDescriptor>
-                <addressRange>0x00000A20 - 0x00000A2F</addressRange>
+                <addressRange>0x00000A10 - 0x00000A1F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>usb_rst</slaveDescriptor>
-                <addressRange>0x00000A30 - 0x00000A3F</addressRange>
+                <addressRange>0x00000A20 - 0x00000A2F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>usb_gpx</slaveDescriptor>
-                <addressRange>0x00000A40 - 0x00000A4F</addressRange>
+                <addressRange>0x00000A30 - 0x00000A3F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>usb_irq</slaveDescriptor>
-                <addressRange>0x00000A50 - 0x00000A5F</addressRange>
+                <addressRange>0x00000A40 - 0x00000A4F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>
         </MemoryMap>
         <MemoryMap>
                 <slaveDescriptor>keycode</slaveDescriptor>
+                <addressRange>0x00000A50 - 0x00000A5F</addressRange>
+                <addressSpan>16</addressSpan>
+                <attributes/>
+        </MemoryMap>
+        <MemoryMap>
+                <slaveDescriptor>main_clkgen_pll</slaveDescriptor>
                 <addressRange>0x00000A60 - 0x00000A6F</addressRange>
                 <addressSpan>16</addressSpan>
                 <attributes/>

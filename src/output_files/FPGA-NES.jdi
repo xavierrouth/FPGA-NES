@@ -1,6 +1,6 @@
 <sld_project_info>
   <project>
-    <hash md5_digest_80b="e2b1a70c50e18278f24e"/>
+    <hash md5_digest_80b="cfe2cf37e86faf661b0f"/>
   </project>
   <file_info>
     <file device="10M50DAF484C7G" path="FPGA-NES.sof" usercode="0xFFFFFFFF"/>
@@ -202,7 +202,7 @@
   <sld_infos>
     <sld_info hpath="toplevel_soc:u0" name="u0">
       <assignment_values>
-        <assignment_value text="QSYS_NAME toplevel_soc HAS_SOPCINFO 1 GENERATION_ID 1682997777"/>
+        <assignment_value text="QSYS_NAME toplevel_soc HAS_SOPCINFO 1 GENERATION_ID 1683303818"/>
       </assignment_values>
       <parameters/>
     </sld_info>

@@ -43,7 +43,8 @@ module NES_ARCHITECUTRE (
 	input [15:0]		rom_prgmr_addr,
 	input [7:0]			rom_prgmr_data,
 	
-	input [7:0] 		controller_keycode,
+	input [7:0] 		controller1_keycode,
+	input [7:0] 		controller2_keycode,
 	
 	// Header Signals
 	input 				is_chr_ram,
@@ -84,8 +85,11 @@ logic 		 CPU_RW_n; // Read is high, write is low
 
 //Controller Signals
 
-logic CONTROLLER_wren, CONTROLLER_rden;
-logic [7:0] CONTROLLER_DATA_OUT;
+logic CONTROLLER_ONE_wren, CONTROLLER_ONE_rden;
+logic [7:0] CONTROLLER_ONE_DATA_OUT;
+
+logic CONTROLLER_TWO_wren, CONTROLLER_TWO_rden;
+logic [7:0] CONTROLLER_TWO_DATA_OUT;
 
 // PPU-CPU Signals
 logic [7:0] PPU_CPU_DATA_OUT;
@@ -152,8 +156,12 @@ always_comb begin : CPU_BUS_SELECTION
 	APU_wren = 1'b0;
 	APU_rden = 1'b0;
 	
-	CONTROLLER_rden = 1'b0;
-	CONTROLLER_wren = 1'b0;
+	CONTROLLER_ONE_rden = 1'b0;
+	CONTROLLER_ONE_wren = 1'b0;
+	
+	CONTROLLER_TWO_rden = 1'b0;
+	CONTROLLER_TWO_wren = 1'b0;
+	
 	CPU_ADDR_BUS = CPU_ADDR;
 	
 	DMA_write = 1'b0;
@@ -188,7 +196,8 @@ always_comb begin : CPU_BUS_SELECTION
 			
 			// CONTROLLER [$4016]
 			if (CPU_ADDR_BUS == 16'h4016) begin
-				CONTROLLER_wren = 1'b1;
+				CONTROLLER_ONE_wren = 1'b1;
+				CONTROLLER_TWO_wren = 1'b1;
 			end
 			
 			
@@ -215,10 +224,13 @@ always_comb begin : CPU_BUS_SELECTION
 			// CONTROLLER [$4016 - $4017]
 			if (CPU_ADDR_BUS == 16'h4016 | CPU_ADDR_BUS == 16'h4017) begin
 				if (CPU_ADDR_BUS == 16'h4016) begin
-					CONTROLLER_rden = 1'b1;
-					CPU_DATA_BUS = CONTROLLER_DATA_OUT;
-				end else
-					CPU_DATA_BUS = 8'h00;
+					CONTROLLER_ONE_rden = 1'b1;
+					CPU_DATA_BUS = CONTROLLER_ONE_DATA_OUT;
+				end else begin
+					CONTROLLER_TWO_rden = 1'b1;
+					CPU_DATA_BUS = CONTROLLER_TWO_DATA_OUT;
+				end
+					
 			end
 			// PRG-ROM [$4020 - $FFFF]
 			else if (CPU_ADDR_BUS >= 16'h4020) begin
@@ -375,7 +387,7 @@ assign sysram_enable = 1'b1;
 logic NMI_n;
 logic APU_frame_IRQ_n; // Tied high
 logic APU_frame_IRQ;
-assign APU_frame_IRQ_n = ~APU_frame_IRQ;
+assign APU_frame_IRQ_n = 1'b1; // ~APU_frame_IRQ;
 
 
 
@@ -383,7 +395,11 @@ assign APU_frame_IRQ_n = ~APU_frame_IRQ;
 //  Module Instatiation
 //=======================================================
 
-CONTROLLER playerone(.rden(CONTROLLER_rden), .clk(MEM_CLK), .reset(RESET), .wren(CONTROLLER_wren), .data_in(CPU_DATA_BUS), .keycodes_in(controller_keycode), .data_out(CONTROLLER_DATA_OUT));
+CONTROLLER playerone(.rden(CONTROLLER_ONE_rden), .clk(MEM_CLK), .reset(RESET), .wren(CONTROLLER_ONE_wren), .data_in(CPU_DATA_BUS), 
+							.keycodes_in(controller1_keycode), .data_out(CONTROLLER_ONE_DATA_OUT));
+
+CONTROLLER playertwo(.rden(CONTROLLER_TWO_rden), .clk(MEM_CLK), .reset(RESET), .wren(CONTROLLER_TWO_wren), .data_in(CPU_DATA_BUS), 
+							.keycodes_in(controller2_keycode), .data_out(CONTROLLER_TWO_DATA_OUT));
 
 CPU_2A03 cpu_inst(.CLK(CPU_CLK), .ENABLE(CPU_ENABLE), .RESET(CPU_RESET), .DATA_IN(CPU_DATA_BUS), .ADDR(CPU_ADDR), 
 				  .DATA_OUT(CPU_DATA_OUT), .RW_n(CPU_RW_n), .cpu_debug(cpu_debug), .NMI_n(NMI_n), .IRQ_n(APU_frame_IRQ_n));
